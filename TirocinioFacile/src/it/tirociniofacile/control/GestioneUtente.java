@@ -21,7 +21,15 @@ public class GestioneUtente extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
   }
-
+  
+  /**
+   * Esempio di commento, ci vuole il punto finale.
+   * ogni riga massimo 100 caratteri
+   * spazio sopra e sotto
+   * @param request richiesta
+   * @param response risposta
+   */
+  
   protected void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
     response.getWriter().append("Served at: ").append(request.getContextPath());
