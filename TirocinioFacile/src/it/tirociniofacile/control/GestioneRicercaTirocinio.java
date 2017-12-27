@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/GestioneRicercaTirocinio")
 public class GestioneRicercaTirocinio extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
     /**
      * Default constructor. 
