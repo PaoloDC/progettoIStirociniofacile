@@ -35,7 +35,7 @@ public class GestioneUtente extends HttpServlet {
   }
 
   /**
-   * Il metodo doPost permette di ...
+   * Il metodo doPost permette di .
    * @param request richiesta
    * @param response risposta
    */
