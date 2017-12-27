@@ -19,7 +19,6 @@ public class GestioneUtente extends HttpServlet {
      */
   public GestioneUtente() {
         super();
-        // TODO Auto-generated constructor stub
   }
   
   /**
@@ -35,7 +34,12 @@ public class GestioneUtente extends HttpServlet {
     response.getWriter().append("Served at: ").append(request.getContextPath());
   }
 
-
+  /**
+   * Il metodo doPost permette di .
+   * @param request richiesta
+   * @param response risposta
+   */
+  
   protected void doPost(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
     doGet(request, response);
