@@ -1,9 +1,22 @@
 package it.tirociniofacile.bean;
 
-public class ProfiloAziendaBean {
+import java.io.Serializable;
 
-  public ProfiloAziendaBean() {
-    // TODO Auto-generated constructor stub
+public class ProfiloAziendaBean extends UtenteBean implements Serializable{
+
+  private String nomeAzienda;
+  
+  public String getNomeAzienda() {
+    return nomeAzienda;
+  }
+
+  public void setNomeAzienda(String nomeAzienda) {
+    this.nomeAzienda = nomeAzienda;
+  }
+
+  public ProfiloAziendaBean(String nomeAzienda, String email, String password) {
+    super(email,password);
+    this.nomeAzienda = nomeAzienda;
   }
 
 }

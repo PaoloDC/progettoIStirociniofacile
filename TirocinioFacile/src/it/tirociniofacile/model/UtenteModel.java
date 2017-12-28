@@ -117,13 +117,12 @@ public class UtenteModel {
    * @return ritorna un bean che rappresenta un utente
    */
   public synchronized UtenteBean caricaAccount(String email, String password) {
-    return new UtenteBean();
+    return new UtenteBean("app","app");
   }
   
   /**
    * Cerca la password di un utente dalla email.
    * @param email email dell'account da cercare nel db
-   * @return ritorna un bean che rappresenta un utente
    */
   public synchronized void cercaAccountPerEmail(String email) {
    //TODO void ma non ne sono sicuro

@@ -1,9 +1,23 @@
 package it.tirociniofacile.bean;
 
-public class ProfiloStudenteBean {
+import java.io.Serializable;
 
-  public ProfiloStudenteBean() {
-    // TODO Auto-generated constructor stub..op
+public class ProfiloStudenteBean extends UtenteBean implements Serializable {
+
+  private String matricola;
+  
+  public ProfiloStudenteBean(String matricola, String email, String password) {
+    super(email,password);
+    this.matricola = matricola;
   }
 
+  public String getMatricola() {
+    return matricola;
+  }
+
+  public void setMatricola(String matricola) {
+    this.matricola = matricola;
+  }
+
+  
 }
