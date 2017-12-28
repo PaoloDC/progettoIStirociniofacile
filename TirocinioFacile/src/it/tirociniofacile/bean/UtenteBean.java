@@ -1,8 +1,8 @@
 package it.tirociniofacile.bean;
 
-public class UteneBean {
+public class UtenteBean {
 
-  public UteneBean() {
+  public UtenteBean() {
     // TODO Auto-generated constructor stub
   }
 
