@@ -1,5 +1,7 @@
 package it.tirociniofacile.model;
 
+import it.tirociniofacile.bean.UtenteBean;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -9,7 +11,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import it.tirociniofacile.bean.UtenteBean;
+
 
 public class UtenteModel {
   private static DataSource ds;
