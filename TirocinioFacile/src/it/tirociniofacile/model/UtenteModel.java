@@ -123,7 +123,6 @@ public class UtenteModel {
   /**
    * Cerca la password di un utente dalla email.
    * @param email email dell'account da cercare nel db
-   * @return ritorna un bean che rappresenta un utente
    */
   public synchronized void cercaAccountPerEmail(String email) {
    //TODO void ma non ne sono sicuro
