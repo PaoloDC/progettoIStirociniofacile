@@ -10,6 +10,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import it.tirociniofacile.bean.UtenteBean;
+
 public class UtenteModel {
   private static DataSource ds;
 
@@ -97,4 +99,36 @@ public class UtenteModel {
     }
     return;
   }
+
+  
+  /**
+   * Salva le credenziali generate per un nuovo account amministrativo (presidente area didattica 
+   * o impiegato ufficio tirocini).
+   * @param email email da salvare nel file per il nuovo account amministrativo
+   * @param password password da salvare nel file per il nuovo account amministrativo
+   */
+  public synchronized void generaCredenziali(String email, String password) {
+    //TODO
+  }
+  
+  /**
+   * Carica email e password da un db.
+   * @param email email dell'account da cercare nel db
+   * @param password password dell'account da cercare nel db
+   * @return ritorna un bean che rappresenta un utente
+   */
+  public synchronized UtenteBean caricaAccount(String email, String password) {
+    return new UtenteBean();
+  }
+  
+  /**
+   * Cerca la password di un utente dalla email.
+   * @param email email dell'account da cercare nel db
+   * @return ritorna un bean che rappresenta un utente
+   */
+  public synchronized void cercaAccountPerEmail(String email) {
+   //TODO void ma non ne sono sicuro
+  }
+  
 }
+
