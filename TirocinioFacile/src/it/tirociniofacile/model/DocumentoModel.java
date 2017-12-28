@@ -1,5 +1,8 @@
 package it.tirociniofacile.model;
 
+import it.tirociniofacile.bean.DocumentoConvezioneBean;
+import it.tirociniofacile.bean.DocumentoQuestionarioBean;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,8 +13,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import it.tirociniofacile.bean.DocumentoConvezioneBean;
-import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 
 public class DocumentoModel {
   private static DataSource ds;
@@ -23,7 +24,7 @@ public class DocumentoModel {
 
       ds = (DataSource) envCtx.lookup("jdbc/tirociniofacile");
     } catch (NamingException e) {
-      System.out.println("Error:" + e.getMessage());
+      System.out.println("Naming Exception:" + e.getMessage());
     }
   }
   
