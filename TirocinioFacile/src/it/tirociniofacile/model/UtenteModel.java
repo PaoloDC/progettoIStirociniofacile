@@ -117,7 +117,7 @@ public class UtenteModel {
    * @return ritorna un bean che rappresenta un utente
    */
   public synchronized UtenteBean caricaAccount(String email, String password) {
-    return new UtenteBean();
+    return new UtenteBean("app","app");
   }
   
   /**
