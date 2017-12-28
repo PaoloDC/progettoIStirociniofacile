@@ -124,6 +124,6 @@ public class DocumentoModel {
    * @param id identificativo del documento da ricercare
    */
   public synchronized void approvaDocumento(int id) {
-    
+    return;
   }
 }
