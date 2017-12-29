@@ -6,6 +6,15 @@ public class ProfiloAziendaBean extends UtenteBean implements Serializable{
 
   private String nomeAzienda;
   
+  public ProfiloAziendaBean() {
+
+  }
+  
+  public ProfiloAziendaBean(String nomeAzienda, String email, String password) {
+    super(email,password);
+    this.nomeAzienda = nomeAzienda;
+  }
+  
   public String getNomeAzienda() {
     return nomeAzienda;
   }
@@ -14,9 +23,6 @@ public class ProfiloAziendaBean extends UtenteBean implements Serializable{
     this.nomeAzienda = nomeAzienda;
   }
 
-  public ProfiloAziendaBean(String nomeAzienda, String email, String password) {
-    super(email,password);
-    this.nomeAzienda = nomeAzienda;
-  }
+ 
 
 }

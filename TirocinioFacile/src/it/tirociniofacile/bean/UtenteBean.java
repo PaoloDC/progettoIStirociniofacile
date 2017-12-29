@@ -7,6 +7,10 @@ public class UtenteBean implements Serializable {
   private String email;
   private String password;
 
+  public UtenteBean() {
+  
+  }
+  
   public UtenteBean(String email, String password) {
     this.email = email;
     this.password = password;

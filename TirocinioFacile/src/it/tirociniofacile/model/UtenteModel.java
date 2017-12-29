@@ -1,9 +1,12 @@
 package it.tirociniofacile.model;
 
+import it.tirociniofacile.bean.ProfiloAziendaBean;
+import it.tirociniofacile.bean.ProfiloStudenteBean;
 import it.tirociniofacile.bean.UtenteBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.naming.Context;
@@ -115,11 +118,65 @@ public class UtenteModel {
   /**
    * Carica email e password da un db.
    * @param email email dell'account da cercare nel db
-   * @param password password dell'account da cercare nel db
+   * @param tipo indica il tio di utente da ricercare
    * @return ritorna un bean che rappresenta un utente
+   * @throws SQLException in caso di errore di connesione al db 
    */
-  public synchronized UtenteBean caricaAccount(String email, String password) {
-    return new UtenteBean("app","app");
+  public synchronized UtenteBean caricaAccount(String email, int tipo) throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = ds.getConnection();
+      if (tipo == 0) {   
+        String insertSql = "SELECT * FROM " + TABLE_NAME_STUDENTE + " WHERE mail  = ? ";
+        preparedStatement = connection.prepareStatement(insertSql);
+        preparedStatement.setString(1, email);
+        ResultSet rs = preparedStatement.executeQuery();
+        
+        ProfiloStudenteBean ps = new ProfiloStudenteBean();
+        
+        while (rs.next()) {
+          ps.setEmail(rs.getString(1));
+          ps.setPassword(rs.getString(2)); 
+          ps.setMatricola(rs.getString(3));
+        }  
+        
+        return ps;
+        
+      } else if (tipo == 1) {  
+        
+        String insertSql = "SELECT * FROM " + TABLE_NAME_AZIENDA + " WHERE mail  = ? ";
+        preparedStatement = connection.prepareStatement(insertSql);
+        preparedStatement.setString(1, email);
+        ResultSet rs = preparedStatement.executeQuery();
+        ProfiloAziendaBean pa = new ProfiloAziendaBean();
+        
+        while (rs.next()) {
+          pa.setEmail(rs.getString(1));
+          pa.setPassword(rs.getString(2));
+          pa.setNomeAzienda(rs.getString(3));
+        }
+        
+        return pa;
+        
+      } else if (tipo == 2) {
+        // da fare
+      }
+      
+           
+   
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+        if (connection != null) {
+          connection.close();
+        }
+      }
+    }
+    return null;
   }
   
   /**

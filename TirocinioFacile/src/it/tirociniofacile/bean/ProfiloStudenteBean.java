@@ -6,6 +6,11 @@ public class ProfiloStudenteBean extends UtenteBean implements Serializable {
 
   private String matricola;
   
+  public ProfiloStudenteBean() {
+ 
+   
+  }
+  
   public ProfiloStudenteBean(String matricola, String email, String password) {
     super(email,password);
     this.matricola = matricola;
