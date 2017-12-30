@@ -1,9 +1,14 @@
 package it.tirociniofacile.bean;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class UtenteBean implements Serializable {
 
+  //variabili di istanza
+  private static final long serialVersionUID = -2852770759774575836L;
   private String email;
   private String password;
 
@@ -32,6 +37,22 @@ public class UtenteBean implements Serializable {
     this.password = password;
   }
   
+  private void writeObject(ObjectOutputStream output) throws IOException {
+    output.writeObject(email);
+    output.writeObject(password);
+  }
+  
+  /**
+   * 
+   * @param input
+   * @throws IOException
+   * @throws ClassNotFoundException
+   */
+  private void readObject(ObjectInputStream input) throws IOException, ClassNotFoundException {
+    //parchiConvenzionati= (ArrayList<Parco>) input.readObject();
+    email = (String) input.readObject();
+    password = (String) input.readObject();
+  }
   
 
 }
