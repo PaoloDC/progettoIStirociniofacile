@@ -3,7 +3,10 @@ package it.tirociniofacile.bean;
 
 public class DocumentoConvenzioneBean {
 
-
+  public DocumentoConvenzioneBean() {
+    
+  }
+  
   public DocumentoConvenzioneBean(boolean approvato, String nomeAzienda, String sedeLegale, String città, String RappresentanteLegale, String LuogoNascitaRappresentanteLegale, String DataNascitaRappresentanteLegale){
     this.approvato=approvato;
     this.nomeAzienda=nomeAzienda;
@@ -52,6 +55,12 @@ public String getDataNascitaRappresentanteLegale() {
 }
 public void setDataNascitaRappresentanteLegale(String dataNascitaRappresentanteLegale) {
   DataNascitaRappresentanteLegale = dataNascitaRappresentanteLegale;
+}
+public void setApprovato(boolean approvato) {
+  this.approvato = approvato;
+}
+public boolean getApprovato() {
+  return approvato;
 }
 
 

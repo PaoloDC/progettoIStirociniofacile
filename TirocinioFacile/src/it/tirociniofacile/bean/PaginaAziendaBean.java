@@ -1,6 +1,6 @@
 
 
-package it.tirociniofacile.bean;
+    package it.tirociniofacile.bean;
 
 public class PaginaAziendaBean {
   private String località;

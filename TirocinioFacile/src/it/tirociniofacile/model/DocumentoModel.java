@@ -1,6 +1,6 @@
 package it.tirociniofacile.model;
 
-import it.tirociniofacile.bean.DocumentoConvezioneBean;
+import it.tirociniofacile.bean.DocumentoConvenzioneBean;
 import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 
 import java.io.File;
@@ -99,7 +99,7 @@ public class DocumentoModel {
    * @param id identificativo del documento da ricercare 
    * @return un documento convenzione
    */
-  public synchronized DocumentoConvezioneBean ricercaConvenzionePerId(int id) {
+  public synchronized DocumentoConvenzioneBean ricercaConvenzionePerId(int id) {
     return null;
   }
   
