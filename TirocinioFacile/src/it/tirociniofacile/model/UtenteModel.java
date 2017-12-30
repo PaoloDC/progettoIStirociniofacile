@@ -278,6 +278,7 @@ public class UtenteModel {
    */
   public synchronized void cercaAccountPerEmail(String email) {
     try {
+      
       UtenteBean ub = caricaAccount(email, 0);
       if (ub == null) {
         ub = caricaAccount(email, 1);
