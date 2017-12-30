@@ -8,6 +8,9 @@ public class DocumentoConvenzioneBean {
   private String RappresentanteLegale;
   private String LuogoDiNascitaRappresentanteLegale;
   private String DataDiNascitaRappresentanteLegale;
+  public DocumentoConvenzioneBean(){
+    
+  }
   public DocumentoConvenzioneBean(  boolean approvato, String nomeAzienda,String sedeLegale,String città,String RappresentanteLegale,String LuogoDiNascitaRappresentanteLegale,String DataDiNascitaRappresentanteLegale){
     this.approvato=approvato;
     this.nomeAzienda=nomeAzienda;

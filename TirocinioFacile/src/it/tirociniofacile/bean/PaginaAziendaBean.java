@@ -8,6 +8,9 @@ public class PaginaAziendaBean {
   private String skill;
   private String descrizione;
   ArrayList<String> ambito=new ArrayList();
+  public PaginaAziendaBean(){
+    
+  }
   public PaginaAziendaBean(String località, String nomeAzienda, String skill, String descrizione, ArrayList<String> ambito){
     this.località=località;
     this.nomeAzienda=nomeAzienda;

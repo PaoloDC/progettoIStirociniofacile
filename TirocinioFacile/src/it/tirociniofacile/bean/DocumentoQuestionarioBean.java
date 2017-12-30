@@ -12,6 +12,9 @@ private Date annoAccademico;
 private float giudizioEsperienza;
 private float giudizioAzienda;
 private float giudizioUniversità;
+public DocumentoQuestionarioBean(){
+  
+}
    public DocumentoQuestionarioBean(boolean approvato, String informazioniSulTirocinio, String commenti, String suggerimenti, Date annoAccademico, float giudizioEsperienza, float giudizioAzienda, float giudizioUniversità, String matricola){
      this.approvato=approvato;
      this.informazioniSulTirocinio=informazioniSulTirocinio;
