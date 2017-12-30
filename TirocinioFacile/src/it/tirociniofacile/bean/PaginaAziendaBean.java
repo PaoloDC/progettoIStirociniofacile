@@ -19,7 +19,7 @@ public class PaginaAziendaBean {
     this.ambito=ambito;
   }
   public String getLocalità() {
-    return località;
+          return località;
   }
   public void setLocalità(String località) {
     this.località = località;

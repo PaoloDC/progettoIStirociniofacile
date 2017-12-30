@@ -1,7 +1,7 @@
 package it.tirociniofacile.bean;
 
 public class DocumentoConvenzioneBean {
-  private boolean approvato;
+      private boolean approvato;
   private String nomeAzienda;
   private String sedeLegale;
   private String città;
@@ -10,7 +10,7 @@ public class DocumentoConvenzioneBean {
   private String DataDiNascitaRappresentanteLegale;
   public DocumentoConvenzioneBean(){
     
-  }
+  }   
   public DocumentoConvenzioneBean(  boolean approvato, String nomeAzienda,String sedeLegale,String città,String RappresentanteLegale,String LuogoDiNascitaRappresentanteLegale,String DataDiNascitaRappresentanteLegale){
     this.approvato=approvato;
     this.nomeAzienda=nomeAzienda;
