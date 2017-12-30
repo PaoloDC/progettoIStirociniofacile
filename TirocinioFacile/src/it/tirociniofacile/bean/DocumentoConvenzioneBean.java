@@ -7,6 +7,16 @@ public class DocumentoConvenzioneBean {
     
   }
   
+  /**
+   * 
+   * @param approvato
+   * @param nomeAzienda
+   * @param sedeLegale
+   * @param città
+   * @param RappresentanteLegale
+   * @param LuogoNascitaRappresentanteLegale
+   * @param DataNascitaRappresentanteLegale
+   */
   public DocumentoConvenzioneBean(boolean approvato, String nomeAzienda, String sedeLegale, String città, String RappresentanteLegale, String LuogoNascitaRappresentanteLegale, String DataNascitaRappresentanteLegale){
     this.approvato=approvato;
     this.nomeAzienda=nomeAzienda;
