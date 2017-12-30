@@ -2,7 +2,7 @@ package it.tirociniofacile.bean;
 
 import java.io.Serializable;
 
-public class ProfiloAziendaBean extends UtenteBean implements Serializable{
+public class ProfiloAziendaBean extends UtenteBean implements Serializable {
 
   private String nomeAzienda;
   
