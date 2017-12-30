@@ -280,14 +280,14 @@ public class UtenteModel {
     try {
       
       UtenteBean ub = caricaAccount(email, 0);
-      if (ub == null) {
+      if (ub == null) { //se l'utente non corrisponde ad un profilo studente
         ub = caricaAccount(email, 1);
-      } else if (ub == null) {
+      }
+      if (ub == null) { //se l'utente non corrisponde ad un profilo azienda
         ub = caricaAccount(email, 2);
       }
-      
-      if (ub == null) {
-        //utente non esiste nel database
+      if (ub == null) { //se l'utente non corrisponde ad un profilo amministrativo, non esiste
+        //TODO eccezione utente non presente
       } else {
         String mailMittente = Email.USER_NAME;
         String passwordMittente = Email.PASSWORD;
