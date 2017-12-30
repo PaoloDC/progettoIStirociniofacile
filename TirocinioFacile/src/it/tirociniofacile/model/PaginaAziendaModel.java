@@ -3,6 +3,7 @@ package it.tirociniofacile.model;
 import it.tirociniofacile.bean.PaginaAziendaBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -10,8 +11,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
-
 
 public class PaginaAziendaModel {
   private static DataSource ds;
@@ -26,6 +25,8 @@ public class PaginaAziendaModel {
       System.out.println("Error:" + e.getMessage());
     }
   }
+  
+  private static final String TABLE_NAME_PAGINA = "PaginaAzienda";
 
   /**
    * Cerca nel db tutte le pagine azienda.
@@ -41,8 +42,25 @@ public class PaginaAziendaModel {
    * @return lista di pagina azienda
    */
   private synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave) {
-    //TODO
-    return null;
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = ds.getConnection();
+      String insertSql = "SELECT * FROM " + TABLE_NAME_PAGINA;
+      preparedStatement = connection.prepareStatement(insertSql);
+      
+      ResultSet rs = preparedStatement.executeQuery();
+      
+      PaginaAziendaBean pab = new PaginaAziendaBean();
+      ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
+      
+      while (rs.next()) {
+        //TODO
+        
+        pabList.add(pab);
+      }
+    }
+    return pabList;
   }
   
   /**
@@ -50,8 +68,34 @@ public class PaginaAziendaModel {
    * @return una pagina azienda
    */
   private synchronized PaginaAziendaBean ricerca(String id) {
-    //TODO
-    return null;
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = ds.getConnection();
+      String insertSql = "SELECT * FROM " + TABLE_NAME_PAGINA + " WHERE ID = ?";
+      preparedStatement = connection.prepareStatement(insertSql);
+      preparedStatement.setString(1, id);
+      
+      ResultSet rs = preparedStatement.executeQuery();
+      
+      PaginaAziendaBean pab = new PaginaAziendaBean();
+      
+      while (rs.next()) {
+        //TODO
+        
+      }
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+        if (connection != null) {
+          connection.close();
+        }
+      }
+    }
+    return pab;
   }
   
  
