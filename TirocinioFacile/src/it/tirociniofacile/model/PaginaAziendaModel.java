@@ -33,15 +33,6 @@ public class PaginaAziendaModel {
    * @return lista di pagina azienda
    */
   private synchronized ArrayList<PaginaAziendaBean> ricerca() {
-    //TODO
-    return null;
-  }
-  
-  /**
-   * Cerca nel db tutte le pagine azienda corrispondenti alla chiave per quella categoria.
-   * @return lista di pagina azienda
-   */
-  private synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -58,6 +49,56 @@ public class PaginaAziendaModel {
         //TODO
         
         pabList.add(pab);
+      }
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+        if (connection != null) {
+          connection.close();
+        }
+      }
+    }
+    return pabList;
+  }
+  
+  /**
+   * Cerca nel db tutte le pagine azienda corrispondenti alla chiave per quella categoria.
+   * @return lista di pagina azienda
+   */
+  private synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave) {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = ds.getConnection();
+      String insertSql = "SELECT * FROM " + TABLE_NAME_PAGINA 
+          + " WHERE categoria = ? AND chiave = ?";
+      
+      preparedStatement = connection.prepareStatement(insertSql);
+      preparedStatement.setString(1, categoria);
+      preparedStatement.setString(2, chiave);
+      
+      ResultSet rs = preparedStatement.executeQuery();
+      
+      PaginaAziendaBean pab = new PaginaAziendaBean();
+      ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
+      
+      while (rs.next()) {
+        //TODO
+        
+        pabList.add(pab);
+      }
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+        if (connection != null) {
+          connection.close();
+        }
       }
     }
     return pabList;
