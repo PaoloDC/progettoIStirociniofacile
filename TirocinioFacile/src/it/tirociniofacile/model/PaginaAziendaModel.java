@@ -32,9 +32,12 @@ public class PaginaAziendaModel {
    * Cerca nel db tutte le pagine azienda.
    * @return lista di pagina azienda
    */
-  private synchronized ArrayList<PaginaAziendaBean> ricerca() {
+  private synchronized ArrayList<PaginaAziendaBean> ricerca() 
+      throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
+    
+    ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
     try {
       connection = ds.getConnection();
       String insertSql = "SELECT * FROM " + TABLE_NAME_PAGINA;
@@ -43,7 +46,6 @@ public class PaginaAziendaModel {
       ResultSet rs = preparedStatement.executeQuery();
       
       PaginaAziendaBean pab = new PaginaAziendaBean();
-      ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
       
       while (rs.next()) {
         //TODO
@@ -68,13 +70,17 @@ public class PaginaAziendaModel {
    * Cerca nel db tutte le pagine azienda corrispondenti alla chiave per quella categoria.
    * @return lista di pagina azienda
    */
-  private synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave) {
+  private synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave) 
+      throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
+    
+    ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
+    
     try {
       connection = ds.getConnection();
       String insertSql = "SELECT * FROM " + TABLE_NAME_PAGINA 
-          + " WHERE categoria = ? AND chiave = ?";
+          + " WHERE categoria = ? AND chiave LIKE '%?%'";
       
       preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, categoria);
@@ -83,7 +89,7 @@ public class PaginaAziendaModel {
       ResultSet rs = preparedStatement.executeQuery();
       
       PaginaAziendaBean pab = new PaginaAziendaBean();
-      ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
+      
       
       while (rs.next()) {
         //TODO
@@ -108,9 +114,11 @@ public class PaginaAziendaModel {
    * Cerca nel db una pagina azienda per il suo id.
    * @return una pagina azienda
    */
-  private synchronized PaginaAziendaBean ricerca(String id) {
+  private synchronized PaginaAziendaBean ricerca(String id) 
+      throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
+    PaginaAziendaBean pab = new PaginaAziendaBean();
     try {
       connection = ds.getConnection();
       String insertSql = "SELECT * FROM " + TABLE_NAME_PAGINA + " WHERE ID = ?";
@@ -118,9 +126,7 @@ public class PaginaAziendaModel {
       preparedStatement.setString(1, id);
       
       ResultSet rs = preparedStatement.executeQuery();
-      
-      PaginaAziendaBean pab = new PaginaAziendaBean();
-      
+
       while (rs.next()) {
         //TODO
         
