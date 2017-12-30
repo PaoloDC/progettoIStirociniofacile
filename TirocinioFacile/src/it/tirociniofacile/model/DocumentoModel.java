@@ -13,7 +13,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-
+/**
+ * Classe model per la gestione di lettura e scrittura 
+ * dei documenti (convenzione e questionario) sul database.
+ * @author Paolo De Cristofaro
+ */
 public class DocumentoModel {
   private static DataSource ds;
 
