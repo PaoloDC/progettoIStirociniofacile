@@ -9,21 +9,37 @@ public class DocumentoQuestionarioBean {
   private String matricola;
   private float giudizioEsperienza;
   private float giudizioAzienda;
-  private float giudizioUniversità;
-  public DocumentoQuestionarioBean(){
-    }
+  private float giudizioUniversita;
   
-  public DocumentoQuestionarioBean(boolean approvato, String informazioniSulTirocinio, String commenti, String suggerimenti, String annoAccademico, String matricola, float giudizioEsperienza, float giudizioAzienda, float giudizioUniversità){
-    this.approvato=approvato;
-    this.informazioniSulTirocinio=informazioniSulTirocinio;
-    this.commenti=commenti;
-    this.suggerimenti=suggerimenti;
-    this.annoAccademico=annoAccademico;
-    this.matricola=matricola;
-    this.giudizioEsperienza=giudizioEsperienza;
-    this.giudizioAzienda=giudizioAzienda;
-    this.giudizioUniversità=giudizioUniversità;
+  public DocumentoQuestionarioBean() {
     
+  }
+  
+  /**
+   * Rappresenta i dati salvati nel sistema riguardanti il questionario di valutazione che 
+   * lo studente sull'azienda.
+   * @param approvato documento approvato o non ancora revisionato
+   * @param informazioniSulTirocinio informazioni sul tirocinio svolto
+   * @param commenti commenti sul tirocinio
+   * @param suggerimenti suggerimenti dello studente per l'azienda
+   * @param annoAccademico anno accdemico del tirocinio
+   * @param matricola matricola dello studeete
+   * @param giudizioEsperienza media sul giudizio esperienza
+   * @param giudizioAzienda media sul giudizio azienda
+   * @param giudizioUniversita media sul giudizio universita
+   */
+  public DocumentoQuestionarioBean(boolean approvato, String informazioniSulTirocinio, 
+      String commenti, String suggerimenti, String annoAccademico, 
+      String matricola, float giudizioEsperienza, float giudizioAzienda, float giudizioUniversita) {
+    this.approvato = approvato;
+    this.informazioniSulTirocinio = informazioniSulTirocinio;
+    this.commenti = commenti;
+    this.suggerimenti = suggerimenti;
+    this.annoAccademico = annoAccademico;
+    this.matricola = matricola;
+    this.giudizioEsperienza = giudizioEsperienza;
+    this.giudizioAzienda = giudizioAzienda;
+    this.giudizioUniversita = giudizioUniversita;
   }
 
   public boolean isApprovato() {
@@ -90,11 +106,11 @@ public class DocumentoQuestionarioBean {
     this.giudizioAzienda = giudizioAzienda;
   }
 
-  public float getGiudizioUniversità() {
-    return giudizioUniversità;
+  public float getGiudizioUniversita() {
+    return giudizioUniversita;
   }
 
-  public void setGiudizioUniversità(float giudizioUniversità) {
-    this.giudizioUniversità = giudizioUniversità;
+  public void setGiudizioUniversita(float giudizioUniversita) {
+    this.giudizioUniversita = giudizioUniversita;
   }
 }

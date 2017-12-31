@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 public class PaginaAziendaBean {
    
-        private String localita;
-  
+  private String localita;
   private String descrizione;
   private String nomeAzienda;
   private ArrayList<String> ambito = new ArrayList<String>();
