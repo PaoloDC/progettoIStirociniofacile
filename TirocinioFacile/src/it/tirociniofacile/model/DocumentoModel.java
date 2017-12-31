@@ -1,12 +1,18 @@
 package it.tirociniofacile.model;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import it.tirociniofacile.bean.DocumentoConvenzioneBean;
+import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 
 /**
  * Classe model per la gestione di lettura e scrittura 
@@ -37,8 +43,31 @@ public class DocumentoModel {
    * @return un intero corrispondente al numero di questionari approvati
    */
   public synchronized int conteggioQuestionariApprovatiPerAnno(String anno) throws SQLException {
-    
-    return 0;
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    int numeroQuestinariApprovatiPerAnno = 0;
+    try {
+      connection = ds.getConnection();
+      String insertSql = "SELECT COUNT (*) FROM " 
+                + TABLE_NAME_QUESTIONARI + " WHERE annoAccademico = ?";
+      preparedStatement = connection.prepareStatement(insertSql);
+      preparedStatement.setString(1, anno);
+      ResultSet rs = preparedStatement.executeQuery();
+      if (rs.next()) {
+        numeroQuestinariApprovatiPerAnno = rs.getInt(1);
+      }
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+   }finally {
+     if(connection != null) {
+       connection.close();
+     }
+   }
+ }
+    return numeroQuestinariApprovatiPerAnno;
   }
   
   /**
