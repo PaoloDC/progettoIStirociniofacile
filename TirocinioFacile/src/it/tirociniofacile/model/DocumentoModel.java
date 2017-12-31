@@ -61,12 +61,12 @@ public class DocumentoModel {
         if (preparedStatement != null) {
           preparedStatement.close();
         }
-   }finally {
-     if(connection != null) {
-       connection.close();
-     }
-   }
- }
+      } finally {
+        if (connection != null) {
+          connection.close();
+        }
+      }
+    }
     return numeroQuestinariApprovatiPerAnno;
   }
   
@@ -77,8 +77,34 @@ public class DocumentoModel {
    */
   public synchronized int conteggioQuestionariApprovatiPerAzienda(String azienda) 
       throws SQLException {
-    
-    return 0;
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    int numAzienda = 0;
+    try {
+      connection = ds.getConnection();
+      String insertSql = "SELECT COUNT(*) FROM " + TABLE_NAME_QUESTIONARI 
+          + " JOIN paginaazienda ON paginaazienda.id = "
+          + " questionariovalutazioneazienda.paginaAzienda " 
+          + " JOIN profiloazienda ON paginaazienda.profiloAzienda = profiloazienda.mail "
+          + " WHERE approvato = 1 AND nomeAziendaRappresentata = ? ; ";
+      preparedStatement = connection.prepareStatement(insertSql);
+      preparedStatement.setString(1, azienda);
+      ResultSet rs = preparedStatement.executeQuery();
+      if (rs.next()) {
+        numAzienda = rs.getInt(1);
+      }
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+       if(connection != null) {
+         connection.close();
+       }
+     }
+   }
+    return numAzienda;
   }
   
   /**
