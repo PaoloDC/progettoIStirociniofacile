@@ -99,11 +99,11 @@ public class DocumentoModel {
           preparedStatement.close();
         }
       } finally {
-       if(connection != null) {
-         connection.close();
-       }
-     }
-   }
+        if (connection != null) {
+          connection.close();
+        }
+      }
+    }
     return numAzienda;
   }
   
