@@ -1,18 +1,17 @@
 package it.tirociniofacile.model;
 
+import it.tirociniofacile.bean.DocumentoConvenzioneBean;
+import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import it.tirociniofacile.bean.DocumentoConvenzioneBean;
-import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 
 /**
  * Classe model per la gestione di lettura e scrittura 
@@ -170,7 +169,39 @@ public class DocumentoModel {
    */
   public synchronized void salvaConvenzione(String nomeAzienda, String sedeLegale,
       String citta, String rappLegale, String luogoDiNascitaRappLegale,
-      String dataDiNascitaRappLegale) {
+      String dataDiNascitaRappLegale) throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = ds.getConnection();
+      String insertSql = "INSERT INTO" + TABLE_NAME_CONVENZIONI + "(nomeAzienda, sedeLegale,"
+          + " citta,rappLegale, luogoDiNascitaRappLegale," 
+          + " dataNascitaRappLegale) VALUES(?,?,?,?,?,?)";
+      preparedStatement = connection.prepareStatement(insertSql);
+      
+     
+      preparedStatement.setString(1, nomeAzienda);
+      preparedStatement.setString(2, sedeLegale);
+      preparedStatement.setString(3, citta);
+      preparedStatement.setString(4, rappLegale);
+      preparedStatement.setString(5, luogoDiNascitaRappLegale);
+      preparedStatement.setString(6, dataDiNascitaRappLegale);
+      preparedStatement.executeUpdate();
+    } finally { 
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+        if (connection != null) {
+          connection.close();
+        }
+      }
+    }
+    
+    
+    
+    
      
   }
   
