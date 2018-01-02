@@ -268,7 +268,7 @@ public class UtenteModel {
           
         }
       }   
-              } finally {
+              } finally { //TODO fix commento
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
