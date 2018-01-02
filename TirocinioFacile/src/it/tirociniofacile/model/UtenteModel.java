@@ -208,57 +208,67 @@ public class UtenteModel {
   /**
    * Carica email e password da un db.
    * @param email email dell'account da cercare nel db
-   * @param tipo indica il tio di utente da ricercare
+   * @param password password dell'account da ricercare nel db
    * @return ritorna un bean che rappresenta un utente
    * @throws SQLException in caso di errore di connesione al db 
    */
-  public synchronized UtenteBean caricaAccount(String email, int tipo) throws SQLException {
+  public synchronized UtenteBean caricaAccount(String email, String password) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
       connection = ds.getConnection();
-      if (tipo == 0) {   
-        String insertSql = "SELECT * FROM " + TABLE_NAME_STUDENTE + " WHERE mail  = ? ";
-        preparedStatement = connection.prepareStatement(insertSql);
-        preparedStatement.setString(1, email);
-        ResultSet rs = preparedStatement.executeQuery();
+    
+      String selectSqlStudente = "SELECT * FROM " + TABLE_NAME_STUDENTE 
+            + " WHERE mail  = ? AND password = ? ";
+      preparedStatement = connection.prepareStatement(selectSqlStudente);
+      preparedStatement.setString(1, email);
+      preparedStatement.setString(2, password);
+      ResultSet rsStudente = preparedStatement.executeQuery();
         
-        ProfiloStudenteBean ps = new ProfiloStudenteBean();
+      ProfiloStudenteBean ps = new ProfiloStudenteBean();
         
-        while (rs.next()) {
-          ps.setEmail(rs.getString(1));
-          ps.setPassword(rs.getString(2)); 
-          ps.setMatricola(rs.getString(3));
+      if (rsStudente.first()) {
+        while (rsStudente.next()) {
+          ps.setEmail(rsStudente.getString(1));
+          ps.setPassword(rsStudente.getString(2)); 
+          ps.setMatricola(rsStudente.getString(3));
         }  
         
         return ps;
+      } else {
         
-      } else if (tipo == 1) {  
+        String selectSqlAzienda = "SELECT * FROM " + TABLE_NAME_AZIENDA 
+            + " WHERE mail  = ? AND password = ? ";
         
-        String insertSql = "SELECT * FROM " + TABLE_NAME_AZIENDA + " WHERE mail  = ? ";
-        preparedStatement = connection.prepareStatement(insertSql);
+        preparedStatement.close();
+        preparedStatement = connection.prepareStatement(selectSqlAzienda);
         preparedStatement.setString(1, email);
-        ResultSet rs = preparedStatement.executeQuery();
+        preparedStatement.setString(2, password);
+        ResultSet rsAzienda = preparedStatement.executeQuery();
+        
         ProfiloAziendaBean pa = new ProfiloAziendaBean();
-        
-        while (rs.next()) {
-          pa.setEmail(rs.getString(1));
-          pa.setPassword(rs.getString(2));
-          pa.setNomeAzienda(rs.getString(3));
-        }
-        
-        return pa;
-        
-      } else if (tipo == 2) {
-        ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
-        for (int i = 0; i < listaUtenti.size(); i++) {
-          if (listaUtenti.get(i).getEmail().equalsIgnoreCase(email)) {
-            return listaUtenti.get(i);
-          }
-        }
-      }
       
-    } finally {
+        if (rsAzienda.first()) {        
+          while (rsAzienda.next()) {
+            pa.setEmail(rsAzienda.getString(1));
+            pa.setPassword(rsAzienda.getString(2));
+            pa.setNomeAzienda(rsAzienda.getString(3));
+          }
+          
+          return pa;
+        } else {
+          ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
+          for (int i = 0; i < listaUtenti.size(); i++) {
+            UtenteBean ub = listaUtenti.get(i);
+            if (ub.getEmail().equalsIgnoreCase(email) && ub.getPassword().equals(password)) {
+              return ub;
+            }
+          }
+          
+          
+        }
+      }   
+              } finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
@@ -271,36 +281,60 @@ public class UtenteModel {
     }
     return null;
   }
+
+  
   
   /**
-   * Cerca la password di un utente dalla email e la invia alla mail.
+   * Cerca la password di un utente dalla email e la invia alla mail
    * @param email email dell'account da cercare nel db
    */
   public synchronized void cercaAccountPerEmail(String email) {
-    try {
-      
-      UtenteBean ub = caricaAccount(email, 0);
-      if (ub == null) { //se l'utente non corrisponde ad un profilo studente
-        ub = caricaAccount(email, 1);
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    
+    String passwordDaInviare = null;
+    
+    //cerca la mail tra gli utenti amministrativi
+    ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
+    for (int i = 0; i < listaUtenti.size() && passwordDaInviare != null; i++) {
+      UtenteBean ub = listaUtenti.get(i);
+      if (ub.getEmail().equalsIgnoreCase(email)) {
+        passwordDaInviare = ub.getPassword();
       }
-      if (ub == null) { //se l'utente non corrisponde ad un profilo azienda
-        ub = caricaAccount(email, 2);
+    }
+    //se non trova la password tra gli utenti amministrativi la cerca tra gli studenti e le aziende
+    if (passwordDaInviare == null) {
+      try {
+        connection = ds.getConnection();
+        
+        String selectSql = "SELECT password FROM " + TABLE_NAME_STUDENTE 
+            + " JOIN " + TABLE_NAME_AZIENDA + " WHERE mail  = ? ";
+        
+        preparedStatement = connection.prepareStatement(selectSql);
+        preparedStatement.setString(1, email);
+        ResultSet rs = preparedStatement.executeQuery();
+        
+        if (rs.first()) {
+          passwordDaInviare = rs.getString(1);
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
       }
-      if (ub == null) { //se l'utente non corrisponde ad un profilo amministrativo, non esiste
-        //TODO eccezione utente non presente
-      } else {
-        String mailMittente = Email.USER_NAME;
-        String passwordMittente = Email.PASSWORD;
-        String[] destinari = { email }; // list of recipient email addresses
-        String oggetto = "Recupera Password Tirocinio Facile";
-        String corpo = "Salve utente, questa mail le è stata inviata per sua richiesta di "
+    }
+    
+    if (passwordDaInviare == null) { 
+      //TODO 
+      //eccezione utente non presente
+    } else {
+      String mailMittente = Email.USER_NAME;
+      String passwordMittente = Email.PASSWORD;
+      String[] destinari = { email }; // list of recipient email addresses
+      String oggetto = "Recupera Password Tirocinio Facile";
+      String corpo = "Salve utente, questa mail le è stata inviata per sua richiesta di "
             + "recupero passowrd.\nLa sua password per accedere alla piattaforma"
-            + " tirocinio facile è: ' " + ub.getPassword() + " '.\n\nBuona navigazione.";
+            + " tirocinio facile è: ' " + passwordDaInviare + " '.\n\nBuona navigazione.";
       
-        Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
+      Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);
     }
   }
   
