@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.naming.Context;
@@ -29,9 +30,6 @@ public class PaginaAziendaModel {
   private static final String TABLE_NAME_PAGINA = "PaginaAzienda";
   private static final String TABLE_NAME_AMBITO = "Ambito";
   private static final String TABLE_NAME_SKILL = "Skill";
-  private static final String TABLE_NAME_JOINAMBITO = "PaginaAziendaAmbito";
-  private static final String TABLE_NAME_JOINSKILL = "PaginaAziendaSkill";
-  
 
   /**
    * Cerca nel db tutte le pagine azienda.
@@ -158,66 +156,57 @@ public class PaginaAziendaModel {
    * @param nomeAzienda nome dell'azienda
    * @param ambito ambiti dove lavora l'azienda
    * @param skill skills richieste dall'azienda
+   * @throws SQLException 
    */
   private synchronized void aggiungiPagina(String localita, String descrizione, String email, 
-      ArrayList<String> ambito, ArrayList<String> skill) {
+      ArrayList<String> ambito, ArrayList<String> skill) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
+    PreparedStatement preparedStatementSkill = null;
+    PreparedStatement preparedStatementJoinSkill = null;
+    PreparedStatement preparedStatementAmbito = null;
+    PreparedStatement preparedStatementJoinAmbito = null;
+    
     PaginaAziendaBean pab = new PaginaAziendaBean();
     
     try {
       connection = ds.getConnection();
       String insertSqlPagAzienda = "INSERT INTO " + TABLE_NAME_PAGINA
-          + " (id, località, descrizione, profiloAzienda) VALUES (?, ?, ?, ?)";
-      preparedStatement = connection.prepareStatement(insertSqlPagAzienda);
-      //ID???
-      preparedStatement.setInt(1, x);
-      preparedStatement.setString(2, localita);
-      preparedStatement.setString(3, descrizione);
-      preparedStatement.setString(4, email);
+          + " (località, descrizione, mailAzienda) VALUES (?, ?, ?)";
+      preparedStatement = connection.prepareStatement(insertSqlPagAzienda, 
+          Statement.RETURN_GENERATED_KEYS);
+
+      preparedStatement.setString(1, localita);
+      preparedStatement.setString(2, descrizione);
+      preparedStatement.setString(3, email);
 
       preparedStatement.executeUpdate();
       
+      ResultSet rs = preparedStatement.getGeneratedKeys();
+      rs.next();
+      int autoId = rs.getInt(1);
+
+      String insertSqlSkill = "INSERT INTO " + TABLE_NAME_SKILL
+          + " (paginaAzienda,nomeSkill) VALUES (?,?)";
+      preparedStatementSkill = connection.prepareStatement(insertSqlSkill);
+      
       for (String s: skill) {
-        String insertSqlSkill = "INSERT INTO " + TABLE_NAME_SKILL
-            + " (id, nome) VALUES (?, ?)";
-        preparedStatement = connection.prepareStatement(insertSqlSkill);
-      
         //ID???
-        preparedStatement.setInt(1, y);
-        preparedStatement.setString(2, s);
-      
-      
-        String insertSqlJoinSkill = "INSERT INTO " + TABLE_NAME_JOINSKILL
-            + " (paginaAzienda, skill) VALUES (?, ?)";
-        preparedStatement = connection.prepareStatement(insertSqlSkill);
-      
-        //ID???
-        preparedStatement.setInt(1, x);
-        preparedStatement.setInt(2, y);
-      
-        preparedStatement.executeUpdate();
+        preparedStatementSkill.setInt(1, autoId);
+        preparedStatementSkill.setString(2, s);
+        
+        preparedStatementSkill.executeUpdate();
       }
       
+      String insertSqlAmbito = "INSERT INTO " + TABLE_NAME_AMBITO
+          + " (paginaAzienda, nomeAmbito) VALUES (?,?)";
+      preparedStatementAmbito = connection.prepareStatement(insertSqlAmbito);
+      
       for (String a: ambito) {
-        String insertSqlSkill = "INSERT INTO " + TABLE_NAME_AMBITO
-            + " (id, nome) VALUES (?, ?)";
-        preparedStatement = connection.prepareStatement(insertSqlSkill);
-      
-        //ID???
-        preparedStatement.setInt(1, y);
-        preparedStatement.setString(2, a);
-      
-      
-        String insertSqlJoinSkill = "INSERT INTO " + TABLE_NAME_JOINAMBITO
-            + " (paginaAzienda, skill) VALUES (?, ?)";
-        preparedStatement = connection.prepareStatement(insertSqlSkill);
-      
-        //ID???
-        preparedStatement.setInt(1, x);
-        preparedStatement.setInt(2, y);
-      
-        preparedStatement.executeUpdate();
+        preparedStatementAmbito.setInt(1, autoId);
+        preparedStatementAmbito.setString(2, a);
+
+        preparedStatementAmbito.executeUpdate();
       }
       
     } finally {
