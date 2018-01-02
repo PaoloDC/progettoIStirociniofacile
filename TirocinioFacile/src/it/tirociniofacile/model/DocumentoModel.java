@@ -99,11 +99,11 @@ public class DocumentoModel {
           preparedStatement.close();
         }
       } finally {
-        if (connection != null) {
-          connection.close();
-        }
-      }
-    }
+       if(connection != null) {
+         connection.close();
+       }
+     }
+   }
     return numAzienda;
   }
   
@@ -119,43 +119,8 @@ public class DocumentoModel {
    * @param matricola identificativo dello studente
    */
   public synchronized void salvaQuestionario(String informazioniSulTirocinio, 
-      String commenti, String suggerimenti, String annoAccademico, float giudizioEsperienza,
-      float giudizioAzienda, float giudizioUniversita, String matricola) throws SQLException {
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    try {
-      connection = ds.getConnection();
-      String insertSql = "INSERT INTO" + TABLE_NAME_QUESTIONARI + "(id,informazioniSulTirocinio,"
-          + " commenti, suggerimenti, annoAccademico, giudizioEsperienza,"
-          + " giudizioAzienda, giudizioUniversità, matricola) VALUES(?,?,?,?,?,?,?,?)";
-      preparedStatement = connection.prepareStatement(insertSql);
-      
-      //ID???
-      preparedStatement.setInt(1, id);
-      preparedStatement.setString(2, informazioniSulTirocinio);
-      preparedStatement.setString(3, commenti);
-      preparedStatement.setString(4, suggerimenti);
-      preparedStatement.setString(5, annoAccademico);
-      preparedStatement.setFloat(6, giudizioEsperienza);
-      preparedStatement.setFloat(7, giudizioAzienda);
-      preparedStatement.setFloat(8, giudizioUniversita);
-      preparedStatement.setString(9, matricola);
-      preparedStatement.executeUpdate();
-    } finally { 
-      try {
-        if (preparedStatement != null) {
-          preparedStatement.close();
-        }
-      } finally {
-        if (connection != null) {
-          connection.close();
-        }
-      }
-    }
-    
-    
-    
-    
+      String commenti, String suggerimenti, String annoAccademico, String giudizioEsperienza,
+      String giudizioAzienda, String giudizioUniversita, String matricola) {
     
   }
   
@@ -206,46 +171,18 @@ public class DocumentoModel {
    * @param id identificativo del documento da ricercare
    */
   public synchronized void cancellaDocumento(int id) {
-    return;
+    
   }
   
   /**
    * Approva il documento il cui id corrisponde a quello passato.
    * @param id identificativo del documento da ricercare
    */
-  public synchronized void approvaDocumento(int id) throws SQLException {
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    try {
-      connection = ds.getConnection();
-      String insertSqlQuest = "UPDATE " + TABLE_NAME_QUESTIONARI 
-          + "SET approvato = 1 WHERE id = ?";
-      preparedStatement = connection.prepareStatement(insertSqlQuest);
-      preparedStatement.setInt(1, id);
-
-      preparedStatement.executeUpdate();
-      
-      String insertSqlConv = "UPDATE " + TABLE_NAME_CONVENZIONI 
-          + "SET approvato = 1 WHERE id = ?";
-      preparedStatement = connection.prepareStatement(insertSqlConv);
-      preparedStatement.setInt(1, id);
-      
-      
-      preparedStatement.executeUpdate();
-    } finally { 
-      try {
-        if (preparedStatement != null) {
-          preparedStatement.close();
-        }
-      } finally {
-        if (connection != null) {
-          connection.close();
-        }
-      } 
-      return;
-    }
+  public synchronized void approvaDocumento(int id) {
+    return;
   }
 }
+
 
 
 
