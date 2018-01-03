@@ -285,7 +285,7 @@ public class UtenteModel {
   
   
   /**
-   * Cerca la password di un utente dalla email e la invia alla mail
+   * Cerca la password di un utente dalla email e la invia alla mail.
    * @param email email dell'account da cercare nel db
    */
   public synchronized void cercaAccountPerEmail(String email) {

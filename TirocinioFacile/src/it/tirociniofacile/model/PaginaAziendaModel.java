@@ -43,16 +43,23 @@ public class PaginaAziendaModel {
     ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
     try {
       connection = ds.getConnection();
-      String insertSql = "SELECT * FROM " + TABLE_NAME_PAGINA;
+      String insertSql = "SELECT (descrizione,localita,nomeazienda) FROM " + TABLE_NAME_PAGINA
+          + " JOIN " + DocumentoModel.;
       preparedStatement = connection.prepareStatement(insertSql);
       
-      ResultSet rs = preparedStatement.executeQuery();
+                ResultSet rs = preparedStatement.executeQuery();
       
-      PaginaAziendaBean pab = new PaginaAziendaBean();
+      
       
       while (rs.next()) {
-        //TODO
+        PaginaAziendaBean pab = new PaginaAziendaBean();
+        pab.setDescrizione("");
+        pab.setLocalita("");
+        pab.setNomeAzienda("");
         
+        
+        pab.setSkill("");
+        pab.setAmbito("");
         pabList.add(pab);
       }
     } finally {
@@ -148,7 +155,6 @@ public class PaginaAziendaModel {
     return pab;
   }
   
- 
   /**
    * Aggiunge una pagina nel db. 
    * @param localita sede dell'azienda
@@ -156,7 +162,7 @@ public class PaginaAziendaModel {
    * @param nomeAzienda nome dell'azienda
    * @param ambito ambiti dove lavora l'azienda
    * @param skill skills richieste dall'azienda
-   * @throws SQLException 
+   * @throws SQLException in caso di lettura errata dal database
    */
   private synchronized void aggiungiPagina(String localita, String descrizione, String email, 
       ArrayList<String> ambito, ArrayList<String> skill) throws SQLException {

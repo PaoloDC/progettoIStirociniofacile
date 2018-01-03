@@ -33,8 +33,8 @@ public class DocumentoModel {
   }
   
   //variabili di istanza
-  private static final String TABLE_NAME_CONVENZIONI = "DomandaConvenzioneAzienda";
-  private static final String TABLE_NAME_QUESTIONARI = "QuestionarioValutazioneAzienda";
+  public static final String TABLE_NAME_CONVENZIONI = "DomandaConvenzioneAzienda";
+  public static final String TABLE_NAME_QUESTIONARI = "QuestionarioValutazioneAzienda";
   
   /**
    * Conta il numero di questionari approvati in un anno indicato.
