@@ -1,11 +1,16 @@
 package it.tirociniofacile.control;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import it.tirociniofacile.model.UtenteModel;
 
 /** .
  * Servlet implementation class GestioneUtente
@@ -13,6 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/GestioneUtente")
 public class GestioneUtente extends HttpServlet {
   private static final long serialVersionUID = 1L;
+  static UtenteModel model;
+  
+    static {
+      model = new UtenteModel();
+    }
        
   /** .
      * @see HttpServlet#HttpServlet()
@@ -32,6 +42,49 @@ public class GestioneUtente extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
     response.getWriter().append("Served at: ").append(request.getContextPath());
+    HttpSession session = request.getSession();
+    String action = request.getParameter("action");
+    
+    try {
+      if(action != null) {
+        if(action.equals("log-out")) {
+          synchronized (session) {
+            session.invalidate();
+          }
+        }else if (action.equals("salvaAccountStudente")) {
+          /*Parametri da prendere nella jsp*/
+          String email = (request.getParameter("email"));
+          String password = (request.getParameter("password"));
+          String matricola = (request.getParameter("matricola"));
+          model.salvaAccountStudente(email, password, matricola);    
+        } else if (action.equals("salvaAccountAzienda")) {
+          String email = (request.getParameter("email"));
+          String password = (request.getParameter("password"));
+          String nomeazienda = (request.getParameter("nomeazienda"));
+          model.salvaAccountAzienda(email, password, nomeazienda);
+        }else if(action.equals("generaCredenziali")) {
+          String email = (request.getParameter("email"));
+          model.generaCredenziali(email);
+        }else if(action.equals("caricaUtentiDaFile")) {
+          /*rimuovo e poi setto l'attributo accounts presente nella jsp*/
+          request.removeAttribute("accounts");
+          request.setAttribute("accounts", model.caricaUtentiDaFile());
+        }else if(action.equals("caricaAccount")){
+          String email = (request.getParameter("email"));
+          String password = (request.getParameter("password"));  
+          request.removeAttribute("account");
+          request.setAttribute("account",  model.caricaAccount(email, password));
+        }else if (action.equals("cercaAccountPerEmail")) {
+          String email = (request.getParameter("email"));
+          model.cercaAccountPerEmail(email);
+        }
+      }
+    } catch(SQLException e) {
+      e.printStackTrace();
+    }
+    
+    /*manca il dispatcher per caricare le pagine jsp */
+    
   }
 
   /**
