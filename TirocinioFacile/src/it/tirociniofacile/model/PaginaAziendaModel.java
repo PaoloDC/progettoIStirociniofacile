@@ -270,7 +270,7 @@ public class PaginaAziendaModel {
    * @param skill skills richieste dall'azienda
    * @throws SQLException in caso di lettura errata dal database
    */
-  private synchronized void aggiungiPagina(String localita, String descrizione, String email, 
+  public synchronized void aggiungiPagina(String localita, String descrizione, String email, 
       ArrayList<String> ambito, ArrayList<String> skill) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
