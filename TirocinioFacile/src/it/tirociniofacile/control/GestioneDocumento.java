@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import it.tirociniofacile.model.DocumentoModel;
 
@@ -92,17 +93,17 @@ public class GestioneDocumento extends HttpServlet {
       request.setAttribute("questionario", model.ricercaQuestionarioPerId(id1));
     }
   }
-  public void scaricaDocumento(httpServeletRequest request) throws SQLException {
+  public void scaricaDocumento(HttpServletRequest request) throws SQLException {
   // da discuterne meglio
 
     }
-  public void caricaDocumento(httpServeletRequest request) throws SQLException {
+  public void caricaDocumento(HttpServletRequest request) throws SQLException {
     String pdf=(request.getParameter("pdf"));
     String id=(request.getParameter("id"));
     int id1 = Integer.parseInt(id);
     model.salvaPdf(pdf, id1);
     }
-  public void convalidaDocumento(httpServeletRequest request) throws SQLException {
+  public void convalidaDocumento(HttpServletRequest request) throws SQLException {
      String id=(request.getParameter("id"));
      int id1 = Integer.parseInt(id);
      String approvato =  (request.getParameter("approvato"));
@@ -115,7 +116,7 @@ public class GestioneDocumento extends HttpServlet {
     }
       
     }  
-  public void compilaConvenzioneAzienda(httpServeletRequest request) throws SQLException {
+  public void compilaConvenzioneAzienda(HttpServletRequest request) throws SQLException {
     String piva = (request.getParameter("piva"));
     String nomeAzienda = (request.getParameter("nomeAzienda"));
     String sedeLegale = (request.getParameter("sedeLegale"));
@@ -125,7 +126,7 @@ public class GestioneDocumento extends HttpServlet {
     String dataDiNascitaRappLegale = (request.getParameter("dataDiNascitaRappLegale"));
     model.salvaConvenzione(piva, nomeAzienda, sedeLegale, citta, rappLegale, luogoDiNascitaRappLegale, dataDiNascitaRappLegale);
   }
-  public void compilaQuestionario(httpServeletRequest request) throws SQLException {
+  public void compilaQuestionario(HttpServletRequest request) throws SQLException {
     String informazioniSulTirocinio = (request.getParameter("informazioniSulTirocinio"));
     String commenti = (request.getParameter("commenti"));
     String suggerimenti = (request.getParameter("suggerimenti"));
