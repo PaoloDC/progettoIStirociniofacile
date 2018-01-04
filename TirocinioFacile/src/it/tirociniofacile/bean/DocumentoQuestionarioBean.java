@@ -6,10 +6,12 @@ public class DocumentoQuestionarioBean {
   private String commenti;
   private String suggerimenti;
   private String annoAccademico;
-  private String matricola;
-  private float giudizioEsperienza;
-  private float giudizioAzienda;
-  private float giudizioUniversita;
+  private String mailStudente;
+  private String gradoDiSoddisfazioneDelTirocinante;
+  private String giudizioEsperienza;
+  private String giudizioAzienda;
+  private String giudizioUniversita;
+  
   
   public DocumentoQuestionarioBean() {
     
@@ -23,23 +25,25 @@ public class DocumentoQuestionarioBean {
    * @param commenti commenti sul tirocinio
    * @param suggerimenti suggerimenti dello studente per l'azienda
    * @param annoAccademico anno accdemico del tirocinio
-   * @param matricola matricola dello studeete
+   * @param mailStudente mail dello studente 
    * @param giudizioEsperienza media sul giudizio esperienza
    * @param giudizioAzienda media sul giudizio azienda
    * @param giudizioUniversita media sul giudizio universita
    */
   public DocumentoQuestionarioBean(boolean approvato, String informazioniSulTirocinio, 
       String commenti, String suggerimenti, String annoAccademico, 
-      String matricola, float giudizioEsperienza, float giudizioAzienda, float giudizioUniversita) {
+      String mailStudente, String giudizioEsperienza, String giudizioAzienda, 
+      String giudizioUniversita, String gradoDiSoddisfazioneDelTirocinante) {
     this.approvato = approvato;
     this.informazioniSulTirocinio = informazioniSulTirocinio;
     this.commenti = commenti;
     this.suggerimenti = suggerimenti;
     this.annoAccademico = annoAccademico;
-    this.matricola = matricola;
+    this.mailStudente = mailStudente;
     this.giudizioEsperienza = giudizioEsperienza;
     this.giudizioAzienda = giudizioAzienda;
     this.giudizioUniversita = giudizioUniversita;
+    this.gradoDiSoddisfazioneDelTirocinante = gradoDiSoddisfazioneDelTirocinante;
   }
 
   public boolean isApprovato() {
@@ -82,35 +86,43 @@ public class DocumentoQuestionarioBean {
     this.annoAccademico = annoAccademico;
   }
 
-  public String getMatricola() {
-    return matricola;
+  public String getMailStudente() {
+    return mailStudente;
+  }
+  
+  public void setMailStudente(String mailStudente) {
+    this.mailStudente = mailStudente;
   }
 
-  public void setMatricola(String matricola) {
-    this.matricola = matricola;
-  }
-
-  public float getGiudizioEsperienza() {
+  public String getGiudizioEsperienza() {
     return giudizioEsperienza;
   }
 
-  public void setGiudizioEsperienza(float giudizioEsperienza) {
+  public void setGiudizioEsperienza(String giudizioEsperienza) {
     this.giudizioEsperienza = giudizioEsperienza;
   }
 
-  public float getGiudizioAzienda() {
+  public String getGiudizioAzienda() {
     return giudizioAzienda;
   }
 
-  public void setGiudizioAzienda(float giudizioAzienda) {
+  public void setGiudizioAzienda(String giudizioAzienda) {
     this.giudizioAzienda = giudizioAzienda;
   }
 
-  public float getGiudizioUniversita() {
+  public String getGiudizioUniversita() {
     return giudizioUniversita;
   }
 
-  public void setGiudizioUniversita(float giudizioUniversita) {
+  public void setGiudizioUniversita(String giudizioUniversita) {
     this.giudizioUniversita = giudizioUniversita;
+  }
+  
+  public String getGradoDiSoddisfazioneDelTirocinante() {
+    return gradoDiSoddisfazioneDelTirocinante;
+  }
+  
+  public void setGradoDiSoddisfazioneDelTirocinante(String gradoDiSoddisfazioneDelTirocinante) {
+    this.gradoDiSoddisfazioneDelTirocinante = gradoDiSoddisfazioneDelTirocinante;
   }
 }

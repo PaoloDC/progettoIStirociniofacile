@@ -27,9 +27,9 @@ public class PaginaAziendaModel {
     }
   }
 
-  private static final String TABLE_NAME_PAGINA = "PaginaAzienda";
-  private static final String TABLE_NAME_AMBITO = "Ambito";
-  private static final String TABLE_NAME_SKILL = "Skill";
+  public static final String TABLE_NAME_PAGINA = "PaginaAzienda";
+  public static final String TABLE_NAME_AMBITO = "Ambito";
+  public static final String TABLE_NAME_SKILL = "Skill";
 
   /**
    * Cerca nel db tutte le pagine azienda.
