@@ -46,30 +46,28 @@ public class GestioneUtente extends HttpServlet {
     String action = request.getParameter("action");
     
     try {
-      if(action != null) {
-        if(action.equals("log-out")) {
+      if (action != null) {
+        if (action.equals("log-out")) {
           synchronized (session) {
             session.invalidate();
           }
-        }else if (action.equals("salvaAccountStudente")) {
-          /*Parametri da prendere nella jsp*/
-          String email = (request.getParameter("email"));
-          String password = (request.getParameter("password"));
-          String matricola = (request.getParameter("matricola"));
-          model.salvaAccountStudente(email, password, matricola);    
+        } else if (action.equals("registrazioneStudente")) {
+          registrazioneStudente(request);
+          
+              
         } else if (action.equals("salvaAccountAzienda")) {
           String email = (request.getParameter("email"));
           String password = (request.getParameter("password"));
           String nomeazienda = (request.getParameter("nomeazienda"));
           model.salvaAccountAzienda(email, password, nomeazienda);
-        }else if(action.equals("generaCredenziali")) {
+        } else if(action.equals("generaCredenziali")) {
           String email = (request.getParameter("email"));
           model.generaCredenziali(email);
-        }else if(action.equals("caricaUtentiDaFile")) {
+        } else if(action.equals("caricaUtentiDaFile")) {
           /*rimuovo e poi setto l'attributo accounts presente nella jsp*/
           request.removeAttribute("accounts");
           request.setAttribute("accounts", model.caricaUtentiDaFile());
-        }else if(action.equals("caricaAccount")){
+        } else if(action.equals("caricaAccount")){
           String email = (request.getParameter("email"));
           String password = (request.getParameter("password"));  
           request.removeAttribute("account");
@@ -98,4 +96,13 @@ public class GestioneUtente extends HttpServlet {
     doGet(request, response);
   }
 
+  
+  public void registrazioneStudente(HttpServletRequest request) 
+      throws SQLException {
+    String email = (request.getParameter("email"));
+    String password = (request.getParameter("password"));
+    String matricola = (request.getParameter("matricola"));
+    model.salvaAccountStudente(email, password, matricola);
+  }
+  
 }
