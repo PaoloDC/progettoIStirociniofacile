@@ -130,7 +130,7 @@ public class GestioneUtente extends HttpServlet {
    * @param request richiesta http
    * @throws SQLException eccezzione sql
    */
-  public void logIn(HttpServletRequest request) 
+  public void logIn(HttpServletRequest request)  // aggiustare log in , attenzione alla sessione, usare modo per capire di che tipo di utente.
       throws SQLException {
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));  
