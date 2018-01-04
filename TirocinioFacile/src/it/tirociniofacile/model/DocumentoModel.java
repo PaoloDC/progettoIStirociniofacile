@@ -209,7 +209,7 @@ public class DocumentoModel {
    * Permette di ricercare un documento convenzione fornendo l'id.
    * @param id identificativo del documento da ricercare 
    * @return un documento convenzione
-   * @throws SQLException in caso di errata connessione al database
+   * @throws SQLException in caso di errata connessione
    */
   public synchronized DocumentoConvenzioneBean ricercaConvenzionePerId(int id)
       throws SQLException {
