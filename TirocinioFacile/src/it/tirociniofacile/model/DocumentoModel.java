@@ -124,21 +124,19 @@ public class DocumentoModel {
     PreparedStatement preparedStatement = null;
     try {
       connection = ds.getConnection();
-      String insertSql = "INSERT INTO" + TABLE_NAME_QUESTIONARI + "(id,informazioniSulTirocinio,"
+      String insertSql = "INSERT INTO" + TABLE_NAME_QUESTIONARI + "(informazioniSulTirocinio,"
           + " commenti, suggerimenti, annoAccademico, giudizioEsperienza,"
-          + " giudizioAzienda, giudizioUniversità, matricola) VALUES(?,?,?,?,?,?,?,?)";
+          + " giudizioAzienda, giudizioUniversità, matricola) VALUES(?,?,?,?,?,?,?)";
       preparedStatement = connection.prepareStatement(insertSql);
       
-      //ID???
-      preparedStatement.setInt(1, id);
-      preparedStatement.setString(2, informazioniSulTirocinio);
-      preparedStatement.setString(3, commenti);
-      preparedStatement.setString(4, suggerimenti);
-      preparedStatement.setString(5, annoAccademico);
-      preparedStatement.setFloat(6, giudizioEsperienza);
-      preparedStatement.setFloat(7, giudizioAzienda);
-      preparedStatement.setFloat(8, giudizioUniversita);
-      preparedStatement.setString(9, matricola);
+      preparedStatement.setString(1, informazioniSulTirocinio);
+      preparedStatement.setString(2, commenti);
+      preparedStatement.setString(3, suggerimenti);
+      preparedStatement.setString(4, annoAccademico);
+      preparedStatement.setFloat(5, giudizioEsperienza);
+      preparedStatement.setFloat(6, giudizioAzienda);
+      preparedStatement.setFloat(7, giudizioUniversita);
+      preparedStatement.setString(8, matricola);
       preparedStatement.executeUpdate();
     } finally { 
       try {
@@ -167,25 +165,25 @@ public class DocumentoModel {
    * @param luogoDiNascitaRappLegale luogo di nascita del rappresentate legale dell'azienda
    * @param dataDiNascitaRappLegale data di nascita del rappresentate legale dell'azienda
    */
-  public synchronized void salvaConvenzione(String nomeAzienda, String sedeLegale,
+  public synchronized void salvaConvenzione(String piva, String nomeAzienda, String sedeLegale,
       String citta, String rappLegale, String luogoDiNascitaRappLegale,
       String dataDiNascitaRappLegale) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
       connection = ds.getConnection();
-      String insertSql = "INSERT INTO" + TABLE_NAME_CONVENZIONI + "(nomeAzienda, sedeLegale,"
+      String insertSql = "INSERT INTO" + TABLE_NAME_CONVENZIONI + "(partitaIva, nomeAzienda, sedeLegale,"
           + " citta,rappLegale, luogoDiNascitaRappLegale," 
-          + " dataNascitaRappLegale) VALUES(?,?,?,?,?,?)";
+          + " dataNascitaRappLegale) VALUES(?,?,?,?,?,?,?)";
       preparedStatement = connection.prepareStatement(insertSql);
       
-     
-      preparedStatement.setString(1, nomeAzienda);
-      preparedStatement.setString(2, sedeLegale);
-      preparedStatement.setString(3, citta);
-      preparedStatement.setString(4, rappLegale);
-      preparedStatement.setString(5, luogoDiNascitaRappLegale);
-      preparedStatement.setString(6, dataDiNascitaRappLegale);
+      preparedStatement.setString(1, piva);
+      preparedStatement.setString(2, nomeAzienda);
+      preparedStatement.setString(3, sedeLegale);
+      preparedStatement.setString(4, citta);
+      preparedStatement.setString(5, rappLegale);
+      preparedStatement.setString(6, luogoDiNascitaRappLegale);
+      preparedStatement.setString(7, dataDiNascitaRappLegale);
       preparedStatement.executeUpdate();
     } finally { 
       try {
@@ -197,12 +195,7 @@ public class DocumentoModel {
           connection.close();
         }
       }
-    }
-    
-    
-    
-    
-     
+    }  
   }
   
   /**
@@ -235,10 +228,42 @@ public class DocumentoModel {
   /**
    * Cancella il documento il cui id corrisponde a quello passato.
    * @param id identificativo del documento da ricercare
+   * @throws SQLException 
    */
-  public synchronized void cancellaDocumento(int id) {
-    return;
+  public synchronized void cancellaDocumento(int id) 
+      throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = ds.getConnection();
+      String insertSqlQuest = "DELETE " + TABLE_NAME_QUESTIONARI 
+          + " WHERE id = ?";
+      preparedStatement = connection.prepareStatement(insertSqlQuest);
+      preparedStatement.setInt(1, id);
+
+      preparedStatement.executeUpdate();
+      
+      String insertSqlConv = "DELETE " + TABLE_NAME_CONVENZIONI 
+          + " WHERE id = ?";
+      preparedStatement = connection.prepareStatement(insertSqlConv);
+      preparedStatement.setInt(1, id);
+      
+      
+      preparedStatement.executeUpdate();
+    } finally { 
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+        if (connection != null) {
+          connection.close();
+        }
+      } 
+      return;
+    }
   }
+
   
   /**
    * Approva il documento il cui id corrisponde a quello passato.
