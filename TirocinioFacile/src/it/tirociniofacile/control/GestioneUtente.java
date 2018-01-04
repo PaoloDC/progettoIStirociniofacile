@@ -1,5 +1,6 @@
 package it.tirociniofacile.control;
 
+import it.tirociniofacile.model.UtenteModel;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.tirociniofacile.model.UtenteModel;
 
 /** .
  * Servlet implementation class GestioneUtente
@@ -20,9 +20,9 @@ public class GestioneUtente extends HttpServlet {
   private static final long serialVersionUID = 1L;
   static UtenteModel model;
   
-    static {
-      model = new UtenteModel();
-    }
+  static {
+    model = new UtenteModel();
+  }
        
   /** .
      * @see HttpServlet#HttpServlet()
@@ -42,6 +42,18 @@ public class GestioneUtente extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
     response.getWriter().append("Served at: ").append(request.getContextPath());
+   
+  }
+
+  /**
+   * Il metodo doPost permette di .
+   * @param request richiesta
+   * @param response risposta
+   */
+  
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
+    doGet(request, response);
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
     
@@ -54,27 +66,18 @@ public class GestioneUtente extends HttpServlet {
         } else if (action.equals("registrazioneStudente")) {
           registrazioneStudente(request);
           
-              
-        } else if (action.equals("salvaAccountAzienda")) {
-          String email = (request.getParameter("email"));
-          String password = (request.getParameter("password"));
-          String nomeazienda = (request.getParameter("nomeazienda"));
-          model.salvaAccountAzienda(email, password, nomeazienda);
-        } else if(action.equals("generaCredenziali")) {
-          String email = (request.getParameter("email"));
-          model.generaCredenziali(email);
-        } else if(action.equals("caricaUtentiDaFile")) {
-          /*rimuovo e poi setto l'attributo accounts presente nella jsp*/
-          request.removeAttribute("accounts");
-          request.setAttribute("accounts", model.caricaUtentiDaFile());
-        } else if(action.equals("caricaAccount")){
-          String email = (request.getParameter("email"));
-          String password = (request.getParameter("password"));  
-          request.removeAttribute("account");
-          request.setAttribute("account",  model.caricaAccount(email, password));
-        }else if (action.equals("cercaAccountPerEmail")) {
-          String email = (request.getParameter("email"));
-          model.cercaAccountPerEmail(email);
+        } else if (action.equals("registrazioneAziendatAzienda")) {
+          registrazioneAzienda(request);
+          
+        } else if (action.equals("generaCredenziali")) {
+          generaCredenziali(request);
+          
+ 
+        } else if (action.equals("log-in")) { 
+          logIn(request);
+          
+        } else if (action.equals("recuperaPassword")) { 
+          recuperaPassword(request);
         }
       }
     } catch(SQLException e) {
@@ -86,17 +89,10 @@ public class GestioneUtente extends HttpServlet {
   }
 
   /**
-   * Il metodo doPost permette di .
-   * @param request richiesta
-   * @param response risposta
+   * RegistrazioneStudente effettua la registrazione di un account studente.
+   * @param request richiesta http
+   * @throws SQLException eccezzione sql
    */
-  
-  protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-      throws ServletException, IOException {
-    doGet(request, response);
-  }
-
-  
   public void registrazioneStudente(HttpServletRequest request) 
       throws SQLException {
     String email = (request.getParameter("email"));
@@ -105,4 +101,51 @@ public class GestioneUtente extends HttpServlet {
     model.salvaAccountStudente(email, password, matricola);
   }
   
+  /**
+   * RegistrazioneAzienda effettua la registrazione di un account azienda.
+   * @param request richiesta http
+   * @throws SQLException eccezzione sql
+   */
+  public void registrazioneAzienda(HttpServletRequest request)
+       throws SQLException {
+    String email = (request.getParameter("email"));
+    String password = (request.getParameter("password"));
+    String nomeazienda = (request.getParameter("nomeazienda"));
+    model.salvaAccountAzienda(email, password, nomeazienda);
+  }
+  
+  /**
+   * Genera nuove credenziali per gli utenti Impiegati uff. tirocini e presidente area didattica
+   * @param request richiesta http
+   * @throws SQLException eccezzione sql
+   */
+  public void generaCredenziali(HttpServletRequest request) 
+      throws SQLException {
+    String email = (request.getParameter("email"));
+    model.generaCredenziali(email);
+  }
+  
+  /**
+   * Effettua la log in.
+   * @param request richiesta http
+   * @throws SQLException eccezzione sql
+   */
+  public void logIn(HttpServletRequest request)  // aggiustare log in , attenzione alla sessione, usare modo per capire di che tipo di utente.
+      throws SQLException {
+    String email = (request.getParameter("email"));
+    String password = (request.getParameter("password"));  
+    request.removeAttribute("account");
+    request.setAttribute("account",  model.caricaAccount(email, password));
+  }
+  
+  /**
+   * Recupera password invia una mail alla mail inviata contenente una nuova password.
+   * @param request richiesta http
+   * @throws SQLException eccezzione sql
+   */
+  public void recuperaPassword(HttpServletRequest request) 
+     throws SQLException {
+    String email = (request.getParameter("email"));
+    model.cercaAccountPerEmail(email);
+  }
 }
