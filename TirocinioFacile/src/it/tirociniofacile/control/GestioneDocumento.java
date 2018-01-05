@@ -142,9 +142,14 @@ public class GestioneDocumento extends HttpServlet {
     String suggerimenti = (request.getParameter("suggerimenti"));
     String annoAccademico = (request.getParameter("annoAccademico"));
     String giudizioEsperienza = (request.getParameter("giudizioEsperienza"));
-    String giudizioAzienda = (request.getParameter("giudizioAzienda"));
+    float giudizioEsperienzaD =   Float.parseFloat(giudizioEsperienza); 
+    String giudizioAzienda =  (request.getParameter("giudizioAzienda"));
+    float giudizioAziendaD =  Float.parseFloat(giudizioAzienda); 
     String giudizioUniversita = (request.getParameter("giudizioUniversita"));
+    float giudizioUniversitaD = Float.parseFloat(giudizioUniversita); 
     String matricola = (request.getParameter("matricola"));
+    model.salvaQuestionario(informazioniSulTirocinio, commenti, suggerimenti,
+        annoAccademico, giudizioEsperienzaD, giudizioAziendaD, giudizioUniversitaD, matricola);
   }
   
   
