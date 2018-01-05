@@ -20,6 +20,7 @@ import it.tirociniofacile.model.DocumentoModel;
 public class GestioneDocumento extends HttpServlet {
   private static final long serialVersionUID = 1L;
   static DocumentoModel model;
+  
   static{       
     model=new DocumentoModel();
   }
@@ -80,43 +81,49 @@ public class GestioneDocumento extends HttpServlet {
     // TODO Auto-generated method stub
     doGet(request, response);
   }
+  
   public void visualizzaDocumento(HttpServletRequest request) 
       throws SQLException {
-    String id= (request.getParameter("id"));
+    String id = (request.getParameter("id"));
     int id1 = Integer.parseInt(id);
-    if (model.ricercaConvenzionePerId(id1)!=null) {
+    if (model.ricercaConvenzionePerId(id1) != null) {
       request.removeAttribute("convenzione");
       request.setAttribute("convenzione", model.ricercaConvenzionePerId(id1));
-      }
-    else{
+    }
+    else {
       request.removeAttribute("questionario");
       request.setAttribute("questionario", model.ricercaQuestionarioPerId(id1));
     }
   }
+  
   public void scaricaDocumento(HttpServletRequest request) throws SQLException {
   // da discuterne meglio
 
-    }
-  public void caricaDocumento(HttpServletRequest request) throws SQLException {
-    String pdf=(request.getParameter("pdf"));
-    String id=(request.getParameter("id"));
+  }
+  
+  public void caricaDocumento(HttpServletRequest request) 
+      throws SQLException {
+    String pdf = (request.getParameter("pdf"));
+    String id = (request.getParameter("id"));
     int id1 = Integer.parseInt(id);
     model.salvaPdf(pdf, id1);
-    }
-  public void convalidaDocumento(HttpServletRequest request) throws SQLException {
-     String id=(request.getParameter("id"));
-     int id1 = Integer.parseInt(id);
-     String approvato =  (request.getParameter("approvato"));
+  }
+  
+  public void convalidaDocumento(HttpServletRequest request) 
+      throws SQLException {
+    String id = (request.getParameter("id"));
+    int id1 = Integer.parseInt(id);
+    String approvato =  (request.getParameter("approvato"));
       
     if (approvato.equals("false")) {
       model.cancellaDocumento(id1);
-      }
-    else {
+    } else {
       model.approvaDocumento(id1);
     }
-      
-    }  
-  public void compilaConvenzioneAzienda(HttpServletRequest request) throws SQLException {
+  }  
+  
+  public void compilaConvenzioneAzienda(HttpServletRequest request) 
+      throws SQLException {
     String piva = (request.getParameter("piva"));
     String nomeAzienda = (request.getParameter("nomeAzienda"));
     String sedeLegale = (request.getParameter("sedeLegale"));
@@ -124,9 +131,12 @@ public class GestioneDocumento extends HttpServlet {
     String rappLegale = (request.getParameter("rappLegale"));
     String luogoDiNascitaRappLegale = (request.getParameter("luogoDiNascitaRappLegale"));
     String dataDiNascitaRappLegale = (request.getParameter("dataDiNascitaRappLegale"));
-    model.salvaConvenzione(piva, nomeAzienda, sedeLegale, citta, rappLegale, luogoDiNascitaRappLegale, dataDiNascitaRappLegale);
+    model.salvaConvenzione(piva, nomeAzienda, sedeLegale, citta, rappLegale, 
+        luogoDiNascitaRappLegale, dataDiNascitaRappLegale);
   }
-  public void compilaQuestionario(HttpServletRequest request) throws SQLException {
+  
+  public void compilaQuestionario(HttpServletRequest request) 
+      throws SQLException {
     String informazioniSulTirocinio = (request.getParameter("informazioniSulTirocinio"));
     String commenti = (request.getParameter("commenti"));
     String suggerimenti = (request.getParameter("suggerimenti"));
