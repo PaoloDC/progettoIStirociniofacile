@@ -82,6 +82,9 @@ public class UtenteModelTest extends TestCase {
     assertEquals(generato2, true);
   }
  
+  /**
+   * 
+   */
   public void testCaricaUtentiDaFile() {
     
   }
