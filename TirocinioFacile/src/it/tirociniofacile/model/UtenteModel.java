@@ -33,7 +33,7 @@ import javax.sql.DataSource;
 public class UtenteModel {
   private static DataSource ds;
   public static final int LUNGHEZZA_PASSWORD = 20;
-  
+
   static {
     try {
       Context initCtx = new InitialContext();
@@ -44,11 +44,11 @@ public class UtenteModel {
       System.out.println("Error:" + e.getMessage());
     }
   }
-  
+
   private static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
   private static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
   public static final String FILE_NAME = "utenti.dat";
-  
+
   /**
    * Inserisce nel db un nuovo studente.
    * @param email email del nuovo studente da registrare
@@ -120,91 +120,87 @@ public class UtenteModel {
     return;
   }
 
-  
   /**
    * Salva le credenziali generate per un nuovo account amministrativo (presidente area didattica 
    * o impiegato ufficio tirocini).
    * @param email email da salvare nel file per il nuovo account amministrativo
+   * @return true se genera correttamente le credenziali, false se l'utente esiste già
    */
-  public synchronized void generaCredenziali(String email) {
-        
+  public synchronized boolean generaCredenziali(String email) {
+
     if (email.contains("@unisa.it")) {
       ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
-      boolean trovato = false;
-      for (int i = 0; i < listaUtenti.size() && !trovato; i++) {
+
+      for (int i = 0; i < listaUtenti.size(); i++) {
         if (listaUtenti.get(i).getEmail().equalsIgnoreCase(email)) {
-          trovato = true;
+          return false;
         }
       }
-      
-      if (trovato) {
-        this.cercaAccountPerEmail(email); 
-        //se trova una corrispondenza viene avviata la procedura di recupera password
-      } else {
-        
-        Random gen = new Random();
-        
-        String maiuscole = "QWERTYUIOPASDFGHJKLZXCVBNM";
-        String minuscole = "qwertyuiopasdfghjklzxcvbnm";
-        String cifre = "0123456789";
-        
-        String nuovaPassword = "";
-        while (nuovaPassword.length() < LUNGHEZZA_PASSWORD) {
-          nuovaPassword += maiuscole.substring(gen.nextInt(maiuscole.length()));
-          nuovaPassword += minuscole.substring(gen.nextInt(minuscole.length()));
-          nuovaPassword += cifre.substring(gen.nextInt(cifre.length()));
-        }
-        
-        listaUtenti.add(new UtenteBean(email,nuovaPassword));
-        this.salvaUtentiNelFile(listaUtenti);
-       
-        String mailMittente = Email.USER_NAME;
-        String passwordMittente = Email.PASSWORD;
-        String[] destinari = { email }; // list of recipient email addresses
-        String oggetto = "Nuova Password Tirocinio Facile";
-        String corpo = "Salve utente, questa è la sua nuova password per accedere alla piattaforma"
-            + " tirocinio facile: ' " + nuovaPassword + " '.\nBuona navigazione.";
-      
-        Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);
-      
-      } 
+
+      Random gen = new Random();
+
+      String maiuscole = "QWERTYUIOPASDFGHJKLZXCVBNM";
+      String minuscole = "qwertyuiopasdfghjklzxcvbnm";
+      String cifre = "0123456789";
+
+      String nuovaPassword = "";
+      while (nuovaPassword.length() < LUNGHEZZA_PASSWORD) {
+        nuovaPassword += maiuscole.substring(gen.nextInt(maiuscole.length()));
+        nuovaPassword += minuscole.substring(gen.nextInt(minuscole.length()));
+        nuovaPassword += cifre.substring(gen.nextInt(cifre.length()));
+      }
+
+      listaUtenti.add(new UtenteBean(email,nuovaPassword));
+      this.salvaUtentiNelFile(listaUtenti);
+
+      String mailMittente = Email.USER_NAME;
+      String passwordMittente = Email.PASSWORD;
+      String[] destinari = { email }; // list of recipient email addresses
+      String oggetto = "Nuova Password Tirocinio Facile";
+      String corpo = "Salve utente, questa è la sua nuova password per accedere alla piattaforma"
+          + " tirocinio facile: ' " + nuovaPassword + " '.\nBuona navigazione.";
+
+      Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);
+      return true;
+
     }
+    return false;
   }
-  
+
   /**
    * Carica tutti gli utenti dal file.
    * @return un arraylist contenente tutti gli utenti presenti sul file
    */
   public ArrayList<UtenteBean> caricaUtentiDaFile() {
     try {
-      
+
       ObjectInputStream in = new ObjectInputStream(new FileInputStream(FILE_NAME));
       ArrayList<UtenteBean> listaUtenti = (ArrayList<UtenteBean>) in.readObject();
       in.close();
       return listaUtenti;
-      
+
     } catch (Exception e) {
       e.printStackTrace();
     }
     return null;
   }
-  
+
   /**
    * Salva tutti gli utenti nel file.
    * @param listaUtenti lista degli utenti da salvare
    */
   public void salvaUtentiNelFile(ArrayList<UtenteBean> listaUtenti) {
     try {
-      
+
       ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILE_NAME));
       out.writeObject(listaUtenti);
       out.close();
-      
+
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
-  
+
   /**
    * Carica email e password da un db.
    * @param email email dell'account da cercare nel db
@@ -217,44 +213,44 @@ public class UtenteModel {
     PreparedStatement preparedStatement = null;
     try {
       connection = ds.getConnection();
-    
+
       String selectSqlStudente = "SELECT * FROM " + TABLE_NAME_STUDENTE 
-            + " WHERE mail  = ? AND password = ? ";
+          + " WHERE mail  = ? AND password = ? ";
       preparedStatement = connection.prepareStatement(selectSqlStudente);
       preparedStatement.setString(1, email);
       preparedStatement.setString(2, password);
       ResultSet rsStudente = preparedStatement.executeQuery();
-        
+
       ProfiloStudenteBean ps = new ProfiloStudenteBean();
-        
+
       if (rsStudente.first()) {
         while (rsStudente.next()) {
           ps.setEmail(rsStudente.getString(1));
           ps.setPassword(rsStudente.getString(2)); 
           ps.setMatricola(rsStudente.getString(3));
         }  
-        
+
         return ps;
       } else {
-        
+
         String selectSqlAzienda = "SELECT * FROM " + TABLE_NAME_AZIENDA 
             + " WHERE mail  = ? AND password = ? ";
-        
+
         preparedStatement.close();
         preparedStatement = connection.prepareStatement(selectSqlAzienda);
         preparedStatement.setString(1, email);
         preparedStatement.setString(2, password);
         ResultSet rsAzienda = preparedStatement.executeQuery();
-        
+
         ProfiloAziendaBean pa = new ProfiloAziendaBean();
-      
+
         if (rsAzienda.first()) {        
           while (rsAzienda.next()) {
             pa.setEmail(rsAzienda.getString(1));
             pa.setPassword(rsAzienda.getString(2));
             pa.setNomeAzienda(rsAzienda.getString(3));
           }
-          
+
           return pa;
         } else {
           ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
@@ -264,11 +260,11 @@ public class UtenteModel {
               return ub;
             }
           }
-          
-          
+
+
         }
       }   
-              } finally { //TODO fix commento
+    } finally { //TODO fix commento
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
@@ -282,8 +278,8 @@ public class UtenteModel {
     return null;
   }
 
-  
-  
+
+
   /**
    * Cerca la password di un utente dalla email e la invia alla mail.
    * @param email email dell'account da cercare nel db
@@ -291,9 +287,9 @@ public class UtenteModel {
   public synchronized void cercaAccountPerEmail(String email) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    
+
     String passwordDaInviare = null;
-    
+
     //cerca la mail tra gli utenti amministrativi
     ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
     for (int i = 0; i < listaUtenti.size() && passwordDaInviare != null; i++) {
@@ -306,14 +302,14 @@ public class UtenteModel {
     if (passwordDaInviare == null) {
       try {
         connection = ds.getConnection();
-        
+
         String selectSql = "SELECT password FROM " + TABLE_NAME_STUDENTE 
             + " JOIN " + TABLE_NAME_AZIENDA + " WHERE mail  = ? ";
-        
+
         preparedStatement = connection.prepareStatement(selectSql);
         preparedStatement.setString(1, email);
         ResultSet rs = preparedStatement.executeQuery();
-        
+
         if (rs.first()) {
           passwordDaInviare = rs.getString(1);
         }
@@ -321,7 +317,7 @@ public class UtenteModel {
         e.printStackTrace();
       }
     }
-    
+
     if (passwordDaInviare == null) { 
       //TODO 
       //eccezione utente non presente
@@ -331,13 +327,13 @@ public class UtenteModel {
       String[] destinari = { email }; // list of recipient email addresses
       String oggetto = "Recupera Password Tirocinio Facile";
       String corpo = "Salve utente, questa mail le è stata inviata per sua richiesta di "
-            + "recupero passowrd.\nLa sua password per accedere alla piattaforma"
-            + " tirocinio facile è: ' " + passwordDaInviare + " '.\n\nBuona navigazione.";
-      
+          + "recupero passowrd.\nLa sua password per accedere alla piattaforma"
+          + " tirocinio facile è: ' " + passwordDaInviare + " '.\n\nBuona navigazione.";
+
       Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);
     }
   }
-  
+
 
   /**
    * Classe interna per l'invio di una mail con le nuove credenziali generate.
@@ -348,7 +344,7 @@ public class UtenteModel {
     //variabili di istanza, parametri della mail utilizzata
     private static final String USER_NAME = "tirociniofacile"; 
     private static final String PASSWORD = "tirociniofacile12"; 
-    
+
     /**
      * Metodo per inviare una email.
      * @param from email mittente
@@ -389,17 +385,17 @@ public class UtenteModel {
         transport.connect(host, from, pass);
         transport.sendMessage(message, message.getAllRecipients());
         transport.close();
-            
+
         System.out.println("MAIL INVIATA");
       } catch (AddressException ae) {
         ae.printStackTrace();
       } catch (MessagingException me) {
         me.printStackTrace();
       }
-         
+
     }
   }
-  
-  
+
+
 }
 
