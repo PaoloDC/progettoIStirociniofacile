@@ -106,7 +106,7 @@ public class GestioneDocumento extends HttpServlet {
     String pdf = (request.getParameter("pdf"));
     String id = (request.getParameter("id"));
     int id1 = Integer.parseInt(id);
-    model.salvaPdf(pdf, id1);
+  //TODO  model.salvaPdf(pdf, id1);
   }
   
   public void convalidaDocumento(HttpServletRequest request) 
