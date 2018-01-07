@@ -173,7 +173,7 @@ public class UtenteModel {
    */
   public ArrayList<UtenteBean> caricaUtentiDaFile() {
     try {
-
+      //TODO caricaUtentiFile
       ObjectInputStream in = new ObjectInputStream(new FileInputStream(FILE_NAME));
       ArrayList<UtenteBean> listaUtenti = (ArrayList<UtenteBean>) in.readObject();
       in.close();
@@ -184,6 +184,15 @@ public class UtenteModel {
     }
     return null;
   }
+  
+  
+  private void creaFileUtenti() {
+    ArrayList<UtenteBean> lista = new ArrayList<>();
+    lista.add(new UtenteBean("utente1@unisa.it","utente1"));
+    lista.add(new UtenteBean("utente2@unisa.it","utente2"));
+    lista.add(new UtenteBean("utente3@unisa.it","utente3"));
+    salvaUtentiNelFile(lista);
+  }
 
   /**
    * Salva tutti gli utenti nel file.
@@ -191,7 +200,7 @@ public class UtenteModel {
    */
   public void salvaUtentiNelFile(ArrayList<UtenteBean> listaUtenti) {
     try {
-
+      creaFileUtenti();
       ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILE_NAME));
       out.writeObject(listaUtenti);
       out.close();

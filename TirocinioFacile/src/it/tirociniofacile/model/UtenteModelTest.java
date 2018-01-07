@@ -1,6 +1,7 @@
 package it.tirociniofacile.model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import it.tirociniofacile.bean.*;
 import junit.framework.TestCase;
@@ -86,22 +87,48 @@ public class UtenteModelTest extends TestCase {
    * 
    */
   public void testCaricaUtentiDaFile() {
+    UtenteBean ub = new UtenteBean("utente4@unisa.it","utente4");
+    
+    ArrayList<UtenteBean> lista = model.caricaUtentiDaFile();
+    assertEquals(lista.contains(ub), false);
+    
+    lista.add(ub);
+    model.salvaUtentiNelFile(lista);
+
+    ArrayList<UtenteBean> nuovaLista = model.caricaUtentiDaFile();
+    assertEquals(nuovaLista.contains(ub), true);
+  }
+  
+  /**
+   * 
+   */
+  public void testSalvaUtentiNelFile() {
+    UtenteBean ub = new UtenteBean("utente5@unisa.it","utente5");
+    
+    ArrayList<UtenteBean> lista = model.caricaUtentiDaFile();
+    assertEquals(lista.contains(ub), false);
+    
+    lista.add(ub);
+    model.salvaUtentiNelFile(lista);
+    
+    lista = model.caricaUtentiDaFile();
+    assertEquals(lista.contains(ub), true);
     
   }
   
-  public void testSalvaUtentiNelFile() {
-    
-  }
   
   public void testCaricaAccount() {
+    ProfiloStudenteBean psb = new ProfiloStudenteBean("studente_prova@studenti.unisa.it",
+        "prova","0512101010");
+    ProfiloAziendaBean pab  = new ProfiloAziendaBean("azienda_prova@gmail.com",
+        "prova","Azienda Prova");
+    UtenteBean ub = new UtenteBean("utente_prova@unisa.it","prova");
+    
+    
     
   }
   
   public void testCercaAccountPerEmail() {
-    
-  }
-  
-  public static void main(String[] args) {
     
   }
 }
