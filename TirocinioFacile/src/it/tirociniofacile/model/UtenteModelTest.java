@@ -162,7 +162,25 @@ public class UtenteModelTest extends TestCase {
     
   }
   
+  /**
+   * 
+   */
   public void testCercaAccountPerEmail() {
+    
+    ProfiloStudenteBean psb = new ProfiloStudenteBean("decri.paolo@gmail.com",
+        "decri.paolo","0512101010");
+    try {
+      
+      model.salvaAccountStudente(psb.getEmail(), psb.getPassword(), psb.getPassword());
+      
+      model.cercaAccountPerEmail(psb.getEmail());
+      
+      //TODO è arrivata la mail?
+      
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    
     
   }
   
