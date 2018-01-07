@@ -14,9 +14,7 @@ public class UtenteModelTest extends TestCase {
     model = new UtenteModel();
   }
   
-  /**
-   * 
-   */
+
   public void testSalvaAccountStudente() {
     
     ProfiloStudenteBean studente = 
@@ -42,9 +40,34 @@ public class UtenteModelTest extends TestCase {
     }
   }
   
-  /**
-   * 
-   */
+/*
+  public void testSalvaUtentiNelFile() {
+    ArrayList<UtenteBean> listaUtenti = new ArrayList<>();
+    listaUtenti.add(new UtenteBean("utente1@unisa.it","utente1"));
+    listaUtenti.add(new UtenteBean("utente2@unisa.it","utente2"));
+    listaUtenti.add(new UtenteBean("utente3@unisa.it","utente3"));
+    listaUtenti.add(new UtenteBean("utente4@unisa.it","utente4"));
+    
+    model.salvaUtentiNelFile(listaUtenti);
+    
+
+    UtenteBean ub = new UtenteBean("utente5@unisa.it","utente5");
+    
+    
+    ArrayList<UtenteBean> lista = model.caricaUtentiDaFile();
+    assertEquals(lista.contains(ub), false);
+    
+    lista.add(ub);
+    model.salvaUtentiNelFile(lista);
+    
+    lista = model.caricaUtentiDaFile();
+    assertEquals(lista.contains(ub), true);
+    
+  }
+  
+ 
+  
+
   public void testSalvaAccountAzienda() {
     ProfiloAziendaBean azienda = 
         new ProfiloAziendaBean("kineton@gmail.com","kineton","Kineton");
@@ -70,9 +93,6 @@ public class UtenteModelTest extends TestCase {
     }
   }
   
-  /**
-   * 
-   */
   public void testGeneraCredenziali() {
     UtenteBean utenteRandom = new UtenteBean("gino@gmail.com","gino");
     boolean generato1 = model.generaCredenziali(utenteRandom.getEmail());
@@ -83,9 +103,7 @@ public class UtenteModelTest extends TestCase {
     assertEquals(generato2, true);
   }
  
-  /**
-   * 
-   */
+
   public void testCaricaUtentiDaFile() {
     UtenteBean ub = new UtenteBean("utente4@unisa.it","utente4");
     
@@ -99,26 +117,9 @@ public class UtenteModelTest extends TestCase {
     assertEquals(nuovaLista.contains(ub), true);
   }
   
-  /**
-   * 
-   */
-  public void testSalvaUtentiNelFile() {
-    UtenteBean ub = new UtenteBean("utente5@unisa.it","utente5");
-    
-    ArrayList<UtenteBean> lista = model.caricaUtentiDaFile();
-    assertEquals(lista.contains(ub), false);
-    
-    lista.add(ub);
-    model.salvaUtentiNelFile(lista);
-    
-    lista = model.caricaUtentiDaFile();
-    assertEquals(lista.contains(ub), true);
-    
-  }
+
   
-  /**
-   * 
-   */
+
   public void testCaricaAccount() {
     ProfiloStudenteBean psb = new ProfiloStudenteBean("studente_prova@studenti.unisa.it",
         "prova","0512101010");
@@ -162,9 +163,7 @@ public class UtenteModelTest extends TestCase {
     
   }
   
-  /**
-   * 
-   */
+
   public void testCercaAccountPerEmail() {
     
     ProfiloStudenteBean psb = new ProfiloStudenteBean("decri.paolo@gmail.com",
@@ -183,6 +182,6 @@ public class UtenteModelTest extends TestCase {
     
     
   }
-  
+  */
   
 }

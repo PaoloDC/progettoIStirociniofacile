@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
 
+import javax.annotation.Resource;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -28,9 +29,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-
-
 public class UtenteModel {
+  
   private static DataSource ds;
   public static final int LUNGHEZZA_PASSWORD = 20;
 
@@ -217,7 +217,7 @@ public class UtenteModel {
    * @return ritorna un bean che rappresenta un utente
    * @throws SQLException in caso di errore di connesione al db 
    */
-  public synchronized UtenteBean caricaAccount(String email, String password) throws SQLException {
+  public synchronized UtenteBean caricaAccount(String email, String password) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -262,6 +262,7 @@ public class UtenteModel {
 
           return pa;
         } else {
+         
           ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
           for (int i = 0; i < listaUtenti.size(); i++) {
             UtenteBean ub = listaUtenti.get(i);
@@ -273,17 +274,28 @@ public class UtenteModel {
 
         }
       }   
-    } finally { //TODO fix commento
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally { 
       try {
         if (preparedStatement != null) {
-          preparedStatement.close();
+          try {
+            preparedStatement.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
-      }
+      } 
     }
+    
     return null;
   }
 
