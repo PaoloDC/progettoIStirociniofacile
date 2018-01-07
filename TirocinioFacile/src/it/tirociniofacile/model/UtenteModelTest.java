@@ -116,14 +116,48 @@ public class UtenteModelTest extends TestCase {
     
   }
   
-  
+  /**
+   * 
+   */
   public void testCaricaAccount() {
     ProfiloStudenteBean psb = new ProfiloStudenteBean("studente_prova@studenti.unisa.it",
         "prova","0512101010");
     ProfiloAziendaBean pab  = new ProfiloAziendaBean("azienda_prova@gmail.com",
         "prova","Azienda Prova");
-    UtenteBean ub = new UtenteBean("utente_prova@unisa.it","prova");
+    UtenteBean ub = new UtenteBean("utente1@unisa.it","utente1");
     
+    try {
+      //salva un account azienda e un account studente nel db
+      model.salvaAccountAzienda(pab.getEmail(), pab.getPassword(), pab.getNomeAzienda());
+      model.salvaAccountStudente(psb.getEmail(), psb.getPassword(), psb.getMatricola());
+
+      //legge lo studente appena salvato
+      UtenteBean utente1 = model.caricaAccount(psb.getEmail(), psb.getPassword());
+      assertNotNull(utente1);
+      ProfiloStudenteBean studente = (ProfiloStudenteBean) utente1;
+      assertNotNull(studente);
+      assertEquals(studente.getEmail(),psb.getEmail());
+      assertEquals(studente.getPassword(),psb.getPassword());
+      assertEquals(studente.getMatricola(),psb.getMatricola());
+      
+      //legge l'azienda appena salvata
+      UtenteBean utente2 = model.caricaAccount(pab.getEmail(), pab.getPassword());
+      assertNotNull(utente2);
+      ProfiloAziendaBean azienda = (ProfiloAziendaBean) utente2;
+      assertNotNull(azienda);
+      assertEquals(azienda.getEmail(),pab.getEmail());
+      assertEquals(azienda.getPassword(),pab.getPassword());
+      assertEquals(azienda.getNomeAzienda(),pab.getNomeAzienda());
+      
+      //legge un utente amministrativo
+      UtenteBean utente3 = model.caricaAccount(ub.getEmail(), ub.getPassword());
+      assertNotNull(utente3);
+      assertEquals(utente3.getEmail(),ub.getEmail());
+      assertEquals(utente3.getPassword(),ub.getPassword());
+      
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
     
     
   }
@@ -131,4 +165,6 @@ public class UtenteModelTest extends TestCase {
   public void testCercaAccountPerEmail() {
     
   }
+  
+  
 }
