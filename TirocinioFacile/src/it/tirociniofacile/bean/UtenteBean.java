@@ -53,6 +53,11 @@ public class UtenteBean implements Serializable {
     email = (String) input.readObject();
     password = (String) input.readObject();
   }
+
+  @Override
+  public String toString() {
+    return "UtenteBean [email=" + email + ", password=" + password + "]";
+  }
   
 
 }
