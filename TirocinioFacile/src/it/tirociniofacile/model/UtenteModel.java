@@ -36,12 +36,15 @@ public class UtenteModel {
 
   static {
     try {
+      System.out.println("Qui ci arriva1");
       Context initCtx = new InitialContext();
+      System.out.println("Qui ci arriva2");
       Context envCtx = (Context) initCtx.lookup("java:comp/env");
-
+      System.out.println("Qui ci arriva3");
       ds = (DataSource) envCtx.lookup("jdbc/tirociniofacile");
+
     } catch (NamingException e) {
-      System.out.println("Error:" + e.getMessage());
+      System.out.println("Error PIPI:" + e.getMessage());
     }
   }
 

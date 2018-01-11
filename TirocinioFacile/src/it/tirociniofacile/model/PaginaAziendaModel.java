@@ -31,6 +31,41 @@ public class PaginaAziendaModel {
   public static final String TABLE_NAME_AMBITO = "Ambito";
   public static final String TABLE_NAME_SKILL = "Skill";
 
+  
+  public synchronized PaginaAziendaBean prova() 
+      throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+
+    PaginaAziendaBean pab = new PaginaAziendaBean();
+
+    try {
+      connection = ds.getConnection();
+      String insertSqlPagAzienda = "INSERT INTO " + TABLE_NAME_PAGINA
+          + " (localita, descrizione, mailAzienda) VALUES (?, ?, ?)";
+      preparedStatement = connection.prepareStatement(insertSqlPagAzienda, 
+          Statement.RETURN_GENERATED_KEYS);
+
+      preparedStatement.setString(1, "avellino");
+      preparedStatement.setString(2, "bellissima");
+      preparedStatement.setString(3, "pluto");
+
+      preparedStatement.executeUpdate();
+
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+        if (connection != null) {
+          connection.close();
+        }
+      }
+    }
+    return pab;
+  }
+  
   /**
    * Cerca nel db tutte le pagine azienda.
    * @return lista di pagina azienda

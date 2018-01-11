@@ -136,6 +136,8 @@ public class PaginaAziendaModelTest extends TestCase {
       e.printStackTrace();
     }
   }
+  
+  
   public void testCaricaSkillAmbito() throws SQLException {
     ArrayList<String> ambiti = new   ArrayList<String>();
     ambiti.add("Sviluppo applicazioni remote");

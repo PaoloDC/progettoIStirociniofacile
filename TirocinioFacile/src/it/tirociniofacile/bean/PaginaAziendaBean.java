@@ -70,5 +70,12 @@ public class PaginaAziendaBean {
   public void setSkill(ArrayList<String> skill) {
     this.skill = skill;
   }
+
+  @Override
+  public String toString() {
+    return "PaginaAziendaBean [localita=" + localita + ", descrizione=" + descrizione
+        + ", nomeAzienda=" + nomeAzienda + ", ambito=" + ambito + ", skill=" + skill + "]";
+  }
+  
   
 }

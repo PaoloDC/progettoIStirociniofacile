@@ -47,6 +47,13 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     String action = request.getParameter("action");
     
     try {
+      model.prova();
+    } catch (SQLException e1) {
+      // TODO Auto-generated catch block
+      e1.printStackTrace();
+    } 
+    
+    try {
       if (action != null) {
         if (action.equals("ricercaTuttePagine")) {
           ricercaTuttePagine(request);
@@ -79,8 +86,11 @@ public class GestioneRicercaTirocinio extends HttpServlet {
   public void ricercaTuttePagine(HttpServletRequest request) 
       throws SQLException {
     ArrayList<PaginaAziendaBean> pabList = model.ricerca();
+    
     request.removeAttribute("listaAziende");
     request.setAttribute("listaAziende", pabList);
+    
+    System.out.println("Ecco" + pabList.get(0));
   }
   
   /**

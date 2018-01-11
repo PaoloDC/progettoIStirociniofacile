@@ -14,7 +14,6 @@ public class UtenteModelTest extends TestCase {
     model = new UtenteModel();
   }
   
-
   public void testSalvaAccountStudente() {
     
     ProfiloStudenteBean studente = 
@@ -40,7 +39,7 @@ public class UtenteModelTest extends TestCase {
     }
   }
   
-/*
+
   public void testSalvaUtentiNelFile() {
     ArrayList<UtenteBean> listaUtenti = new ArrayList<>();
     listaUtenti.add(new UtenteBean("utente1@unisa.it","utente1"));
@@ -182,6 +181,5 @@ public class UtenteModelTest extends TestCase {
     
     
   }
-  */
   
 }

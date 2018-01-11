@@ -20,7 +20,6 @@ private static UtenteModel model;
     try {
       UtenteBean utente = model.caricaAccount(studente.getEmail(),studente.getPassword());
       
-      
       model.salvaAccountStudente(studente.getEmail(), 
           studente.getPassword(), studente.getMatricola());
       
