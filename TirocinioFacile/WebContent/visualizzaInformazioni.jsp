@@ -4,60 +4,54 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>TirocinioFacile - Login</title>
+
+<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
-
-<link rel="stylesheet" href="css/tf.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
 
+<body>
 	<!-- Latest compiled and minified JavaScript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
 
-
-	<div class="row">
-		<div class="col-4 col-md-4">
-			<!-- usato per centrare -->
-		</div>
-
-		<div class="col-4 col-md-4">
-			<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<%@ include file="header.jsp"%>
+		<br> <br> <br>
+		<div class="row">
 			<div class="container-fluid">
-				<div class="navbar-header">
-					<ul class="nav navbar-nav">
-						<li><img alt="logo" width="130" height="100"
-							src="logo_documento.png"></li>
-						<li>
-							<div class="container-fluid">
-								<div>
-									<h1>
-										<a href="index.jsp" id="tf">Tirocinio Facile</a>
-									</h1>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
+				<a class="btn btn-primary btn-lg btn-block" href="visInfAnno.jsp"
+					role="button">Tirocini Conclusi Per Anno Accademico</a>
 			</div>
-			</nav>
+			<br> <br> <br>
 		</div>
 
-		<div class="col-4 col-md-4">
-			<!-- usato per centrare -->
+
+
+		<div class="row">
+			<div class="container-fluid">
+				<a class="btn btn-primary btn-lg btn-block" href="visInfAnno.jsp"
+					role="button">Tirocini Conclusi Per Azienda</a>
+			</div>
+			<br> <br> <br>
 		</div>
+
+		<div class="row">
+			<div class="container-fluid">
+				<a class="btn btn-primary btn-lg btn-block" href="visInfAnno.jsp"
+					role="button">Ricerca Pagina Azienda</a>
+			</div>
+			<br> <br> <br>
+		</div>
+
 
 	</div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+	<%@ include file="footer.jsp"%>
 </body>
 </html>
