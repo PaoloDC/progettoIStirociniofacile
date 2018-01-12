@@ -43,7 +43,7 @@ public class UtenteModelTest_jdbc extends TestCase {
   }
   
   /**
-   * 
+   * Testa il metodo salva utenti nel file
    */
   public void testSalvaUtentiNelFile() {
     ArrayList<UtenteBean> listaUtenti = new ArrayList<>();
