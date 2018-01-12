@@ -7,18 +7,20 @@ import java.io.Serializable;
 
 public class ProfiloStudenteBean extends UtenteBean implements Serializable {
 
+  //variabile di istanza
   private String matricola;
   
+  //costruttore vuoto
   public ProfiloStudenteBean() {
- 
-   
   }
   
-  public ProfiloStudenteBean(String matricola, String email, String password) {
+  //costruttore
+  public ProfiloStudenteBean(String email, String password,String matricola) {
     super(email,password);
     this.matricola = matricola;
   }
-
+  
+  //setter & getter
   public String getMatricola() {
     return matricola;
   }
@@ -26,20 +28,13 @@ public class ProfiloStudenteBean extends UtenteBean implements Serializable {
   public void setMatricola(String matricola) {
     this.matricola = matricola;
   }
-
-private void writeObject(ObjectOutputStream output) throws IOException {
-    
+  
+  private void writeObject(ObjectOutputStream output) throws IOException {  
     output.writeObject(this.getEmail());
     output.writeObject(this.getPassword());
     output.writeObject(matricola);
   }
-  
-  /**
-   * 
-   * @param input
-   * @throws IOException
-   * @throws ClassNotFoundException
-   */
+ 
   private void readObject(ObjectInputStream input) throws IOException, ClassNotFoundException {
     //parchiConvenzionati= (ArrayList<Parco>) input.readObject();
     this.setEmail((String) input.readObject());
