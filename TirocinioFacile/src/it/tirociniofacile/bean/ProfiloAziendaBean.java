@@ -13,7 +13,7 @@ public class ProfiloAziendaBean extends UtenteBean implements Serializable {
 
   }
   
-  public ProfiloAziendaBean(String nomeAzienda, String email, String password) {
+  public ProfiloAziendaBean(String email, String password,String nomeAzienda) {
     super(email,password);
     this.nomeAzienda = nomeAzienda;
   }
