@@ -1,15 +1,12 @@
 package it.tirociniofacile.model;
 
-import it.tirociniofacile.bean.ProfiloAziendaBean;
-import it.tirociniofacile.bean.ProfiloStudenteBean;
-import it.tirociniofacile.bean.UtenteBean;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,36 +26,41 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.mysql.jdbc.Statement;
 
-/**
- * 
- * @author Paolo
- *
- */
-public class UtenteModel {
+import it.tirociniofacile.bean.ProfiloAziendaBean;
+import it.tirociniofacile.bean.ProfiloStudenteBean;
+import it.tirociniofacile.bean.UtenteBean;
+
+public class UtenteModel_jdbc {
   
-
-
+  //variabili di istanza
+  private static Statement stmt;
+  private static Connection con;
+    
   static {
+    //Inizia una connessione
+    String db = "tirociniofacile";
+    String user = "root";
+    String pass = "root";
+    
     try {
-      System.out.println("Qui ci arriva1");
-      Context initCtx = new InitialContext();
-      System.out.println("Qui ci arriva2");
-      Context envCtx = (Context) initCtx.lookup("java:comp/env");
-      System.out.println("Qui ci arriva3");
-      ds = (DataSource) envCtx.lookup("jdbc/tirociniofacile");
-
-    } catch (NamingException e) {
-      System.out.println("Error PIPI:" + e.getMessage());
+      // jdbs:mysql://indirizzo dell'host/nome del database
+      String url = "jdbc:mysql://127.0.0.1/" + db;
+     
+      //Nome utente, password per la connessione al database
+      con = (Connection) DriverManager.getConnection(url, user, pass);
+      stmt = (Statement) con.createStatement();
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.exit(0);
     }
   }
 
-  //variabili di istanza
+  public static final int LUNGHEZZA_PASSWORD = 20;
   private static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
   private static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
   public static final String FILE_NAME = "utenti.dat";
-  private static DataSource ds;
-  public static final int LUNGHEZZA_PASSWORD = 20;
 
   /**
    * Inserisce nel db un nuovo studente.
@@ -69,30 +71,18 @@ public class UtenteModel {
    */
   public synchronized void salvaAccountStudente(String email, String password, String matricola) 
       throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
 
-    try {
-      connection = ds.getConnection();
-      String insertSql = "INSERT INTO " + TABLE_NAME_STUDENTE
+    String insertSql = "INSERT INTO " + TABLE_NAME_STUDENTE
           + " (mail, password, matricola) VALUES (?, ?, ?)";
-      preparedStatement = connection.prepareStatement(insertSql);
-      preparedStatement.setString(1, email);
-      preparedStatement.setString(2, password);
-      preparedStatement.setString(3, matricola);
+    preparedStatement = connection.prepareStatement(insertSql);
+    preparedStatement.setString(1, email);
+    preparedStatement.setString(2, password);
+    preparedStatement.setString(3, matricola);
 
-      preparedStatement.executeUpdate();
-    } finally {
-      try {
-        if (preparedStatement != null) {
-          preparedStatement.close();
-        }
-      } finally {
-        if (connection != null) {
-          connection.close();
-        }
-      }
-    }
+    preparedStatement.executeUpdate();
+    
     return;
   }
 
@@ -104,30 +94,18 @@ public class UtenteModel {
    */
   public synchronized void salvaAccountAzienda(String email, String password, String nomeazienda) 
       throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
 
-    try {
-      connection = ds.getConnection();
-      String insertSql = "INSERT INTO " + TABLE_NAME_AZIENDA
+    String insertSql = "INSERT INTO " + TABLE_NAME_AZIENDA
           + " (mail, password, nomeAzienda) VALUES (?, ?, ?)";
-      preparedStatement = connection.prepareStatement(insertSql);
-      preparedStatement.setString(1, email);
-      preparedStatement.setString(2, password);
-      preparedStatement.setString(3, nomeazienda);
+    preparedStatement = connection.prepareStatement(insertSql);
+    preparedStatement.setString(1, email);
+    preparedStatement.setString(2, password);
+    preparedStatement.setString(3, nomeazienda);
 
-      preparedStatement.executeUpdate();
-    } finally {
-      try {
-        if (preparedStatement != null) {
-          preparedStatement.close();
-        }
-      } finally {
-        if (connection != null) {
-          connection.close();
-        }
-      }
-    }
+    preparedStatement.executeUpdate();
+    
     return;
   }
 
@@ -184,9 +162,9 @@ public class UtenteModel {
    */
   public ArrayList<UtenteBean> caricaUtentiDaFile() {
     try {
-      //TODO caricaUtentiFile
       
       File f = new File(FILE_NAME);
+      
       if (f.exists()) {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
         ArrayList<UtenteBean> listaUtentiRead = (ArrayList<UtenteBean>) in.readObject();
@@ -224,10 +202,9 @@ public class UtenteModel {
    * @throws SQLException in caso di errore di connesione al db 
    */
   public synchronized UtenteBean caricaAccount(String email, String password) {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
     try {
-      connection = ds.getConnection();
 
       String selectSqlStudente = "SELECT * FROM " + TABLE_NAME_STUDENTE 
           + " WHERE mail  = ? AND password = ? ";
@@ -282,25 +259,7 @@ public class UtenteModel {
       }   
     } catch (SQLException e) {
       e.printStackTrace();
-    } finally { 
-      try {
-        if (preparedStatement != null) {
-          try {
-            preparedStatement.close();
-          } catch (SQLException e) {
-            e.printStackTrace();
-          }
-        }
-      } finally {
-        if (connection != null) {
-          try {
-            connection.close();
-          } catch (SQLException e) {
-            e.printStackTrace();
-          }
-        }
-      } 
-    }
+    } 
     
     return null;
   }
@@ -312,7 +271,7 @@ public class UtenteModel {
    * @param email email dell'account da cercare nel db
    */
   public synchronized void cercaAccountPerEmail(String email) {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
 
     String passwordDaInviare = null;
@@ -328,7 +287,6 @@ public class UtenteModel {
     //se non trova la password tra gli utenti amministrativi la cerca tra gli studenti e le aziende
     if (passwordDaInviare == null) {
       try {
-        connection = ds.getConnection();
 
         String selectSql = "SELECT password FROM " + TABLE_NAME_STUDENTE 
             + " JOIN " + TABLE_NAME_AZIENDA + " WHERE mail  = ? ";
@@ -422,7 +380,4 @@ public class UtenteModel {
 
     }
   }
-
-
 }
-

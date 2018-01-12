@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import it.tirociniofacile.bean.*;
 import junit.framework.TestCase;
 
-public class UtenteModelTest extends TestCase {
+public class UtenteModelTest_jdbc extends TestCase {
 
-  private static UtenteModel model;
+  private static UtenteModel_jdbc model;
   
   static {
-    model = new UtenteModel();
+    model = new UtenteModel_jdbc();
   }
   
   public void testSalvaAccountStudente() {
