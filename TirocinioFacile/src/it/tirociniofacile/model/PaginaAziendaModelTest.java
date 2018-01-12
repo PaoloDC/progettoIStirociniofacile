@@ -7,14 +7,15 @@ import it.tirociniofacile.bean.PaginaAziendaBean;
 import junit.framework.TestCase;
 
 public class PaginaAziendaModelTest extends TestCase {
-    private static PaginaAziendaModel model;
+  private static PaginaAziendaModel model;
   
   static {
-        model = new PaginaAziendaModel();
+    model = new PaginaAziendaModel();
   }
-    public PaginaAziendaModelTest() {
-    // TODO Auto-generated constructor stub
-  }
+
+  /**
+   * 
+   */
   public void testRicerca() {
     try {
       ArrayList<String> ambitiAzienda1 = new   ArrayList<String>();
@@ -68,11 +69,15 @@ public class PaginaAziendaModelTest extends TestCase {
       assertEquals(listaCorretta.get(1).getAmbito(), listaResult.get(1).getAmbito());
       assertEquals(listaCorretta.get(1).getSkill(), listaResult.get(1).getSkill());
       
-    } catch (Exception e ) {
-        e.printStackTrace();
-      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    public void testRicercaPerID() {
+  }
+  
+  /**
+   * 
+   */
+  public void testRicercaPerId() {
     try {
       ArrayList<String> ambiti = new   ArrayList<String>();
       ambiti.add("Sviluppo applicazioni web");
@@ -98,14 +103,16 @@ public class PaginaAziendaModelTest extends TestCase {
       assertEquals(pabCorretta.getAmbito(), pabResult.getAmbito());
       assertEquals(pabCorretta.getSkill(), pabResult.getSkill());
       
-    } catch(Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
-    }
+  }
+  
+  
   public void testRicercaParamtrica() throws SQLException { 
     try {
    
- 
+
       ArrayList<String> ambiti = new   ArrayList<String>();
       ambiti.add("Sviluppo applicazioni web");
       ambiti.add("Reti");
@@ -136,8 +143,4 @@ public class PaginaAziendaModelTest extends TestCase {
       e.printStackTrace();
     }
   }
-  
-  
- 
-
 }
