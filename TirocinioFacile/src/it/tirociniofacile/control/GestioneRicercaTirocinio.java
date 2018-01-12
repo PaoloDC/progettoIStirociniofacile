@@ -46,13 +46,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
     
-    try {
-      model.prova();
-    } catch (SQLException e1) {
-      // TODO Auto-generated catch block
-      e1.printStackTrace();
-    } 
-    
+    System.out.println(action);
     try {
       if (action != null) {
         if (action.equals("ricercaTuttePagine")) {

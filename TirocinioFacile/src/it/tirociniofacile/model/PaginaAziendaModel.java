@@ -18,9 +18,11 @@ public class PaginaAziendaModel {
 
   static {
     try {
+      System.out.println("Qui ci arriva1 andrea");
       Context initCtx = new InitialContext();
+      System.out.println("Qui ci arriva2 andrea");
       Context envCtx = (Context) initCtx.lookup("java:comp/env");
-
+      System.out.println("Qui ci arriva3");
       ds = (DataSource) envCtx.lookup("jdbc/tirociniofacile");
     } catch (NamingException e) {
       System.out.println("Error:" + e.getMessage());
