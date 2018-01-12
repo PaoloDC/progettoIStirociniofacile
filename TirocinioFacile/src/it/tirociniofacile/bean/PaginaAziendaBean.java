@@ -72,10 +72,22 @@ public class PaginaAziendaBean {
   }
 
   @Override
-  public String toString() {
+   public String toString() {
     return "PaginaAziendaBean [localita=" + localita + ", descrizione=" + descrizione
         + ", nomeAzienda=" + nomeAzienda + ", ambito=" + ambito + ", skill=" + skill + "]";
   }
   
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof PaginaAziendaBean) {
+      PaginaAziendaBean a = (PaginaAziendaBean) obj;
+      return a.getAmbito().equals(ambito) 
+          && a.getDescrizione().equals(descrizione)
+          && a.getLocalita().equals(localita)
+          && a.getNomeAzienda().equals(nomeAzienda)
+          && a.getSkill().equals(skill);
+    }
+    return false;
+  }
   
 }
