@@ -138,22 +138,6 @@ public class PaginaAziendaModelTest extends TestCase {
   }
   
   
-  public void testCaricaSkillAmbito() throws SQLException {
-    ArrayList<String> ambiti = new   ArrayList<String>();
-    ambiti.add("Sviluppo applicazioni remote");
-    ambiti.add("Sicurezza");
-    ambiti.add("Gestione degli oggetti 3D");
-    ArrayList<String> skill = new  ArrayList<String>();
-    skill.add("Conoscenza di programmazione remota");
-    skill.add("Conoscenza di Java");
-    skill.add("iOs e Android e piattaforme che ospitano sync 3");
-    
-    PaginaAziendaBean pab = new PaginaAziendaBean("Napoli",
-        "Azienda che sviluppa software per vetture elettriche","Tesla Soft",ambiti,skill);
-    
-    model.aggiungiPagina("Napoli","Azienda che sviluppa software per vetture elettriche","Teslainfo@info.com", ambiti, skill);
-    
-    
-  }
+ 
 
 }
