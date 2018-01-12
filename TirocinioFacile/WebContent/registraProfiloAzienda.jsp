@@ -25,34 +25,35 @@
 		<%@ include file="header.jsp"%>
 
 		<div class="row">
-			<div class="col-2 col-md-2">
+			<div class="col-4 col-md-4">
 				<!-- usato per centrare -->
 			</div>
-			<div class="col-8 col-md-8">
+			<div class="col-4 col-md-4">
 				<form>
 					<div class="form-group">
-						<label for="exampleInputEmail1">Localita'</label> <input
+						<label for="exampleInputEmail1">Email</label> <input
+							type="email" class="form-control" id="exampleInputEmail1"
+							aria-describedby="emailHelp" placeholder="Enter email">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Nome Azienda</label> <input
 							type="text" class="form-control" id="exampleInputEmail1"
-							aria-describedby="emailHelp" placeholder="Località">
+							aria-describedby="emailHelp" placeholder="Enter matricola">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputEmail1">Descrizione</label>
-						<textarea class="form-control" rows="5" id="descr"></textarea>
+						<label for="exampleInputPassword1">Password</label> <input
+							type="password" class="form-control" id="exampleInputPassword1"
+							placeholder="Password">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1">Ambiti (Per inserire più di un ambito usa la , Es. Web Development, Reti)</label> <input
-							type="text" class="form-control" id="exampleInputPassword1"
-							placeholder="Ambito">
+						<label for="exampleInputPassword1">Conferma Password</label> <input
+							type="password" class="form-control" id="exampleInputPassword1"
+							placeholder="Password">
 					</div>
-					<div class="form-group">
-						<label for="exampleInputPassword1">Skill (Per inserire più di una skill usa la , Es. C++, Test)</label> <input
-							type="text" class="form-control" id="exampleInputPassword1"
-							placeholder="Skill Richieste">
-					</div>
-					<button type="submit" class="btn btn-primary">Crea</button>
+					<button type="submit" class="btn btn-primary">Continua con la richiesta di convenzione</button>
 				</form>
 			</div>
-			<div class="col-2 col-md-2">
+			<div class="col-4 col-md-4">
 				<!-- usato per centrare -->
 			</div>
 		</div>
