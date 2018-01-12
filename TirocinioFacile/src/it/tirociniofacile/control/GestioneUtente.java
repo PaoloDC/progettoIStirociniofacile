@@ -56,6 +56,7 @@ public class GestioneUtente extends HttpServlet {
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
     
+    System.out.println(action);
     try {
       if (action != null) {
         if (action.equals("log-out")) {
