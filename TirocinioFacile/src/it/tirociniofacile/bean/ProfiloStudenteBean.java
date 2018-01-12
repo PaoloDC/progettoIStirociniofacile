@@ -46,4 +46,15 @@ private void writeObject(ObjectOutputStream output) throws IOException {
     this.setPassword((String) input.readObject());
     matricola = (String) input.readObject();
   }
+  
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof ProfiloStudenteBean) {
+      ProfiloStudenteBean s = (ProfiloStudenteBean) obj;
+      return s.getEmail().equals(this.getEmail()) 
+          && s.getPassword().equals(this.getPassword())
+          && s.getMatricola().equals(this.getMatricola());
+    }
+    return false;
+  }
 }

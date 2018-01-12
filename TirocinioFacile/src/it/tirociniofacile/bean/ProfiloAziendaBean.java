@@ -46,6 +46,18 @@ public class ProfiloAziendaBean extends UtenteBean implements Serializable {
     nomeAzienda = (String) input.readObject();
   }
 
- 
+  /**
+   * 
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof ProfiloAziendaBean) {
+      ProfiloAziendaBean a = (ProfiloAziendaBean) obj;
+      return a.getEmail().equals(this.getEmail()) 
+          && a.getPassword().equals(this.getPassword())
+          && a.getNomeAzienda().equals(this.getNomeAzienda());
+    }
+    return false;
+  }
 
 }

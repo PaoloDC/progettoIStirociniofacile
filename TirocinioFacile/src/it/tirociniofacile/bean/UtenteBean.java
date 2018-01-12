@@ -43,8 +43,8 @@ public class UtenteBean implements Serializable {
   }
   
   /**
-   * 
-   * @param input
+   * Permette di serializzare i parametri dell'utente bean su di un file
+   * @param input 
    * @throws IOException
    * @throws ClassNotFoundException
    */
@@ -59,5 +59,14 @@ public class UtenteBean implements Serializable {
     return "UtenteBean [email=" + email + ", password=" + password + "]";
   }
   
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof UtenteBean) {
+      UtenteBean u = (UtenteBean) obj;
+      return u.getEmail().equals(this.getEmail()) 
+          && u.getPassword().equals(this.getPassword());
+    }
+    return false;
+  }
 
 }

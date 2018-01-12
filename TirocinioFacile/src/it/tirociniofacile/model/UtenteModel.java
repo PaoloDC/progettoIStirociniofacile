@@ -1,9 +1,6 @@
 package it.tirociniofacile.model;
 
-import it.tirociniofacile.bean.ProfiloAziendaBean;
-import it.tirociniofacile.bean.ProfiloStudenteBean;
-import it.tirociniofacile.bean.UtenteBean;
-
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -16,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
 
-import javax.annotation.Resource;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -28,6 +24,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import it.tirociniofacile.bean.ProfiloAziendaBean;
+import it.tirociniofacile.bean.ProfiloStudenteBean;
+import it.tirociniofacile.bean.UtenteBean;
 
 public class UtenteModel {
   
@@ -176,34 +176,28 @@ public class UtenteModel {
    */
   public ArrayList<UtenteBean> caricaUtentiDaFile() {
     try {
-      //TODO caricaUtentiFile
-      ObjectInputStream in = new ObjectInputStream(new FileInputStream(FILE_NAME));
-      ArrayList<UtenteBean> listaUtenti = (ArrayList<UtenteBean>) in.readObject();
-      in.close();
-      return listaUtenti;
-
+      
+      File f = new File(FILE_NAME);
+      if (f.exists()) {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
+        ArrayList<UtenteBean> listaUtentiRead = (ArrayList<UtenteBean>) in.readObject();
+        in.close();
+        return listaUtentiRead;
+      } else {
+        return new ArrayList<>();
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
     return null;
   }
   
-  
-  private void creaFileUtenti() {
-    ArrayList<UtenteBean> lista = new ArrayList<>();
-    lista.add(new UtenteBean("utente1@unisa.it","utente1"));
-    lista.add(new UtenteBean("utente2@unisa.it","utente2"));
-    lista.add(new UtenteBean("utente3@unisa.it","utente3"));
-    salvaUtentiNelFile(lista);
-  }
-
   /**
    * Salva tutti gli utenti nel file.
    * @param listaUtenti lista degli utenti da salvare
    */
   public void salvaUtentiNelFile(ArrayList<UtenteBean> listaUtenti) {
-    try {
-      creaFileUtenti();
+    try {      
       ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILE_NAME));
       out.writeObject(listaUtenti);
       out.close();

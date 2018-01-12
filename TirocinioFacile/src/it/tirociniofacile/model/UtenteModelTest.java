@@ -109,10 +109,16 @@ public class UtenteModelTest extends TestCase {
     ArrayList<UtenteBean> lista = model.caricaUtentiDaFile();
     assertEquals(lista.contains(ub), false);
     
+    System.out.println(lista);
+    
     lista.add(ub);
     model.salvaUtentiNelFile(lista);
 
+    
+    
     ArrayList<UtenteBean> nuovaLista = model.caricaUtentiDaFile();
+    System.out.println(nuovaLista);
+    
     assertEquals(nuovaLista.contains(ub), true);
   }
   
