@@ -27,6 +27,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.mysql.jdbc.Statement;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import it.tirociniofacile.bean.ProfiloAziendaBean;
 import it.tirociniofacile.bean.ProfiloStudenteBean;
@@ -81,7 +82,12 @@ public class UtenteModel_jdbc {
     preparedStatement.setString(2, password);
     preparedStatement.setString(3, matricola);
 
-    preparedStatement.executeUpdate();
+    try {
+      preparedStatement.executeUpdate();
+    } catch (MySQLIntegrityConstraintViolationException e) {
+      System.out.println("Entry duplicata per studente con email: " + email);
+      return;
+    }
     
     return;
   }
@@ -98,14 +104,18 @@ public class UtenteModel_jdbc {
     PreparedStatement preparedStatement = null;
 
     String insertSql = "INSERT INTO " + TABLE_NAME_AZIENDA
-          + " (mail, password, nomeAzienda) VALUES (?, ?, ?)";
+          + " (mail, password, nomeAziendaRappresentata) VALUES (?, ?, ?)";
     preparedStatement = connection.prepareStatement(insertSql);
     preparedStatement.setString(1, email);
     preparedStatement.setString(2, password);
     preparedStatement.setString(3, nomeazienda);
 
-    preparedStatement.executeUpdate();
-    
+    try {
+      preparedStatement.executeUpdate();
+    } catch (MySQLIntegrityConstraintViolationException e) {
+      System.out.println("Entry duplicata per azienda con email: " + email);
+      return;
+    }
     return;
   }
 
@@ -289,7 +299,7 @@ public class UtenteModel_jdbc {
       try {
 
         String selectSql = "SELECT password FROM " + TABLE_NAME_STUDENTE 
-            + " JOIN " + TABLE_NAME_AZIENDA + " WHERE mail  = ? ";
+            + " WHERE mail  = ? ";
 
         preparedStatement = connection.prepareStatement(selectSql);
         preparedStatement.setString(1, email);
@@ -297,6 +307,16 @@ public class UtenteModel_jdbc {
 
         if (rs.first()) {
           passwordDaInviare = rs.getString(1);
+        } else {
+          
+          String selectSql2 = "SELECT password FROM " + TABLE_NAME_AZIENDA 
+              + " WHERE mail  = ? ";
+          preparedStatement = connection.prepareStatement(selectSql);
+          preparedStatement.setString(1, email);
+          ResultSet rs2 = preparedStatement.executeQuery();
+          if (rs2.first()) {
+            passwordDaInviare = rs2.getString(1);
+          }
         }
       } catch (Exception e) {
         e.printStackTrace();

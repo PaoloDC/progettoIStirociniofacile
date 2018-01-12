@@ -14,6 +14,9 @@ public class UtenteModelTest_jdbc extends TestCase {
     model = new UtenteModel_jdbc();
   }
   
+  /**
+   * 
+   */
   public void testSalvaAccountStudente() {
     
     ProfiloStudenteBean studente = 
@@ -39,7 +42,9 @@ public class UtenteModelTest_jdbc extends TestCase {
     }
   }
   
-
+  /**
+   * 
+   */
   public void testSalvaUtentiNelFile() {
     ArrayList<UtenteBean> listaUtenti = new ArrayList<>();
     listaUtenti.add(new UtenteBean("utente1@unisa.it","utente1"));
@@ -64,9 +69,10 @@ public class UtenteModelTest_jdbc extends TestCase {
     
   }
   
- 
   
-
+  /**
+   * 
+   */
   public void testSalvaAccountAzienda() {
     ProfiloAziendaBean azienda = 
         new ProfiloAziendaBean("kineton@gmail.com","kineton","Kineton");
@@ -92,6 +98,9 @@ public class UtenteModelTest_jdbc extends TestCase {
     }
   }
   
+  /**
+   * 
+   */
   public void testGeneraCredenziali() {
     UtenteBean utenteRandom = new UtenteBean("gino@gmail.com","gino");
     boolean generato1 = model.generaCredenziali(utenteRandom.getEmail());
@@ -126,7 +135,9 @@ public class UtenteModelTest_jdbc extends TestCase {
   
 
   
-
+  /**
+   * 
+   */
   public void testCaricaAccount() {
     ProfiloStudenteBean psb = new ProfiloStudenteBean("studente_prova@studenti.unisa.it",
         "prova","0512101010");
@@ -170,14 +181,16 @@ public class UtenteModelTest_jdbc extends TestCase {
     
   }
   
-
+  /**
+   * 
+   */
   public void testCercaAccountPerEmail() {
     
     ProfiloStudenteBean psb = new ProfiloStudenteBean("decri.paolo@gmail.com",
         "decri.paolo","0512101010");
     try {
       
-      model.salvaAccountStudente(psb.getEmail(), psb.getPassword(), psb.getPassword());
+      model.salvaAccountStudente(psb.getEmail(), psb.getPassword(), psb.getMatricola());
       
       model.cercaAccountPerEmail(psb.getEmail());
       
