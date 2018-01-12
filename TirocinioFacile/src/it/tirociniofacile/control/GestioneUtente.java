@@ -65,7 +65,7 @@ public class GestioneUtente extends HttpServlet {
         } else if (action.equals("registrazioneStudente")) {
           registrazioneStudente(request);
           
-        } else if (action.equals("registrazioneAziendatAzienda")) {
+        } else if (action.equals("registrazioneAzienda")) {
           registrazioneAzienda(request);
           
         } else if (action.equals("generaCredenziali")) {
