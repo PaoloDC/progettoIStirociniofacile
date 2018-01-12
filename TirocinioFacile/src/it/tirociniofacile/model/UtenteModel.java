@@ -178,6 +178,7 @@ public class UtenteModel {
     try {
       
       File f = new File(FILE_NAME);
+      
       if (f.exists()) {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
         ArrayList<UtenteBean> listaUtentiRead = (ArrayList<UtenteBean>) in.readObject();
