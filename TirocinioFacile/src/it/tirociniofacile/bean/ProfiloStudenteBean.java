@@ -46,10 +46,17 @@ public class ProfiloStudenteBean extends UtenteBean implements Serializable {
   public boolean equals(Object obj) {
     if (obj instanceof ProfiloStudenteBean) {
       ProfiloStudenteBean s = (ProfiloStudenteBean) obj;
-      return s.getEmail().equals(this.getEmail()) 
+      return (s.getEmail().equals(this.getEmail()) 
           && s.getPassword().equals(this.getPassword())
-          && s.getMatricola().equals(this.getMatricola());
+          && s.getMatricola().equals(this.getMatricola()));
     }
     return false;
+  }
+  
+  @Override
+  public String toString() {
+    return "PROFILO STUDENTE [MAIL: " + getEmail() 
+      + ", PASSWORD: " + getPassword() 
+      + ", MATRICOLA: " + matricola + "]";
   }
 }

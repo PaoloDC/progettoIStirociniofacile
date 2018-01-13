@@ -14,131 +14,106 @@ public class UtenteModelTest_jdbc extends TestCase {
     model = new UtenteModel_jdbc();
   }
   
-  /**
-   * 
-   */
   public void testSalvaAccountStudente() {
     
     ProfiloStudenteBean studente = 
         new ProfiloStudenteBean("vittorio@studenti.unisa.it","vittorio","0512103123");
     
     try {
+      
       UtenteBean utente = model.caricaAccount(studente.getEmail(),studente.getPassword());
-      assertEquals(utente, null);
+      assertNull(utente);
       
       model.salvaAccountStudente(studente.getEmail(), 
           studente.getPassword(), studente.getMatricola());
       
-      utente = model.caricaAccount(studente.getEmail(),studente.getPassword());
-      assertEquals(utente, studente);
+      UtenteBean utente2 = model.caricaAccount(studente.getEmail(),studente.getPassword());
+      assertNotNull(utente2);
       
-      //si cerca di salvare un account studente con gli stessi dati del precedente
-      model.salvaAccountStudente(studente.getEmail(), 
-          studente.getPassword(), studente.getMatricola());
-      //TODO mi aspetto una eccezione SQL
+      ProfiloStudenteBean s = (ProfiloStudenteBean) utente2;
+      assertEquals(studente, s);
       
+      model.eliminaProfiloStudente(s);
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
   
-  /**
-   * Testa il metodo salva utenti nel file
-   */
-  public void testSalvaUtentiNelFile() {
-    ArrayList<UtenteBean> listaUtenti = new ArrayList<>();
-    listaUtenti.add(new UtenteBean("utente1@unisa.it","utente1"));
-    listaUtenti.add(new UtenteBean("utente2@unisa.it","utente2"));
-    listaUtenti.add(new UtenteBean("utente3@unisa.it","utente3"));
-    listaUtenti.add(new UtenteBean("utente4@unisa.it","utente4"));
-    
-    model.salvaUtentiNelFile(listaUtenti);
-    
-
-    UtenteBean ub = new UtenteBean("utente5@unisa.it","utente5");
-    
-    
-    ArrayList<UtenteBean> lista = model.caricaUtentiDaFile();
-    assertEquals(lista.contains(ub), false);
-    
-    lista.add(ub);
-    model.salvaUtentiNelFile(lista);
-    
-    lista = model.caricaUtentiDaFile();
-    assertEquals(lista.contains(ub), true);
-    
-  }
   
-  
-  /**
-   * 
-   */
   public void testSalvaAccountAzienda() {
     ProfiloAziendaBean azienda = 
-        new ProfiloAziendaBean("kineton@gmail.com","kineton","Kineton");
+        new ProfiloAziendaBean("azienda_test@gmail.com","azienda_test","azienda_test");
     
     try {
       UtenteBean utente = model.caricaAccount(azienda.getEmail(),azienda.getPassword());
-      assertEquals(utente, null);
+      assertNull(utente);
       
       model.salvaAccountAzienda(azienda.getEmail(), 
           azienda.getPassword(), azienda.getNomeAzienda());
       
       utente = model.caricaAccount(azienda.getEmail(),azienda.getPassword());
       assertEquals(utente, azienda);
+      ProfiloAziendaBean a = (ProfiloAziendaBean) utente;
+      assertEquals(a, azienda);
       
-      //si cerca di salvare un account azienda con gli stessi dati del precedente
-      model.salvaAccountAzienda(azienda.getEmail(), 
-          azienda.getPassword(), azienda.getNomeAzienda());
-      
-      //TODO mi aspetto una eccezione SQL
-      
+      model.eliminaProfiloAzienda(azienda);
+     
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
   
-  /**
-   * 
-   */
+ 
+  public void testSalvaUtentiNelFile() {
+    ArrayList<UtenteBean> listaUtenti = new ArrayList<>();
+    
+    model.salvaUtentiNelFile(listaUtenti);  //svuota il file dal contenuto precedente
+    
+    UtenteBean u1 = new UtenteBean("utente1@unisa.it","utente1");
+    UtenteBean u2 = new UtenteBean("utente2@unisa.it","utente2");
+    UtenteBean u3 = new UtenteBean("utente3@unisa.it","utente3");
+    UtenteBean u4 = new UtenteBean("utente4@unisa.it","utente4");
+    
+    listaUtenti.add(u1);
+    listaUtenti.add(u2);
+    listaUtenti.add(u3);
+    listaUtenti.add(u4);
+    
+    model.salvaUtentiNelFile(listaUtenti);  //salva una lista fittizia nel file
+    
+    ArrayList<UtenteBean> newList = model.caricaUtentiDaFile();
+    
+    assertEquals(newList, listaUtenti);
+    
+    ArrayList<UtenteBean> svuota = new ArrayList<>();
+    model.salvaUtentiNelFile(svuota);
+    
+  }
+  
+
   public void testGeneraCredenziali() {
     UtenteBean utenteRandom = new UtenteBean("gino@gmail.com","gino");
     boolean generato1 = model.generaCredenziali(utenteRandom.getEmail());
-    assertEquals(generato1, false);
+    assertFalse(generato1);
     
     UtenteBean utenteAmministrativo = new UtenteBean("presidente@unisa.it","presidente");
     boolean generato2 = model.generaCredenziali(utenteAmministrativo.getEmail());
-    assertEquals(generato2, true);
+    assertTrue(generato2);
   }
  
-  /**
-   * 
-   */
-  public void testCaricaUtentiDaFile() {
-    UtenteBean ub = new UtenteBean("utenteXX@unisa.it","utente4");
-    
-    ArrayList<UtenteBean> lista = model.caricaUtentiDaFile();
-    assertEquals(lista.contains(ub), false);
-    
-    System.out.println(lista);
-    
-    lista.add(ub);
-    model.salvaUtentiNelFile(lista);
 
+  public void testCaricaUtentiDaFile() {
+    ArrayList<UtenteBean> lista = null;
+    assertNull(lista);
     
-    
-    ArrayList<UtenteBean> nuovaLista = model.caricaUtentiDaFile();
-    System.out.println(nuovaLista);
-    
-    assertEquals(nuovaLista.contains(ub), true);
+    lista = model.caricaUtentiDaFile();
+    assertNotNull(lista);
   }
   
 
   
-  /**
-   * 
-   */
   public void testCaricaAccount() {
+    
     ProfiloStudenteBean psb = new ProfiloStudenteBean("studente_prova@studenti.unisa.it",
         "prova","0512101010");
     ProfiloAziendaBean pab  = new ProfiloAziendaBean("azienda_prova@gmail.com",
@@ -146,15 +121,19 @@ public class UtenteModelTest_jdbc extends TestCase {
     UtenteBean ub = new UtenteBean("utente1@unisa.it","utente1");
     
     try {
-      //salva un account azienda e un account studente nel db
+      //salva un account azienda e un account studente nel db, ed un account amministrativo nel file
       model.salvaAccountAzienda(pab.getEmail(), pab.getPassword(), pab.getNomeAzienda());
       model.salvaAccountStudente(psb.getEmail(), psb.getPassword(), psb.getMatricola());
-
+      ArrayList<UtenteBean> lista = new ArrayList<>();
+      lista.add(ub);
+      model.salvaUtentiNelFile(lista);
+      
+      
       //legge lo studente appena salvato
       UtenteBean utente1 = model.caricaAccount(psb.getEmail(), psb.getPassword());
       assertNotNull(utente1);
+      
       ProfiloStudenteBean studente = (ProfiloStudenteBean) utente1;
-      assertNotNull(studente);
       assertEquals(studente.getEmail(),psb.getEmail());
       assertEquals(studente.getPassword(),psb.getPassword());
       assertEquals(studente.getMatricola(),psb.getMatricola());
@@ -162,8 +141,8 @@ public class UtenteModelTest_jdbc extends TestCase {
       //legge l'azienda appena salvata
       UtenteBean utente2 = model.caricaAccount(pab.getEmail(), pab.getPassword());
       assertNotNull(utente2);
+      
       ProfiloAziendaBean azienda = (ProfiloAziendaBean) utente2;
-      assertNotNull(azienda);
       assertEquals(azienda.getEmail(),pab.getEmail());
       assertEquals(azienda.getPassword(),pab.getPassword());
       assertEquals(azienda.getNomeAzienda(),pab.getNomeAzienda());
@@ -174,6 +153,13 @@ public class UtenteModelTest_jdbc extends TestCase {
       assertEquals(utente3.getEmail(),ub.getEmail());
       assertEquals(utente3.getPassword(),ub.getPassword());
       
+      
+      //elimina gli account inseriti per il test
+      model.eliminaProfiloAzienda(pab);
+      model.eliminaProfiloStudente(psb);
+      ArrayList<UtenteBean> svuota = new ArrayList<>();
+      model.salvaUtentiNelFile(svuota);
+      
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -181,26 +167,25 @@ public class UtenteModelTest_jdbc extends TestCase {
     
   }
   
-  /**
-   * 
-   */
+
   public void testCercaAccountPerEmail() {
     
     ProfiloStudenteBean psb = new ProfiloStudenteBean("decri.paolo@gmail.com",
         "decri.paolo","0512101010");
     try {
+      boolean res1 = model.cercaAccountPerEmail(psb.getEmail());
+      assertFalse(res1);
       
       model.salvaAccountStudente(psb.getEmail(), psb.getPassword(), psb.getMatricola());
       
-      model.cercaAccountPerEmail(psb.getEmail());
+      boolean res2 = model.cercaAccountPerEmail(psb.getEmail());
+      assertTrue(res2);
       
-      //TODO è arrivata la mail?
+      model.eliminaProfiloStudente(psb);
       
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    
-    
   }
   
 }

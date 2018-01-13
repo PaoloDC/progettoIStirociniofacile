@@ -63,8 +63,8 @@ public class UtenteBean implements Serializable {
   public boolean equals(Object obj) {
     if (obj instanceof UtenteBean) {
       UtenteBean u = (UtenteBean) obj;
-      return u.getEmail().equals(this.getEmail()) 
-          && u.getPassword().equals(this.getPassword());
+      return (u.getEmail().equals(this.getEmail()) 
+          && u.getPassword().equals(this.getPassword()));
     }
     return false;
   }

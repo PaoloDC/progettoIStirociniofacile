@@ -1,5 +1,12 @@
 package it.tirociniofacile.model;
 
+import com.mysql.jdbc.Statement;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
+import it.tirociniofacile.bean.ProfiloAziendaBean;
+import it.tirociniofacile.bean.ProfiloStudenteBean;
+import it.tirociniofacile.bean.UtenteBean;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,24 +28,18 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
-import com.mysql.jdbc.Statement;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-
-import it.tirociniofacile.bean.ProfiloAziendaBean;
-import it.tirociniofacile.bean.ProfiloStudenteBean;
-import it.tirociniofacile.bean.UtenteBean;
 
 public class UtenteModel_jdbc {
   
   //variabili di istanza
   private static Statement stmt;
   private static Connection con;
-    
+  public static final int LUNGHEZZA_PASSWORD = 20;
+  private static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
+  private static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
+  public static final String FILE_NAME = "utenti.dat";  
+  
   static {
     //Inizia una connessione
     String db = "tirociniofacile";
@@ -57,11 +58,6 @@ public class UtenteModel_jdbc {
       System.exit(0);
     }
   }
-
-  public static final int LUNGHEZZA_PASSWORD = 20;
-  private static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
-  private static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
-  public static final String FILE_NAME = "utenti.dat";
 
   /**
    * Inserisce nel db un nuovo studente.
@@ -214,24 +210,24 @@ public class UtenteModel_jdbc {
   public synchronized UtenteBean caricaAccount(String email, String password) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
+    
     try {
 
       String selectSqlStudente = "SELECT * FROM " + TABLE_NAME_STUDENTE 
           + " WHERE mail  = ? AND password = ? ";
+      
       preparedStatement = connection.prepareStatement(selectSqlStudente);
       preparedStatement.setString(1, email);
       preparedStatement.setString(2, password);
       ResultSet rsStudente = preparedStatement.executeQuery();
 
-      ProfiloStudenteBean ps = new ProfiloStudenteBean();
-
+      ProfiloStudenteBean ps = new ProfiloStudenteBean();    
+      
       if (rsStudente.first()) {
-        while (rsStudente.next()) {
-          ps.setEmail(rsStudente.getString(1));
-          ps.setPassword(rsStudente.getString(2)); 
-          ps.setMatricola(rsStudente.getString(3));
-        }  
-
+        ps.setEmail(rsStudente.getString(1));
+        ps.setPassword(rsStudente.getString(2)); 
+        ps.setMatricola(rsStudente.getString(3));
+        
         return ps;
       } else {
 
@@ -246,13 +242,11 @@ public class UtenteModel_jdbc {
 
         ProfiloAziendaBean pa = new ProfiloAziendaBean();
 
-        if (rsAzienda.first()) {        
-          while (rsAzienda.next()) {
-            pa.setEmail(rsAzienda.getString(1));
-            pa.setPassword(rsAzienda.getString(2));
-            pa.setNomeAzienda(rsAzienda.getString(3));
-          }
-
+        if (rsAzienda.first()) {     
+          pa.setEmail(rsAzienda.getString(1));
+          pa.setPassword(rsAzienda.getString(2));
+          pa.setNomeAzienda(rsAzienda.getString(3));
+          
           return pa;
         } else {
          
@@ -279,8 +273,9 @@ public class UtenteModel_jdbc {
   /**
    * Cerca la password di un utente dalla email e la invia alla mail.
    * @param email email dell'account da cercare nel db
+   * @return true se l'utente è presente, false altrimenti
    */
-  public synchronized void cercaAccountPerEmail(String email) {
+  public synchronized boolean cercaAccountPerEmail(String email) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
@@ -324,7 +319,7 @@ public class UtenteModel_jdbc {
     }
 
     if (passwordDaInviare == null) { 
-      //TODO 
+      return false;
       //eccezione utente non presente
     } else {
       String mailMittente = Email.USER_NAME;
@@ -336,6 +331,7 @@ public class UtenteModel_jdbc {
           + " tirocinio facile è: ' " + passwordDaInviare + " '.\n\nBuona navigazione.";
 
       Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);
+      return true;
     }
   }
 
@@ -391,7 +387,6 @@ public class UtenteModel_jdbc {
         transport.sendMessage(message, message.getAllRecipients());
         transport.close();
 
-        System.out.println("MAIL INVIATA");
       } catch (AddressException ae) {
         ae.printStackTrace();
       } catch (MessagingException me) {
@@ -399,5 +394,44 @@ public class UtenteModel_jdbc {
       }
 
     }
+  }
+  
+  //METODI ACCESSORI PER L'ELIMINAZIONE
+
+
+  public synchronized void eliminaProfiloAzienda(ProfiloAziendaBean a) {
+    Connection connection = con;
+    PreparedStatement preparedStatement = null;
+    
+    try {
+      String deleteSql = "DELETE FROM " + TABLE_NAME_AZIENDA + " WHERE mail = ? ";
+      preparedStatement = connection.prepareStatement(deleteSql);
+      preparedStatement.setString(1, a.getEmail());
+      preparedStatement.executeUpdate();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }   
+  }
+  
+  public synchronized void eliminaProfiloStudente(ProfiloStudenteBean s) {
+    Connection connection = con;
+    PreparedStatement preparedStatement = null;
+    
+    try {
+      String deleteSql = "DELETE FROM " + TABLE_NAME_STUDENTE + " WHERE mail = ? ";
+      preparedStatement = connection.prepareStatement(deleteSql);
+      preparedStatement.setString(1, s.getEmail());
+      preparedStatement.executeUpdate();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }   
+  }
+  
+  public synchronized void eliminaAccountAmministrativo(UtenteBean u) {
+    ArrayList<UtenteBean> lista = this.caricaUtentiDaFile();
+    if (lista.contains(u)) {
+      lista.remove(u);
+    }
+    this.salvaUtentiNelFile(lista);
   }
 }

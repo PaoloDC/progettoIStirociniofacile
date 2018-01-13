@@ -81,11 +81,11 @@ public class PaginaAziendaBean {
   public boolean equals(Object obj) {
     if (obj instanceof PaginaAziendaBean) {
       PaginaAziendaBean a = (PaginaAziendaBean) obj;
-      return a.getAmbito().equals(ambito) 
+      return (a.getAmbito().equals(ambito) 
           && a.getDescrizione().equals(descrizione)
           && a.getLocalita().equals(localita)
           && a.getNomeAzienda().equals(nomeAzienda)
-          && a.getSkill().equals(skill);
+          && a.getSkill().equals(skill));
     }
     return false;
   }

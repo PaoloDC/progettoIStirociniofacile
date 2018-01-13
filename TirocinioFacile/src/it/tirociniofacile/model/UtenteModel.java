@@ -29,6 +29,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 
 /**
  * 
@@ -37,8 +39,14 @@ import javax.sql.DataSource;
  */
 public class UtenteModel {
   
-
-
+//variabili di istanza
+  private static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
+  private static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
+  public static final String FILE_NAME = "utenti.dat";
+  private static DataSource ds;
+  public static final int LUNGHEZZA_PASSWORD = 20;
+  
+  //inizializzazione statica
   static {
     try {
       System.out.println("Qui ci arriva1");
@@ -52,13 +60,6 @@ public class UtenteModel {
       System.out.println("Error PIPI:" + e.getMessage());
     }
   }
-
-  //variabili di istanza
-  private static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
-  private static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
-  public static final String FILE_NAME = "utenti.dat";
-  private static DataSource ds;
-  public static final int LUNGHEZZA_PASSWORD = 20;
 
   /**
    * Inserisce nel db un nuovo studente.
@@ -81,7 +82,12 @@ public class UtenteModel {
       preparedStatement.setString(2, password);
       preparedStatement.setString(3, matricola);
 
-      preparedStatement.executeUpdate();
+      try {
+        preparedStatement.executeUpdate();
+      } catch (MySQLIntegrityConstraintViolationException e) {
+        System.out.println("Entry duplicata per studente con email: " + email);
+        return;
+      }
     } finally {
       try {
         if (preparedStatement != null) {
@@ -116,7 +122,12 @@ public class UtenteModel {
       preparedStatement.setString(2, password);
       preparedStatement.setString(3, nomeazienda);
 
-      preparedStatement.executeUpdate();
+      try {
+        preparedStatement.executeUpdate();
+      } catch (MySQLIntegrityConstraintViolationException e) {
+        System.out.println("Entry duplicata per azienda con email: " + email);
+        return;
+      }
     } finally {
       try {
         if (preparedStatement != null) {
@@ -184,7 +195,6 @@ public class UtenteModel {
    */
   public ArrayList<UtenteBean> caricaUtentiDaFile() {
     try {
-      //TODO caricaUtentiFile
       
       File f = new File(FILE_NAME);
       if (f.exists()) {
@@ -239,12 +249,10 @@ public class UtenteModel {
       ProfiloStudenteBean ps = new ProfiloStudenteBean();
 
       if (rsStudente.first()) {
-        while (rsStudente.next()) {
-          ps.setEmail(rsStudente.getString(1));
-          ps.setPassword(rsStudente.getString(2)); 
-          ps.setMatricola(rsStudente.getString(3));
-        }  
-
+        ps.setEmail(rsStudente.getString(1));
+        ps.setPassword(rsStudente.getString(2)); 
+        ps.setMatricola(rsStudente.getString(3));
+        
         return ps;
       } else {
 
@@ -259,12 +267,11 @@ public class UtenteModel {
 
         ProfiloAziendaBean pa = new ProfiloAziendaBean();
 
-        if (rsAzienda.first()) {        
-          while (rsAzienda.next()) {
-            pa.setEmail(rsAzienda.getString(1));
-            pa.setPassword(rsAzienda.getString(2));
-            pa.setNomeAzienda(rsAzienda.getString(3));
-          }
+        if (rsAzienda.first()) {     
+          pa.setEmail(rsAzienda.getString(1));
+          pa.setPassword(rsAzienda.getString(2));
+          pa.setNomeAzienda(rsAzienda.getString(3));
+          
 
           return pa;
         } else {
@@ -310,8 +317,9 @@ public class UtenteModel {
   /**
    * Cerca la password di un utente dalla email e la invia alla mail.
    * @param email email dell'account da cercare nel db
+   * @return true se l'utente è presente, false altrimenti
    */
-  public synchronized void cercaAccountPerEmail(String email) {
+  public synchronized boolean cercaAccountPerEmail(String email) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
@@ -346,7 +354,7 @@ public class UtenteModel {
     }
 
     if (passwordDaInviare == null) { 
-      //TODO 
+      return false;
       //eccezione utente non presente
     } else {
       String mailMittente = Email.USER_NAME;
@@ -358,6 +366,7 @@ public class UtenteModel {
           + " tirocinio facile è: ' " + passwordDaInviare + " '.\n\nBuona navigazione.";
 
       Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);
+      return true;
     }
   }
 
