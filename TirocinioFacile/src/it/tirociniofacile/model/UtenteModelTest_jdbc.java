@@ -110,8 +110,7 @@ public class UtenteModelTest_jdbc extends TestCase {
     assertNotNull(lista);
   }
   
-
-  
+ 
   public void testCaricaAccount() {
     
     ProfiloStudenteBean psb = new ProfiloStudenteBean("studente_prova@studenti.unisa.it",
@@ -163,13 +162,9 @@ public class UtenteModelTest_jdbc extends TestCase {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    
-    
   }
   
-  /**
-   * 
-   */
+
   public void testCercaAccountPerEmail() {
     
     ProfiloStudenteBean psb = new ProfiloStudenteBean("decri.paolo@gmail.com",

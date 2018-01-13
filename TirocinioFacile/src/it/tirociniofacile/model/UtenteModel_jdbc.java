@@ -364,7 +364,7 @@ public class UtenteModel_jdbc {
       props.put("mail.smtp.password", pass);
       props.put("mail.smtp.port", "587");
       props.put("mail.smtp.auth", "true");
-
+     
       Session session = Session.getDefaultInstance(props);
       MimeMessage message = new MimeMessage(session);
       try {
