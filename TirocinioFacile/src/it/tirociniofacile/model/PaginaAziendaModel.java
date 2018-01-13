@@ -22,7 +22,7 @@ public class PaginaAziendaModel {
       Context initCtx = new InitialContext();
       System.out.println("Qui ci arriva2 andrea");
       Context envCtx = (Context) initCtx.lookup("java:comp/env");
-      System.out.println("Qui ci arriva3");
+      System.out.println("Qui ci arriva3 andrea");
       ds = (DataSource) envCtx.lookup("jdbc/tirociniofacile");
     } catch (NamingException e) {
       System.out.println("Error:" + e.getMessage());

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -62,6 +63,9 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+      RequestDispatcher dispatcher;
+  
+      dispatcher = getServletContext().getRequestDispatcher("/ricercaAzienda.jsp");
   }
 
   /**.
@@ -80,7 +84,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
   public void ricercaTuttePagine(HttpServletRequest request) 
       throws SQLException {
     ArrayList<PaginaAziendaBean> pabList = model.ricerca();
-    
+    System.out.println("Eccomi andrea sono nella servlet");
     request.removeAttribute("listaAziende");
     request.setAttribute("listaAziende", pabList);
     
