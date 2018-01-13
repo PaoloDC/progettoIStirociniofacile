@@ -167,7 +167,9 @@ public class UtenteModelTest_jdbc extends TestCase {
     
   }
   
-
+  /**
+   * 
+   */
   public void testCercaAccountPerEmail() {
     
     ProfiloStudenteBean psb = new ProfiloStudenteBean("decri.paolo@gmail.com",
