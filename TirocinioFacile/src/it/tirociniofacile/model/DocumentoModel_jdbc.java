@@ -48,7 +48,7 @@ public class DocumentoModel_jdbc {
     PreparedStatement preparedStatement = null;
     int numeroQuestinariApprovatiPerAnno = 0;
     try {
-      String insertSql = "SELECT COUNT (*) FROM " 
+      String insertSql = "SELECT COUNT(*) FROM " 
           + TABLE_NAME_QUESTIONARI + " WHERE annoAccademico = ?";
       preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, anno);
@@ -69,7 +69,7 @@ public class DocumentoModel_jdbc {
    */
   public synchronized int conteggioQuestionariApprovatiPerAzienda(String azienda) 
       throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
     int numAzienda = 0;
     try {
@@ -77,7 +77,7 @@ public class DocumentoModel_jdbc {
           + " JOIN paginaazienda ON paginaazienda.id = "
           + " questionariovalutazioneazienda.paginaAzienda " 
           + " JOIN profiloazienda ON paginaazienda.profiloAzienda = profiloazienda.mail "
-          + " WHERE approvato = 1 AND nomeAziendaRappresentata = ? ; ";
+          + " WHERE approvato = 1 AND nomeAziendaRappresentata = ?";
       preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, azienda);
       ResultSet rs = preparedStatement.executeQuery();
@@ -104,12 +104,12 @@ public class DocumentoModel_jdbc {
   public synchronized void salvaQuestionario(String informazioniSulTirocinio, 
       String commenti, String suggerimenti, String annoAccademico, float giudizioEsperienza,
       float giudizioAzienda, float giudizioUniversita, String matricola) throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
     try {
-      String insertSql = "INSERT INTO" + TABLE_NAME_QUESTIONARI + "(informazioniSulTirocinio,"
-          + " commenti, suggerimenti, annoAccademico, giudizioEsperienza,"
-          + " giudizioAzienda, giudizioUniversità, matricola) VALUES(?,?,?,?,?,?,?)";
+      String insertSql = "INSERT INTO " + TABLE_NAME_QUESTIONARI + "(informazioniSulTirocinio,"
+          + " commenti, suggerimenti, annoAccademico, giudizioesperienza,"
+          + " giudizioAzienda, giudizioUniversità, matricola) VALUES(?,?,?,?,?,?,?,?)";
       preparedStatement = connection.prepareStatement(insertSql);
 
       preparedStatement.setString(1, informazioniSulTirocinio);
@@ -138,10 +138,10 @@ public class DocumentoModel_jdbc {
   public synchronized void salvaConvenzione(String piva, String nomeAzienda, String sedeLegale,
       String citta, String rappLegale, String luogoDiNascitaRappLegale,
       String dataDiNascitaRappLegale) throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
     try {
-      String insertSql = "INSERT INTO" + TABLE_NAME_CONVENZIONI 
+      String insertSql = "INSERT INTO " + TABLE_NAME_CONVENZIONI 
           + "(partitaIva, nomeAzienda, sedeLegale,"
           + " citta,rappLegale, luogoDiNascitaRappLegale," 
           + " dataNascitaRappLegale) VALUES(?,?,?,?,?,?,?)";
@@ -177,7 +177,7 @@ public class DocumentoModel_jdbc {
    */
   public synchronized DocumentoConvenzioneBean ricercaConvenzionePerId(String id)
       throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
 
     DocumentoConvenzioneBean dcb = null;
@@ -216,7 +216,7 @@ public class DocumentoModel_jdbc {
    */
   public synchronized DocumentoQuestionarioBean ricercaQuestionarioPerId(int id)
       throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
 
     DocumentoQuestionarioBean dqb = null;
@@ -258,7 +258,7 @@ public class DocumentoModel_jdbc {
    */
   public synchronized void cancellaDocumento(int id) 
       throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
     try {
       String insertSqlQuest = "DELETE " + TABLE_NAME_QUESTIONARI 
@@ -288,7 +288,7 @@ public class DocumentoModel_jdbc {
    * @param id identificativo del documento da ricercare
    */
   public synchronized void approvaDocumento(int id) throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
     try {
       String insertSqlQuest = "UPDATE " + TABLE_NAME_QUESTIONARI 

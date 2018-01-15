@@ -15,6 +15,7 @@ public class DocumentoModelTest_jdbc  extends TestCase{
   
   static {
     model = new DocumentoModel_jdbc();
+    modelAzienda = new PaginaAziendaModel_jdbc();
   }
   
   public void testConteggioQuestionariApprovatiPerAnno() {
@@ -71,11 +72,12 @@ public class DocumentoModelTest_jdbc  extends TestCase{
     try {
       model.salvaConvenzione("pivaProva", "test", "test", "test", "test", "test","test");
       
-      ArrayList<String> ambitiAzienda1 = new   ArrayList<String>();
+      ArrayList<String> ambitiAzienda1 = new ArrayList<String>();
       ambitiAzienda1.add("Realtà Aumentata");
       ambitiAzienda1.add("Realtà Virtuale");
       ambitiAzienda1.add("Sviluppo videogiochi");
-      ArrayList<String> skillAzienda1 = new  ArrayList<String>();
+      
+      ArrayList<String> skillAzienda1 = new ArrayList<String>();
       skillAzienda1.add("Conoscenza del FrameWork AngularJS");
       skillAzienda1.add("Conoscenza di Java");
       skillAzienda1.add("Conoscenza dei linguaggi HTML, CSS, JS");
@@ -93,7 +95,7 @@ public class DocumentoModelTest_jdbc  extends TestCase{
     try {
       model.salvaQuestionario("test","test","test","test",1,1,1,"test");
       
-      assertNotNull(model.ricercaQuestionarioPerId(1));
+      assertNotNull(model.ricercaQuestionarioPerId(0));
       
       //supponendo che ci siano meno di 55 questionari
       assertNull(model.ricercaQuestionarioPerId(55));

@@ -49,7 +49,7 @@ public class DocumentoModel {
     int numeroQuestinariApprovatiPerAnno = 0;
     try {
       connection = ds.getConnection();
-      String insertSql = "SELECT COUNT (*) FROM " 
+      String insertSql = "SELECT COUNT(*) FROM " 
           + TABLE_NAME_QUESTIONARI + " WHERE annoAccademico = ?";
       preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, anno);
@@ -87,7 +87,7 @@ public class DocumentoModel {
           + " JOIN paginaazienda ON paginaazienda.id = "
           + " questionariovalutazioneazienda.paginaAzienda " 
           + " JOIN profiloazienda ON paginaazienda.profiloAzienda = profiloazienda.mail "
-          + " WHERE approvato = 1 AND nomeAziendaRappresentata = ? ; ";
+          + " WHERE approvato = 1 AND nomeAziendaRappresentata = ? ";
       preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, azienda);
       ResultSet rs = preparedStatement.executeQuery();
@@ -126,9 +126,9 @@ public class DocumentoModel {
     PreparedStatement preparedStatement = null;
     try {
       connection = ds.getConnection();
-      String insertSql = "INSERT INTO" + TABLE_NAME_QUESTIONARI + "(informazioniSulTirocinio,"
+      String insertSql = "INSERT INTO " + TABLE_NAME_QUESTIONARI + "(informazioniSulTirocinio,"
           + " commenti, suggerimenti, annoAccademico, giudizioEsperienza,"
-          + " giudizioAzienda, giudizioUniversità, matricola) VALUES(?,?,?,?,?,?,?)";
+          + " giudizioAzienda, giudizioUniversità, matricola) VALUES(?,?,?,?,?,?,?,?)";
       preparedStatement = connection.prepareStatement(insertSql);
 
       preparedStatement.setString(1, informazioniSulTirocinio);
@@ -169,7 +169,7 @@ public class DocumentoModel {
     PreparedStatement preparedStatement = null;
     try {
       connection = ds.getConnection();
-      String insertSql = "INSERT INTO" + TABLE_NAME_CONVENZIONI 
+      String insertSql = "INSERT INTO " + TABLE_NAME_CONVENZIONI 
           + "(partitaIva, nomeAzienda, sedeLegale,"
           + " citta,rappLegale, luogoDiNascitaRappLegale," 
           + " dataNascitaRappLegale) VALUES(?,?,?,?,?,?,?)";
