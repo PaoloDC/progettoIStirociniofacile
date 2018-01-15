@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1" import="java.util.* , it.tirociniofacile.bean.*"%>
+	pageEncoding="ISO-8859-1" import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
 	<%
 	ArrayList<PaginaAziendaBean> listaAziende = (ArrayList<PaginaAziendaBean>) request.getAttribute("listaAziende");
-	if(listaAziende!= null){
-		System.out.print("li arrivo andrea");
-	}
 	
+	int i = 0;
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -64,30 +62,39 @@
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Cerca">
 							</div>
-							<button  href="GestioneRicercaTirocinio?action=ricercaTuttePagine"  type="submit" class="btn btn-default">Cerca</button>
+							<button   type="submit" class="btn btn-default">Cerca</button>
 						</form>
 				</div>
 				</ul>
 			</div>
+			<a  href="GestioneTf?action=ricercaTuttePagine" class="btn btn-success btn-block">Cerca tutto <i class="fa fa-angle-right"></a>
 			<!-- /.navbar-collapse -->
+			<% if (listaAziende != null){
+				while (i<listaAziende.size()) {
+			%>
+			
 			<div class="panel-group">
 				<div class="panel panel-default panel-modest" style="max-width: 30%; margin: 5px;">
+					<div class="panel-heading"><%=listaAziende.get(i).getNomeAzienda() %></div>
+					<div class="panel-body" ><%=listaAziende.get(i).getDescrizione() %></div>
+					<center><button type="submit" class="btn btn-default">Vai Alla
+						Pagina</button></center>
+				</div>
+				<%	i = i+1;
+					}
+				  } else{
+					%>
+					<div class="panel panel-default panel-modest" style="max-width: 30%; margin: 5px;">
 					<div class="panel-heading">Ak Informatica</div>
 					<div class="panel-body" >Ak Informatica esiste dal 1988 ed è
 						bella (descrizione qua ci va)</div>
 					<center><button type="submit" class="btn btn-default">Vai Alla
 						Pagina</button></center>
 				</div>
-				
-				<div class="panel panel-default panel-modest" style="max-width: 30%; margin: 5px;">
-					<div class="panel-heading">Ak Informatica</div>
-					<div class="panel-body" >Ak Informatica esiste dal 1988 ed è
-						bella (descrizione qua ci va)</div>
-					<center><button type="submit" class="btn btn-default">Vai Alla
-						Pagina</button></center>
-				</div>
+				<%} %>
 			</div>
 		</div>
+			
 		<!-- /.container-fluid -->
 		</nav>
 

@@ -63,9 +63,10 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-      RequestDispatcher dispatcher;
+    RequestDispatcher dispatcher;
   
-      dispatcher = getServletContext().getRequestDispatcher("/ricercaAzienda.jsp");
+    dispatcher = getServletContext().getRequestDispatcher("/ricercaAzienda.jsp");
+    dispatcher.forward(request, response);
   }
 
   /**.
@@ -84,11 +85,10 @@ public class GestioneRicercaTirocinio extends HttpServlet {
   public void ricercaTuttePagine(HttpServletRequest request) 
       throws SQLException {
     ArrayList<PaginaAziendaBean> pabList = model.ricerca();
-    System.out.println("Eccomi andrea sono nella servlet");
     request.removeAttribute("listaAziende");
     request.setAttribute("listaAziende", pabList);
     
-    System.out.println("Ecco" + pabList.get(0));
+ 
   }
   
   /**

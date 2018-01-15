@@ -18,11 +18,8 @@ public class PaginaAziendaModel {
 
   static {
     try {
-      System.out.println("Qui ci arriva1 andrea");
       Context initCtx = new InitialContext();
-      System.out.println("Qui ci arriva2 andrea");
       Context envCtx = (Context) initCtx.lookup("java:comp/env");
-      System.out.println("Qui ci arriva3 andrea");
       ds = (DataSource) envCtx.lookup("jdbc/tirociniofacile");
     } catch (NamingException e) {
       System.out.println("Error:" + e.getMessage());
@@ -80,7 +77,7 @@ public class PaginaAziendaModel {
     ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT descrizione,localita,nomeazienda FROM " + TABLE_NAME_PAGINA
+      String selectSql = "SELECT descrizione,localita,nomeazienda,id FROM " + TABLE_NAME_PAGINA
           + " JOIN " + DocumentoModel.TABLE_NAME_CONVENZIONI 
           + " ON " + TABLE_NAME_PAGINA + ".id = " 
           + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID ";
@@ -91,9 +88,13 @@ public class PaginaAziendaModel {
       while (rs.next()) {
         PaginaAziendaBean pab = new PaginaAziendaBean();
         pab.setDescrizione(rs.getString(1));
+        System.out.println("1"+rs.getString(1));
         pab.setLocalita(rs.getString(2));
+        System.out.println("2"+rs.getString(2));
         pab.setNomeAzienda(rs.getString(3));
-        String id = rs.getString(4);
+        System.out.println("3"+rs.getString(3));
+       String id = ""+rs.getInt(4);
+       System.out.println("4"+rs.getString(4));
 
         pab.setSkill(this.caricaSkill(id));
         pab.setAmbito(this.caricaAmbito(id));
@@ -238,6 +239,7 @@ public class PaginaAziendaModel {
 
       while (rs.next()) {
         daRestituire.add(rs.getString(1));
+    
       }
 
     } finally {
@@ -280,6 +282,7 @@ public class PaginaAziendaModel {
 
       while (rs.next()) {
         daRestituire.add(rs.getString(1));
+     
       }
 
     } finally {
