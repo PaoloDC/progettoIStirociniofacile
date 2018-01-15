@@ -40,7 +40,6 @@ public class ProfiloAziendaBean extends UtenteBean implements Serializable {
    * @throws ClassNotFoundException
    */
   private void readObject(ObjectInputStream input) throws IOException, ClassNotFoundException {
-    //parchiConvenzionati= (ArrayList<Parco>) input.readObject();
     this.setEmail((String) input.readObject());
     this.setPassword((String) input.readObject());
     nomeAzienda = (String) input.readObject();
