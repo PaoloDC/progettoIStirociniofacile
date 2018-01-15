@@ -125,6 +125,7 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       PaginaAziendaBean pab = new PaginaAziendaBean("Milano",
           "Affermata azienda nel campo  dello sviluppo web","AK INFORMATICA",ambiti,skill);
       ArrayList<PaginaAziendaBean> listaCorretta = new ArrayList<PaginaAziendaBean>();
+      
       listaCorretta.add(pab);
      
       model.aggiungiPagina("Milano","Affermata azienda nel campo  dello sviluppo web",
@@ -132,7 +133,7 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       
       ArrayList<PaginaAziendaBean>  listaResult = new ArrayList<PaginaAziendaBean>();
       //Categoria = nome chiave = AK
-      listaResult = model.ricerca("Nome", "AK");
+      listaResult = model.ricerca("localita", "AK");
       assertNotNull(listaResult);
       assertEquals(listaCorretta.get(0).getLocalita(), listaResult.get(0).getLocalita());
       assertEquals(listaCorretta.get(0).getDescrizione(), listaResult.get(0).getDescrizione());
@@ -143,4 +144,20 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
+  
+  public void testAggiungiPagina() throws SQLException {
+    ArrayList<String> ambiti = new   ArrayList<String>();
+    ambiti.add("Sviluppo applicazioni web");
+    ambiti.add("Reti");
+    ambiti.add("Web designer");
+    ArrayList<String> skill = new  ArrayList<String>();
+    skill.add("Conoscenza di logica client server e java EE 7");
+    skill.add("Conoscenza di Java  (base)");
+    skill.add("Conoscenza dei linguaggi HTML, CSS, JSP");
+    
+    model.aggiungiPagina("Milano","Affermata azienda nel campo  dello sviluppo web",
+        "akinformatica@info.com", ambiti, skill);
+
+  }
+  
 }

@@ -95,7 +95,7 @@ public class PaginaAziendaModel_jdbc {
    */
   public synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave) 
       throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
 
     ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
@@ -106,7 +106,7 @@ public class PaginaAziendaModel_jdbc {
       // la chiave permette una ricerca dei valori in quel campo scelto
 
       String selectSql = "SELECT * FROM " + TABLE_NAME_PAGINA 
-          + " WHERE ? LIKE '%?%'";
+          + " WHERE ? LIKE ?";
 
       preparedStatement = connection.prepareStatement(selectSql);
       preparedStatement.setString(1, categoria);
@@ -145,7 +145,7 @@ public class PaginaAziendaModel_jdbc {
    */
   public synchronized PaginaAziendaBean ricerca(String id) 
       throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
     
     PaginaAziendaBean pab = null;
@@ -172,17 +172,10 @@ public class PaginaAziendaModel_jdbc {
         pab.setAmbito(this.caricaAmbito(id));
         pab.setSkill(this.caricaSkill(id));
       }
-    } finally {
-      try {
-        if (preparedStatement != null) {
-          preparedStatement.close();
-        }
-      } finally {
-        if (connection != null) {
-          connection.close();
-        }
-      }
+    } catch(SQLException e) { 
+        e.printStackTrace(); 
     }
+    
     return pab;
   }
 
@@ -195,7 +188,7 @@ public class PaginaAziendaModel_jdbc {
   private ArrayList<String> caricaSkill(String id) throws SQLException {
     ArrayList<String> daRestituire = new ArrayList<>();
 
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
 
     try {
@@ -213,17 +206,7 @@ public class PaginaAziendaModel_jdbc {
     
       }
 
-    } finally {
-      try {
-        if (preparedStatement != null) {
-          preparedStatement.close();
-        }
-      } finally {
-        if (connection != null) {
-          connection.close();
-        }
-      }
-    }
+    } catch (SQLException e) { e.printStackTrace(); }
 
     return daRestituire;
   }
@@ -238,7 +221,7 @@ public class PaginaAziendaModel_jdbc {
   private ArrayList<String> caricaAmbito(String id) throws SQLException {
     ArrayList<String> daRestituire = new ArrayList<>();
 
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
 
     try {
@@ -255,17 +238,7 @@ public class PaginaAziendaModel_jdbc {
      
       }
 
-    } finally {
-      try {
-        if (preparedStatement != null) {
-          preparedStatement.close();
-        }
-      } finally {
-        if (connection != null) {
-          connection.close();
-        }
-      }
-    }
+    } catch (SQLException e) { e.printStackTrace(); }
 
     return daRestituire;
   }
@@ -282,7 +255,7 @@ public class PaginaAziendaModel_jdbc {
    */
   public synchronized void aggiungiPagina(String localita, String descrizione, String email, 
       ArrayList<String> ambito, ArrayList<String> skill) throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
     PreparedStatement preparedStatementSkill = null;
     PreparedStatement preparedStatementAmbito = null;
@@ -291,7 +264,7 @@ public class PaginaAziendaModel_jdbc {
 
     try {
       String insertSqlPagAzienda = "INSERT INTO " + TABLE_NAME_PAGINA
-          + " (località, descrizione, mailAzienda) VALUES (?, ?, ?)";
+          + " (localita, descrizione, mailAzienda) VALUES (?, ?, ?)";
       preparedStatement = connection.prepareStatement(insertSqlPagAzienda, 
           Statement.RETURN_GENERATED_KEYS);
 
@@ -327,19 +300,8 @@ public class PaginaAziendaModel_jdbc {
 
         preparedStatementAmbito.executeUpdate();
       }
-
-    } finally {
-      try {
-        if (preparedStatement != null) {
-          preparedStatement.close();
-        }
-      } finally {
-        if (connection != null) {
-          connection.close();
-        }
-      }
-    }
     return;
+    } catch(SQLException e) { e.printStackTrace(); }
   }
 }
 

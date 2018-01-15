@@ -287,7 +287,7 @@ public class PaginaAziendaModel {
     try {
       connection = ds.getConnection();
       String insertSqlPagAzienda = "INSERT INTO " + TABLE_NAME_PAGINA
-          + " (località, descrizione, mailAzienda) VALUES (?, ?, ?)";
+          + " (localita, descrizione, mailAzienda) VALUES (?, ?, ?)";
       preparedStatement = connection.prepareStatement(insertSqlPagAzienda, 
           Statement.RETURN_GENERATED_KEYS);
 
