@@ -211,7 +211,7 @@ public class DocumentoModel {
    * @return un documento convenzione
    * @throws SQLException in caso di errata connessione
    */
-  public synchronized DocumentoConvenzioneBean ricercaConvenzionePerId(int id)
+  public synchronized DocumentoConvenzioneBean ricercaConvenzionePerId(String id)
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;

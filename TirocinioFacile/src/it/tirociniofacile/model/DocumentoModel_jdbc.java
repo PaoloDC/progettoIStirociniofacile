@@ -175,7 +175,7 @@ public class DocumentoModel_jdbc {
    * @return un documento convenzione
    * @throws SQLException in caso di errata connessione
    */
-  public synchronized DocumentoConvenzioneBean ricercaConvenzionePerId(int id)
+  public synchronized DocumentoConvenzioneBean ricercaConvenzionePerId(String id)
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -187,7 +187,7 @@ public class DocumentoModel_jdbc {
           + PaginaAziendaModel.TABLE_NAME_PAGINA + " WHERE partitaIva = ?";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, "" + id);
+      preparedStatement.setString(1,id);
       ResultSet rs = preparedStatement.executeQuery();
 
       if (rs.first()) {

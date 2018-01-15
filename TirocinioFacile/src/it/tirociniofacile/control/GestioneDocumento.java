@@ -86,9 +86,9 @@ public class GestioneDocumento extends HttpServlet {
       throws SQLException {
     String id = (request.getParameter("id"));
     int id1 = Integer.parseInt(id);
-    if (model.ricercaConvenzionePerId(id1) != null) {
+    if (model.ricercaConvenzionePerId(id) != null) {
       request.removeAttribute("convenzione");
-      request.setAttribute("convenzione", model.ricercaConvenzionePerId(id1));
+      request.setAttribute("convenzione", model.ricercaConvenzionePerId(id));
     }
     else {
       request.removeAttribute("questionario");
