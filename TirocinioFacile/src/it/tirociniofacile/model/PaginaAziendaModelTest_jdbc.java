@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import it.tirociniofacile.bean.PaginaAziendaBean;
 import junit.framework.TestCase;
 
-public class PaginaAziendaModelTest extends TestCase {
-  private static PaginaAziendaModel model;
+public class PaginaAziendaModelTest_jdbc extends TestCase {
+  private static PaginaAziendaModel_jdbc model;
   
   static {
-    model = new PaginaAziendaModel();
+    model = new PaginaAziendaModel_jdbc();
   }
 
   /**

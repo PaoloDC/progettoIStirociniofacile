@@ -1,47 +1,55 @@
 package it.tirociniofacile.model;
 
-import it.tirociniofacile.bean.PaginaAziendaBean;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+import com.mysql.jdbc.Statement;
 
-public class PaginaAziendaModel {
-  private static DataSource ds;
+import it.tirociniofacile.bean.PaginaAziendaBean;
 
-  static {
-    try {
-      Context initCtx = new InitialContext();
-      Context envCtx = (Context) initCtx.lookup("java:comp/env");
-      ds = (DataSource) envCtx.lookup("jdbc/tirociniofacile");
-    } catch (NamingException e) {
-      System.out.println("Error:" + e.getMessage());
-    }
-  }
-
+public class PaginaAziendaModel_jdbc {
+//variabili di istanza
+  private static Statement stmt;
+  private static Connection con;
+  public static final int LUNGHEZZA_PASSWORD = 20;
   public static final String TABLE_NAME_PAGINA = "PaginaAzienda";
   public static final String TABLE_NAME_AMBITO = "Ambito";
   public static final String TABLE_NAME_SKILL = "Skill";
-
+  
+  static {
+    //Inizia una connessione
+    String db = "tirociniofacile";
+    String user = "root";
+    String pass = "root";
+    
+    try {
+      // jdbs:mysql://indirizzo dell'host/nome del database
+      String url = "jdbc:mysql://127.0.0.1/" + db;
+     
+      //Nome utente, password per la connessione al database
+      con = (Connection) DriverManager.getConnection(url, user, pass);
+      stmt = (Statement) con.createStatement();
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.exit(0);
+    }
+  }
+  
   /**
    * Cerca nel db tutte le pagine azienda.
    * @return lista di pagina azienda
    */
   public synchronized ArrayList<PaginaAziendaBean> ricerca() 
       throws SQLException {
-    Connection connection = null;
+    Connection connection = con;
     PreparedStatement preparedStatement = null;
 
     ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
     try {
-      connection = ds.getConnection();
       String selectSql = "SELECT descrizione,localita,nomeazienda,id FROM " + TABLE_NAME_PAGINA
           + " JOIN " + DocumentoModel.TABLE_NAME_CONVENZIONI 
           + " ON " + TABLE_NAME_PAGINA + ".id = " 
@@ -93,7 +101,6 @@ public class PaginaAziendaModel {
     ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
 
     try {
-      connection = ds.getConnection();
 
       // categoria sta ad indicare un capo della tabella azienda (es. descrizione, località)
       // la chiave permette una ricerca dei valori in quel campo scelto
@@ -144,7 +151,6 @@ public class PaginaAziendaModel {
     PaginaAziendaBean pab = null;
     
     try {
-      connection = ds.getConnection();
 
       String selectSql = "SELECT descrizione,localita,nomeazienda FROM " + TABLE_NAME_PAGINA
           + " JOIN " + DocumentoModel.TABLE_NAME_CONVENZIONI 
@@ -193,7 +199,7 @@ public class PaginaAziendaModel {
     PreparedStatement preparedStatement = null;
 
     try {
-      connection = ds.getConnection();
+
 
       String selectSql = "SELECT nomeSkill FROM " + TABLE_NAME_SKILL + " WHERE " 
           + TABLE_NAME_SKILL + ".paginaAziendaID = ? ";
@@ -236,7 +242,6 @@ public class PaginaAziendaModel {
     PreparedStatement preparedStatement = null;
 
     try {
-      connection = ds.getConnection();
 
       String selectSql = "SELECT nomeAmbito FROM " + TABLE_NAME_AMBITO + " WHERE " 
           + TABLE_NAME_AMBITO + ".paginaAziendaID = ? ";
@@ -285,7 +290,6 @@ public class PaginaAziendaModel {
     PaginaAziendaBean pab = new PaginaAziendaBean();
 
     try {
-      connection = ds.getConnection();
       String insertSqlPagAzienda = "INSERT INTO " + TABLE_NAME_PAGINA
           + " (località, descrizione, mailAzienda) VALUES (?, ?, ?)";
       preparedStatement = connection.prepareStatement(insertSqlPagAzienda, 
