@@ -15,6 +15,9 @@
 </head>
 
 <body>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		crossorigin="anonymous"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -30,16 +33,18 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-4 col-md-4">
-				<form>
+				<form method="post" action="GestioneTf" id="form1"
+					onsubmit="return isOk();">
+					<input type="hidden" id="thisField" name="action" value="log-in">
 					<div class="form-group">
-						<label for="exampleInputEmail1">Email</label> <input type="email"
-							class="form-control" id="exampleInputEmail1"
-							aria-describedby="emailHelp" placeholder="Enter email">
+						<label for="exampleInputEmail1" id="txtErrEmail">Email</label> <input type="email"
+							class="form-control" id="theEmail" aria-describedby="emailHelp"
+							placeholder="Enter email" name="email">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1">Password</label> <input
-							type="password" class="form-control" id="exampleInputPassword1"
-							placeholder="Password">
+						<label for="exampleInputPassword1" id="txtErrPass">Password</label> <input
+							type="password" class="form-control" id="thePass"
+							placeholder="Password" name="password">
 					</div>
 					<button type="submit" class="btn btn-primary">Accedi</button>
 				</form>
@@ -51,18 +56,43 @@
 		<div class="col-4 col-md-4">
 			<div class="row">
 				<h2>Non sei registrato?</h2>
-				<h4>Se sei uno Studente o una Azienda <a href="registrazione">clicca QUI</a></h4>
-				<h4>Se sei un Impiegato o il Presidente dell'area didattica
-					<a href="generaCredenziali.jsp">clicca QUI</a></h4>
-				<h5>Hai dimenticato la password?
-					<a href="recuperaPassword.jsp">clicca QUI</a></h5>
+				<h4>
+					Se sei uno Studente o una Azienda <a href="registrazione.jsp">clicca
+						QUI</a>
+				</h4>
+				<h4>
+					Se sei un Impiegato o il Presidente dell'area didattica <a
+						href="generaCredenziali.jsp">clicca QUI</a>
+				</h4>
+				<h5>
+					Hai dimenticato la password? <a href="recuperaPassword.jsp">clicca
+						QUI</a>
+				</h5>
 			</div>
 		</div>
 		<div class="col-4 col-md-4">
 			<!-- usato per centrare -->
 		</div>
-	
+
 	</div>
 	<%@ include file="footer.jsp"%>
+
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/js/validate.js"></script>
+
+	<script>
+		function isOk() {
+			if (ValidateEmail(document.getElementById("theEmail"), document
+					.getElementById("txtErrEmail"))
+					&& ValidatePassword(document.getElementById("thePass"),
+							document.getElementById("txtErrPass"))) {
+
+				return true;
+
+			}
+
+			return false;
+		}
+	</script>
 </body>
 </html>

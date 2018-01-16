@@ -52,7 +52,6 @@ public class GestioneUtente extends HttpServlet {
   
   protected void doPost(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
-    doGet(request, response);
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
     
@@ -135,7 +134,9 @@ public class GestioneUtente extends HttpServlet {
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));  
     request.removeAttribute("account");
-    request.setAttribute("account",  model.caricaAccount(email, password));
+    request.setAttribute("account", model.caricaAccount(email, password));
+    
+    System.out.println("Arrivatt nella servlet giuata" + email + password);
   }
   
   /**
