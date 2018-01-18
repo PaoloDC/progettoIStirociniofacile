@@ -3,9 +3,13 @@
 	import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
 <%
 	ArrayList<PaginaAziendaBean> listaAzienda = 
-		(ArrayList<PaginaAziendaBean>) request.getAttribute("listaAziende");
+		(ArrayList<PaginaAziendaBean>) session.getAttribute("listaAziende");
 
-	int numQuest = Integer.parseInt(request.getParameter("numeroQuestionari"));
+	int numQuest = -1;
+	if(request.getAttribute("numeroQuestionari") != null) {
+		numQuest = (int) request.getAttribute("numeroQuestionari");
+		System.out.println("Entrato" + numQuest);
+	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -51,7 +55,7 @@
 						<% if (listaAzienda != null) { %>
 						<% for(int i = 0; i < listaAzienda.size(); i++ ) { %>
 						<li><a
-							href="GestioneTf?action=visualizzaInformazioniPerAzienda"><%=listaAzienda.get(i).getNomeAzienda()%></a></li>
+							href="GestioneTf?action=visualizzaInformazioniPerAzienda&azienda=<%=listaAzienda.get(i).getNomeAzienda()%>"><%=listaAzienda.get(i).getNomeAzienda()%></a></li>
 						<% } %>
 						<% } %>
 					</ul>
@@ -68,8 +72,10 @@
 			<div class="col-8 col-md-8">
 				<h2>Il numero di tirocini conclusi per questa azienda e':</h2>
 				<center>
-					<%if (numQuest == null) {%>
-					  <h2>Seleziona un'azienda!</h2>
+					<%if (numQuest == -1) { %>
+						<h2>Seleziona un'azienda!</h2>
+					<% } else { %>
+						<h2><%=numQuest%></h2>
 					<% } %>
 				</center>
 			</div>

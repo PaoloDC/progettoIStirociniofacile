@@ -77,8 +77,8 @@
 				<div class="panel panel-default panel-modest" style="max-width: 30%; margin: 5px;">
 					<div class="panel-heading"><%=listaAziende.get(i).getNomeAzienda() %></div>
 					<div class="panel-body" ><%=listaAziende.get(i).getDescrizione() %></div>
-					<center><button type="submit" class="btn btn-default">Vai Alla
-						Pagina</button></center>
+					<center><a href ="GestioneTf?action=visualizzaPagina&id=01193670625"><button type="submit" class="btn btn-default">Vai Alla
+						Pagina</button><a></a></center>
 				</div>
 				<%	i = i+1;
 					}

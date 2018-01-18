@@ -42,7 +42,6 @@ public class GestioneRicercaTirocinio extends HttpServlet {
   */
   protected void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
-    response.getWriter().append("Served at: ").append(request.getContextPath());
     
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
@@ -63,9 +62,24 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    RequestDispatcher dispatcher;
+    RequestDispatcher dispatcher = null;
+    if (action != null) {
+        if (action.equals("ricercaTuttePagine")) {
+         dispatcher = getServletContext().getRequestDispatcher("/ricercaAzienda.jsp");
+     
+      } else if (action.equals("ricercaPagina")) {
+        dispatcher = getServletContext().getRequestDispatcher("/ricercaAzienda.jsp");
   
-    dispatcher = getServletContext().getRequestDispatcher("/ricercaAzienda.jsp");
+      } else if (action.equals("visualizzaPagina")) {
+        dispatcher = getServletContext().getRequestDispatcher("/visualizzaPagina.jsp");
+        
+      } else if (action.equals("ceaPagina")) {
+       
+      }
+    }else {
+      dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+     
+    }
     dispatcher.forward(request, response);
   }
 
@@ -94,6 +108,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     
     if (tirocini != null) {
       if (tirocini.equals("true")) {
+        request.getSession().setAttribute("listaAziende", pabList);
         RequestDispatcher rd = request.getRequestDispatcher("/visInfAz.jsp");  
         rd.forward(request, response);
       }

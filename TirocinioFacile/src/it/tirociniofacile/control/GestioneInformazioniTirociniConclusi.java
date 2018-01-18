@@ -42,7 +42,7 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
     try {
       if (action!= null) {
         if(action.equals("visualizzaInformazioniPerAnnoAccademico")) {
-          visualizzaInformazioniPerAnnoAccademico(request);
+          visualizzaInformazioniPerAnnoAccademico(request,response);
         }else if (action.equals("visualizzaInformazioniPerAzienda")) {
           visualizzaInformazioniPerAzienda(request,response);
         }
@@ -60,11 +60,14 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
     doGet(request, response);
   }
   
-  public void visualizzaInformazioniPerAnnoAccademico(HttpServletRequest request)
-      throws SQLException {
+  public void visualizzaInformazioniPerAnnoAccademico(HttpServletRequest request, HttpServletResponse response)
+      throws SQLException, ServletException, IOException {
     String anno = request.getParameter("anno");
     request.removeAttribute("numeroQuestionari");
-    request.setAttribute("numeroQuestionari",model.conteggioQuestionariApprovatiPerAnno(anno) );
+    request.setAttribute("numeroQuestionari",model.conteggioQuestionariApprovatiPerAnno(anno));
+    
+    RequestDispatcher rd = request.getRequestDispatcher("/visInfAnno.jsp");  
+    rd.forward(request, response);
   }
   
   public void visualizzaInformazioniPerAzienda(HttpServletRequest request, HttpServletResponse response) 
@@ -74,6 +77,7 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
     request.setAttribute("numeroQuestionari",
         model.conteggioQuestionariApprovatiPerAzienda(azienda));
   
+    System.out.println("QUIIIIIIIIIIII" + request.getAttribute("numeroQuestionari"));
     RequestDispatcher rd = request.getRequestDispatcher("/visInfAz.jsp");  
     rd.forward(request, response);
   }

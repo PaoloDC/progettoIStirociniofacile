@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"
+	import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>%>
+
+<%
+	ArrayList<String> listaAnni = (ArrayList<String>) session.getAttribute("listaAnni");
+
+	int numQuest = -1;
+	if (request.getAttribute("numeroQuestionari") != null) {
+		numQuest = (int) request.getAttribute("numeroQuestionari");
+		System.out.println("Entrato" + numQuest);
+	}
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -40,8 +51,7 @@
 						- <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li><a href="#">2016/2017</a></li>
-						<li><a href="#">2015/2016</a></li>
+						<li><a href="GestioneTf?action=visualizzaInformazioniPerAnnoAccademico&anno=2018">2018</a></li>
 					</ul>
 				</div>
 
@@ -56,9 +66,14 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-8 col-md-8">
-				<h2>Il numero di tirocini conclusi per quest'anno accademico
-					e':</h2>
-				<center><h2>Seleziona un anno!</h2></center>
+				<h2>Il numero di tirocini conclusi per questo anno accademico e':</h2>
+				<center>
+					<%if (numQuest == -1) { %>
+						<h2>Seleziona un anno!</h2>
+					<% } else { %>
+						<h2><%=numQuest%></h2>
+					<% } %>
+				</center>
 			</div>
 			<div class="col-2 col-md-2">
 				<!-- usato per centrare -->
