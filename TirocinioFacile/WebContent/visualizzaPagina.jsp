@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1" import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
+	<%
+	
+	PaginaAziendaBean  pagina = (PaginaAziendaBean) request.getAttribute("pagina");
+
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>TirocinioFacile - Login</title>
+<title>TirocinioFacile - Visualizza pagina</title>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -23,23 +28,23 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
-
+<%if (pagina != null) {%>
 	<div class="container">
 		<%@ include file="header.jsp"%>
 		<div class="row">
 			<div class="col-4 col-sm-4">
 				<img src="logo_documento.png" width="40%" height="40%">
-				<h2>AK Informatica</h2>
+				<h2><%=pagina.getNomeAzienda() %></h2>
 			</div>
 
 			<div class="col-8 col-sm-8">
-				<h3>Indirizzo: Via vione</h3>
-				<h3>Sede: Napoli</h3>
-				<h3>Skill Richieste: Grandi</h3>
-				<h3>Ambito: Piccole</h3>
+				<h3>Indirizzo: <%=pagina.getLocalita() %></h3>
+				<h3>Sede: </h3>
+				<h3>Skill Richieste: <%= pagina.getSkill() %></h3>
+				<h3>Ambito: <%=pagina.getAmbito() %></h3>
 			</div>
 		</div>
-
+<%} %>
 		<div class="row">
 			<div class="col-4 col-sm-4"></div>
 			<div class="col-4 col-sm-4">
