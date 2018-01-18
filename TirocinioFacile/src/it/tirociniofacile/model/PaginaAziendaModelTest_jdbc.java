@@ -229,6 +229,6 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     
     model.eliminaPagina(x);
     u.eliminaProfiloAzienda(prof);
-    
+    //Ciao
   }
 }
