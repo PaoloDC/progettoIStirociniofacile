@@ -31,7 +31,7 @@ import javax.mail.internet.MimeMessage;
 
 
 public class UtenteModel_jdbc {
-  
+
   //variabili di istanza
   private static Statement stmt;
   private static Connection con;
@@ -39,17 +39,17 @@ public class UtenteModel_jdbc {
   private static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
   private static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
   public static final String FILE_NAME = "utenti.dat";  
-  
+
   static {
     //Inizia una connessione
     String db = "tirociniofacile";
     String user = "root";
     String pass = "root";
-    
+
     try {
       // jdbs:mysql://indirizzo dell'host/nome del database
       String url = "jdbc:mysql://127.0.0.1/" + db;
-     
+
       //Nome utente, password per la connessione al database
       con = (Connection) DriverManager.getConnection(url, user, pass);
       stmt = (Statement) con.createStatement();
@@ -66,25 +66,27 @@ public class UtenteModel_jdbc {
    * @param matricola matricola del nuovo studente da registrare
    * @throws SQLException eccezione lanciata in caso di record già esistente
    */
-  public synchronized void salvaAccountStudente(String email, String password, String matricola) 
-      throws SQLException {
+  public synchronized void salvaAccountStudente(String email, String password, String matricola) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
     String insertSql = "INSERT INTO " + TABLE_NAME_STUDENTE
-          + " (mail, password, matricola) VALUES (?, ?, ?)";
-    preparedStatement = connection.prepareStatement(insertSql);
-    preparedStatement.setString(1, email);
-    preparedStatement.setString(2, password);
-    preparedStatement.setString(3, matricola);
+        + " (mail, password, matricola) VALUES (?, ?, ?)";
 
     try {
+      preparedStatement = connection.prepareStatement(insertSql);
+      preparedStatement.setString(1, email);
+      preparedStatement.setString(2, password);
+      preparedStatement.setString(3, matricola);
+
       preparedStatement.executeUpdate();
     } catch (MySQLIntegrityConstraintViolationException e) {
       System.out.println("Entry duplicata per studente con email: " + email);
       return;
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    
+
     return;
   }
 
@@ -94,23 +96,24 @@ public class UtenteModel_jdbc {
    * @param password password della nuova azienda da registrare
    * @throws SQLException eccezione lanciata in caso di record già esistente
    */
-  public synchronized void salvaAccountAzienda(String email, String password, String nomeazienda) 
-      throws SQLException {
+  public synchronized void salvaAccountAzienda(String email, String password, String nomeazienda) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
-
-    String insertSql = "INSERT INTO " + TABLE_NAME_AZIENDA
-          + " (mail, password, nomeAziendaRappresentata) VALUES (?, ?, ?)";
-    preparedStatement = connection.prepareStatement(insertSql);
-    preparedStatement.setString(1, email);
-    preparedStatement.setString(2, password);
-    preparedStatement.setString(3, nomeazienda);
-
     try {
+      String insertSql = "INSERT INTO " + TABLE_NAME_AZIENDA
+          + " (mail, password, nomeAziendaRappresentata) VALUES (?, ?, ?)";
+      preparedStatement = connection.prepareStatement(insertSql);
+      preparedStatement.setString(1, email);
+      preparedStatement.setString(2, password);
+      preparedStatement.setString(3, nomeazienda);
+
+
       preparedStatement.executeUpdate();
     } catch (MySQLIntegrityConstraintViolationException e) {
       System.out.println("Entry duplicata per azienda con email: " + email);
       return;
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
     return;
   }
@@ -168,9 +171,9 @@ public class UtenteModel_jdbc {
    */
   public ArrayList<UtenteBean> caricaUtentiDaFile() {
     try {
-      
+
       File f = new File(FILE_NAME);
-      
+
       if (f.exists()) {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
         ArrayList<UtenteBean> listaUtentiRead = (ArrayList<UtenteBean>) in.readObject();
@@ -184,7 +187,7 @@ public class UtenteModel_jdbc {
     }
     return null;
   }
-  
+
   /**
    * Salva tutti gli utenti nel file.
    * @param listaUtenti lista degli utenti da salvare
@@ -210,24 +213,24 @@ public class UtenteModel_jdbc {
   public synchronized UtenteBean caricaAccount(String email, String password) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
-    
+
     try {
 
       String selectSqlStudente = "SELECT * FROM " + TABLE_NAME_STUDENTE 
           + " WHERE mail  = ? AND password = ? ";
-      
+
       preparedStatement = connection.prepareStatement(selectSqlStudente);
       preparedStatement.setString(1, email);
       preparedStatement.setString(2, password);
       ResultSet rsStudente = preparedStatement.executeQuery();
 
       ProfiloStudenteBean ps = new ProfiloStudenteBean();    
-      
+
       if (rsStudente.first()) {
         ps.setEmail(rsStudente.getString(1));
         ps.setPassword(rsStudente.getString(2)); 
         ps.setMatricola(rsStudente.getString(3));
-        
+
         return ps;
       } else {
 
@@ -246,10 +249,10 @@ public class UtenteModel_jdbc {
           pa.setEmail(rsAzienda.getString(1));
           pa.setPassword(rsAzienda.getString(2));
           pa.setNomeAzienda(rsAzienda.getString(3));
-          
+
           return pa;
         } else {
-         
+
           ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
           for (int i = 0; i < listaUtenti.size(); i++) {
             UtenteBean ub = listaUtenti.get(i);
@@ -264,7 +267,7 @@ public class UtenteModel_jdbc {
     } catch (SQLException e) {
       e.printStackTrace();
     } 
-    
+
     return null;
   }
 
@@ -303,7 +306,7 @@ public class UtenteModel_jdbc {
         if (rs.first()) {
           passwordDaInviare = rs.getString(1);
         } else {
-          
+
           String selectSql2 = "SELECT password FROM " + TABLE_NAME_AZIENDA 
               + " WHERE mail  = ? ";
           preparedStatement = connection.prepareStatement(selectSql);
@@ -364,7 +367,7 @@ public class UtenteModel_jdbc {
       props.put("mail.smtp.password", pass);
       props.put("mail.smtp.port", "587");
       props.put("mail.smtp.auth", "true");
-     
+
       Session session = Session.getDefaultInstance(props);
       MimeMessage message = new MimeMessage(session);
       try {
@@ -395,14 +398,14 @@ public class UtenteModel_jdbc {
 
     }
   }
-  
+
   //METODI ACCESSORI PER L'ELIMINAZIONE
 
 
   public synchronized void eliminaProfiloAzienda(ProfiloAziendaBean a) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
-    
+
     try {
       String deleteSql = "DELETE FROM " + TABLE_NAME_AZIENDA + " WHERE mail = ? ";
       preparedStatement = connection.prepareStatement(deleteSql);
@@ -412,11 +415,11 @@ public class UtenteModel_jdbc {
       e.printStackTrace();
     }   
   }
-  
+
   public synchronized void eliminaProfiloStudente(ProfiloStudenteBean s) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
-    
+
     try {
       String deleteSql = "DELETE FROM " + TABLE_NAME_STUDENTE + " WHERE mail = ? ";
       preparedStatement = connection.prepareStatement(deleteSql);
@@ -426,7 +429,7 @@ public class UtenteModel_jdbc {
       e.printStackTrace();
     }   
   }
-  
+
   public synchronized void eliminaAccountAmministrativo(UtenteBean u) {
     ArrayList<UtenteBean> lista = this.caricaUtentiDaFile();
     if (lista.contains(u)) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class PaginaAziendaBean {
    
+  private int id;
   private String localita;
   private String descrizione;
   private String nomeAzienda;
@@ -71,17 +72,27 @@ public class PaginaAziendaBean {
     this.skill = skill;
   }
 
+  public int getId() {
+    return id;
+  }
+  
+  public void setId(int id) {
+    this.id = id;
+  }
+  
   @Override
    public String toString() {
-    return "PaginaAziendaBean [localita=" + localita + ", descrizione=" + descrizione
-        + ", nomeAzienda=" + nomeAzienda + ", ambito=" + ambito + ", skill=" + skill + "]";
+    return "PaginaAziendaBean [id = " + id + ", localita = " 
+        + localita + ", descrizione = " + descrizione
+        + ", nomeAzienda = " + nomeAzienda + ", ambito = " + ambito + ", skill = " + skill + "]";
   }
   
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof PaginaAziendaBean) {
       PaginaAziendaBean a = (PaginaAziendaBean) obj;
-      return (a.getAmbito().equals(ambito) 
+      return (a.getId() == id
+          && a.getAmbito().equals(ambito) 
           && a.getDescrizione().equals(descrizione)
           && a.getLocalita().equals(localita)
           && a.getNomeAzienda().equals(nomeAzienda)

@@ -50,22 +50,19 @@ public class PaginaAziendaModel {
 
       ResultSet rs = preparedStatement.executeQuery();
 
-      while (rs.next()) {
-        PaginaAziendaBean pab = new PaginaAziendaBean();
-        pab.setDescrizione(rs.getString(1));
-        System.out.println("1"+rs.getString(1));
-        pab.setLocalita(rs.getString(2));
-        System.out.println("2"+rs.getString(2));
-        pab.setNomeAzienda(rs.getString(3));
-        System.out.println("3"+rs.getString(3));
-       String id = ""+rs.getInt(4);
-       System.out.println("4"+rs.getString(4));
+      if (rs.first()) {
+        do {
+          PaginaAziendaBean pab = new PaginaAziendaBean();
+          pab.setDescrizione(rs.getString(1));
+          pab.setLocalita(rs.getString(2));
+          pab.setNomeAzienda(rs.getString(3));
+          String id = rs.getString(4);
 
-        pab.setSkill(this.caricaSkill(id));
-        pab.setAmbito(this.caricaAmbito(id));
-        pabList.add(pab);
+          pab.setSkill(this.caricaSkill(id));
+          pab.setAmbito(this.caricaAmbito(id));
+          pabList.add(pab);
+        } while (rs.next());
       }
-
     } finally {
       try {
         if (preparedStatement != null) {
@@ -136,34 +133,33 @@ public class PaginaAziendaModel {
    * Cerca nel db una pagina azienda per il suo id.
    * @return una pagina azienda
    */
-  public synchronized PaginaAziendaBean ricerca(String partitaIva) 
+  public synchronized PaginaAziendaBean ricerca(String id) 
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    
+
     PaginaAziendaBean pab = null;
-    
+
     try {
       connection = ds.getConnection();
 
       String selectSql = "SELECT descrizione,localita,nomeazienda,id FROM " + TABLE_NAME_PAGINA
           + " JOIN " + DocumentoModel.TABLE_NAME_CONVENZIONI 
           + " ON " + TABLE_NAME_PAGINA + ".id = " 
-          + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE partitaIva = ?";
+          + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE id = ?";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, partitaIva);
+      preparedStatement.setString(1, id);
 
       ResultSet rs = preparedStatement.executeQuery();
 
       if (rs.first()) {
         pab = new PaginaAziendaBean();
-        
+
         pab.setDescrizione(rs.getString(1));
         pab.setLocalita(rs.getString(2));
         pab.setNomeAzienda(rs.getString(3));
-        String id = rs.getString(4);
-        
+
         pab.setAmbito(this.caricaAmbito(id));
         pab.setSkill(this.caricaSkill(id));
       }
@@ -205,7 +201,7 @@ public class PaginaAziendaModel {
 
       while (rs.next()) {
         daRestituire.add(rs.getString(1));
-    
+
       }
 
     } finally {
@@ -248,7 +244,7 @@ public class PaginaAziendaModel {
 
       while (rs.next()) {
         daRestituire.add(rs.getString(1));
-     
+
       }
 
     } finally {
@@ -323,7 +319,7 @@ public class PaginaAziendaModel {
 
         preparedStatementAmbito.executeUpdate();
       }
-      
+
       return autoId;
 
     } finally {

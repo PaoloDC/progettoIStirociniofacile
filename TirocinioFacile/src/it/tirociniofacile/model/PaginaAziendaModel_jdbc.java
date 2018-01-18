@@ -44,6 +44,7 @@ public class PaginaAziendaModel_jdbc {
    * @return lista di pagina azienda
    */
   public synchronized ArrayList<PaginaAziendaBean> ricerca() {
+    
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
@@ -57,22 +58,19 @@ public class PaginaAziendaModel_jdbc {
 
       ResultSet rs = preparedStatement.executeQuery();
 
-      while (rs.next()) {
-        PaginaAziendaBean pab = new PaginaAziendaBean();
-        pab.setDescrizione(rs.getString(1));
-        System.out.println("1"+rs.getString(1));
-        pab.setLocalita(rs.getString(2));
-        System.out.println("2"+rs.getString(2));
-        pab.setNomeAzienda(rs.getString(3));
-        System.out.println("3"+rs.getString(3));
-        String id = ""+rs.getInt(4);
-        System.out.println("4"+rs.getString(4));
+      if (rs.first()) {
+        do {
+          PaginaAziendaBean pab = new PaginaAziendaBean();
+          pab.setDescrizione(rs.getString(1));
+          pab.setLocalita(rs.getString(2));
+          pab.setNomeAzienda(rs.getString(3));
+          int id = rs.getInt(4);
 
-        pab.setSkill(this.caricaSkill(id));
-        pab.setAmbito(this.caricaAmbito(id));
-        pabList.add(pab);
+          pab.setSkill(this.caricaSkill(id));
+          pab.setAmbito(this.caricaAmbito(id));
+          pabList.add(pab);
+        } while (rs.next());
       }
-
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -85,24 +83,24 @@ public class PaginaAziendaModel_jdbc {
    * @return lista di pagina azienda
    */
   public synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave)  {
+    
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
     ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
 
     try {
-
       // categoria sta ad indicare un capo della tabella azienda (es. descrizione, località)
       // la chiave permette una ricerca dei valori in quel campo scelto
 
-      String selectSql = "SELECT descrizione,localita,nomeazienda,id FROM " + TABLE_NAME_PAGINA
-          + " JOIN " + DocumentoModel.TABLE_NAME_CONVENZIONI 
-          + " ON " + TABLE_NAME_PAGINA + ".id = " 
-          + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE ? LIKE ?";
+      String selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id "
+          + "FROM " + TABLE_NAME_PAGINA
+          + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
+          + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = " 
+          + UtenteModel.TABLE_NAME_AZIENDA + ".mail WHERE " + categoria + " LIKE ?";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, categoria);
-      preparedStatement.setString(2, chiave);
+      preparedStatement.setString(1, chiave);
 
       ResultSet rs = preparedStatement.executeQuery();
       if (rs.first()) {
@@ -111,8 +109,9 @@ public class PaginaAziendaModel_jdbc {
           pab.setDescrizione(rs.getString(1));
           pab.setLocalita(rs.getString(2));
           pab.setNomeAzienda(rs.getString(3));
-          String id = rs.getString(4);
-
+          int id = rs.getInt(4);
+          
+          pab.setId(id);
           pab.setSkill(this.caricaSkill(id));
           pab.setAmbito(this.caricaAmbito(id));
           pabList.add(pab);
@@ -128,8 +127,7 @@ public class PaginaAziendaModel_jdbc {
    * Cerca nel db una pagina azienda per il suo id.
    * @return una pagina azienda
    */
-  public synchronized PaginaAziendaBean ricerca(String partitaIva) 
-      throws SQLException {
+  public synchronized PaginaAziendaBean ricerca(int id)  {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
@@ -137,24 +135,23 @@ public class PaginaAziendaModel_jdbc {
 
     try {
 
-      String selectSql = "SELECT descrizione,localita,nomeazienda,id FROM " + TABLE_NAME_PAGINA
-          + " JOIN " + DocumentoModel.TABLE_NAME_CONVENZIONI 
-          + " ON " + TABLE_NAME_PAGINA + ".id = " 
-          + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE partitaIva = ? ";
+      String selectSql = " SELECT descrizione,localita,nomeaziendarappresentata FROM " 
+          + TABLE_NAME_PAGINA + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
+          + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = " 
+          + UtenteModel.TABLE_NAME_AZIENDA + ".mail WHERE id = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, partitaIva);
+      preparedStatement.setInt(1, id);
 
       ResultSet rs = preparedStatement.executeQuery();
 
       if (rs.first()) {
         pab = new PaginaAziendaBean();
-
+        
         pab.setDescrizione(rs.getString(1));
         pab.setLocalita(rs.getString(2));
         pab.setNomeAzienda(rs.getString(3));
-        String id = rs.getString(4);
-        
+        pab.setId(id);
         pab.setAmbito(this.caricaAmbito(id));
         pab.setSkill(this.caricaSkill(id));
       }
@@ -171,20 +168,18 @@ public class PaginaAziendaModel_jdbc {
    * @return una lista di stringhe corrispondenti alle skill richieste dall'azienda
    * @throws SQLException in caso di errata connessione al database
    */
-  private ArrayList<String> caricaSkill(String id) throws SQLException {
+  private ArrayList<String> caricaSkill(int id) {
     ArrayList<String> daRestituire = new ArrayList<>();
 
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
     try {
-
-
       String selectSql = "SELECT nomeSkill FROM " + TABLE_NAME_SKILL + " WHERE " 
           + TABLE_NAME_SKILL + ".paginaAziendaID = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, id);
+      preparedStatement.setInt(1, id);
       ResultSet rs = preparedStatement.executeQuery();
 
       while (rs.next()) {
@@ -206,7 +201,7 @@ public class PaginaAziendaModel_jdbc {
    * @return una lista di stringhe corrispondenti ai vari ambiti di cui si occupa l'azienda
    * @throws SQLException in caso di errata connessione al database
    */
-  private ArrayList<String> caricaAmbito(String id) throws SQLException {
+  private ArrayList<String> caricaAmbito(int id) {
     ArrayList<String> daRestituire = new ArrayList<>();
 
     Connection connection = con;
@@ -218,7 +213,7 @@ public class PaginaAziendaModel_jdbc {
           + TABLE_NAME_AMBITO + ".paginaAziendaID = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, id);
+      preparedStatement.setInt(1, id);
       ResultSet rs = preparedStatement.executeQuery();
 
       while (rs.next()) {
@@ -271,7 +266,6 @@ public class PaginaAziendaModel_jdbc {
       preparedStatementSkill = connection.prepareStatement(insertSqlSkill);
 
       for (String s: skill) {
-        //ID???
         preparedStatementSkill.setInt(1, autoId);
         preparedStatementSkill.setString(2, s);
 
@@ -295,5 +289,24 @@ public class PaginaAziendaModel_jdbc {
     }
     return 0;
   }
+  
+  public void eliminaPagina(int id) {
+    Connection connection = con;
+    PreparedStatement preparedStatement = null;
+    PreparedStatement preparedStatementSkill = null;
+    PreparedStatement preparedStatementAmbito = null;
+
+    String deleteSql = "delete FROM " + TABLE_NAME_PAGINA + " where id = ? ";
+    
+    try {
+      preparedStatement = connection.prepareStatement(deleteSql);
+      preparedStatement.setInt(1, id);
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+  
+  
 }
 

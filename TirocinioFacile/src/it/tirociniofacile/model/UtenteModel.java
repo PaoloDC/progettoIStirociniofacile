@@ -40,9 +40,9 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
 public class UtenteModel {
   
 //variabili di istanza
-  private static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
-  private static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
-  public static final String FILE_NAME = "utenti.dat";
+  public static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
+  public static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
+  private static final String FILE_NAME = "utenti.dat";
   private static DataSource ds;
   public static final int LUNGHEZZA_PASSWORD = 20;
   
