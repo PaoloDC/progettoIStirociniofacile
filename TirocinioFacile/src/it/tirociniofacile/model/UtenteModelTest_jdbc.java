@@ -13,7 +13,10 @@ public class UtenteModelTest_jdbc extends TestCase {
   static {
     model = new UtenteModel_jdbc();
   }
-
+  
+  /**
+   * 
+   */
   public void testSalvaAccountStudente() {
 
     ProfiloStudenteBean studente = 
