@@ -46,11 +46,11 @@ public class DocumentoModel {
   public synchronized int conteggioQuestionariApprovatiPerAnno(String anno) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    int numeroQuestinariApprovatiPerAnno = 0;
+    int numeroQuestinariApprovatiPerAnno = -1;
     try {
       connection = ds.getConnection();
       String insertSql = "SELECT COUNT(*) FROM " 
-          + TABLE_NAME_QUESTIONARI + " WHERE annoAccademico = ?";
+          + TABLE_NAME_QUESTIONARI + " WHERE annoAccademico = ? AND approvato = 1";
       preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, anno);
       ResultSet rs = preparedStatement.executeQuery();
@@ -80,7 +80,7 @@ public class DocumentoModel {
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    int numAzienda = 0;
+    int numAzienda = -1;
     try {
       connection = ds.getConnection();
       String insertSql = "SELECT COUNT(*) FROM " + TABLE_NAME_QUESTIONARI 

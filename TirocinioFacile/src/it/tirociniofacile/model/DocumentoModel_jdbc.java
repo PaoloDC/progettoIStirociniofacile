@@ -109,7 +109,7 @@ public class DocumentoModel_jdbc {
     try {
       String insertSql = "INSERT INTO " + TABLE_NAME_QUESTIONARI + "(informazioniSulTirocinio,"
           + " commenti, suggerimenti, annoAccademico, giudizioesperienza,"
-          + " giudizioAzienda, giudizioUniversità, matricola) VALUES(?,?,?,?,?,?,?,?)";
+          + " giudizioAzienda, giudizioUniversita, matricola) VALUES(?,?,?,?,?,?,?,?)";
       preparedStatement = connection.prepareStatement(insertSql);
 
       preparedStatement.setString(1, informazioniSulTirocinio);
