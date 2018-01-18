@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1" import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
-	<%
-	ArrayList<PaginaAziendaBean> listaAziende = (ArrayList<PaginaAziendaBean>) request.getAttribute("listaAziende");
-	
-	int i = 0;
+	pageEncoding="ISO-8859-1"
+	import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
+<%
+	ArrayList<PaginaAziendaBean> listaAziende = (ArrayList<PaginaAziendaBean>) request
+			.getAttribute("listaAziende");
 
+	int i = 0;
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -40,61 +41,73 @@
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
+						<form action="GestioneTf" method="get">
+							<input type="hidden" id="thisField" name="action"
+								value="ricercaPagina">
 
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">Categoria<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Ambito</a></li>
-								<li><a href="#">Skill</a></li>
-								<li><a href="#">Localita'</a></li>
-								<li><a href="#">Nome</a></li>
-							</ul></li>
+							<li><input type="radio" name="categoria" value="ambito">
+								<label for="ambitoChoice">Ambito</label></li>
+							<li><input type="radio" name="categoria" value="skill">
+								<label for="skillChoice">Skill</label></li>
+							<li><input type="radio" name="categoria" value="localita">
+								<label for="localitaChoice">Localita'</label></li>
+							<li><input type="radio" name="categoria" value="nome">
+								<label for="nomeChoice">Nome</label></li>
 					</ul>
-					<form class="navbar-form navbar-left">
+					<div class="navbar-form navbar-left">
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Chiave">
+							<input type="text" class="form-control" name="chiave"
+								placeholder="Chiave">
 						</div>
-					</form>
+					</div>
 					<ul class="nav navbar-nav navbar-right">
 
-						<form action="GestioneRicercaTirocinio"  method="get" class="navbar-form navbar-right">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Cerca">
-							</div>
-							<button   type="submit" class="btn btn-default">Cerca</button>
+						<div class="navbar-form navbar-right">
+							<button type="submit" class="btn btn-default">Cerca</button>
+						</div>
 						</form>
 				</div>
+
 				</ul>
 			</div>
-			<a  href="GestioneTf?action=ricercaTuttePagine" class="btn btn-success btn-block">Cerca tutto <i class="fa fa-angle-right"></a>
-			<!-- /.navbar-collapse -->
-			<% if (listaAziende != null){
-				while (i<listaAziende.size()) {
-			%>
-			
-			<div class="panel-group">
-				<div class="panel panel-default panel-modest" style="max-width: 30%; margin: 5px;">
-					<div class="panel-heading"><%=listaAziende.get(i).getNomeAzienda() %></div>
-					<div class="panel-body" ><%=listaAziende.get(i).getDescrizione() %></div>
-					<center><a href ="GestioneTf?action=visualizzaPagina&id=01193670625"><button type="submit" class="btn btn-default">Vai Alla
-						Pagina</button><a></a></center>
+			<a href="GestioneTf?action=ricercaTuttePagine"
+				class="btn btn-success btn-block">Cerca tutto <i
+				class="fa fa-angle-right"></a> <!-- /.navbar-collapse -->
+			<div class="container">
+				<div class="row">
+					<div class="panel-group">
+						<%
+							if (listaAziende != null) {
+								while (i < listaAziende.size()) {
+						%>
+						<div class="col-3 col-sm-3">
+
+							<div class="panel panel-default panel-modest"
+								style="max-width: 80%; margin: 5px; max-height: 60%;">
+								<div class="panel-heading"><%=listaAziende.get(i).getNomeAzienda()%></div>
+								<div class="panel-body"><%=listaAziende.get(i).getDescrizione()%></div>
+								<center>
+									<a href="GestioneTf?action=visualizzaPagina&id=<%=listaAziende.get(i).getId()%>"><button type="submit" class="btn btn-default">Vai Alla
+										Pagina</button></a>
+								</center>
+							</div>
+						</div>
+						<%
+							i = i + 1;
+								}
+							} else {
+						%>
+						<center>
+							<h2>Nessuna Azienda</h2>
+						</center>
+						<%
+							}
+						%>
+					</div>
 				</div>
-				<%	i = i+1;
-					}
-				  } else{
-					%>
-					<div class="panel panel-default panel-modest" style="max-width: 30%; margin: 5px;">
-					<div class="panel-heading">Ak Informatica</div>
-					<div class="panel-body" >Ak Informatica esiste dal 1988 ed è
-						bella (descrizione qua ci va)</div>
-					<center><button type="submit" class="btn btn-default">Vai Alla
-						Pagina</button></center>
-				</div>
-				<%} %>
 			</div>
 		</div>
-			
+
 		<!-- /.container-fluid -->
 		</nav>
 

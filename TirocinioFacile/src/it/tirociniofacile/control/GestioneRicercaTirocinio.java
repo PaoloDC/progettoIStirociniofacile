@@ -52,9 +52,9 @@ public class GestioneRicercaTirocinio extends HttpServlet {
         if (action.equals("ricercaTuttePagine")) {
           ricercaTuttePagine(request,response);
         } else if (action.equals("ricercaPagina")) {
-          ricercaPagina(request);
+          ricercaPagina(request,response);
         } else if (action.equals("visualizzaPagina")) {
-          visualizzaPagina(request);
+          visualizzaPagina(request,response);
         } else if (action.equals("ceaPagina")) {
           creaPagina(request);
         }
@@ -62,25 +62,6 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    RequestDispatcher dispatcher = null;
-    if (action != null) {
-        if (action.equals("ricercaTuttePagine")) {
-         dispatcher = getServletContext().getRequestDispatcher("/ricercaAzienda.jsp");
-     
-      } else if (action.equals("ricercaPagina")) {
-        dispatcher = getServletContext().getRequestDispatcher("/ricercaAzienda.jsp");
-  
-      } else if (action.equals("visualizzaPagina")) {
-        dispatcher = getServletContext().getRequestDispatcher("/visualizzaPagina.jsp");
-        
-      } else if (action.equals("ceaPagina")) {
-       
-      }
-    }else {
-      dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-     
-    }
-    dispatcher.forward(request, response);
   }
 
   /**.
@@ -104,6 +85,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     request.removeAttribute("listaAziende");
     request.setAttribute("listaAziende", pabList);
     
+    
     String tirocini = request.getParameter("tirocini");
     
     if (tirocini != null) {
@@ -113,37 +95,50 @@ public class GestioneRicercaTirocinio extends HttpServlet {
         rd.forward(request, response);
       }
     }
- 
+    
+    RequestDispatcher rd = request.getRequestDispatcher("/ricercaAzienda.jsp");  
+    rd.forward(request, response);
   }
   
   /**
    * Servlet che ricerca le pagine per una categoria e una chiave.
    * @param request la richiesta http
    * @throws SQLException eccezione lanciato dal metodo del model
+   * @throws IOException 
+   * @throws ServletException 
    */
-  public void ricercaPagina(HttpServletRequest request) 
-      throws SQLException {
+  public void ricercaPagina(HttpServletRequest request, HttpServletResponse response) 
+      throws SQLException, ServletException, IOException {
     String categoria = request.getParameter("categoria");
     String chiave = request.getParameter("chiave");
     
     ArrayList<PaginaAziendaBean> pabList = model.ricerca(categoria,chiave);
     request.removeAttribute("listaAziende");
     request.setAttribute("listaAziende", pabList);
+    
+    RequestDispatcher rd = request.getRequestDispatcher("/ricercaAzienda.jsp");  
+    rd.forward(request, response);
   }
   
   /**
    * Servlet che visualizza una singola pagina.
    * @param request la richiesta http
    * @throws SQLException eccezione lanciato dal metodo del model
+   * @throws IOException 
+   * @throws ServletException 
    */
-  public void visualizzaPagina(HttpServletRequest request) 
-      throws SQLException {
+  public void visualizzaPagina(HttpServletRequest request, HttpServletResponse response) 
+      throws SQLException, ServletException, IOException {
     String id = request.getParameter("id");
     
     PaginaAziendaBean pab = model.ricerca(id);
     
     request.removeAttribute("pagina");
     request.setAttribute("pagina", pab);
+    
+    RequestDispatcher rd = request.getRequestDispatcher("/visualizzaPagina.jsp");  
+    rd.forward(request, response);
+    
   }
   
   /**
