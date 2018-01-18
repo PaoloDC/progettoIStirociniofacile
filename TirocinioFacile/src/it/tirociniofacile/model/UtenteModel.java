@@ -39,7 +39,7 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
  */
 public class UtenteModel {
   
-//variabili di istanza
+
   public static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
   public static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
   private static final String FILE_NAME = "utenti.dat";

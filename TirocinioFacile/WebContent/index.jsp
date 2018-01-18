@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
+<%
+	String messaggioErrore = (String) request.getAttribute("noUtente");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,13 +41,14 @@
 					onsubmit="return isOk();">
 					<input type="hidden" id="thisField" name="action" value="log-in">
 					<div class="form-group">
-						<label for="exampleInputEmail1" id="txtErrEmail">Email</label> <input type="email"
-							class="form-control" id="theEmail" aria-describedby="emailHelp"
-							placeholder="Enter email" name="email">
+						<label for="exampleInputEmail1" id="txtErrEmail">Email</label> <input
+							type="email" class="form-control" id="theEmail"
+							aria-describedby="emailHelp" placeholder="Enter email"
+							name="email">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1" id="txtErrPass">Password</label> <input
-							type="password" class="form-control" id="thePass"
+						<label for="exampleInputPassword1" id="txtErrPass">Password</label>
+						<input type="password" class="form-control" id="thePass"
 							placeholder="Password" name="password">
 					</div>
 					<button type="submit" class="btn btn-primary">Accedi</button>
@@ -55,6 +60,13 @@
 		</div>
 		<div class="col-4 col-md-4">
 			<div class="row">
+				<%
+					if (messaggioErrore != null) {
+				%>
+					<h3 style="color:#FF0000"><%=messaggioErrore%></h3>
+				<%
+					}
+				%>
 				<h2>Non sei registrato?</h2>
 				<h4>
 					Se sei uno Studente o una Azienda <a href="registrazione.jsp">clicca
@@ -83,14 +95,9 @@
 	<script>
 		function isOk() {
 			if (ValidateEmail(document.getElementById("theEmail"), document
-					.getElementById("txtErrEmail"))
-					&& ValidatePassword(document.getElementById("thePass"),
-							document.getElementById("txtErrPass"))) {
-
+					.getElementById("txtErrEmail"))) {
 				return true;
-
 			}
-
 			return false;
 		}
 	</script>

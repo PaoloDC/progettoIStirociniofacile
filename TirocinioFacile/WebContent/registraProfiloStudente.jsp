@@ -29,26 +29,31 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-4 col-md-4">
-				<form>
+				<form method="post" action="GestioneTf" id="form1"
+					onsubmit="return isOk();">
+					<input type="hidden" id="thisField" name="action"
+						value="registrazioneStudente">
 					<div class="form-group">
-						<label for="exampleInputEmail1">Email Istituzionale</label> <input
+						<label for="exampleInputEmail1">Email Istituzionale
+							(inserire solo cio' che viene prima di @studenti.unisa.it)</label> <input
 							type="email" class="form-control" id="exampleInputEmail1"
-							aria-describedby="emailHelp" placeholder="Enter email">
+							aria-describedby="emailHelp" placeholder="Email" name="email">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputEmail1">Matricola</label> <input
-							type="text" class="form-control" id="exampleInputEmail1"
-							aria-describedby="emailHelp" placeholder="Enter matricola">
+						<label for="exampleInputEmail1" id="txtErrMatricola">Matricola (inserire solo
+							le ultime 5 cifre)</label> <input type="text" class="form-control"
+							id="exampleInputEmail1" aria-describedby="emailHelp"
+							placeholder="Matricola" name="matricola" id="theMatricola">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1">Password</label> <input
 							type="password" class="form-control" id="exampleInputPassword1"
-							placeholder="Password">
+							placeholder="Password" name="password">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1">Conferma Password</label> <input
 							type="password" class="form-control" id="exampleInputPassword1"
-							placeholder="Password">
+							placeholder="Conferma Password">
 					</div>
 					<button type="submit" class="btn btn-primary">Registrati</button>
 				</form>
@@ -61,5 +66,18 @@
 
 	</div>
 	<%@ include file="footer.jsp"%>
+
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/js/validate.js"></script>
+
+	<script>
+		function isOk() {
+			if (ValidateMatricola(document.getElementById("theMatricola"), document
+					.getElementById("txtErrMatricola"))) {
+				return true;
+			}
+			return false;
+		}
+	</script>
 </body>
 </html>

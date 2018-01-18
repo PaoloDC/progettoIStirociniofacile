@@ -1,9 +1,11 @@
 package it.tirociniofacile.control;
 
+import it.tirociniofacile.bean.UtenteBean;
 import it.tirociniofacile.model.UtenteModel;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -73,7 +75,7 @@ public class GestioneUtente extends HttpServlet {
           
  
         } else if (action.equals("log-in")) { 
-          logIn(request);
+          logIn(request,response);
           
         } else if (action.equals("recuperaPassword")) { 
           recuperaPassword(request);
@@ -94,10 +96,14 @@ public class GestioneUtente extends HttpServlet {
    */
   public void registrazioneStudente(HttpServletRequest request) 
       throws SQLException {
+    
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));
     String matricola = (request.getParameter("matricola"));
-    model.salvaAccountStudente(email, password, matricola);
+    
+    String emailIntera = email + "@studenti.unisa.it";
+    
+    model.salvaAccountStudente(emailIntera, password, matricola);
   }
   
   /**
@@ -128,15 +134,45 @@ public class GestioneUtente extends HttpServlet {
    * Effettua la log in.
    * @param request richiesta http
    * @throws SQLException eccezzione sql
+   * @throws IOException 
+   * @throws ServletException 
    */
-  public void logIn(HttpServletRequest request)  // aggiustare log in , attenzione alla sessione, usare modo per capire di che tipo di utente.
-      throws SQLException {
+  public void logIn(HttpServletRequest request, HttpServletResponse response)
+      throws SQLException, ServletException, IOException {
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));  
     request.removeAttribute("account");
-    request.setAttribute("account", model.caricaAccount(email, password));
     
-    System.out.println("Arrivatt nella servlet giuata" + email + password);
+    UtenteBean utente = model.caricaAccount(email, password);
+
+    if (utente != null) {
+      request.getSession().setAttribute("account", utente);
+      if (utente.getEmail().equals("fferrucci@unisa.it")) {
+        request.getSession().setAttribute("tipologiaAccount","presidente");
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/visualizzaInformazioni.jsp");  
+        rd.forward(request, response);
+      } else if (utente.getEmail().contains("@studenti.unisa.it")) {
+        request.getSession().setAttribute("tipologiaAccount","studente");
+      
+        RequestDispatcher rd = request.getRequestDispatcher("/homeStudente.jsp");  
+        rd.forward(request, response);
+      } else if (utente.getEmail().contains("@unisa.it")) {
+        request.getSession().setAttribute("tipologiaAccount","impiegato");
+      
+        RequestDispatcher rd = request.getRequestDispatcher("/");  
+        rd.forward(request, response);
+      } else {
+        request.getSession().setAttribute("tipologiaAccount","azienda");
+      
+        RequestDispatcher rd = request.getRequestDispatcher("/");  
+        rd.forward(request, response);
+      }
+    } else {
+      RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");  
+      request.setAttribute("noUtente","nessun utente con queste credenziali");
+      rd.forward(request, response);
+    }
   }
   
   /**

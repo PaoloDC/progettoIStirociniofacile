@@ -1,3 +1,14 @@
+function ValidateMatricola(matriola,txt) {
+	if(matricola.value != 5) {
+		$(txt).html("Errore codice");
+		code.style.border = "2px solid red";
+		return false;
+	} 
+	$(txt).html("");
+	code.style.border="2px solid green";
+	return true;
+}
+
 function ValidateCode(code,txt) {
 	var codeFormat = /^\d{3}$/;
 	if(code.value.match(codeFormat)) {
