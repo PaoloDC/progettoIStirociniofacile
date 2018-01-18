@@ -20,15 +20,13 @@ import it.tirociniofacile.model.DocumentoModel;
 public class GestioneInformazioniTirociniConclusi extends HttpServlet {
   private static final long serialVersionUID = 1L;
   static DocumentoModel model;
+  
   static {
-    model=new DocumentoModel();
+    model = new DocumentoModel();
   }
-  /**.
-  * @see HttpServlet#HttpServlet()
-  */
+  
   public GestioneInformazioniTirociniConclusi() {
         super();
-        // TODO Auto-generated constructor stub
   }
 
   /**.
@@ -40,14 +38,14 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
     try {
-      if (action!= null) {
-        if(action.equals("visualizzaInformazioniPerAnnoAccademico")) {
+      if (action != null) {
+        if (action.equals("visualizzaInformazioniPerAnnoAccademico")) {
           visualizzaInformazioniPerAnnoAccademico(request,response);
-        }else if (action.equals("visualizzaInformazioniPerAzienda")) {
+        } else if (action.equals("visualizzaInformazioniPerAzienda")) {
           visualizzaInformazioniPerAzienda(request,response);
         }
       }
-    }catch(SQLException e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     }
   }
