@@ -51,7 +51,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     try {
       if (action != null) {
         if (action.equals("ricercaTuttePagine")) {
-          ricercaTuttePagine(request);
+          ricercaTuttePagine(request,response);
         } else if (action.equals("ricercaPagina")) {
           ricercaPagina(request);
         } else if (action.equals("visualizzaPagina")) {
@@ -81,13 +81,23 @@ public class GestioneRicercaTirocinio extends HttpServlet {
    * Servlet che ricerca tutte le pagine.
    * @param request la richiesta http
    * @throws SQLException eccezione lanciato dal metodo del model
+   * @throws IOException 
+   * @throws ServletException 
    */
-  public void ricercaTuttePagine(HttpServletRequest request) 
-      throws SQLException {
+  public void ricercaTuttePagine(HttpServletRequest request, HttpServletResponse response) 
+      throws SQLException, ServletException, IOException {
     ArrayList<PaginaAziendaBean> pabList = model.ricerca();
     request.removeAttribute("listaAziende");
     request.setAttribute("listaAziende", pabList);
     
+    String tirocini = request.getParameter("tirocini");
+    
+    if (tirocini != null) {
+      if (tirocini.equals("true")) {
+        RequestDispatcher rd = request.getRequestDispatcher("/visInfAz.jsp");  
+        rd.forward(request, response);
+      }
+    }
  
   }
   

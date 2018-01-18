@@ -85,8 +85,8 @@ public class DocumentoModel {
       connection = ds.getConnection();
       String insertSql = "SELECT COUNT(*) FROM " + TABLE_NAME_QUESTIONARI 
           + " JOIN paginaazienda ON paginaazienda.id = "
-          + " questionariovalutazioneazienda.paginaAzienda " 
-          + " JOIN profiloazienda ON paginaazienda.profiloAzienda = profiloazienda.mail "
+          + " questionariovalutazioneazienda.paginaAziendaID " 
+          + " JOIN profiloazienda ON paginaazienda.mailAzienda = profiloazienda.mail "
           + " WHERE approvato = 1 AND nomeAziendaRappresentata = ? ";
       preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, azienda);
@@ -128,7 +128,7 @@ public class DocumentoModel {
       connection = ds.getConnection();
       String insertSql = "INSERT INTO " + TABLE_NAME_QUESTIONARI + "(informazioniSulTirocinio,"
           + " commenti, suggerimenti, annoAccademico, giudizioEsperienza,"
-          + " giudizioAzienda, giudizioUniversità, matricola) VALUES(?,?,?,?,?,?,?,?)";
+          + " giudizioAzienda, giudizioUniversita, matricola) VALUES(?,?,?,?,?,?,?,?)";
       preparedStatement = connection.prepareStatement(insertSql);
 
       preparedStatement.setString(1, informazioniSulTirocinio);

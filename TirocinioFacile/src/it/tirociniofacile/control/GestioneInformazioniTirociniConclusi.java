@@ -3,6 +3,7 @@ package it.tirociniofacile.control;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,16 +36,15 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
   */
   protected void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
-    // TODO Auto-generated method stub
-    response.getWriter().append("Served at: ").append(request.getContextPath());
+  
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
     try {
-      if(action!= null ) {
+      if (action!= null) {
         if(action.equals("visualizzaInformazioniPerAnnoAccademico")) {
           visualizzaInformazioniPerAnnoAccademico(request);
         }else if (action.equals("visualizzaInformazioniPerAzienda")) {
-          visualizzaInformazioniPerAzienda(request);
+          visualizzaInformazioniPerAzienda(request,response);
         }
       }
     }catch(SQLException e) {
@@ -57,21 +57,25 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
   */
   protected void doPost(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
-    // TODO Auto-generated method stub
-      doGet(request, response);
+    doGet(request, response);
   }
+  
   public void visualizzaInformazioniPerAnnoAccademico(HttpServletRequest request)
       throws SQLException {
-  String anno = request.getParameter("anno");
-  request.removeAttribute("numeroQuestionari");
-  request.setAttribute("numeroQuestionari",model.conteggioQuestionariApprovatiPerAnno(anno) );
-}
-  public void visualizzaInformazioniPerAzienda(HttpServletRequest request) 
-      throws SQLException {
-  String azienda = request.getParameter("azienda");
-  request.removeAttribute("numeroQuestionari");
-  request.setAttribute("numeroQuestionari",
-      model.conteggioQuestionariApprovatiPerAzienda(azienda));
-}
+    String anno = request.getParameter("anno");
+    request.removeAttribute("numeroQuestionari");
+    request.setAttribute("numeroQuestionari",model.conteggioQuestionariApprovatiPerAnno(anno) );
+  }
+  
+  public void visualizzaInformazioniPerAzienda(HttpServletRequest request, HttpServletResponse response) 
+      throws SQLException, ServletException, IOException {
+    String azienda = request.getParameter("azienda");
+    request.removeAttribute("numeroQuestionari");
+    request.setAttribute("numeroQuestionari",
+        model.conteggioQuestionariApprovatiPerAzienda(azienda));
+  
+    RequestDispatcher rd = request.getRequestDispatcher("/visInfAz.jsp");  
+    rd.forward(request, response);
+  }
 
 }

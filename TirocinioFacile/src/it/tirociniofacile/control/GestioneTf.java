@@ -39,6 +39,7 @@ public class GestioneTf extends HttpServlet {
           || action.equals("visualizzaInformazioniPerAzienda")) {
         RequestDispatcher rd = request.getRequestDispatcher("GestioneInformazioniTirociniConclusi");
         rd.forward(request, response);
+
       } else if (action.equals("visualizzaDocumento") 
           || action.equals("scaricaDocumento") || action.equals("caricaDocumento") 
           || action.equals("convalidaDocumento") || action.equals("compilaConvenzioneAzienda")

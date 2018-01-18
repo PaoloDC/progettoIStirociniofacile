@@ -32,11 +32,10 @@
 			<br> <br> <br>
 		</div>
 
-
-
 		<div class="row">
 			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block" href="visInfAnno.jsp"
+				
+				<a class="btn btn-primary btn-lg btn-block" href="GestioneTf?action=ricercaTuttePagine&tirocini=true"
 					role="button">Tirocini Conclusi Per Azienda</a>
 			</div>
 			<br> <br> <br>
@@ -44,12 +43,11 @@
 
 		<div class="row">
 			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block" href="visInfAnno.jsp"
+				<a class="btn btn-primary btn-lg btn-block" href="ricercaAzienda.jsp"
 					role="button">Ricerca Pagina Azienda</a>
 			</div>
 			<br> <br> <br>
 		</div>
-
 
 	</div>
 	<%@ include file="footer.jsp"%>

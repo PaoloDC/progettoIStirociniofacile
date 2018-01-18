@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"
+	import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
+<%
+	ArrayList<PaginaAziendaBean> listaAzienda = 
+		(ArrayList<PaginaAziendaBean>) request.getAttribute("listaAziende");
+
+	int numQuest = Integer.parseInt(request.getParameter("numeroQuestionari"));
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,7 +33,6 @@
 		crossorigin="anonymous"></script>
 
 
-
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
 		<br> <br> <br>
@@ -42,8 +48,12 @@
 						- <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li><a href="#">SpinVector</a></li>
-						<li><a href="#">Pear</a></li>
+						<% if (listaAzienda != null) { %>
+						<% for(int i = 0; i < listaAzienda.size(); i++ ) { %>
+						<li><a
+							href="GestioneTf?action=visualizzaInformazioniPerAzienda"><%=listaAzienda.get(i).getNomeAzienda()%></a></li>
+						<% } %>
+						<% } %>
 					</ul>
 				</div>
 
@@ -51,16 +61,17 @@
 			<br> <br> <br>
 		</div>
 
-
-
 		<div class="row">
 			<div class="col-2 col-md-2">
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-8 col-md-8">
-				<h2>Il numero di tirocini conclusi per questa azienda
-					e':</h2>
-				<center><h2>Seleziona un'azienda!</h2></center>
+				<h2>Il numero di tirocini conclusi per questa azienda e':</h2>
+				<center>
+					<%if (numQuest == null) {%>
+					  <h2>Seleziona un'azienda!</h2>
+					<% } %>
+				</center>
 			</div>
 			<div class="col-2 col-md-2">
 				<!-- usato per centrare -->
