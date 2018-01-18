@@ -12,24 +12,24 @@ import com.mysql.jdbc.Statement;
 import it.tirociniofacile.bean.PaginaAziendaBean;
 
 public class PaginaAziendaModel_jdbc {
-//variabili di istanza
+  //variabili di istanza
   private static Statement stmt;
   private static Connection con;
   public static final int LUNGHEZZA_PASSWORD = 20;
   public static final String TABLE_NAME_PAGINA = "PaginaAzienda";
   public static final String TABLE_NAME_AMBITO = "Ambito";
   public static final String TABLE_NAME_SKILL = "Skill";
-  
+
   static {
     //Inizia una connessione
     String db = "tirociniofacile";
     String user = "root";
     String pass = "root";
-    
+
     try {
       // jdbs:mysql://indirizzo dell'host/nome del database
       String url = "jdbc:mysql://127.0.0.1/" + db;
-     
+
       //Nome utente, password per la connessione al database
       con = (Connection) DriverManager.getConnection(url, user, pass);
       stmt = (Statement) con.createStatement();
@@ -38,13 +38,12 @@ public class PaginaAziendaModel_jdbc {
       System.exit(0);
     }
   }
-  
+
   /**
    * Cerca nel db tutte le pagine azienda.
    * @return lista di pagina azienda
    */
-  public synchronized ArrayList<PaginaAziendaBean> ricerca() 
-      throws SQLException {
+  public synchronized ArrayList<PaginaAziendaBean> ricerca() {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
@@ -66,24 +65,16 @@ public class PaginaAziendaModel_jdbc {
         System.out.println("2"+rs.getString(2));
         pab.setNomeAzienda(rs.getString(3));
         System.out.println("3"+rs.getString(3));
-       String id = ""+rs.getInt(4);
-       System.out.println("4"+rs.getString(4));
+        String id = ""+rs.getInt(4);
+        System.out.println("4"+rs.getString(4));
 
         pab.setSkill(this.caricaSkill(id));
         pab.setAmbito(this.caricaAmbito(id));
         pabList.add(pab);
       }
 
-    } finally {
-      try {
-        if (preparedStatement != null) {
-          preparedStatement.close();
-        }
-      } finally {
-        if (connection != null) {
-          connection.close();
-        }
-      }
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
     return pabList;
   }
@@ -93,8 +84,7 @@ public class PaginaAziendaModel_jdbc {
    * Cerca nel db tutte le pagine azienda corrispondenti alla chiave per quella categoria.
    * @return lista di pagina azienda
    */
-  public synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave) 
-      throws SQLException {
+  public synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave)  {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
@@ -105,36 +95,31 @@ public class PaginaAziendaModel_jdbc {
       // categoria sta ad indicare un capo della tabella azienda (es. descrizione, località)
       // la chiave permette una ricerca dei valori in quel campo scelto
 
-      String selectSql = "SELECT * FROM " + TABLE_NAME_PAGINA 
-          + " WHERE ? LIKE ?";
+      String selectSql = "SELECT descrizione,localita,nomeazienda,id FROM " + TABLE_NAME_PAGINA
+          + " JOIN " + DocumentoModel.TABLE_NAME_CONVENZIONI 
+          + " ON " + TABLE_NAME_PAGINA + ".id = " 
+          + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE ? LIKE ?";
 
       preparedStatement = connection.prepareStatement(selectSql);
       preparedStatement.setString(1, categoria);
       preparedStatement.setString(2, chiave);
 
       ResultSet rs = preparedStatement.executeQuery();
+      if (rs.first()) {
+        do {
+          PaginaAziendaBean pab = new PaginaAziendaBean();
+          pab.setDescrizione(rs.getString(1));
+          pab.setLocalita(rs.getString(2));
+          pab.setNomeAzienda(rs.getString(3));
+          String id = rs.getString(4);
 
-      while (rs.next()) {
-        PaginaAziendaBean pab = new PaginaAziendaBean();
-        pab.setDescrizione(rs.getString(1));
-        pab.setLocalita(rs.getString(2));
-        pab.setNomeAzienda(rs.getString(3));
-        String id = rs.getString(4);
-
-        pab.setSkill(this.caricaSkill(id));
-        pab.setAmbito(this.caricaAmbito(id));
-        pabList.add(pab);
+          pab.setSkill(this.caricaSkill(id));
+          pab.setAmbito(this.caricaAmbito(id));
+          pabList.add(pab);
+        } while (rs.next());
       }
-    } finally {
-      try {
-        if (preparedStatement != null) {
-          preparedStatement.close();
-        }
-      } finally {
-        if (connection != null) {
-          connection.close();
-        }
-      }
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
     return pabList;
   }
@@ -143,39 +128,40 @@ public class PaginaAziendaModel_jdbc {
    * Cerca nel db una pagina azienda per il suo id.
    * @return una pagina azienda
    */
-  public synchronized PaginaAziendaBean ricerca(String id) 
+  public synchronized PaginaAziendaBean ricerca(String partitaIva) 
       throws SQLException {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
-    
+
     PaginaAziendaBean pab = null;
-    
+
     try {
 
-      String selectSql = "SELECT descrizione,localita,nomeazienda FROM " + TABLE_NAME_PAGINA
+      String selectSql = "SELECT descrizione,localita,nomeazienda,id FROM " + TABLE_NAME_PAGINA
           + " JOIN " + DocumentoModel.TABLE_NAME_CONVENZIONI 
           + " ON " + TABLE_NAME_PAGINA + ".id = " 
-          + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE id = " + id;
+          + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE partitaIva = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, id);
+      preparedStatement.setString(1, partitaIva);
 
       ResultSet rs = preparedStatement.executeQuery();
 
       if (rs.first()) {
         pab = new PaginaAziendaBean();
-        
+
         pab.setDescrizione(rs.getString(1));
         pab.setLocalita(rs.getString(2));
         pab.setNomeAzienda(rs.getString(3));
+        String id = rs.getString(4);
         
         pab.setAmbito(this.caricaAmbito(id));
         pab.setSkill(this.caricaSkill(id));
       }
-    } catch(SQLException e) { 
-        e.printStackTrace(); 
+    } catch (SQLException e) { 
+      e.printStackTrace(); 
     }
-    
+
     return pab;
   }
 
@@ -203,10 +189,12 @@ public class PaginaAziendaModel_jdbc {
 
       while (rs.next()) {
         daRestituire.add(rs.getString(1));
-    
+
       }
 
-    } catch (SQLException e) { e.printStackTrace(); }
+    } catch (SQLException e) {
+      e.printStackTrace(); 
+    }
 
     return daRestituire;
   }
@@ -235,7 +223,7 @@ public class PaginaAziendaModel_jdbc {
 
       while (rs.next()) {
         daRestituire.add(rs.getString(1));
-     
+
       }
 
     } catch (SQLException e) { e.printStackTrace(); }
@@ -248,13 +236,13 @@ public class PaginaAziendaModel_jdbc {
    * Aggiunge una pagina nel db. 
    * @param localita sede dell'azienda
    * @param descrizione descrizione dell'azienda
-   * @param nomeAzienda nome dell'azienda
+   * @param email mail dell'azienda
    * @param ambito ambiti dove lavora l'azienda
    * @param skill skills richieste dall'azienda
    * @throws SQLException in caso di lettura errata dal database
    */
-  public synchronized void aggiungiPagina(String localita, String descrizione, String email, 
-      ArrayList<String> ambito, ArrayList<String> skill) throws SQLException {
+  public synchronized int aggiungiPagina(String localita, String descrizione, String email, 
+      ArrayList<String> ambito, ArrayList<String> skill) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
     PreparedStatement preparedStatementSkill = null;
@@ -279,7 +267,7 @@ public class PaginaAziendaModel_jdbc {
       int autoId = rs.getInt(1);
 
       String insertSqlSkill = "INSERT INTO " + TABLE_NAME_SKILL
-          + " (paginaAzienda,nomeSkill) VALUES (?,?)";
+          + " (paginaAziendaID,nomeSkill) VALUES (?,?)";
       preparedStatementSkill = connection.prepareStatement(insertSqlSkill);
 
       for (String s: skill) {
@@ -291,7 +279,7 @@ public class PaginaAziendaModel_jdbc {
       }
 
       String insertSqlAmbito = "INSERT INTO " + TABLE_NAME_AMBITO
-          + " (paginaAzienda, nomeAmbito) VALUES (?,?)";
+          + " (paginaAziendaID, nomeAmbito) VALUES (?,?)";
       preparedStatementAmbito = connection.prepareStatement(insertSqlAmbito);
 
       for (String a: ambito) {
@@ -300,8 +288,12 @@ public class PaginaAziendaModel_jdbc {
 
         preparedStatementAmbito.executeUpdate();
       }
-    return;
-    } catch(SQLException e) { e.printStackTrace(); }
+
+      return autoId;
+    } catch (SQLException e) {
+      e.printStackTrace(); 
+    }
+    return 0;
   }
 }
 

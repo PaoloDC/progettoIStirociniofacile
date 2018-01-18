@@ -362,7 +362,7 @@ public class UtenteModel {
       String[] destinari = { email }; // list of recipient email addresses
       String oggetto = "Recupera Password Tirocinio Facile";
       String corpo = "Salve utente, questa mail le è stata inviata per sua richiesta di "
-          + "recupero passowrd.\nLa sua password per accedere alla piattaforma"
+          + "recupero password.\nLa sua password per accedere alla piattaforma"
           + " tirocinio facile è: ' " + passwordDaInviare + " '.\n\nBuona navigazione.";
 
       Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);

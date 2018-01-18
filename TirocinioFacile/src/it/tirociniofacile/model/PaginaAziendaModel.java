@@ -136,7 +136,7 @@ public class PaginaAziendaModel {
    * Cerca nel db una pagina azienda per il suo id.
    * @return una pagina azienda
    */
-  public synchronized PaginaAziendaBean ricerca(String id) 
+  public synchronized PaginaAziendaBean ricerca(String partitaIva) 
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -146,13 +146,13 @@ public class PaginaAziendaModel {
     try {
       connection = ds.getConnection();
 
-      String selectSql = "SELECT descrizione,localita,nomeazienda FROM " + TABLE_NAME_PAGINA
+      String selectSql = "SELECT descrizione,localita,nomeazienda,id FROM " + TABLE_NAME_PAGINA
           + " JOIN " + DocumentoModel.TABLE_NAME_CONVENZIONI 
           + " ON " + TABLE_NAME_PAGINA + ".id = " 
-          + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE id = " + id;
+          + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE partitaIva = ?";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, id);
+      preparedStatement.setString(1, partitaIva);
 
       ResultSet rs = preparedStatement.executeQuery();
 
@@ -162,6 +162,7 @@ public class PaginaAziendaModel {
         pab.setDescrizione(rs.getString(1));
         pab.setLocalita(rs.getString(2));
         pab.setNomeAzienda(rs.getString(3));
+        String id = rs.getString(4);
         
         pab.setAmbito(this.caricaAmbito(id));
         pab.setSkill(this.caricaSkill(id));
@@ -275,7 +276,7 @@ public class PaginaAziendaModel {
    * @param skill skills richieste dall'azienda
    * @throws SQLException in caso di lettura errata dal database
    */
-  public synchronized void aggiungiPagina(String localita, String descrizione, String email, 
+  public synchronized int aggiungiPagina(String localita, String descrizione, String email, 
       ArrayList<String> ambito, ArrayList<String> skill) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -302,11 +303,10 @@ public class PaginaAziendaModel {
       int autoId = rs.getInt(1);
 
       String insertSqlSkill = "INSERT INTO " + TABLE_NAME_SKILL
-          + " (paginaAzienda,nomeSkill) VALUES (?,?)";
+          + " (paginaAziendaID,nomeSkill) VALUES (?,?)";
       preparedStatementSkill = connection.prepareStatement(insertSqlSkill);
 
       for (String s: skill) {
-        //ID???
         preparedStatementSkill.setInt(1, autoId);
         preparedStatementSkill.setString(2, s);
 
@@ -314,7 +314,7 @@ public class PaginaAziendaModel {
       }
 
       String insertSqlAmbito = "INSERT INTO " + TABLE_NAME_AMBITO
-          + " (paginaAzienda, nomeAmbito) VALUES (?,?)";
+          + " (paginaAziendaID, nomeAmbito) VALUES (?,?)";
       preparedStatementAmbito = connection.prepareStatement(insertSqlAmbito);
 
       for (String a: ambito) {
@@ -323,6 +323,8 @@ public class PaginaAziendaModel {
 
         preparedStatementAmbito.executeUpdate();
       }
+      
+      return autoId;
 
     } finally {
       try {
@@ -335,7 +337,6 @@ public class PaginaAziendaModel {
         }
       }
     }
-    return;
   }
 }
 

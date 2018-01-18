@@ -7,6 +7,7 @@ import it.tirociniofacile.bean.PaginaAziendaBean;
 import junit.framework.TestCase;
 
 public class PaginaAziendaModelTest_jdbc extends TestCase {
+  
   private static PaginaAziendaModel_jdbc model;
   
   static {
@@ -91,10 +92,10 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       PaginaAziendaBean pabCorretta = new PaginaAziendaBean("Milano",
           "Affermata azienda nel campo  dello sviluppo web","AK INFORMATICA",ambiti,skill);
       
-      model.aggiungiPagina("Milano","Affermata azienda nel campo  dello sviluppo web",
+      int x = model.aggiungiPagina("Milano","Affermata azienda nel campo  dello sviluppo web",
           "akinformatica@info.com", ambiti, skill);
       
-      PaginaAziendaBean pabResult = model.ricerca("3");
+      PaginaAziendaBean pabResult = model.ricerca("" + x);
       
       assertNotNull(pabResult);
       assertEquals(pabCorretta.getDescrizione(), pabResult.getDescrizione());
@@ -135,17 +136,25 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       //Categoria = nome chiave = AK
       listaResult = model.ricerca("localita", "AK");
       assertNotNull(listaResult);
-      assertEquals(listaCorretta.get(0).getLocalita(), listaResult.get(0).getLocalita());
-      assertEquals(listaCorretta.get(0).getDescrizione(), listaResult.get(0).getDescrizione());
-      assertEquals(listaCorretta.get(0).getNomeAzienda(), listaResult.get(0).getNomeAzienda());
-      assertEquals(listaCorretta.get(0).getAmbito(), listaResult.get(0).getAmbito());
-      assertEquals(listaCorretta.get(0).getSkill(), listaResult.get(0).getSkill());
+      assertEquals(listaResult.size(), 0);
+
+      listaResult.clear();
+      listaResult = model.ricerca("localita","Milano");
+      
+      assertEquals(listaResult.size(), 1);
+      assertEquals(listaResult.get(0).getNomeAzienda(), pab.getNomeAzienda());
+      assertEquals(listaResult.get(0).getDescrizione(), pab.getDescrizione());
+      assertEquals(listaResult.get(0).getLocalita(), pab.getLocalita());
+      assertEquals(listaResult.get(0).getAmbito(), pab.getAmbito());
+      assertEquals(listaResult.get(0).getSkill(), pab.getSkill());
+      
+      
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
   
-  public void testAggiungiPagina() throws SQLException {
+  public void testAggiungiPagina() {
     ArrayList<String> ambiti = new   ArrayList<String>();
     ambiti.add("Sviluppo applicazioni web");
     ambiti.add("Reti");
