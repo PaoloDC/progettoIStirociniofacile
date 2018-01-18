@@ -15,16 +15,15 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     model = new PaginaAziendaModel_jdbc();
   }
 
-  /**
-   * 
-   */
+  
   public void testRicerca() {
     try {
       
       //da una situazione di db caricato con dati default in sql
-      final int LISTA_SIZE = 8;
+      final int dimensione_iniziale = 8;
+      
       ArrayList<PaginaAziendaBean> lista = model.ricerca();
-      assertEquals(lista.size(), LISTA_SIZE);
+      assertEquals(lista.size(), dimensione_iniziale);
       
       //inserisco una pagina di prova, utilizzando uno stub di profiloAziendaBean
       ArrayList<String> ambiti = new   ArrayList<String>();
@@ -63,9 +62,10 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       
       pab.setId(id);
       
-      lista = model.ricerca();
-      assertEquals(lista.size(), LISTA_SIZE+1);
-      assertEquals(lista.contains(pab),true);
+      ArrayList<PaginaAziendaBean> nuovaLista = model.ricerca();
+      
+      assertEquals(nuovaLista.size(), (dimensione_iniziale + 1));
+      assertEquals(nuovaLista.contains(pab), true);
       
       model.eliminaPagina(pab.getId());
       um.eliminaProfiloAzienda(profilo);
@@ -76,9 +76,7 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     }
   }
   
-  /**
-   * 
-   */
+
   public void testRicercaPerId() {
     try {
       //inserisco una pagina di prova, utilizzando uno stub di profiloAziendaBean
@@ -107,7 +105,8 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       
       UtenteModel_jdbc um = new UtenteModel_jdbc();
       
-      um.salvaAccountAzienda(profilo.getEmail(), profilo.getPassword(),
+      um.salvaAccountAzienda(profilo.getEmail(), 
+          profilo.getPassword(),
           profilo.getNomeAzienda());
       
       int id = model.aggiungiPagina(pab.getLocalita(),
@@ -129,7 +128,6 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
-  
   
   public void testRicercaParametrica() { 
     try {
@@ -211,6 +209,7 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     prof.setPassword("mail");
     
     UtenteModel_jdbc u = new UtenteModel_jdbc();
+    
     u.salvaAccountAzienda(prof.getEmail(), prof.getPassword(), prof.getNomeAzienda());
     
     PaginaAziendaBean pab = new PaginaAziendaBean();
@@ -229,6 +228,5 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     
     model.eliminaPagina(x);
     u.eliminaProfiloAzienda(prof);
-    //Ciao
   }
 }

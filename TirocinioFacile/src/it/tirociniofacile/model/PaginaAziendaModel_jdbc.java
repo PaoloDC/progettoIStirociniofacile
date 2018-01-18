@@ -50,10 +50,11 @@ public class PaginaAziendaModel_jdbc {
 
     ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
     try {
-      String selectSql = "SELECT descrizione,localita,nomeazienda,id FROM " + TABLE_NAME_PAGINA
-          + " JOIN " + DocumentoModel.TABLE_NAME_CONVENZIONI 
-          + " ON " + TABLE_NAME_PAGINA + ".id = " 
-          + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID ";
+      String selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id "
+          + "FROM " + TABLE_NAME_PAGINA
+          + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
+          + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = " 
+          + UtenteModel.TABLE_NAME_AZIENDA + ".mail";
       preparedStatement = connection.prepareStatement(selectSql);
 
       ResultSet rs = preparedStatement.executeQuery();
@@ -65,7 +66,8 @@ public class PaginaAziendaModel_jdbc {
           pab.setLocalita(rs.getString(2));
           pab.setNomeAzienda(rs.getString(3));
           int id = rs.getInt(4);
-
+          
+          pab.setId(id);
           pab.setSkill(this.caricaSkill(id));
           pab.setAmbito(this.caricaAmbito(id));
           pabList.add(pab);

@@ -82,6 +82,7 @@ public class UtenteModel_jdbc {
       preparedStatement.executeUpdate();
     } catch (MySQLIntegrityConstraintViolationException e) {
       System.out.println("Entry duplicata per studente con email: " + email);
+      e.printStackTrace();
       return;
     } catch (SQLException e) {
       e.printStackTrace();
@@ -111,6 +112,7 @@ public class UtenteModel_jdbc {
       preparedStatement.executeUpdate();
     } catch (MySQLIntegrityConstraintViolationException e) {
       System.out.println("Entry duplicata per azienda con email: " + email);
+      e.printStackTrace();
       return;
     } catch (SQLException e) {
       e.printStackTrace();

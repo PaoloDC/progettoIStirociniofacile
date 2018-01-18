@@ -34,18 +34,18 @@ public class PaginaAziendaModel {
    * Cerca nel db tutte le pagine azienda.
    * @return lista di pagina azienda
    */
-  public synchronized ArrayList<PaginaAziendaBean> ricerca() 
-      throws SQLException {
+  public synchronized ArrayList<PaginaAziendaBean> ricerca() {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
     ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT descrizione,localita,nomeazienda,id FROM " + TABLE_NAME_PAGINA
-          + " JOIN " + DocumentoModel.TABLE_NAME_CONVENZIONI 
-          + " ON " + TABLE_NAME_PAGINA + ".id = " 
-          + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID ";
+      String selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id "
+          + "FROM " + TABLE_NAME_PAGINA
+          + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
+          + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = " 
+          + UtenteModel.TABLE_NAME_AZIENDA + ".mail";
       preparedStatement = connection.prepareStatement(selectSql);
 
       ResultSet rs = preparedStatement.executeQuery();
@@ -56,23 +56,34 @@ public class PaginaAziendaModel {
           pab.setDescrizione(rs.getString(1));
           pab.setLocalita(rs.getString(2));
           pab.setNomeAzienda(rs.getString(3));
-          String id = rs.getString(4);
-
+          int id = rs.getInt(4);
+          
+          pab.setId(id);
           pab.setSkill(this.caricaSkill(id));
           pab.setAmbito(this.caricaAmbito(id));
           pabList.add(pab);
         } while (rs.next());
       }
-    } finally {
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
         }
+      } catch (SQLException e) {
+        e.printStackTrace();
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          }
+          catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
-      }
+      } 
     }
     return pabList;
   }
@@ -82,8 +93,7 @@ public class PaginaAziendaModel {
    * Cerca nel db tutte le pagine azienda corrispondenti alla chiave per quella categoria.
    * @return lista di pagina azienda
    */
-  public synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave) 
-      throws SQLException {
+  public synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave)  {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
@@ -95,36 +105,51 @@ public class PaginaAziendaModel {
       // categoria sta ad indicare un capo della tabella azienda (es. descrizione, località)
       // la chiave permette una ricerca dei valori in quel campo scelto
 
-      String selectSql = "SELECT * FROM " + TABLE_NAME_PAGINA 
-          + " WHERE ? LIKE '%?%'";
+      String selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id "
+          + "FROM " + TABLE_NAME_PAGINA
+          + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
+          + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = " 
+          + UtenteModel.TABLE_NAME_AZIENDA + ".mail WHERE " + categoria + " LIKE ?";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, categoria);
-      preparedStatement.setString(2, chiave);
+      preparedStatement.setString(1, chiave);
 
       ResultSet rs = preparedStatement.executeQuery();
 
-      while (rs.next()) {
-        PaginaAziendaBean pab = new PaginaAziendaBean();
-        pab.setDescrizione(rs.getString(1));
-        pab.setLocalita(rs.getString(2));
-        pab.setNomeAzienda(rs.getString(3));
-        String id = rs.getString(4);
-
-        pab.setSkill(this.caricaSkill(id));
-        pab.setAmbito(this.caricaAmbito(id));
-        pabList.add(pab);
+      if (rs.first()) {
+        do {
+          PaginaAziendaBean pab = new PaginaAziendaBean();
+          pab.setDescrizione(rs.getString(1));
+          pab.setLocalita(rs.getString(2));
+          pab.setNomeAzienda(rs.getString(3));
+          int id = rs.getInt(4);
+          
+          pab.setId(id);
+          pab.setSkill(this.caricaSkill(id));
+          pab.setAmbito(this.caricaAmbito(id));
+          pabList.add(pab);
+        } while (rs.next());
       }
-    } finally {
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
         }
+      } catch (SQLException e) {
+        e.printStackTrace();
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          }
+          catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
-      }
+      } 
     }
     return pabList;
   }
@@ -133,7 +158,7 @@ public class PaginaAziendaModel {
    * Cerca nel db una pagina azienda per il suo id.
    * @return una pagina azienda
    */
-  public synchronized PaginaAziendaBean ricerca(String id) 
+  public synchronized PaginaAziendaBean ricerca(int id) 
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -143,36 +168,46 @@ public class PaginaAziendaModel {
     try {
       connection = ds.getConnection();
 
-      String selectSql = "SELECT descrizione,localita,nomeazienda,id FROM " + TABLE_NAME_PAGINA
-          + " JOIN " + DocumentoModel.TABLE_NAME_CONVENZIONI 
-          + " ON " + TABLE_NAME_PAGINA + ".id = " 
-          + DocumentoModel.TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE id = ?";
+      String selectSql = " SELECT descrizione,localita,nomeaziendarappresentata FROM " 
+          + TABLE_NAME_PAGINA + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
+          + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = " 
+          + UtenteModel.TABLE_NAME_AZIENDA + ".mail WHERE id = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, id);
+      preparedStatement.setInt(1, id);
 
       ResultSet rs = preparedStatement.executeQuery();
 
       if (rs.first()) {
         pab = new PaginaAziendaBean();
-
+        
         pab.setDescrizione(rs.getString(1));
         pab.setLocalita(rs.getString(2));
         pab.setNomeAzienda(rs.getString(3));
-
+        pab.setId(id);
         pab.setAmbito(this.caricaAmbito(id));
         pab.setSkill(this.caricaSkill(id));
       }
-    } finally {
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
         }
+      } catch (SQLException e) {
+        e.printStackTrace();
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          }
+          catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
-      }
+      } 
     }
     return pab;
   }
@@ -183,7 +218,7 @@ public class PaginaAziendaModel {
    * @return una lista di stringhe corrispondenti alle skill richieste dall'azienda
    * @throws SQLException in caso di errata connessione al database
    */
-  private ArrayList<String> caricaSkill(String id) throws SQLException {
+  private ArrayList<String> caricaSkill(int id) {
     ArrayList<String> daRestituire = new ArrayList<>();
 
     Connection connection = null;
@@ -196,7 +231,7 @@ public class PaginaAziendaModel {
           + TABLE_NAME_SKILL + ".paginaAziendaID = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, id);
+      preparedStatement.setInt(1, id);
       ResultSet rs = preparedStatement.executeQuery();
 
       while (rs.next()) {
@@ -204,16 +239,26 @@ public class PaginaAziendaModel {
 
       }
 
-    } finally {
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
         }
+      } catch (SQLException e) {
+        e.printStackTrace();
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          }
+          catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
-      }
+      } 
     }
 
     return daRestituire;
@@ -226,7 +271,7 @@ public class PaginaAziendaModel {
    * @return una lista di stringhe corrispondenti ai vari ambiti di cui si occupa l'azienda
    * @throws SQLException in caso di errata connessione al database
    */
-  private ArrayList<String> caricaAmbito(String id) throws SQLException {
+  private ArrayList<String> caricaAmbito(int id) {
     ArrayList<String> daRestituire = new ArrayList<>();
 
     Connection connection = null;
@@ -239,7 +284,7 @@ public class PaginaAziendaModel {
           + TABLE_NAME_AMBITO + ".paginaAziendaID = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, id);
+      preparedStatement.setInt(1, id);
       ResultSet rs = preparedStatement.executeQuery();
 
       while (rs.next()) {
@@ -247,16 +292,26 @@ public class PaginaAziendaModel {
 
       }
 
-    } finally {
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
         }
+      } catch (SQLException e) {
+        e.printStackTrace();
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          }
+          catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
-      }
+      } 
     }
 
     return daRestituire;
@@ -273,7 +328,7 @@ public class PaginaAziendaModel {
    * @throws SQLException in caso di lettura errata dal database
    */
   public synchronized int aggiungiPagina(String localita, String descrizione, String email, 
-      ArrayList<String> ambito, ArrayList<String> skill) throws SQLException {
+      ArrayList<String> ambito, ArrayList<String> skill) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     PreparedStatement preparedStatementSkill = null;
@@ -322,17 +377,28 @@ public class PaginaAziendaModel {
 
       return autoId;
 
-    } finally {
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
         }
+      } catch (SQLException e) {
+        e.printStackTrace();
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          }
+          catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
-      }
+      } 
     }
+    return -1;
   }
 }
 
