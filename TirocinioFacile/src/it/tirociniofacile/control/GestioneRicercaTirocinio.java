@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mysql.jdbc.StringUtils;
+
 /**
  * Servlet implementation class GestioneRicercaTirocinio.
  */
@@ -25,28 +27,28 @@ import javax.servlet.http.HttpSession;
 public class GestioneRicercaTirocinio extends HttpServlet {
   private static final long serialVersionUID = 1L;
   static PaginaAziendaModel model;
-  
+
   static {
     model = new PaginaAziendaModel();
   }
-  
+
   /**
-  * Costruttore vuoto. 
-  */
+   * Costruttore vuoto. 
+   */
   public GestioneRicercaTirocinio() {
-    
+    super();
   }
 
   /**.
-  * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-  */
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   */
   protected void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
-    
+
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
-    
-    System.out.println(action);
+
+    System.out.println("AZIONE: " + action);
     try {
       if (action != null) {
         if (action.equals("ricercaTuttePagine")) {
@@ -65,13 +67,13 @@ public class GestioneRicercaTirocinio extends HttpServlet {
   }
 
   /**.
-  * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-  */
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
   protected void doPost(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
     doGet(request, response);
   }
-  
+
   /**
    * Servlet che ricerca tutte le pagine.
    * @param request la richiesta http
@@ -84,10 +86,10 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     ArrayList<PaginaAziendaBean> pabList = model.ricerca();
     request.removeAttribute("listaAziende");
     request.setAttribute("listaAziende", pabList);
-    
-    
+
+
     String tirocini = request.getParameter("tirocini");
-    
+
     if (tirocini != null) {
       if (tirocini.equals("true")) {
         request.getSession().setAttribute("listaAziende", pabList);
@@ -95,11 +97,11 @@ public class GestioneRicercaTirocinio extends HttpServlet {
         rd.forward(request, response);
       }
     }
-    
+
     RequestDispatcher rd = request.getRequestDispatcher("/ricercaAzienda.jsp");  
     rd.forward(request, response);
   }
-  
+
   /**
    * Servlet che ricerca le pagine per una categoria e una chiave.
    * @param request la richiesta http
@@ -111,36 +113,37 @@ public class GestioneRicercaTirocinio extends HttpServlet {
       throws SQLException, ServletException, IOException {
     String categoria = request.getParameter("categoria");
     String chiave = request.getParameter("chiave");
-    
+
     ArrayList<PaginaAziendaBean> pabList = model.ricerca(categoria,chiave);
     request.removeAttribute("listaAziende");
     request.setAttribute("listaAziende", pabList);
-    
+
     RequestDispatcher rd = request.getRequestDispatcher("/ricercaAzienda.jsp");  
     rd.forward(request, response);
   }
-  
+
   /**
-   * Servlet che visualizza una singola pagina.
-   * @param request la richiesta http
-   * @throws SQLException eccezione lanciato dal metodo del model
-   * @throws IOException 
-   * @throws ServletException 
+   * 
+   * @param request
+   * @param response
+   * @throws SQLException
+   * @throws ServletException
+   * @throws IOException
    */
   public void visualizzaPagina(HttpServletRequest request, HttpServletResponse response) 
       throws SQLException, ServletException, IOException {
     String id = request.getParameter("id");
-    
+
     PaginaAziendaBean pab = model.ricerca(Integer.parseInt(id));
-    
+
     request.removeAttribute("pagina");
     request.setAttribute("pagina", pab);
-    
+
     RequestDispatcher rd = request.getRequestDispatcher("/visualizzaPagina.jsp");  
     rd.forward(request, response);
-    
+
   }
-  
+
   /**
    * Servlet che crea una pagina.
    * @param request la richiesta http
@@ -149,19 +152,26 @@ public class GestioneRicercaTirocinio extends HttpServlet {
   public void creaPagina(HttpServletRequest request) {
     String localita = request.getParameter("localita");
     String descrizione = request.getParameter("descrizione");
-    String email = request.getParameter("email");
+    String mailAzienda = request.getParameter("mailAzienda");
+
+    String allambito = request.getParameter("ambito");
+    String allskill = request.getParameter("skill");
+
+    ArrayList<String> ambiti = this.separaValoriStringa(allambito);
+    ArrayList<String> skill = this.separaValoriStringa(allskill);
+
+    model.aggiungiPagina(localita, descrizione, mailAzienda, ambiti, skill);
+  }
+
+  private ArrayList<String> separaValoriStringa(String stringa) {
+    final String separatore = ",";
+    ArrayList<String> lista = new ArrayList<>();
     
-    String[] ambitoArray = request.getParameterValues("ambito");
-    String[] skillArray = request.getParameterValues("skill");
+    String[] divise = stringa.split(separatore);
+    for (int i = 0; i < divise.length; i++) {
+      lista.add(divise[i]);
+    }
     
-    List<String> ambitoList = Arrays.asList(ambitoArray);
-    List<String> skillList = Arrays.asList(skillArray);
-    
-    ArrayList<String> ambito = (ArrayList) ambitoList;
-    ArrayList<String> skill = (ArrayList) skillList;
-    
-    //sequenza di operazioni per fare cast da String[] ad ArrayList
-    
-    model.aggiungiPagina(localita, descrizione, email, ambito, skill);
+    return lista;
   }
 }

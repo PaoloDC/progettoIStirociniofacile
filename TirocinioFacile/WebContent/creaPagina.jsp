@@ -1,5 +1,6 @@
-<%@page import="it.tirociniofacile.bean.PaginaAziendaBean"%>
-<%@page import="it.tirociniofacile.model.PaginaAziendaModel"%>
+<%@page import="it.tirociniofacile.bean.UtenteBean"%>
+<%@page import="it.tirociniofacile.model.UtenteModel"%>
+<%@page import="it.tirociniofacile.bean.ProfiloAziendaBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,9 +18,11 @@
 </head>
 
 <body>
-	<%	//da passare nella sessione la pagina azienda bean
-		PaginaAziendaModel pam = new PaginaAziendaModel();
-		PaginaAziendaBean pab = pam.ricerca(3);
+	<%	//da passare nella sessione il profilo azienda bean
+		UtenteModel um = new UtenteModel();
+		UtenteBean ub = um.caricaAccount("kineton@info.com", "kineton");
+		ProfiloAziendaBean pab = (ProfiloAziendaBean) ub;
+		
 	%>
 	<!-- Latest compiled and minified JavaScript -->
 	<script
@@ -35,12 +38,18 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-8 col-md-8">
-				<form action="GestioneRicercaTirocinio" method="post" >
+				<form action="GestioneRicercaTirocinio?action=ceaPagina" method="post" >
+				<!-- 
 					<div class="form-group">
 						<label for="exampleInputEmail1">Nome Azienda</label> <input
 							type="text" class="form-control" id="nomeAzienda"
-							value="<%=pab.getNomeAzienda()%>" aria-describedby="emailHelp"
-							placeholder="Località" readonly="readonly">
+							value="<%=pab.getNomeAzienda()%>" readonly="readonly">
+					</div>
+				 -->
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email Profilo Azienda</label> <input
+							type="text" class="form-control" name="mailAzienda"
+							value="<%=pab.getEmail()%>" readonly="readonly">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Località</label> <input
