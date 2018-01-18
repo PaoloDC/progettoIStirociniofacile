@@ -70,7 +70,6 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       model.eliminaPagina(pab.getId());
       um.eliminaProfiloAzienda(profilo);
       
-      
     } catch (Exception e) {
       e.printStackTrace();
     }

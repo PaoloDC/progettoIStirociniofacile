@@ -55,7 +55,8 @@
 						<% if (listaAzienda != null) { %>
 						<% for(int i = 0; i < listaAzienda.size(); i++ ) { %>
 						<li><a
-							href="GestioneTf?action=visualizzaInformazioniPerAzienda&azienda=<%=listaAzienda.get(i).getNomeAzienda()%>"><%=listaAzienda.get(i).getNomeAzienda()%></a></li>
+							href="GestioneTf?action=visualizzaInformazioniPerAzienda&azienda=
+							<%=listaAzienda.get(i).getNomeAzienda()%>"><%=listaAzienda.get(i).getNomeAzienda()%></a></li>
 						<% } %>
 						<% } %>
 					</ul>

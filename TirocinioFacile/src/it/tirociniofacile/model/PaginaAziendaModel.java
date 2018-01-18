@@ -319,13 +319,13 @@ public class PaginaAziendaModel {
 
 
   /**
-   * Aggiunge una pagina nel db. 
+   * Aggiunge una pagina nel db.
    * @param localita sede dell'azienda
    * @param descrizione descrizione dell'azienda
-   * @param nomeAzienda nome dell'azienda
-   * @param ambito ambiti dove lavora l'azienda
+   * @param email mail dell'account azienda
+   * @param ambito dove lavora l'azienda
    * @param skill skills richieste dall'azienda
-   * @throws SQLException in caso di lettura errata dal database
+   * @return -1 in caso di errore di salvataggio sul db, altrimenti l'intero 
    */
   public synchronized int aggiungiPagina(String localita, String descrizione, String email, 
       ArrayList<String> ambito, ArrayList<String> skill) {
@@ -379,8 +379,7 @@ public class PaginaAziendaModel {
 
     } catch (SQLException e) {
       e.printStackTrace();
-    }
-    finally {
+    } finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
@@ -391,8 +390,7 @@ public class PaginaAziendaModel {
         if (connection != null) {
           try {
             connection.close();
-          }
-          catch (SQLException e) {
+          } catch (SQLException e) {
             e.printStackTrace();
           }
         }

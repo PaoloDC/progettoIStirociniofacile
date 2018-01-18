@@ -1,10 +1,12 @@
+<%@page import="it.tirociniofacile.bean.PaginaAziendaBean"%>
+<%@page import="it.tirociniofacile.model.PaginaAziendaModel"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>TirocinioFacile - Login</title>
+<title>TirocinioFacile - Crea Pagina Azienda</title>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -15,6 +17,10 @@
 </head>
 
 <body>
+	<%	//da passare nella sessione la pagina azienda bean
+		PaginaAziendaModel pam = new PaginaAziendaModel();
+		PaginaAziendaBean pab = pam.ricerca(3);
+	%>
 	<!-- Latest compiled and minified JavaScript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -29,24 +35,33 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-8 col-md-8">
-				<form>
+				<form action="GestioneRicercaTirocinio" method="post" >
 					<div class="form-group">
-						<label for="exampleInputEmail1">Localita'</label> <input
+						<label for="exampleInputEmail1">Nome Azienda</label> <input
+							type="text" class="form-control" id="nomeAzienda"
+							value="<%=pab.getNomeAzienda()%>" aria-describedby="emailHelp"
+							placeholder="Località" readonly="readonly">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Località</label> <input
 							type="text" class="form-control" id="exampleInputEmail1"
-							aria-describedby="emailHelp" placeholder="Località">
+							name="localita" aria-describedby="emailHelp" placeholder="Località">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Descrizione</label>
-						<textarea class="form-control" rows="5" id="descr"></textarea>
+						<textarea class="form-control" rows="5" id="descr"
+							name="descrizione" placeholder="Descrizione"></textarea>
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1">Ambiti (Per inserire più di un ambito usa la , Es. Web Development, Reti)</label> <input
+						<label for="exampleInputPassword1">Ambiti (Per inserire
+							più di un ambito usa la , Es. Web Development, Reti)</label> <input
 							type="text" class="form-control" id="exampleInputPassword1"
-							placeholder="Ambito">
+							name="ambito" placeholder="Ambito">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1">Skill (Per inserire più di una skill usa la , Es. C++, Test)</label> <input
-							type="text" class="form-control" id="exampleInputPassword1"
+						<label for="exampleInputPassword1">Skill (Per inserire più
+							di una skill usa la , Es. C++, Test)</label> <input type="text"
+							name="skill" class="form-control" id="exampleInputPassword1"
 							placeholder="Skill Richieste">
 					</div>
 					<button type="submit" class="btn btn-primary">Crea</button>

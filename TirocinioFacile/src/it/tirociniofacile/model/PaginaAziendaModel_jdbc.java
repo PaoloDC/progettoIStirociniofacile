@@ -223,7 +223,9 @@ public class PaginaAziendaModel_jdbc {
 
       }
 
-    } catch (SQLException e) { e.printStackTrace(); }
+    } catch (SQLException e) {
+      e.printStackTrace(); 
+    }
 
     return daRestituire;
   }
@@ -289,21 +291,21 @@ public class PaginaAziendaModel_jdbc {
     } catch (SQLException e) {
       e.printStackTrace(); 
     }
-    return 0;
+    return -1;
   }
   
   public void eliminaPagina(int id) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
-    PreparedStatement preparedStatementSkill = null;
-    PreparedStatement preparedStatementAmbito = null;
 
     String deleteSql = "delete FROM " + TABLE_NAME_PAGINA + " where id = ? ";
     
     try {
+      
       preparedStatement = connection.prepareStatement(deleteSql);
       preparedStatement.setInt(1, id);
       preparedStatement.executeUpdate();
+      
     } catch (SQLException e) {
       e.printStackTrace();
     }

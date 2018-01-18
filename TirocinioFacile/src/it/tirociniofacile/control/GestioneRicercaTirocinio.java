@@ -131,7 +131,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
       throws SQLException, ServletException, IOException {
     String id = request.getParameter("id");
     
-    PaginaAziendaBean pab = model.ricerca(id);
+    PaginaAziendaBean pab = model.ricerca(Integer.parseInt(id));
     
     request.removeAttribute("pagina");
     request.setAttribute("pagina", pab);
@@ -146,8 +146,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
    * @param request la richiesta http
    * @throws SQLException eccezione lanciato dal metodo del model
    */
-  public void creaPagina(HttpServletRequest request) 
-      throws SQLException {
+  public void creaPagina(HttpServletRequest request) {
     String localita = request.getParameter("localita");
     String descrizione = request.getParameter("descrizione");
     String email = request.getParameter("email");
