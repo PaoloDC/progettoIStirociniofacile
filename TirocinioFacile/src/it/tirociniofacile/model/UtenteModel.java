@@ -49,11 +49,8 @@ public class UtenteModel {
   //inizializzazione statica
   static {
     try {
-      System.out.println("Qui ci arriva1");
       Context initCtx = new InitialContext();
-      System.out.println("Qui ci arriva2");
       Context envCtx = (Context) initCtx.lookup("java:comp/env");
-      System.out.println("Qui ci arriva3");
       ds = (DataSource) envCtx.lookup("jdbc/tirociniofacile");
 
     } catch (NamingException e) {
@@ -333,20 +330,32 @@ public class UtenteModel {
         passwordDaInviare = ub.getPassword();
       }
     }
+
     //se non trova la password tra gli utenti amministrativi la cerca tra gli studenti e le aziende
     if (passwordDaInviare == null) {
       try {
         connection = ds.getConnection();
 
         String selectSql = "SELECT password FROM " + TABLE_NAME_STUDENTE 
-            + " JOIN " + TABLE_NAME_AZIENDA + " WHERE mail  = ? ";
+            + " WHERE mail  = ? ";
 
         preparedStatement = connection.prepareStatement(selectSql);
         preparedStatement.setString(1, email);
         ResultSet rs = preparedStatement.executeQuery();
 
+
         if (rs.first()) {
           passwordDaInviare = rs.getString(1);
+        } else {
+
+          selectSql = "SELECT password FROM " + TABLE_NAME_AZIENDA 
+              + " WHERE mail  = ? ";
+          preparedStatement = connection.prepareStatement(selectSql);
+          preparedStatement.setString(1, email);
+          rs = preparedStatement.executeQuery();
+          if (rs.first()) {
+            passwordDaInviare = rs.getString(1);
+          }
         }
       } catch (Exception e) {
         e.printStackTrace();
@@ -359,12 +368,13 @@ public class UtenteModel {
     } else {
       String mailMittente = Email.USER_NAME;
       String passwordMittente = Email.PASSWORD;
-      String[] destinari = { email }; // list of recipient email addresses
+      String[] destinari = { email }; // lista dei destinatari
       String oggetto = "Recupera Password Tirocinio Facile";
       String corpo = "Salve utente, questa mail le è stata inviata per sua richiesta di "
           + "recupero password.\nLa sua password per accedere alla piattaforma"
           + " tirocinio facile è: ' " + passwordDaInviare + " '.\n\nBuona navigazione.";
 
+      System.out.println("Prima di inviare: " + email + ", pass: " + passwordDaInviare);
       Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);
       return true;
     }
@@ -428,10 +438,6 @@ public class UtenteModel {
       } catch (MessagingException me) {
         me.printStackTrace();
       }
-
     }
   }
-
-
 }
-

@@ -13,50 +13,56 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-/** .
- * Servlet implementation class GestioneUtente
+/**
+ * . Servlet implementation class GestioneUtente
  */
 @WebServlet("/GestioneUtente")
 public class GestioneUtente extends HttpServlet {
   private static final long serialVersionUID = 1L;
   static UtenteModel model;
-  
+
   static {
     model = new UtenteModel();
   }
-       
-  /** .
-     * @see HttpServlet#HttpServlet()
-     */
-  public GestioneUtente() {
-        super();
-  }
-  
+
   /**
-   * Esempio di commento, ci vuole il punto finale.
-   * ogni riga massimo 100 caratteri
-   * spazio sopra e sotto
-   * @param request richiesta
-   * @param response risposta
+   * .
+   * 
+   * @see HttpServlet#HttpServlet()
    */
-  
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+  public GestioneUtente() {
+    super();
+  }
+
+  /**
+   * Esempio di commento, ci vuole il punto finale. ogni riga massimo 100 caratteri spazio sopra e
+   * sotto
+   * 
+   * @param request
+   *          richiesta
+   * @param response
+   *          risposta
+   */
+
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    doPost(request,response);
+    doPost(request, response);
   }
 
   /**
    * Il metodo doPost permette di .
-   * @param request richiesta
-   * @param response risposta
+   * 
+   * @param request
+   *          richiesta
+   * @param response
+   *          risposta
    */
-  
-  protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
-    
+
     System.out.println(action);
     try {
       if (action != null) {
@@ -66,123 +72,144 @@ public class GestioneUtente extends HttpServlet {
           }
         } else if (action.equals("registrazioneStudente")) {
           registrazioneStudente(request);
-          
+
         } else if (action.equals("registrazioneAzienda")) {
           registrazioneAzienda(request);
-          
+
         } else if (action.equals("generaCredenziali")) {
           generaCredenziali(request);
-          
- 
-        } else if (action.equals("log-in")) { 
-          logIn(request,response);
-          
-        } else if (action.equals("recuperaPassword")) { 
-          recuperaPassword(request);
+
+        } else if (action.equals("log-in")) {
+          logIn(request, response);
+
+        } else if (action.equals("recuperaPassword")) {
+          recuperaPassword(request,response);
         }
       }
-    } catch(SQLException e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     }
-    
-    /*manca il dispatcher per caricare le pagine jsp */
-    
+
+    /* manca il dispatcher per caricare le pagine jsp */
+
   }
 
   /**
    * RegistrazioneStudente effettua la registrazione di un account studente.
-   * @param request richiesta http
-   * @throws SQLException eccezzione sql
+   * 
+   * @param request
+   *          richiesta http
+   * @throws SQLException
+   *           eccezzione sql
    */
-  public void registrazioneStudente(HttpServletRequest request) 
-      throws SQLException {
-    
+  public void registrazioneStudente(HttpServletRequest request) throws SQLException {
+
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));
     String matricola = (request.getParameter("matricola"));
-    
+
     String emailIntera = email + "@studenti.unisa.it";
-    
+
     model.salvaAccountStudente(emailIntera, password, matricola);
   }
-  
+
   /**
    * RegistrazioneAzienda effettua la registrazione di un account azienda.
-   * @param request richiesta http
-   * @throws SQLException eccezzione sql
+   * 
+   * @param request
+   *          richiesta http
+   * @throws SQLException
+   *           eccezzione sql
    */
-  public void registrazioneAzienda(HttpServletRequest request)
-       throws SQLException {
+  public void registrazioneAzienda(HttpServletRequest request) throws SQLException {
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));
     String nomeazienda = (request.getParameter("nomeazienda"));
     model.salvaAccountAzienda(email, password, nomeazienda);
   }
-  
+
   /**
    * Genera nuove credenziali per gli utenti Impiegati uff. tirocini e presidente area didattica
-   * @param request richiesta http
-   * @throws SQLException eccezzione sql
+   * 
+   * @param request
+   *          richiesta http
+   * @throws SQLException
+   *           eccezzione sql
    */
-  public void generaCredenziali(HttpServletRequest request) 
-      throws SQLException {
+  public void generaCredenziali(HttpServletRequest request) throws SQLException {
     String email = (request.getParameter("email"));
     model.generaCredenziali(email);
   }
-  
+
   /**
    * Effettua la log in.
-   * @param request richiesta http
-   * @throws SQLException eccezzione sql
-   * @throws IOException 
-   * @throws ServletException 
+   * 
+   * @param request
+   *          richiesta http
+   * @throws SQLException
+   *           eccezzione sql
+   * @throws IOException
+   * @throws ServletException
    */
   public void logIn(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
     String email = (request.getParameter("email"));
-    String password = (request.getParameter("password"));  
+    String password = (request.getParameter("password"));
     request.removeAttribute("account");
-    
+
     UtenteBean utente = model.caricaAccount(email, password);
 
     if (utente != null) {
       request.getSession().setAttribute("account", utente);
       if (utente.getEmail().equals("fferrucci@unisa.it")) {
-        request.getSession().setAttribute("tipologiaAccount","presidente");
-        
-        RequestDispatcher rd = request.getRequestDispatcher("/visualizzaInformazioni.jsp");  
+        request.getSession().setAttribute("tipologiaAccount", "presidente");
+
+        RequestDispatcher rd = request.getRequestDispatcher("/visualizzaInformazioni.jsp");
         rd.forward(request, response);
       } else if (utente.getEmail().contains("@studenti.unisa.it")) {
-        request.getSession().setAttribute("tipologiaAccount","studente");
-      
-        RequestDispatcher rd = request.getRequestDispatcher("/homeStudente.jsp");  
+        request.getSession().setAttribute("tipologiaAccount", "studente");
+
+        RequestDispatcher rd = request.getRequestDispatcher("/homeStudente.jsp");
         rd.forward(request, response);
       } else if (utente.getEmail().contains("@unisa.it")) {
-        request.getSession().setAttribute("tipologiaAccount","impiegato");
-      
-        RequestDispatcher rd = request.getRequestDispatcher("/");  
+        request.getSession().setAttribute("tipologiaAccount", "impiegato");
+
+        RequestDispatcher rd = request.getRequestDispatcher("/");
         rd.forward(request, response);
       } else {
-        request.getSession().setAttribute("tipologiaAccount","azienda");
-      
-        RequestDispatcher rd = request.getRequestDispatcher("/");  
+        request.getSession().setAttribute("tipologiaAccount", "azienda");
+
+        RequestDispatcher rd = request.getRequestDispatcher("/");
         rd.forward(request, response);
       }
     } else {
-      RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");  
-      request.setAttribute("noUtente","nessun utente con queste credenziali");
+      RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+      request.setAttribute("noUtente", "nessun utente con queste credenziali");
       rd.forward(request, response);
     }
   }
-  
+
   /**
    * Recupera password invia una mail alla mail inviata contenente una nuova password.
-   * @param request richiesta http
-   * @throws SQLException eccezzione sql
+   * 
+   * @param request
+   *          richiesta http
+   * @throws SQLException
+   *           eccezzione sql
    */
-  public void recuperaPassword(HttpServletRequest request) 
-     throws SQLException {
-    String email = (request.getParameter("email"));
-    model.cercaAccountPerEmail(email);
+  public void recuperaPassword(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException,IOException {
+    String email = request.getParameter("email");
+    boolean trovato = model.cercaAccountPerEmail(email);
+    
+    String msg = "Corrispondenza non trovata!";
+    if (trovato) {
+      msg = "Corrispondenza trovata, mail inviata!";
+    }
+    request.setAttribute("trovato", msg);
+    RequestDispatcher rd = request.getRequestDispatcher("/recuperaPassword.jsp");
+    rd.forward(request, response);
+    System.out.println("mail: " + email + ", trovato: " + trovato);
+   
   }
 }

@@ -309,16 +309,16 @@ public class UtenteModel_jdbc {
           passwordDaInviare = rs.getString(1);
         } else {
 
-          String selectSql2 = "SELECT password FROM " + TABLE_NAME_AZIENDA 
+          selectSql = "SELECT password FROM " + TABLE_NAME_AZIENDA 
               + " WHERE mail  = ? ";
           preparedStatement = connection.prepareStatement(selectSql);
           preparedStatement.setString(1, email);
-          ResultSet rs2 = preparedStatement.executeQuery();
-          if (rs2.first()) {
-            passwordDaInviare = rs2.getString(1);
+          rs = preparedStatement.executeQuery();
+          if (rs.first()) {
+            passwordDaInviare = rs.getString(1);
           }
         }
-      } catch (Exception e) {
+      } catch (SQLException e) {
         e.printStackTrace();
       }
     }

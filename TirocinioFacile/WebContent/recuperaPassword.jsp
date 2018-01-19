@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%
+	String msg = (String) request.getAttribute("trovato");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -24,21 +28,26 @@
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
 
-		<br>
-		<br>
-		<br>
+		<br> <br> <br>
 		<div class="row">
 			<div class="col-4 col-md-4">
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-4 col-md-4">
-				<form action="GestioneRicercaTirocinio?action=creaPagina" method="post">
+				<form action="GestioneUtente?action=recuperaPassword" method="post">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email</label> <input type="email"
-							class="form-control" id="exampleInputEmail1"
+							class="form-control" id="exampleInputEmail1" name="email"
 							aria-describedby="emailHelp" placeholder="Enter email">
 					</div>
 					<button type="submit" class="btn btn-primary">Invia</button>
+					<%
+						if (msg != null) {
+					%>
+					<label><%=msg%></label>
+					<%
+						}
+					%>
 				</form>
 			</div>
 		</div>

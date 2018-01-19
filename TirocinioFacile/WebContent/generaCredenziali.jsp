@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>TirocinioFacile - Login</title>
+<title>TirocinioFacile - Genera Credenziali</title>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -30,7 +30,7 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-4 col-md-4">
-				<form>
+				<form action="GestioneUtente?action=">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email</label> <input type="email"
 							class="form-control" id="exampleInputEmail1"
