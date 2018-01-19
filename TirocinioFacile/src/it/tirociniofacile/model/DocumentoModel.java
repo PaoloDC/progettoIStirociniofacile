@@ -46,7 +46,7 @@ public class DocumentoModel {
   public synchronized int conteggioQuestionariApprovatiPerAnno(String anno) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    int numeroQuestinariApprovatiPerAnno = -1;
+    int numeroQuestinariApprovatiPerAnno = 0;
     try {
       connection = ds.getConnection();
       String insertSql = "SELECT COUNT(*) FROM " 
@@ -80,7 +80,7 @@ public class DocumentoModel {
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    int numAzienda = -1;
+    int numAzienda = 0;
     try {
       connection = ds.getConnection();
       String insertSql = "SELECT COUNT(*) FROM " + TABLE_NAME_QUESTIONARI 
@@ -128,7 +128,7 @@ public class DocumentoModel {
       connection = ds.getConnection();
       String insertSql = "INSERT INTO " + TABLE_NAME_QUESTIONARI + "(informazioniSulTirocinio,"
           + " commenti, suggerimenti, annoAccademico, giudizioEsperienza,"
-          + " giudizioAzienda, giudizioUniversita, matricola) VALUES(?,?,?,?,?,?,?,?)";
+          + " giudizioAzienda, giudizioUniversita) VALUES(?,?,?,?,?,?,?,?)";
       preparedStatement = connection.prepareStatement(insertSql);
 
       preparedStatement.setString(1, informazioniSulTirocinio);
@@ -171,8 +171,8 @@ public class DocumentoModel {
       connection = ds.getConnection();
       String insertSql = "INSERT INTO " + TABLE_NAME_CONVENZIONI 
           + "(partitaIva, nomeAzienda, sedeLegale,"
-          + " citta,rappresentanteLegale, luogoDiNascitaRappLegale," 
-          + " dataNascitaRappLegale) VALUES(?,?,?,?,?,?,?)";
+          + " citta,rappresentanteLegale, luogoDiNascitaRappresentanteLegale," 
+          + " datadiNascitaRappresentanteLegale,approvato) VALUES(?,?,?,?,?,?,?,?)";
       preparedStatement = connection.prepareStatement(insertSql);
 
       preparedStatement.setString(1, piva);
@@ -182,6 +182,7 @@ public class DocumentoModel {
       preparedStatement.setString(5, rappLegale);
       preparedStatement.setString(6, luogoDiNascitaRappLegale);
       preparedStatement.setString(7, dataDiNascitaRappLegale);
+      preparedStatement.setInt(8, 0);
       preparedStatement.executeUpdate();
     } finally { 
       try {
@@ -310,7 +311,7 @@ public class DocumentoModel {
    * @param id identificativo del documento da ricercare
    * @throws SQLException in caso di errata connessione al database 
    */
-  public synchronized void cancellaDocumento(int id) 
+  public synchronized void cancellaDocumento(String id) 
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -319,14 +320,14 @@ public class DocumentoModel {
       String insertSqlQuest = "DELETE " + TABLE_NAME_QUESTIONARI 
           + " WHERE id = ?";
       preparedStatement = connection.prepareStatement(insertSqlQuest);
-      preparedStatement.setInt(1, id);
+      preparedStatement.setString(1, id);
 
       preparedStatement.executeUpdate();
 
       String insertSqlConv = "DELETE " + TABLE_NAME_CONVENZIONI 
           + " WHERE id = ?";
       preparedStatement = connection.prepareStatement(insertSqlConv);
-      preparedStatement.setInt(1, id);
+      preparedStatement.setString(1, id);
 
 
       preparedStatement.executeUpdate();
@@ -349,7 +350,7 @@ public class DocumentoModel {
    * Approva il documento il cui id corrisponde a quello passato.
    * @param id identificativo del documento da ricercare
    */
-  public synchronized void approvaDocumento(int id) throws SQLException {
+  public synchronized void approvaDocumento(String id) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -357,14 +358,14 @@ public class DocumentoModel {
       String insertSqlQuest = "UPDATE " + TABLE_NAME_QUESTIONARI 
           + "SET approvato = 1 WHERE id = ?";
       preparedStatement = connection.prepareStatement(insertSqlQuest);
-      preparedStatement.setInt(1, id);
+      preparedStatement.setString(1, id);
 
       preparedStatement.executeUpdate();
 
       String insertSqlConv = "UPDATE " + TABLE_NAME_CONVENZIONI 
-          + "SET approvato = 1 WHERE id = ?";
+          + "SET approvato = 1 WHERE partitaIva = ?";
       preparedStatement = connection.prepareStatement(insertSqlConv);
-      preparedStatement.setInt(1, id);
+      preparedStatement.setString(1, id);
 
 
       preparedStatement.executeUpdate();
