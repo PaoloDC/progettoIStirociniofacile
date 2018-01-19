@@ -29,17 +29,17 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-8 col-md-8">
-				<form>
+				<form action="GestioneTf?action=registrazioneAzienda" method="post">
 					<div class="col-6 col-sm-6">
 						<div class="form-group">
 							<label for="exampleInputEmail1">Email</label> <input type="email"
-								class="form-control" id="exampleInputEmail1"
+								class="form-control" id="exampleInputEmail1" name="email"
 								aria-describedby="emailHelp" placeholder="Enter email">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputPassword1">Password</label> <input
 								type="password" class="form-control" id="exampleInputPassword1"
-								placeholder="Password">
+								placeholder="Password" name="password">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputPassword1">Conferma Password</label> <input
@@ -48,30 +48,32 @@
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail1">Nome Azienda</label> <input
-								type="text" class="form-control" id="exampleInputEmail1"
-								aria-describedby="emailHelp" placeholder="Enter matricola">
+								type="text" class="form-control" placeholder="Nome Azienda"
+								name="nomeazienda">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputPassword1">Citta</label> <input
 								type="text" class="form-control" id="exampleInputPassword1"
-								placeholder="Citta">
+								placeholder="Citta" name="citta">
 						</div>
 					</div>
 					<div class="col-6 col-sm-6">
 						<div class="form-group">
 							<label for="exampleInputEmail1">Partita Iva</label> <input
-								type="email" class="form-control" id="exampleInputEmail1"
-								aria-describedby="emailHelp" placeholder="Enter email">
+								type="text" class="form-control" id="exampleInputEmail1"
+								aria-describedby="emailHelp" placeholder="Partita Iva"
+								name="piva">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputPassword1">Sede Legale</label> <input
 								type="text" class="form-control" id="exampleInputPassword1"
-								placeholder="Sede">
+								placeholder="Sede" name="sedeLegale">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputPassword1">Luogo Di Nascita del
 								rappresentante</label> <input type="text" class="form-control"
-								id="exampleInputPassword1" placeholder="Luogo Nascita">
+								id="exampleInputPassword1" placeholder="Luogo Nascita"
+								name="luogoDiNascitaRappLegale">
 						</div>
 
 					</div>
@@ -79,13 +81,15 @@
 						<div class="form-group">
 							<label for="exampleInputPassword1">Rappresentante Legale</label>
 							<input type="text" class="form-control"
-								id="exampleInputPassword1" placeholder="Rappresentante">
+								id="exampleInputPassword1" placeholder="Rappresentante"
+								name="rappLegale">
 						</div>
 
 						<div class="form-group">
 							<label for="exampleInputPassword1">Data Di Nascita del
 								rappresentante</label> <input type="text" class="form-control"
-								id="exampleInputPassword1" placeholder="Data Nascita">
+								id="exampleInputPassword1" placeholder="Data Nascita"
+								name="dataDiNascitaRappLegale">
 						</div>
 						<button type="submit" class="btn btn-primary">Invia La
 							Richiesta Di Convenzione e Aspetta La Convalida</button>

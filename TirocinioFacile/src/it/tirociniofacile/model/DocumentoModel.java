@@ -171,7 +171,7 @@ public class DocumentoModel {
       connection = ds.getConnection();
       String insertSql = "INSERT INTO " + TABLE_NAME_CONVENZIONI 
           + "(partitaIva, nomeAzienda, sedeLegale,"
-          + " citta,rappLegale, luogoDiNascitaRappLegale," 
+          + " citta,rappresentanteLegale, luogoDiNascitaRappLegale," 
           + " dataNascitaRappLegale) VALUES(?,?,?,?,?,?,?)";
       preparedStatement = connection.prepareStatement(insertSql);
 

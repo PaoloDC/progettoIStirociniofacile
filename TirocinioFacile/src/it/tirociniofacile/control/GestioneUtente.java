@@ -23,9 +23,11 @@ import javax.servlet.http.HttpSession;
 public class GestioneUtente extends HttpServlet {
   private static final long serialVersionUID = 1L;
   static UtenteModel model;
-
+  static DocumentoModel docModel;
+  
   static {
     model = new UtenteModel();
+    docModel = new DocumentoModel();
   }
 
   /**
@@ -126,8 +128,8 @@ public class GestioneUtente extends HttpServlet {
   public void registrazioneAzienda(HttpServletRequest request) {
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));
-    String nomeAzienda = (request.getParameter("nomeazienda"));
-    model.salvaAccountAzienda(email, password, nomeAzienda);
+    String nomeazienda = (request.getParameter("nomeazienda"));
+    model.salvaAccountAzienda(email, password, nomeazienda);
 
     String piva = request.getParameter("piva");
     String sedeLegale = request.getParameter("sedeLegale");
@@ -136,9 +138,11 @@ public class GestioneUtente extends HttpServlet {
     String luogoDiNascitaRappLegale = request.getParameter("luogoDiNascitaRappLegale");
     String dataDiNascitaRappLegale = request.getParameter("dataDiNascitaRappLegale");
 
+    System.out.println("\n" + email + "\n" + password + "\n" + nomeazienda + "\n" + piva + "\n" 
+    + sedeLegale + "\n" + citta + "\n" + rappLegale + "\n" + luogoDiNascitaRappLegale + "\n" + dataDiNascitaRappLegale);
+    
     try {
-      DocumentoModel docModel = new DocumentoModel();
-      docModel.salvaConvenzione(piva, nomeAzienda, sedeLegale, citta, rappLegale,
+      docModel.salvaConvenzione(piva, nomeazienda, sedeLegale, citta, rappLegale,
           luogoDiNascitaRappLegale, dataDiNascitaRappLegale);
     } catch (SQLException e) {
       e.printStackTrace();
