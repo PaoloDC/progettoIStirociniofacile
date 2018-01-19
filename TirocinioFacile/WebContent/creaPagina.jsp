@@ -38,7 +38,8 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-8 col-md-8">
-				<form action="GestioneRicercaTirocinio?action=ceaPagina" method="post" >
+				<form action="GestioneRicercaTirocinio?action=creaPagina" method="post" >
+				
 				<!-- 
 					<div class="form-group">
 						<label for="exampleInputEmail1">Nome Azienda</label> <input
@@ -46,6 +47,7 @@
 							value="<%=pab.getNomeAzienda()%>" readonly="readonly">
 					</div>
 				 -->
+				
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email Profilo Azienda</label> <input
 							type="text" class="form-control" name="mailAzienda"

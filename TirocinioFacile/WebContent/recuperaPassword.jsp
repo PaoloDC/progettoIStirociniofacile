@@ -32,7 +32,7 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-4 col-md-4">
-				<form>
+				<form action="GestioneRicercaTirocinio?action=creaPagina" method="post">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email</label> <input type="email"
 							class="form-control" id="exampleInputEmail1"

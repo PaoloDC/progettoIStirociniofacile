@@ -52,7 +52,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
           ricercaPagina(request,response);
         } else if (action.equals("visualizzaPagina")) {
           visualizzaPagina(request,response);
-        } else if (action.equals("ceaPagina")) {
+        } else if (action.equals("creaPagina")) {
           creaPagina(request);
         }
       }
