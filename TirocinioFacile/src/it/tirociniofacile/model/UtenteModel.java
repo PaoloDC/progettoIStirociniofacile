@@ -31,22 +31,20 @@ import javax.sql.DataSource;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
-
 /**
  * 
  * @author Paolo
  *
  */
 public class UtenteModel {
-  
 
   public static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
   public static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
   private static final String FILE_NAME = "utenti.dat";
   private static DataSource ds;
   public static final int LUNGHEZZA_PASSWORD = 20;
-  
-  //inizializzazione statica
+
+  // inizializzazione statica
   static {
     try {
       Context initCtx = new InitialContext();
@@ -60,13 +58,17 @@ public class UtenteModel {
 
   /**
    * Inserisce nel db un nuovo studente.
-   * @param email email del nuovo studente da registrare
-   * @param password password del nuovo studente da registrare
-   * @param matricola matricola del nuovo studente da registrare
-   * @throws SQLException eccezione lanciata in caso di record già esistente
+   * 
+   * @param email
+   *          email del nuovo studente da registrare
+   * @param password
+   *          password del nuovo studente da registrare
+   * @param matricola
+   *          matricola del nuovo studente da registrare
+   * @throws SQLException
+   *           eccezione lanciata in caso di record già esistente
    */
-  public synchronized void salvaAccountStudente(String email, String password, String matricola) 
-      throws SQLException {
+  public synchronized void salvaAccountStudente(String email, String password, String matricola) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
@@ -85,14 +87,22 @@ public class UtenteModel {
         System.out.println("Entry duplicata per studente con email: " + email);
         return;
       }
+    } catch (SQLException e) {
+      e.printStackTrace();
     } finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
         }
+      } catch (SQLException e) {
+        e.printStackTrace();
       } finally {
-        if (connection != null) {
-          connection.close();
+        try {
+          if (connection != null) {
+            connection.close();
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
       }
     }
@@ -101,12 +111,15 @@ public class UtenteModel {
 
   /**
    * Inserisce nel db una nuova azienda.
-   * @param email email della nuova azienda da registrare
-   * @param password password della nuova azienda da registrare
-   * @throws SQLException eccezione lanciata in caso di record già esistente
+   * 
+   * @param email
+   *          email della nuova azienda da registrare
+   * @param password
+   *          password della nuova azienda da registrare
+   * @throws SQLException
+   *           eccezione lanciata in caso di record già esistente
    */
-  public synchronized void salvaAccountAzienda(String email, String password, String nomeazienda) 
-      throws SQLException {
+  public synchronized void salvaAccountAzienda(String email, String password, String nomeazienda) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
@@ -125,14 +138,22 @@ public class UtenteModel {
         System.out.println("Entry duplicata per azienda con email: " + email);
         return;
       }
+    } catch (SQLException e) {
+      e.printStackTrace();
     } finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
         }
+      } catch (SQLException e) {
+        e.printStackTrace();
       } finally {
-        if (connection != null) {
-          connection.close();
+        try {
+          if (connection != null) {
+            connection.close();
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
       }
     }
@@ -140,9 +161,11 @@ public class UtenteModel {
   }
 
   /**
-   * Salva le credenziali generate per un nuovo account amministrativo (presidente area didattica 
-   * o impiegato ufficio tirocini).
-   * @param email email da salvare nel file per il nuovo account amministrativo
+   * Salva le credenziali generate per un nuovo account amministrativo (presidente area didattica o
+   * impiegato ufficio tirocini).
+   * 
+   * @param email
+   *          email da salvare nel file per il nuovo account amministrativo
    * @return true se genera correttamente le credenziali, false se l'utente esiste già
    */
   public synchronized boolean generaCredenziali(String email) {
@@ -169,7 +192,7 @@ public class UtenteModel {
         nuovaPassword += cifre.substring(gen.nextInt(cifre.length()));
       }
 
-      listaUtenti.add(new UtenteBean(email,nuovaPassword));
+      listaUtenti.add(new UtenteBean(email, nuovaPassword));
       this.salvaUtentiNelFile(listaUtenti);
 
       String mailMittente = Email.USER_NAME;
@@ -188,11 +211,12 @@ public class UtenteModel {
 
   /**
    * Carica tutti gli utenti dal file.
+   * 
    * @return un arraylist contenente tutti gli utenti presenti sul file
    */
   public ArrayList<UtenteBean> caricaUtentiDaFile() {
     try {
-      
+
       File f = new File(FILE_NAME);
       if (f.exists()) {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
@@ -207,13 +231,15 @@ public class UtenteModel {
     }
     return null;
   }
-  
+
   /**
    * Salva tutti gli utenti nel file.
-   * @param listaUtenti lista degli utenti da salvare
+   * 
+   * @param listaUtenti
+   *          lista degli utenti da salvare
    */
   public void salvaUtentiNelFile(ArrayList<UtenteBean> listaUtenti) {
-    try {      
+    try {
       ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILE_NAME));
       out.writeObject(listaUtenti);
       out.close();
@@ -225,10 +251,14 @@ public class UtenteModel {
 
   /**
    * Carica email e password da un db.
-   * @param email email dell'account da cercare nel db
-   * @param password password dell'account da ricercare nel db
+   * 
+   * @param email
+   *          email dell'account da cercare nel db
+   * @param password
+   *          password dell'account da ricercare nel db
    * @return ritorna un bean che rappresenta un utente
-   * @throws SQLException in caso di errore di connesione al db 
+   * @throws SQLException
+   *           in caso di errore di connesione al db
    */
   public synchronized UtenteBean caricaAccount(String email, String password) {
     Connection connection = null;
@@ -236,7 +266,7 @@ public class UtenteModel {
     try {
       connection = ds.getConnection();
 
-      String selectSqlStudente = "SELECT * FROM " + TABLE_NAME_STUDENTE 
+      String selectSqlStudente = "SELECT * FROM " + TABLE_NAME_STUDENTE
           + " WHERE mail  = ? AND password = ? ";
       preparedStatement = connection.prepareStatement(selectSqlStudente);
       preparedStatement.setString(1, email);
@@ -247,13 +277,13 @@ public class UtenteModel {
 
       if (rsStudente.first()) {
         ps.setEmail(rsStudente.getString(1));
-        ps.setPassword(rsStudente.getString(2)); 
+        ps.setPassword(rsStudente.getString(2));
         ps.setMatricola(rsStudente.getString(3));
-        
+
         return ps;
       } else {
 
-        String selectSqlAzienda = "SELECT * FROM " + TABLE_NAME_AZIENDA 
+        String selectSqlAzienda = "SELECT * FROM " + TABLE_NAME_AZIENDA
             + " WHERE mail  = ? AND password = ? ";
 
         preparedStatement.close();
@@ -264,15 +294,14 @@ public class UtenteModel {
 
         ProfiloAziendaBean pa = new ProfiloAziendaBean();
 
-        if (rsAzienda.first()) {     
+        if (rsAzienda.first()) {
           pa.setEmail(rsAzienda.getString(1));
           pa.setPassword(rsAzienda.getString(2));
           pa.setNomeAzienda(rsAzienda.getString(3));
-          
 
           return pa;
         } else {
-         
+
           ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
           for (int i = 0; i < listaUtenti.size(); i++) {
             UtenteBean ub = listaUtenti.get(i);
@@ -281,12 +310,11 @@ public class UtenteModel {
             }
           }
 
-
         }
-      }   
+      }
     } catch (SQLException e) {
       e.printStackTrace();
-    } finally { 
+    } finally {
       try {
         if (preparedStatement != null) {
           try {
@@ -303,17 +331,17 @@ public class UtenteModel {
             e.printStackTrace();
           }
         }
-      } 
+      }
     }
-    
+
     return null;
   }
 
-
-
   /**
    * Cerca la password di un utente dalla email e la invia alla mail.
-   * @param email email dell'account da cercare nel db
+   * 
+   * @param email
+   *          email dell'account da cercare nel db
    * @return true se l'utente è presente, false altrimenti
    */
   public synchronized boolean cercaAccountPerEmail(String email) {
@@ -322,7 +350,7 @@ public class UtenteModel {
 
     String passwordDaInviare = null;
 
-    //cerca la mail tra gli utenti amministrativi
+    // cerca la mail tra gli utenti amministrativi
     ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
     for (int i = 0; i < listaUtenti.size() && passwordDaInviare != null; i++) {
       UtenteBean ub = listaUtenti.get(i);
@@ -331,25 +359,22 @@ public class UtenteModel {
       }
     }
 
-    //se non trova la password tra gli utenti amministrativi la cerca tra gli studenti e le aziende
+    // se non trova la password tra gli utenti amministrativi la cerca tra gli studenti e le aziende
     if (passwordDaInviare == null) {
       try {
         connection = ds.getConnection();
 
-        String selectSql = "SELECT password FROM " + TABLE_NAME_STUDENTE 
-            + " WHERE mail  = ? ";
+        String selectSql = "SELECT password FROM " + TABLE_NAME_STUDENTE + " WHERE mail  = ? ";
 
         preparedStatement = connection.prepareStatement(selectSql);
         preparedStatement.setString(1, email);
         ResultSet rs = preparedStatement.executeQuery();
 
-
         if (rs.first()) {
           passwordDaInviare = rs.getString(1);
         } else {
 
-          selectSql = "SELECT password FROM " + TABLE_NAME_AZIENDA 
-              + " WHERE mail  = ? ";
+          selectSql = "SELECT password FROM " + TABLE_NAME_AZIENDA + " WHERE mail  = ? ";
           preparedStatement = connection.prepareStatement(selectSql);
           preparedStatement.setString(1, email);
           rs = preparedStatement.executeQuery();
@@ -361,10 +386,10 @@ public class UtenteModel {
         e.printStackTrace();
       }
     }
-    
-    if (passwordDaInviare == null) { 
+
+    if (passwordDaInviare == null) {
       return false;
-      //eccezione utente non presente
+      // eccezione utente non presente
     } else {
       String mailMittente = Email.USER_NAME;
       String passwordMittente = Email.PASSWORD;
@@ -375,33 +400,39 @@ public class UtenteModel {
           + " tirocinio facile è: ' " + passwordDaInviare + " '.\n\nBuona navigazione.";
 
       System.out.println("Prima di inviare: " + email + ", pass: " + passwordDaInviare);
-      
+
       Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);
       return true;
     }
   }
 
-
   /**
    * Classe interna per l'invio di una mail con le nuove credenziali generate.
+   * 
    * @author Paolo De Cristofaro
    */
   public static class Email {
 
-    //variabili di istanza, parametri della mail utilizzata
-    private static final String USER_NAME = "tirociniofacile"; 
-    private static final String PASSWORD = "tirociniofacile12"; 
+    // variabili di istanza, parametri della mail utilizzata
+    private static final String USER_NAME = "tirociniofacile";
+    private static final String PASSWORD = "tirociniofacile12";
 
     /**
      * Metodo per inviare una email.
-     * @param from email mittente
-     * @param pass password mittente
-     * @param to destinatario
-     * @param subject oggetto della mail
-     * @param body corpo della mail
+     * 
+     * @param from
+     *          email mittente
+     * @param pass
+     *          password mittente
+     * @param to
+     *          destinatario
+     * @param subject
+     *          oggetto della mail
+     * @param body
+     *          corpo della mail
      */
-    public static void sendFromGMail(String from, String pass, String[] to, 
-        String subject, String body) {
+    public static void sendFromGMail(String from, String pass, String[] to, String subject,
+        String body) {
       Properties props = System.getProperties();
       String host = "smtp.gmail.com";
       props.put("mail.smtp.starttls.enable", "true");

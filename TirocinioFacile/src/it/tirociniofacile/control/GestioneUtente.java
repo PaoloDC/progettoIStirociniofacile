@@ -1,6 +1,7 @@
 package it.tirociniofacile.control;
 
 import it.tirociniofacile.bean.UtenteBean;
+import it.tirociniofacile.model.DocumentoModel;
 import it.tirociniofacile.model.UtenteModel;
 import sun.security.provider.certpath.ResponderId;
 
@@ -65,8 +66,8 @@ public class GestioneUtente extends HttpServlet {
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
 
-    //Gestione utente
-    System.out.println("GestioneUtente action: "  + action);
+    // Gestione utente
+    System.out.println("GestioneUtente action: " + action);
     try {
       if (action != null) {
         if (action.equals("log-out")) {
@@ -80,13 +81,13 @@ public class GestioneUtente extends HttpServlet {
           registrazioneAzienda(request);
 
         } else if (action.equals("generaCredenziali")) {
-          generaCredenziali(request,response);
+          generaCredenziali(request, response);
 
         } else if (action.equals("log-in")) {
           logIn(request, response);
 
         } else if (action.equals("recuperaPassword")) {
-          recuperaPassword(request,response);
+          recuperaPassword(request, response);
         }
       }
     } catch (SQLException e) {
@@ -120,39 +121,52 @@ public class GestioneUtente extends HttpServlet {
    * RegistrazioneAzienda effettua la registrazione di un account azienda.
    * 
    * @param request
-   *          richiesta http
    * @throws SQLException
-   *           eccezzione sql
    */
-  public void registrazioneAzienda(HttpServletRequest request) throws SQLException {
+  public void registrazioneAzienda(HttpServletRequest request) {
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));
-    String nomeazienda = (request.getParameter("nomeazienda"));
-    model.salvaAccountAzienda(email, password, nomeazienda);
-  }
+    String nomeAzienda = (request.getParameter("nomeazienda"));
+    model.salvaAccountAzienda(email, password, nomeAzienda);
 
+    String piva = request.getParameter("piva");
+    String sedeLegale = request.getParameter("sedeLegale");
+    String citta = request.getParameter("citta");
+    String rappLegale = request.getParameter("rappLegale");
+    String luogoDiNascitaRappLegale = request.getParameter("luogoDiNascitaRappLegale");
+    String dataDiNascitaRappLegale = request.getParameter("dataDiNascitaRappLegale");
+
+    try {
+      DocumentoModel docModel = new DocumentoModel();
+      docModel.salvaConvenzione(piva, nomeAzienda, sedeLegale, citta, rappLegale,
+          luogoDiNascitaRappLegale, dataDiNascitaRappLegale);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
 
   /**
    * Genera nuove credenziali per gli utenti Impiegati uff. tirocini e presidente area didattica.
+   * 
    * @param request
    * @param response
    * @throws ServletException
    * @throws IOException
    */
-  public void generaCredenziali(HttpServletRequest request, HttpServletResponse response) 
-      throws ServletException,IOException {
-    
+  public void generaCredenziali(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+
     String email = (request.getParameter("email"));
     boolean corretto = model.generaCredenziali(email);
-    
+
     String msg = "Dominio mail non valido, utlizzare mail '...@unisa.it'. ";
     if (corretto) {
       msg = "Credenziali generate, buona navigazione su TirocinioFacile";
     }
-    
+
     request.setAttribute("mailCorretta", msg);
     RequestDispatcher rd = request.getRequestDispatcher("/generaCredenziali.jsp");
-    rd.forward(request,response);
+    rd.forward(request, response);
   }
 
   /**
@@ -211,11 +225,11 @@ public class GestioneUtente extends HttpServlet {
    * @throws SQLException
    *           eccezzione sql
    */
-  public void recuperaPassword(HttpServletRequest request, HttpServletResponse response) 
-      throws ServletException,IOException {
+  public void recuperaPassword(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
     String email = request.getParameter("email");
     boolean trovato = model.cercaAccountPerEmail(email);
-    
+
     String msg = "Corrispondenza non trovata!";
     if (trovato) {
       msg = "Corrispondenza trovata, mail inviata!";
@@ -224,6 +238,6 @@ public class GestioneUtente extends HttpServlet {
     RequestDispatcher rd = request.getRequestDispatcher("/recuperaPassword.jsp");
     rd.forward(request, response);
     System.out.println("mail: " + email + ", trovato: " + trovato);
-   
+
   }
 }
