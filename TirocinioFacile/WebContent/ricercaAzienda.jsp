@@ -40,6 +40,10 @@
 
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
+		<center>
+				<h2><span class="glyphicon glyphicon-search"></span> Ricerca Aziende </h2>
+					<hr class = "line">
+			</center>
 
 		<div class="container">
 			<nav class="navbar navbar-default">
@@ -51,7 +55,6 @@
 						<form action="GestioneTf" method="get">
 							<input type="hidden" id="thisField" name="action"
 								value="ricercaPagina">
-
 							<li><input type="radio" name="categoria" value="ambito">
 								<label for="ambitoChoice">Ambito</label></li>
 							<li><input type="radio" name="categoria" value="skill">
@@ -63,12 +66,11 @@
 					</ul>
 					<div class="navbar-form navbar-left">
 						<div class="form-group">
-							<input type="text" class="form-control" name="chiave"
+							<input type="text" class="form-control" name="Inserisci una chiave di ricerca"
 								placeholder="Chiave">
 						</div>
 					</div>
 					<ul class="nav navbar-nav navbar-right">
-
 						<div class="navbar-form navbar-right">
 							<button type="submit" class="btn btn-default">Cerca</button>
 						</div>
@@ -78,8 +80,7 @@
 				</ul>
 			</div>
 			<a href="GestioneTf?action=ricercaTuttePagine"
-				class="btn btn-success btn-block">Cerca tutto <i
-				class="fa fa-angle-right"></a> <!-- /.navbar-collapse -->
+				class="btn btn-success btn-block">Cerca tutte le aziende <span class="glyphicon glyphicon-hdd"> </span> <i class="fa fa-angle-right"></a> <!-- /.navbar-collapse -->
 			<div class="container">
 				<div class="row">
 					<div class="panel-group">
