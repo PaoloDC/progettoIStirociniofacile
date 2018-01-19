@@ -65,6 +65,7 @@ public class GestioneUtente extends HttpServlet {
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
 
+    //Gestione utente
     System.out.println("GestioneUtente action: "  + action);
     try {
       if (action != null) {
