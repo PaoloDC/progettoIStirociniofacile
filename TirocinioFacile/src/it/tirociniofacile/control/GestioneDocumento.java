@@ -118,13 +118,12 @@ public class GestioneDocumento extends HttpServlet {
   public void convalidaDocumento(HttpServletRequest request) 
       throws SQLException {
     String id = (request.getParameter("id"));
-    int id1 = Integer.parseInt(id);
     String approvato =  (request.getParameter("approvato"));
       
     if (approvato.equals("false")) {
-      model.cancellaDocumento(id1);
+      model.cancellaDocumento(id);
     } else {
-      model.approvaDocumento(id1);
+      model.approvaDocumento(id);
     }
   }  
   
