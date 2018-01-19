@@ -1,19 +1,16 @@
 package it.tirociniofacile.model;
 
-import com.mysql.jdbc.Statement;
-import it.tirociniofacile.bean.DocumentoConvenzioneBean;
-import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.sql.SQLException;
 
+import com.mysql.jdbc.Statement;
 
-
+import it.tirociniofacile.bean.DocumentoConvenzioneBean;
+import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 
 public class DocumentoModel_jdbc {
   //variabili di istanza
@@ -49,20 +46,20 @@ public class DocumentoModel_jdbc {
   public synchronized int conteggioQuestionariApprovatiPerAnno(String anno) throws SQLException {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
-    int numeroQuestinariApprovatiPerAnno = 0;
+    int numeroQuestionariApprovatiPerAnno = 0;
     try {
       String insertSql = "SELECT COUNT(*) FROM " 
-          + TABLE_NAME_QUESTIONARI + " WHERE annoAccademico = ?";
+          + TABLE_NAME_QUESTIONARI + " WHERE annoAccademico = ? AND approvato = 1";
       preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, anno);
       ResultSet rs = preparedStatement.executeQuery();
       if (rs.next()) {
-        numeroQuestinariApprovatiPerAnno = rs.getInt(1);
+        numeroQuestionariApprovatiPerAnno = rs.getInt(1);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return numeroQuestinariApprovatiPerAnno;
+    return numeroQuestionariApprovatiPerAnno;
   }
 
   /**
@@ -112,7 +109,7 @@ public class DocumentoModel_jdbc {
     try {
       String insertSql = "INSERT INTO " + TABLE_NAME_QUESTIONARI + "(informazioniSulTirocinio,"
           + " commenti, suggerimenti, annoAccademico, giudizioesperienza,"
-          + " giudizioAzienda, giudizioUniversita, matricola) VALUES(?,?,?,?,?,?,?,?)";
+          + " giudizioAzienda, giudizioUniversita) VALUES(?,?,?,?,?,?,?,?)";
       preparedStatement = connection.prepareStatement(insertSql);
 
       preparedStatement.setString(1, informazioniSulTirocinio);
@@ -146,8 +143,8 @@ public class DocumentoModel_jdbc {
     try {
       String insertSql = "INSERT INTO " + TABLE_NAME_CONVENZIONI 
           + "(partitaIva, nomeAzienda, sedeLegale,"
-          + " citta,rappLegale, luogoDiNascitaRappLegale," 
-          + " dataNascitaRappLegale) VALUES(?,?,?,?,?,?,?)";
+          + " citta,rappresentanteLegale, luogoDiNascitaRappresentanteLegale," 
+          + " dataDiNascitaRappresentanteLegale,approvato) VALUES(?,?,?,?,?,?,?,?)";
       preparedStatement = connection.prepareStatement(insertSql);
 
       preparedStatement.setString(1, piva);
@@ -157,6 +154,7 @@ public class DocumentoModel_jdbc {
       preparedStatement.setString(5, rappLegale);
       preparedStatement.setString(6, luogoDiNascitaRappLegale);
       preparedStatement.setString(7, dataDiNascitaRappLegale);
+      preparedStatement.setInt(8, 0);
       preparedStatement.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -259,23 +257,22 @@ public class DocumentoModel_jdbc {
    * @param id identificativo del documento da ricercare
    * @throws SQLException in caso di errata connessione al database 
    */
-  public synchronized void cancellaDocumento(int id) 
+  public synchronized void cancellaDocumento(String id) 
       throws SQLException {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
     try {
-      String insertSqlQuest = "DELETE " + TABLE_NAME_QUESTIONARI 
+      String insertSqlQuest = "DELETE FROM " + TABLE_NAME_QUESTIONARI 
           + " WHERE id = ?";
       preparedStatement = connection.prepareStatement(insertSqlQuest);
-      preparedStatement.setInt(1, id);
+      preparedStatement.setString(1, id);
 
       preparedStatement.executeUpdate();
 
-      String insertSqlConv = "DELETE " + TABLE_NAME_CONVENZIONI 
-          + " WHERE id = ?";
+      String insertSqlConv = "DELETE FROM " + TABLE_NAME_CONVENZIONI 
+          + " WHERE partitaIva = ?";
       preparedStatement = connection.prepareStatement(insertSqlConv);
-      preparedStatement.setInt(1, id);
-
+      preparedStatement.setString(1, id);
 
       preparedStatement.executeUpdate();
     } catch (SQLException e) {
@@ -302,10 +299,9 @@ public class DocumentoModel_jdbc {
       preparedStatement.executeUpdate();
 
       String insertSqlConv = "UPDATE " + TABLE_NAME_CONVENZIONI 
-          + "SET approvato = 1 WHERE id = ?";
+          + "SET approvato = 1 WHERE partitaIva = ?";
       preparedStatement = connection.prepareStatement(insertSqlConv);
       preparedStatement.setInt(1, id);
-
 
       preparedStatement.executeUpdate();
     } catch (SQLException e) {

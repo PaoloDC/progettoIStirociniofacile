@@ -17,13 +17,10 @@ public class DocumentoModelTest_jdbc  extends TestCase{
     model = new DocumentoModel_jdbc();
     modelAzienda = new PaginaAziendaModel_jdbc();
   }
-  
-  /**
-   * test.
-   */
+
   public void testConteggioQuestionariApprovatiPerAnno() {
     //anno che esiste
-    String annoEs = "2015";
+    String annoEs = "2017";
     //anno che non esiste
     String annoNo = "1111";
     
@@ -34,15 +31,13 @@ public class DocumentoModelTest_jdbc  extends TestCase{
       
       numero = model.conteggioQuestionariApprovatiPerAnno(annoNo);
       
-      assertNull(numero);
+      assertEquals(numero,0);
+      
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
   
-  /**
-   * Test metodo  conteggioquestionariapprovatiperazienda.
-   */
   public void testConteggioQuestionariApprovatiPerAzienda() {
     //azienda che esiste
     String aziendaEs = "SpinVector";
@@ -56,31 +51,24 @@ public class DocumentoModelTest_jdbc  extends TestCase{
       
       numero = model.conteggioQuestionariApprovatiPerAnno(aziendaNo);
       
-      assertNull(numero);
+      assertEquals(numero,0);
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
   
-  /**
-   * Test metodo salvaconvenzione.
-   */
   public void testSalvaConvenzione() {
     try {
       model.salvaConvenzione("pivaProva", "test", "test", "test", "test","test","test");
       model.salvaConvenzione("pivaProva", "test", "test", "test", "test","test","test");
     } catch (SQLException e) {
-      if (e.getErrorCode() == MYSQL_DUPLICATE_PK) {
+      if (e.getErrorCode() == MYSQL_DUPLICATE_PK ) {
         fail("Partita Iva gia usata");
       }
       e.printStackTrace();
     }
   }
   
-  
-  /**
-   * test del metodo Ricercaconvenzioneperid.
-   */
   public void testRicercaConvenzionePerId() {
     try {
       model.salvaConvenzione("pivaProva", "test", "test", "test", "test", "test","test");
@@ -98,15 +86,13 @@ public class DocumentoModelTest_jdbc  extends TestCase{
       modelAzienda.aggiungiPagina("test", "test", "test", ambitiAzienda1, skillAzienda1);
       
       assertNotNull(model.ricercaConvenzionePerId("pivaProva"));
+      
       assertNull(model.ricercaConvenzionePerId("ProvaSbagliato"));
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
-  
-  /**
-   * Test per il metodo ricercaquestionarioperid.
-   */
+
   public void testRicercaQuestionarioPerId() {
     try {
       model.salvaQuestionario("test","test","test","test",1,1,1,"test");
@@ -119,4 +105,5 @@ public class DocumentoModelTest_jdbc  extends TestCase{
       e.printStackTrace();
     }
   }
+
 }
