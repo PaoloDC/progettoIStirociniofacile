@@ -32,11 +32,8 @@
 
 	<nav class="footerNav navbar navbar-fixed-bottom">
 	<div class="container-fluid">
-		<div class="navbar-header">
 			<center><p id="testoFooter">TirocinioFacile è un servizio di UNISA Informatica -
 				Tutti i Diritti Riservati - 2018</p></center>
-		</div>
-
 	</div>
 	</nav>
 
