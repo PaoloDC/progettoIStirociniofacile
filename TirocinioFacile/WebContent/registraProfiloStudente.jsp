@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>TirocinioFacile - Login</title>
 
+
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -15,6 +16,10 @@
 </head>
 
 <body>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		crossorigin="anonymous"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -34,28 +39,31 @@
 					<input type="hidden" id="thisField" name="action"
 						value="registrazioneStudente">
 					<div class="form-group">
-						<label for="exampleInputEmail1">Email Istituzionale
-							(inserire solo cio' che viene prima di @studenti.unisa.it)</label> <input
-							type="email" class="form-control" id="exampleInputEmail1"
-							aria-describedby="emailHelp" placeholder="Email" name="email">
+						<label for="exampleInputEmail1" id="txtErrEmail">Email
+							Istituzionale (inserire solo cio' che viene prima di
+							@studenti.unisa.it)</label> <input type="text" class="form-control"
+							aria-describedby="emailHelp" placeholder="Email" name="email"
+							id="theEmail">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputEmail1" id="txtErrMatricola">Matricola (inserire solo
-							le ultime 5 cifre)</label> <input type="text" class="form-control"
-							id="exampleInputEmail1" aria-describedby="emailHelp"
+						<label for="exampleInputEmail1" id="txtErrMatricola">Matricola
+							(inserire solo le ultime 5 cifre)</label> <input type="text"
+							class="form-control" aria-describedby="emailHelp"
 							placeholder="Matricola" name="matricola" id="theMatricola">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1">Password</label> <input
-							type="password" class="form-control" id="exampleInputPassword1"
+						<label for="exampleInputPassword1" id="txtErrPass">Password</label>
+						<input type="password" class="form-control" id="thePass"
 							placeholder="Password" name="password">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1">Conferma Password</label> <input
-							type="password" class="form-control" id="exampleInputPassword1"
+							type="password" class="form-control" id="theConfPass"
 							placeholder="Conferma Password">
 					</div>
+
 					<button type="submit" class="btn btn-primary">Registrati</button>
+					<label id="matchPass"></label>
 				</form>
 			</div>
 			<div class="col-4 col-md-4">
@@ -72,9 +80,17 @@
 
 	<script>
 		function isOk() {
-			if (ValidateMatricola(document.getElementById("theMatricola"), document
-					.getElementById("txtErrMatricola"))) {
-				return true;
+			if (ValidateEmailStudente(document.getElementById("theEmail"),
+					document.getElementById("txtErrEmail"))
+					&& ValidateMatricola(document.getElementById("theMatricola"), document
+							.getElementById("txtErrMatricola"))
+					&& ValidatePassword(document.getElementById("thePass"),
+							document.getElementById("txtErrPass"))) {
+				if (ValidatePasswordUguali(document.getElementById("thePass"),
+						document.getElementById("theConfPass"), document
+								.getElementById("matchPass"))) {
+					return true;
+				}
 			}
 			return false;
 		}
