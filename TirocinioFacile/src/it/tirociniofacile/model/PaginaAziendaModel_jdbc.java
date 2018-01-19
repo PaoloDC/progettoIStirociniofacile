@@ -247,7 +247,7 @@ public class PaginaAziendaModel_jdbc {
     PreparedStatement preparedStatementSkill = null;
     PreparedStatement preparedStatementAmbito = null;
 
-    PaginaAziendaBean pab = new PaginaAziendaBean();
+    
 
     try {
       String insertSqlPagAzienda = "INSERT INTO " + TABLE_NAME_PAGINA

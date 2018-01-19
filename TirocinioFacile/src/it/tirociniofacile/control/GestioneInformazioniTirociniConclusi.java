@@ -1,8 +1,8 @@
 package it.tirociniofacile.control;
 
+import it.tirociniofacile.model.DocumentoModel;
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.tirociniofacile.model.DocumentoModel;
+
 
 /**
  * Servlet implementation class GestioneInformazioniTirociniConclusi.
@@ -58,6 +58,14 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
     doGet(request, response);
   }
   
+  /**
+   *  servlet visualizzaInformazioniPerAnnoAccademico.
+   * @param request richiesta http
+   * @param response risponse http 
+   * @throws SQLException eccezzione sql
+   * @throws ServletException eccezzioni servlet 
+   * @throws IOException eccezzioni input output
+   */
   public void visualizzaInformazioniPerAnnoAccademico(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
     String anno = request.getParameter("anno");

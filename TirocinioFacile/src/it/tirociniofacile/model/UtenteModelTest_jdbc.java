@@ -1,9 +1,7 @@
 package it.tirociniofacile.model;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import it.tirociniofacile.bean.*;
+import java.util.ArrayList;
 import junit.framework.TestCase;
 
 public class UtenteModelTest_jdbc extends TestCase {
@@ -158,7 +156,9 @@ public class UtenteModelTest_jdbc extends TestCase {
 
   }
 
-
+  /**
+   * test meodo cercaaccountperemail.
+   */
   public void testCercaAccountPerEmail() {
 
     ProfiloStudenteBean psb = new ProfiloStudenteBean("decri.paolo@gmail.com",

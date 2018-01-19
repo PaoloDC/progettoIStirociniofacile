@@ -334,7 +334,7 @@ public class PaginaAziendaModel {
     PreparedStatement preparedStatementSkill = null;
     PreparedStatement preparedStatementAmbito = null;
 
-    PaginaAziendaBean pab = new PaginaAziendaBean();
+   
 
     try {
       connection = ds.getConnection();

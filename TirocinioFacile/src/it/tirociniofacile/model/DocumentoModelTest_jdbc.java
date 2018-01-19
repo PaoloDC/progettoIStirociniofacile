@@ -18,6 +18,9 @@ public class DocumentoModelTest_jdbc  extends TestCase{
     modelAzienda = new PaginaAziendaModel_jdbc();
   }
   
+  /**
+   * test.
+   */
   public void testConteggioQuestionariApprovatiPerAnno() {
     //anno che esiste
     String annoEs = "2015";
@@ -37,6 +40,9 @@ public class DocumentoModelTest_jdbc  extends TestCase{
     }
   }
   
+  /**
+   * Test metodo  conteggioquestionariapprovatiperazienda.
+   */
   public void testConteggioQuestionariApprovatiPerAzienda() {
     //azienda che esiste
     String aziendaEs = "SpinVector";
@@ -56,18 +62,25 @@ public class DocumentoModelTest_jdbc  extends TestCase{
     }
   }
   
+  /**
+   * Test metodo salvaconvenzione.
+   */
   public void testSalvaConvenzione() {
     try {
       model.salvaConvenzione("pivaProva", "test", "test", "test", "test","test","test");
       model.salvaConvenzione("pivaProva", "test", "test", "test", "test","test","test");
     } catch (SQLException e) {
-      if (e.getErrorCode() == MYSQL_DUPLICATE_PK ) {
+      if (e.getErrorCode() == MYSQL_DUPLICATE_PK) {
         fail("Partita Iva gia usata");
       }
       e.printStackTrace();
     }
   }
   
+  
+  /**
+   * test del metodo Ricercaconvenzioneperid.
+   */
   public void testRicercaConvenzionePerId() {
     try {
       model.salvaConvenzione("pivaProva", "test", "test", "test", "test", "test","test");
@@ -91,6 +104,9 @@ public class DocumentoModelTest_jdbc  extends TestCase{
     }
   }
   
+  /**
+   * Test per il metodo ricercaquestionarioperid.
+   */
   public void testRicercaQuestionarioPerId() {
     try {
       model.salvaQuestionario("test","test","test","test",1,1,1,"test");

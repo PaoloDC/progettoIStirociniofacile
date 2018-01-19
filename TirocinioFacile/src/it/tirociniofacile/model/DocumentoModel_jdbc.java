@@ -1,16 +1,19 @@
 package it.tirociniofacile.model;
 
+import com.mysql.jdbc.Statement;
+import it.tirociniofacile.bean.DocumentoConvenzioneBean;
+import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import java.sql.SQLException;
 
-import com.mysql.jdbc.Statement;
 
-import it.tirociniofacile.bean.DocumentoConvenzioneBean;
-import it.tirociniofacile.bean.DocumentoQuestionarioBean;
+
 
 public class DocumentoModel_jdbc {
   //variabili di istanza
@@ -56,7 +59,7 @@ public class DocumentoModel_jdbc {
       if (rs.next()) {
         numeroQuestinariApprovatiPerAnno = rs.getInt(1);
       }
-    } catch(SQLException e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     }
     return numeroQuestinariApprovatiPerAnno;
@@ -276,10 +279,10 @@ public class DocumentoModel_jdbc {
 
       preparedStatement.executeUpdate();
     } catch (SQLException e) {
-        e.printStackTrace();
+      e.printStackTrace();
     }
-      return;
-    }
+    return;
+  }
 
 
 
@@ -305,7 +308,7 @@ public class DocumentoModel_jdbc {
 
 
       preparedStatement.executeUpdate();
-    } catch(SQLException e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     }
     return;

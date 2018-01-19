@@ -1,9 +1,8 @@
 package it.tirociniofacile.control;
 
-import java.io.File;
+import it.tirociniofacile.model.DocumentoModel;
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import it.tirociniofacile.model.DocumentoModel;
 
 /**.
  * Servlet implementation class GestioneDocumento
@@ -21,10 +19,12 @@ public class GestioneDocumento extends HttpServlet {
   private static final long serialVersionUID = 1L;
   static DocumentoModel model;
   
-  static{       
-    model=new DocumentoModel();
+  static {       
+    model = new DocumentoModel();
   }
-  /**.
+  
+  /**
+   * gestione documento costruttore vuoto.
    * @see HttpServlet#HttpServlet()
    */
   public GestioneDocumento() {
@@ -42,35 +42,27 @@ public class GestioneDocumento extends HttpServlet {
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
     try {
-      if(action!=null) { 
+      if (action != null) { 
         
         
         if (action.equals("visualizzaDocumento")) {
           visualizzaDocumento(request);
-          }
-        else if (action.equals("scaricaDocumento")) {
+        } else if (action.equals("scaricaDocumento")) {
           scaricaDocumento(request);
-        }
-        else if (action.equals("caricaDocumento")) {
+        } else if (action.equals("caricaDocumento")) {
           caricaDocumento(request);
-        }
-        else if (action.equals("convalidaDocumento")) {
+        } else if (action.equals("convalidaDocumento")) {
           convalidaDocumento(request);
-        }
-        else if (action.equals("compilaConvenzioneAzienda")) {
+        } else if (action.equals("compilaConvenzioneAzienda")) {
           compilaConvenzioneAzienda(request);
-        }
-        else if (action.equals("compilaQuestionario")) { 
+        } else if (action.equals("compilaQuestionario")) { 
           compilaQuestionario(request);
-        }
-        
-        
+        } 
       }        
-      }
-    catch(SQLException e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     }
-      }
+  }
     
     
   /**.
@@ -82,6 +74,11 @@ public class GestioneDocumento extends HttpServlet {
     doGet(request, response);
   }
   
+  /**
+   * Servlet visualizzaDocumento.
+   * @param request richoesta 
+   * @throws SQLException eccezzioni di sql
+   */
   public void visualizzaDocumento(HttpServletRequest request) 
       throws SQLException {
     String id = (request.getParameter("id"));
@@ -89,8 +86,7 @@ public class GestioneDocumento extends HttpServlet {
     if (model.ricercaConvenzionePerId(id) != null) {
       request.removeAttribute("convenzione");
       request.setAttribute("convenzione", model.ricercaConvenzionePerId(id));
-    }
-    else {
+    } else {
       request.removeAttribute("questionario");
       request.setAttribute("questionario", model.ricercaQuestionarioPerId(id1));
     }
@@ -101,14 +97,24 @@ public class GestioneDocumento extends HttpServlet {
 
   }
   
+  /**
+   * servlet caricaDocumento.
+   * @param request richiesta http
+   * @throws SQLException eccezzioni sql
+   */
   public void caricaDocumento(HttpServletRequest request) 
       throws SQLException {
     String pdf = (request.getParameter("pdf"));
     String id = (request.getParameter("id"));
     int id1 = Integer.parseInt(id);
-  //TODO  model.salvaPdf(pdf, id1);
+    //TODO  model.salvaPdf(pdf, id1);
   }
   
+  /**
+   * servlet convalida documento.
+   * @param request richiesta http
+   * @throws SQLException eccazzioni sql
+   */
   public void convalidaDocumento(HttpServletRequest request) 
       throws SQLException {
     String id = (request.getParameter("id"));
@@ -122,6 +128,11 @@ public class GestioneDocumento extends HttpServlet {
     }
   }  
   
+  /**
+   * servlet compilaConvenzioneAzienda.
+   * @param request richiesta http
+   * @throws SQLException eccezzioni sql
+   */
   public void compilaConvenzioneAzienda(HttpServletRequest request) 
       throws SQLException {
     String piva = (request.getParameter("piva"));
@@ -135,6 +146,11 @@ public class GestioneDocumento extends HttpServlet {
         luogoDiNascitaRappLegale, dataDiNascitaRappLegale);
   }
   
+  /**
+   * servlet compila questionario.
+   *@param request richiesta http
+   * @throws SQLException eccezzioni sql
+   */
   public void compilaQuestionario(HttpServletRequest request) 
       throws SQLException {
     String informazioniSulTirocinio = (request.getParameter("informazioniSulTirocinio"));

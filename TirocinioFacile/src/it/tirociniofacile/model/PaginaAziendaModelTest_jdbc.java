@@ -15,7 +15,9 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     model = new PaginaAziendaModel_jdbc();
   }
 
-  
+  /**
+   * test  metodo ricerca.
+   */
   public void testRicerca() {
     try {
       
@@ -75,7 +77,9 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     }
   }
   
-
+  /**
+   * test metodo ricercaperid.
+   */
   public void testRicercaPerId() {
     try {
       //inserisco una pagina di prova, utilizzando uno stub di profiloAziendaBean
@@ -128,6 +132,9 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     }
   }
   
+  /**
+   * test metodo ricercaparametrica.
+   */
   public void testRicercaParametrica() { 
     try {
   
@@ -190,6 +197,9 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     }
   }
   
+  /**
+   * test metodo aggiungipagina.
+   */
   public void testAggiungiPagina() {
     ArrayList<String> ambiti = new   ArrayList<String>();
     ambiti.add("Sviluppo applicazioni web");

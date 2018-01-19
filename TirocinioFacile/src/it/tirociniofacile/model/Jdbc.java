@@ -14,7 +14,7 @@ public class Jdbc {
   
   /**
    * Main per avviare la connessione del database.
-   * @param args
+   * @param args args
    */
   public static void main(String[] args) {
     
