@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 public class GestioneRicercaTirocinio extends HttpServlet {
   private static final long serialVersionUID = 1L;
   static PaginaAziendaModel model;
-
+  int indice = 4;
   static {
     model = new PaginaAziendaModel();
   }
@@ -81,7 +81,11 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     ArrayList<PaginaAziendaBean> pabList = model.ricerca();
     request.removeAttribute("listaAziende");
     request.setAttribute("listaAziende", pabList);
-
+    
+    if (request.getParameter("indice") != null) {
+      this.indice = Integer.parseInt(request.getParameter("indice")); 
+    }
+    request.setAttribute("indice", indice); 
 
     String tirocini = request.getParameter("tirocini");
 
