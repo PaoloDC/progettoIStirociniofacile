@@ -33,7 +33,7 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-4 col-md-4">
-				<form action="GestioneUtente?action=generaCredenziali" method="post">
+				<form action="GestioneTf?action=generaCredenziali" method="post">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email</label> <input
 							class="form-control" id="exampleInputEmail1" name="email"

@@ -30,6 +30,9 @@ public class GestioneTf extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     String action = request.getParameter("action");
+
+    System.out.println("GestioneTf doGet action: " + action);
+    
     if (action != null) {
       if (action.equals("ricercaTuttePagine") || action.equals("ricercaPagina")
           || action.equals("visualizzaPagina") || action.equals("ceaPagina")) {
@@ -57,6 +60,9 @@ public class GestioneTf extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     String action = request.getParameter("action");
+    
+    System.out.println("GestioneTf doPost action: " + action);
+    
     if (action != null) {
       if (action.equals("log-out") || action.equals("registrazioneStudente")
           || action.equals("registrazioneAzienda") || action.equals("generaCredenziali")

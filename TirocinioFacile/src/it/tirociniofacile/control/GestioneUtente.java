@@ -65,7 +65,7 @@ public class GestioneUtente extends HttpServlet {
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
 
-    System.out.println("ACTION: "  + action);
+    System.out.println("GestioneUtente action: "  + action);
     try {
       if (action != null) {
         if (action.equals("log-out")) {
@@ -144,15 +144,11 @@ public class GestioneUtente extends HttpServlet {
     String email = (request.getParameter("email"));
     boolean corretto = model.generaCredenziali(email);
     
-    System.out.println("MAIL: " + email);
-    //TODO TEST
-    if(email.equals("maestro"))
-      corretto = true;
-    
     String msg = "Dominio mail non valido, utlizzare mail '...@unisa.it'. ";
     if (corretto) {
       msg = "Credenziali generate, buona navigazione su TirocinioFacile";
     }
+    
     request.setAttribute("mailCorretta", msg);
     RequestDispatcher rd = request.getRequestDispatcher("/generaCredenziali.jsp");
     rd.forward(request,response);

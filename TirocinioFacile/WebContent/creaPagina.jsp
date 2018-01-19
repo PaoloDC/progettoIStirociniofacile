@@ -38,7 +38,7 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-8 col-md-8">
-				<form action="GestioneRicercaTirocinio?action=creaPagina" method="post" >
+				<form action="GestioneTf?action=creaPagina" method="post" >
 				
 				<!-- 
 					<div class="form-group">
