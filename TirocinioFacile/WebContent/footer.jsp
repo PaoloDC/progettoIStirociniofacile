@@ -13,17 +13,32 @@
 </head>
 <body>
 
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		crossorigin="anonymous"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
 
+	<!-- 
 	<footer class="footer">
 	<div class="container">
 		<span>TirocinioFacile è un servizio di UNISA Informatica - Tutti i Diritti Riservati - 2018</span>
 	</div>
 	</footer>
+    -->
+
+	<nav class="footerNav navbar navbar-fixed-bottom">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<center><p id="testoFooter">TirocinioFacile è un servizio di UNISA Informatica -
+				Tutti i Diritti Riservati - 2018</p></center>
+		</div>
+
+	</div>
+	</nav>
 
 </body>
 </html>
