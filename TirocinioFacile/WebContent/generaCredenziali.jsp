@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%
+	String msg = (String) request.getAttribute("mailCorretta");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -30,13 +33,20 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-4 col-md-4">
-				<form action="GestioneUtente?action=">
+				<form action="GestioneUtente?action=generaCredenziali" method="post">
 					<div class="form-group">
-						<label for="exampleInputEmail1">Email</label> <input type="email"
-							class="form-control" id="exampleInputEmail1"
+						<label for="exampleInputEmail1">Email</label> <input
+							class="form-control" id="exampleInputEmail1" name="email"
 							aria-describedby="emailHelp" placeholder="Enter email">
 					</div>
 					<button type="submit" class="btn btn-primary">Invia</button>
+					<%
+						if (msg != null) {
+					%>
+					<label><%=msg%></label>
+					<%
+						}
+					%>
 				</form>
 			</div>
 		</div>

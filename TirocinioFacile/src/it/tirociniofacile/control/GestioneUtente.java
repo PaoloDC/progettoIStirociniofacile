@@ -2,6 +2,8 @@ package it.tirociniofacile.control;
 
 import it.tirociniofacile.bean.UtenteBean;
 import it.tirociniofacile.model.UtenteModel;
+import sun.security.provider.certpath.ResponderId;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -63,7 +65,7 @@ public class GestioneUtente extends HttpServlet {
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
 
-    System.out.println(action);
+    System.out.println("ACTION: "  + action);
     try {
       if (action != null) {
         if (action.equals("log-out")) {
@@ -77,7 +79,7 @@ public class GestioneUtente extends HttpServlet {
           registrazioneAzienda(request);
 
         } else if (action.equals("generaCredenziali")) {
-          generaCredenziali(request);
+          generaCredenziali(request,response);
 
         } else if (action.equals("log-in")) {
           logIn(request, response);
@@ -128,17 +130,32 @@ public class GestioneUtente extends HttpServlet {
     model.salvaAccountAzienda(email, password, nomeazienda);
   }
 
+
   /**
-   * Genera nuove credenziali per gli utenti Impiegati uff. tirocini e presidente area didattica
-   * 
+   * Genera nuove credenziali per gli utenti Impiegati uff. tirocini e presidente area didattica.
    * @param request
-   *          richiesta http
-   * @throws SQLException
-   *           eccezzione sql
+   * @param response
+   * @throws ServletException
+   * @throws IOException
    */
-  public void generaCredenziali(HttpServletRequest request) throws SQLException {
+  public void generaCredenziali(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException,IOException {
+    
     String email = (request.getParameter("email"));
-    model.generaCredenziali(email);
+    boolean corretto = model.generaCredenziali(email);
+    
+    System.out.println("MAIL: " + email);
+    //TODO TEST
+    if(email.equals("maestro"))
+      corretto = true;
+    
+    String msg = "Dominio mail non valido, utlizzare mail '...@unisa.it'. ";
+    if (corretto) {
+      msg = "Credenziali generate, buona navigazione su TirocinioFacile";
+    }
+    request.setAttribute("mailCorretta", msg);
+    RequestDispatcher rd = request.getRequestDispatcher("/generaCredenziali.jsp");
+    rd.forward(request,response);
   }
 
   /**
