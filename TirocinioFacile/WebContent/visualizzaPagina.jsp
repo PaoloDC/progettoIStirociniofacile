@@ -38,10 +38,10 @@
 			</div>
 
 			<div class="col-8 col-sm-8">
-				<h3>Indirizzo: <%=pagina.getLocalita() %></h3>
-				<h3>Sede: </h3>
-				<h3>Skill Richieste: <%= pagina.getSkill() %></h3>
-				<h3>Ambito: <%=pagina.getAmbito() %></h3>
+				<h1><span class="glyphicon glyphicon-list-alt"></span> Tutte le informazione sull'azienda </h1>
+				<h2><span class="glyphicon glyphicon-home"></span> Indirizzo </h2> <h3><p><%=pagina.getLocalita() %></p></h3>
+				<h2><span class="glyphicon glyphicon-star"></span> Skill Richieste </h2><h3><p><%= pagina.getSkill() %></p></h3>
+				<h2><span class="glyphicon glyphicon-folder-open"></span> Ambito </h2><h3><p> <%=pagina.getAmbito() %></p></h3>
 			</div>
 		</div>
 <%} %>
