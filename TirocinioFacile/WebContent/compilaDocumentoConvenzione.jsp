@@ -30,16 +30,31 @@
 			</div>
 			<div class="col-8 col-md-8">
 				<form>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email</label> <input type="email"
+							class="form-control" id="exampleInputEmail1"
+							aria-describedby="emailHelp" placeholder="Enter email">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Nome Azienda</label> <input
+							type="text" class="form-control" id="exampleInputEmail1"
+							aria-describedby="emailHelp" placeholder="Enter matricola">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Password</label> <input
+							type="password" class="form-control" id="exampleInputPassword1"
+							placeholder="Password">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Conferma Password</label> <input
+							type="password" class="form-control" id="exampleInputPassword1"
+							placeholder="Password">
+					</div>
 					<div class="col-6 col-sm-6">
 						<div class="form-group">
 							<label for="exampleInputEmail1">Partita Iva</label> <input
 								type="email" class="form-control" id="exampleInputEmail1"
 								aria-describedby="emailHelp" placeholder="Enter email">
-						</div>
-						<div class="form-group">
-							<label for="exampleInputEmail1">Nome Azienda</label> <input
-								type="text" class="form-control" id="exampleInputEmail1"
-								aria-describedby="emailHelp" placeholder="Nome Azienda">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputPassword1">Sede Legale</label> <input
