@@ -32,16 +32,7 @@
 
 
 					<div class="col-8 col-sm-8">
-						<div class="form-group">
-							<label for="commenti">Commenti</label>
-							<textarea class="form-control" rows="5" cols="15" name="commenti"
-								placeholder="Commenti"></textarea>
-						</div>
-						<div class="form-group">
-							<label for="suggerimenti">Suggerimenti</label>
-							<textarea rows="5" cols="15" class="form-control"
-								name="suggerimenti" placeholder="Suggerimenti"></textarea>
-						</div>
+
 
 						<div>
 							<table>
@@ -294,16 +285,20 @@
 									</select></td>
 								</tr>
 							</table>
+							<div class="form-group">
+								<label for="commenti">Commenti</label>
+								<textarea class="form-control" rows="5" cols="15"
+									name="commenti" placeholder="Commenti"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="suggerimenti">Suggerimenti</label>
+								<textarea rows="5" cols="15" class="form-control"
+									name="suggerimenti" placeholder="Suggerimenti"></textarea>
+							</div>
 							<button type="submit" class="btn btn-primary">Invia
 								Questionario</button>
-							
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
-							<br>
+
+							<br> <br> <br> <br> <br> <br> <br>
 							<br>
 						</div>
 					</div>
