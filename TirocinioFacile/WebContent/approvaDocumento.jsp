@@ -71,12 +71,12 @@
 		<div class="row">
 			<div class= " col-sm-6">
 			
-					<a href="GestioneTf?action=ricercaTuttiDocumentiConvenzioneAzienda"
+					<a href="GestioneTf?action=ricercaTuttiDocumentiConvenzioneAzienda&indice=4"
 						class="btn btn-success btn-block">Cerca tutte le convenzioni azienda
 						 <span class="glyphicon glyphicon-hdd"> </span> <i class="fa fa-angle-right"></a> 
 			</div>
 			<div class= " col-sm-6">			 
-						 <a href="GestioneTf?action=ricercaTuttiDocumentiQuestionariAzienda"
+						 <a href="GestioneTf?action=ricercaTuttiDocumentiQuestionariAzienda&indice=4"
 						class="btn btn-success btn-block">Cerca tutte i questionari 
 						 <span class="glyphicon glyphicon-hdd"> </span> <i class="fa fa-angle-right"></a>		
 			</div>
@@ -92,6 +92,10 @@
 							if (listaDocumentiConvenzione != null) 
 								if(listaDocumentiConvenzione.size()!=0){
 									int i = 0;
+									if(request.getAttribute("indice") != null){
+										 indice =(int)  request.getAttribute("indice");
+										 System.out.println("Indice= " + indice);
+									}
 									int indiceIniziale = (( indice - NUM_ELE_PAG ));
 									while (i < listaDocumentiConvenzione.size()) {
 										if( i >=indiceIniziale && i<indice){	
@@ -185,6 +189,7 @@
 						
 						
 						/* lista questionari*/
+					
 							if (listaDocumentiQuestionari != null) 
 								if(listaDocumentiQuestionari.size()!=0){
 									int i = 0;
