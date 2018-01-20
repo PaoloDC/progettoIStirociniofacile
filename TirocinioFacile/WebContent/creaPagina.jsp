@@ -3,6 +3,12 @@
 <%@page import="it.tirociniofacile.bean.ProfiloAziendaBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%
+	//da passare nella sessione il profilo azienda bean
+	UtenteModel um = new UtenteModel();
+	UtenteBean ub = um.caricaAccount("kineton@info.com", "kineton");
+	ProfiloAziendaBean pab = (ProfiloAziendaBean) ub;
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,12 +24,7 @@
 </head>
 
 <body>
-	<%	//da passare nella sessione il profilo azienda bean
-		UtenteModel um = new UtenteModel();
-		UtenteBean ub = um.caricaAccount("kineton@info.com", "kineton");
-		ProfiloAziendaBean pab = (ProfiloAziendaBean) ub;
-		
-	%>
+
 	<!-- Latest compiled and minified JavaScript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -38,12 +39,12 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-8 col-md-8">
-				<form action="GestioneTf?action=creaPagina" method="post" >
+				<form action="GestioneTf?action=creaPagina" method="post">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Nome Azienda</label> <input
 							type="text" class="form-control" id="nomeAzienda"
 							value="<%=pab.getNomeAzienda()%>" readonly="readonly">
-					</div>				
+					</div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email Profilo Azienda</label> <input
 							type="text" class="form-control" name="mailAzienda"
@@ -52,7 +53,8 @@
 					<div class="form-group">
 						<label for="exampleInputEmail1">Località</label> <input
 							type="text" class="form-control" id="exampleInputEmail1"
-							name="localita" aria-describedby="emailHelp" placeholder="Località">
+							name="localita" aria-describedby="emailHelp"
+							placeholder="Località">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Descrizione</label>

@@ -1,5 +1,14 @@
+<%@page import="it.tirociniofacile.bean.UtenteBean"%>
+<%@page import="it.tirociniofacile.model.UtenteModel"%>
+<%@page import="it.tirociniofacile.bean.ProfiloStudenteBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%
+	//da passare nella sessione il profilo studente bean
+	UtenteModel um = new UtenteModel();
+	UtenteBean ub = um.caricaAccount("paolo@studenti.unisa.it", "paolo");
+	ProfiloStudenteBean psb = (ProfiloStudenteBean) ub;
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,262 +38,533 @@
 			</div>
 			<div>
 				<form action="GestioneTf?action=compilaQuestionario" method="post">
-
-
 					<div class="col-8 col-sm-8">
-
-
 						<div>
-							<table>
-								<tr>
-									<th>Giudizio sull'Esperienza</th>
-								</tr>
-								<tr>
-									<td>A.1 L'esperienza di tirocinio ha arricchito il suo
-										bagaglio di conoscenza?</td>
-									<td><select name="a1">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>A.2 L'esperienza di tirocinio &egrave; stata utile dal
-										punto di vista professionale?</td>
-									<td><select name="a2">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>A.3 L'esperienza di tirocinio &egrave; stata utile per
-										la sua crescita personale?</td>
-									<td><select name="a3">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>A.4 L'accoglienza a lei riservata in azienda &egrave;
-										stata buona?</td>
-									<td><select name="a4">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>A.5 Come valuta l'esperienza rispetto alle sue
-										aspettative iniziali?</td>
-									<td><select name="a5">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<th>Giudizio sull'Azienda</th>
-								</tr>
-								<tr>
-									<td>B.1 Il tutor aziendale l'ha seguito accuratamente
-										durante il tirocinio?</td>
-									<td><select name="b1">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>B.2 Il personale l'ha messo in condizione di rendere
-										al meglio?</td>
-									<td><select name="b2">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>B.3 Il suo lavoro &egrave; stato preso in seria
-										considerazione?</td>
-									<td><select name="b3">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>B.4 Il ritmo di lavoro &egrave; stato adeguato?</td>
-									<td><select name="b4">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>B.5 Il tempo impiegato &egrave; stato adeguato per lo
-										svolgimento del progetto?</td>
-									<td><select name="b5">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<th>Giudizio sull'Universit&agrave;</th>
-								</tr>
-								<tr>
-									<td>C.1 Il tempo impiegato per espletare le
-										attivit&agrave; burocratiche per dare inizio
-										dell'attivit&agrave; di tirocinio &egrave; stato adeguato?</td>
-									<td><select name="c1">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>C.2 L'azienda era nel settore di suo gradimento?</td>
-									<td><select name="c2">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>C.3 La gestione dei tirocini le &egrave; sembrata
-										efficiente?</td>
-									<td><select name="c3">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>C.4 La preparazione fornita dal Corso di Studi
-										&egrave; stata adeguata ad affrontare l'attivita' proposta?</td>
-									<td><select name="c4">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>C.5 Le informazioni che le sono state fornite per
-										affrontare il tirocinio sono state adeguate?</td>
-									<td><select name="c5">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>C.6 I compiti e le responsabilit&agrave; del tutor
-										interno vanno aumentati?</td>
-									<td><select name="c6">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-									</select></td>
-								</tr>
-							</table>
+							<div id="parte1" style="background: #42d9f4">
+								<label id="titoloParte">PARTE I : INFORMAZIONI SUL
+									LAUREATO</label>
+								<div class="form-group">
+									<label> 1. Cognome </label> <input name="cognome"
+										placeholder="Cognome"> <label> 2. Nome </label> <input
+										name="nome" placeholder="Nome">
+								</div>
+								<div class="form-group">
+									<label> 3. Telefono 1 </label> <input name="telefono1"
+										placeholder="Telefono 1"> <label> 4. Telefono
+										2 </label> <input name="telefono2" placeholder="Telefono 2">
+								</div>
+								<div class="form-group">
+									<label> 5. E-mail </label> <input name="email"
+										placeholder="Email"> <label> 6. Comune di
+										Residenza </label> <input name="comune"
+										placeholder="Comune di Residenza">
+								</div>
+								<div class="form-group">
+									<label> 7. Provincia </label> <input name="provincia"
+										placeholder="Provincia"> <label> 8. Anno
+										accademico di immatricolazione </label> <input name="annoimm"
+										placeholder="Anno accademico di immatricolazione">
+
+								</div>
+								<div class="form-group">
+									<label> 9. CdL di Immatricolazione </label> <input
+										name="cdlimm" placeholder="CdL di Immatricolazione"> <label>
+										10. Matricola </label> <input name="matricola" readonly="readonly"
+										value="<%=psb.getMatricola()%>">
+								</div>
+								<div class="form-group">
+									<label> 11. Azienda/Laboratorio Interno ospitante il
+										tirocinante </label> <input name="azienda"
+										placeholder="Azienda/Laboratorio Interno ospitante il tirocinante">
+								</div>
+								<div class="form-group">
+									<label> 12. Comune dell'Azienda / Laboratorio </label> <input
+										name="comuneazienda"
+										placeholder="Comune dell'Azienda / Laboratorio"> <label>
+										13. Provincia </label> <input name="provazienda"
+										placeholder="Provincia">
+								</div>
+								<div class="form-group">
+									<label> 14. Sesso </label> <select name="sesso">
+										<option value="maschio">Maschio</option>
+										<option value="fermmina">Fermmina</option>
+									</select> <label> 15. Data di nascita </label> <input name="datanascita"
+										placeholder="Data di nascita">
+								</div>
+							</div>
+							<div id="parte2" style="background: #5bf441">
+								<label id="titoloParte">PARTE II : INFORMAZIONI SULLO
+									STAGE / TIROCINIO</label>
+								<div class="form-group">
+
+									<fieldset name="parte2dom1">
+										<legend>1. Come &egrave; avvenuta la scelta dello
+											stage?</legend>
+										<input type="radio" /> Tramite indicazioni da parte del tutor
+										interno <br> <input type="radio" /> Tramite indicazioni
+										da parte dell'azienda <br> <input type="radio" /> In
+										base ai propri interessi/motivazioni <br> <input
+											type="radio" /> In base al proprio curriculum <br> <input
+											type="radio" name="parte2dom1altro" /> Altro, Spec <input>
+									</fieldset>
+
+									<fieldset name="parte2dom2">
+										<legend>2. Lo stage &egrave; stato svolto:</legend>
+										<input type="radio" disabled="disabled" /> all'interno <br>
+										<input type="radio" checked="checked" readonly="readonly" />
+										all'esterno <br>
+									</fieldset>
+
+									<fieldset name="parte2dom3">
+										<legend>3. Qual &egrave; stato il ruolo del tutor
+											aziendale durante lo stage?</legend>
+										<input type="radio" /> Definire e strutturare il progetto di
+										stage <br> <input type="radio" /> Supervisionare lo
+										svolgimento dello stage, risolvendo eventuali difficoltà
+										incontrate dal tirocinante <br> <input type="radio" />
+										Garantire il raggiungimento degli obiettivi formativi
+										contenuti nel Progetto di stage <br> <input type="radio" />
+										Nessun ruolo <br> <input type="radio"
+											name="parte2dom4altro" /> Altro, Spec <input>
+									</fieldset>
+
+									<fieldset name="parte2dom4">
+										<legend>4. Qual &egrave; stato il ruolo del tutor
+											universitario durante lo stage?</legend>
+										<input type="radio" /> Definire e strutturare il progetto di
+										stage <br> <input type="radio" /> Supervisionare lo
+										svolgimento dello stage, risolvendo eventuali difficoltà
+										incontrate dal tirocinante <br> <input type="radio" />
+										Garantire il raggiungimento degli obiettivi formativi
+										contenuti nel Progetto di stage <br> <input type="radio" />
+										Nessun ruolo <br> <input type="radio"
+											name="parte2dom4altro" /> Altro, Spec <input>
+									</fieldset>
+									<fieldset>
+										<legend>5. In che misura lei possedeva le seguenti
+											caratteristiche al momento dell'inizio dello stage?</legend>
+										<table>
+											<tr>
+												<td>Capacit&agrave; relazionali e di comunicazione</td>
+												<td><select name="cinque1">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Capacit&agrave; di lavorare in gruppo</td>
+												<td><select name="cinque2">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Iniziativa / Autonomia</td>
+												<td><select name="cinque3">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Abilit&agrave; nell'uso degli strumenti e tecniche
+													specifiche</td>
+												<td><select name="cinque4">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Conoscenza di base</td>
+												<td><select name="cinque5">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Conoscenze linguistiche</td>
+												<td><select name="cinque6">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Conoscenze tecniche</td>
+												<td><select name="cinque7">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+										</table>
+									</fieldset>
+									<fieldset>
+										<legend>6. Quali delle precedenti caratteristiche lei
+											ritiene di aver potenziato maggiormente al termine dello
+											stage?</legend>
+										<table>
+											<tr>
+												<td>Capacit&agrave; relazionali e di comunicazione</td>
+												<td><select name="cinque1">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Capacit&agrave; di lavorare in gruppo</td>
+												<td><select name="cinque2">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Iniziativa / Autonomia</td>
+												<td><select name="cinque3">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Abilit&agrave; nell'uso degli strumenti e tecniche
+													specifiche</td>
+												<td><select name="cinque4">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Conoscenza di base</td>
+												<td><select name="cinque5">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Conoscenze linguistiche</td>
+												<td><select name="cinque6">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>Conoscenze tecniche</td>
+												<td><select name="cinque7">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+												</select></td>
+											</tr>
+										</table>
+									</fieldset>
+
+
+								</div>
+
+							</div>
+
+
+
+							<div id="parte3" style="background: #f4cb42">
+								<label id="titoloParte">PARTE III : GRADO DI
+									SODDISFAZIONE DEL TIROCINANTE</label>
+								<fieldset>
+									<legend>Giudizio sull'Esperienza</legend>
+
+									<table>
+										<tr>
+											<td>A.1 L'esperienza di tirocinio ha arricchito il suo
+												bagaglio di conoscenza?</td>
+											<td><select name="a1">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>A.2 L'esperienza di tirocinio &egrave; stata utile
+												dal punto di vista professionale?</td>
+											<td><select name="a2">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>A.3 L'esperienza di tirocinio &egrave; stata utile
+												per la sua crescita personale?</td>
+											<td><select name="a3">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>A.4 L'accoglienza a lei riservata in azienda
+												&egrave; stata buona?</td>
+											<td><select name="a4">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>A.5 Come valuta l'esperienza rispetto alle sue
+												aspettative iniziali?</td>
+											<td><select name="a5">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+
+									</table>
+								</fieldset>
+								<fieldset>
+									<legend>Giudizio sull'Azienda</legend>
+
+									<table>
+										<tr>
+											<td>B.1 Il tutor aziendale l'ha seguito accuratamente
+												durante il tirocinio?</td>
+											<td><select name="b1">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>B.2 Il personale l'ha messo in condizione di rendere
+												al meglio?</td>
+											<td><select name="b2">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>B.3 Il suo lavoro &egrave; stato preso in seria
+												considerazione?</td>
+											<td><select name="b3">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>B.4 Il ritmo di lavoro &egrave; stato adeguato?</td>
+											<td><select name="b4">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>B.5 Il tempo impiegato &egrave; stato adeguato per
+												lo svolgimento del progetto?</td>
+											<td><select name="b5">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+									</table>
+								</fieldset>
+								<fieldset>
+									<legend>Giudizio sull'Universit&agrave;</legend>
+									<table>
+										<tr>
+											<td>C.1 Il tempo impiegato per espletare le
+												attivit&agrave; burocratiche per dare inizio
+												dell'attivit&agrave; di tirocinio &egrave; stato adeguato?</td>
+											<td><select name="c1">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>C.2 L'azienda era nel settore di suo gradimento?</td>
+											<td><select name="c2">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>C.3 La gestione dei tirocini le &egrave; sembrata
+												efficiente?</td>
+											<td><select name="c3">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>C.4 La preparazione fornita dal Corso di Studi
+												&egrave; stata adeguata ad affrontare l'attivita' proposta?</td>
+											<td><select name="c4">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>C.5 Le informazioni che le sono state fornite per
+												affrontare il tirocinio sono state adeguate?</td>
+											<td><select name="c5">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td>C.6 I compiti e le responsabilit&agrave; del tutor
+												interno vanno aumentati?</td>
+											<td><select name="c6">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+											</select></td>
+										</tr>
+									</table>
+								</fieldset>
+							</div>
+
 							<div class="form-group">
 								<label for="commenti">Commenti</label>
 								<textarea class="form-control" rows="5" cols="15"
