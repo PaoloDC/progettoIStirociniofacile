@@ -23,6 +23,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
   private static final long serialVersionUID = 1L;
   static PaginaAziendaModel model;
   int indice = 4;
+  
   static {
     model = new PaginaAziendaModel();
   }

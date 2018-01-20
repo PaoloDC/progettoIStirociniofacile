@@ -39,6 +39,7 @@ public class DocumentoModel {
   //variabili di istanza
   public static final String TABLE_NAME_CONVENZIONI = "DomandaConvenzioneAzienda";
   public static final String TABLE_NAME_QUESTIONARI = "QuestionarioValutazioneAzienda";
+  public static final String SAVE_DIR = "pdf";
 
   /**
    * Ricerca tutti i documenti convenzione bean.
@@ -311,10 +312,107 @@ public class DocumentoModel {
    * Salva il documento PDF all'interno del database.
    * @param pdf il documento da salvare
    * @param id id che collega il pdf ad un documento (convenzione o questionario)
+   * @throws SQLException 
    */
-  public synchronized void salvaPdf(File pdf,int id) {
-
+  public synchronized void salvaPdfConvenzione(File pdf, String email) 
+      throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = ds.getConnection();
+      String selectSql = "SELECT partitaIva FROM " + PaginaAziendaModel.TABLE_NAME_PAGINA 
+          + " JOIN " 
+          + TABLE_NAME_CONVENZIONI + " ON "
+          + " paginaAzienda.id = domandaconvenzioneazienda.paginaaziendaID "
+          + " WHERE paginaazienda.mailAzienda = ? ";
+      
+      preparedStatement = connection.prepareStatement(selectSql);
+      preparedStatement.setString(1, email);
+      ResultSet rs = preparedStatement.executeQuery();
+      
+      String savePath = "C:/Users/PC1/git/progettoIStirociniofacile/"
+          + "TirocinioFacile/WebContent"
+          + "/" + SAVE_DIR;
+      
+      File fileSaveDir = new File(savePath);
+      if (!fileSaveDir.exists()) {
+        fileSaveDir.mkdir();
+      }
+      
+      String updateSql = "UPDATE " + TABLE_NAME_QUESTIONARI 
+          + " SET url = ? WHERE id = ?";
+      
+      rs.next();
+      String piva = rs.getString(1);
+      
+      preparedStatement = connection.prepareStatement(updateSql);
+      preparedStatement.setString(1, savePath);
+      preparedStatement.setString(2, piva);
+      
+      preparedStatement.executeUpdate();
+      
+      
+    } finally { 
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+        if (connection != null) {
+          connection.close();
+        }
+      }
+    }  
   }
+  
+  public synchronized void salvaPdfQuestionario(File pdf,String email) 
+      throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = ds.getConnection();
+      String selectSql = "SELECT id FROM " 
+          + TABLE_NAME_QUESTIONARI
+          + " WHERE mailStudente = ? ";
+      
+      preparedStatement = connection.prepareStatement(selectSql);
+      preparedStatement.setString(1, email);
+      ResultSet rs = preparedStatement.executeQuery();
+
+      String savePath = "C:/Users/PC1/git/progettoIStirociniofacile/"
+          + "TirocinioFacile/WebContent"
+          + "/" + SAVE_DIR;
+      
+      File fileSaveDir = new File(savePath);
+      if (!fileSaveDir.exists()) {
+        fileSaveDir.mkdir();
+      }
+      
+      String updateSql = "UPDATE " + TABLE_NAME_QUESTIONARI 
+          + " SET url = ? WHERE id = ?";
+      
+      rs.next();
+      int id = rs.getInt(1);
+      
+      preparedStatement = connection.prepareStatement(updateSql);
+      preparedStatement.setString(1, savePath);
+      preparedStatement.setInt(2, id);
+      
+      preparedStatement.executeUpdate();
+      
+    } finally { 
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+        if (connection != null) {
+          connection.close();
+        }
+      }
+    }  
+  }
+  
 
   /**
    * Permette di ricercare un documento convenzione fornendo l'id.

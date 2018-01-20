@@ -2,6 +2,9 @@ package it.tirociniofacile.control;
 
 import it.tirociniofacile.bean.DocumentoConvenzioneBean;
 import it.tirociniofacile.bean.DocumentoQuestionarioBean;
+import it.tirociniofacile.bean.ProfiloAziendaBean;
+import it.tirociniofacile.bean.ProfiloStudenteBean;
+import it.tirociniofacile.bean.UtenteBean;
 import it.tirociniofacile.model.DocumentoModel;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -116,12 +119,16 @@ public class GestioneDocumento extends HttpServlet {
    * @throws SQLException
    *           eccezzioni sql
    */
-  public void caricaDocumento(HttpServletRequest request ,
-      HttpServletResponse response) throws SQLException {
+  public void caricaDocumento(HttpServletRequest request, HttpServletResponse response) 
+      throws SQLException {
     String pdf = (request.getParameter("pdf"));
-    String id = (request.getParameter("id"));
-    int id1 = Integer.parseInt(id);
-    // TODO model.salvaPdf(pdf, id1);
+    UtenteBean utente = (UtenteBean) request.getSession().getAttribute("account");
+    String email = utente.getEmail();
+    if (utente instanceof ProfiloAziendaBean) {
+      model.salvaPdfConvenzione(pdf,email);
+    } else if (utente instanceof ProfiloStudenteBean) {
+      model.salvaPdfQuestionario(pdf,email);
+    }
   }
 
   /**

@@ -42,8 +42,7 @@
 					<div class="form-group">
 						<label for="exampleInputEmail1" id="txtErrEmail">Email</label> <input
 							type="email" class="form-control" id="theEmail"
-							aria-describedby="emailHelp" placeholder="Email"
-							name="email">
+							aria-describedby="emailHelp" placeholder="Email" name="email">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1" id="txtErrPass">Password</label>
@@ -62,7 +61,7 @@
 				<%
 					if (messaggioErrore != null) {
 				%>
-					<h3 style="color:#FF0000"><%=messaggioErrore%></h3>
+				<h3 style="color: #FF0000"><%=messaggioErrore%></h3>
 				<%
 					}
 				%>
@@ -86,6 +85,15 @@
 		</div>
 
 	</div>
+	<button class="btn btn-primary" onclick="myFunction()">Print
+		this page</button>
 	<%@ include file="footer.jsp"%>
+
+	<script>
+		function myFunction() {
+			window.print();
+		}
+	</script>
+
 </body>
 </html>

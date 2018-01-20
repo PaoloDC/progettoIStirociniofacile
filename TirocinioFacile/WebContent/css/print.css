@@ -1,0 +1,12 @@
+@CHARSET "ISO-8859-1";
+
+@page {size: 210mm 297mm; margin: 25mm;}
+
+button {
+	visibility: hidden;
+}
+.footer {
+	visibility: hidden;
+}
+
+a:link:after{content: " [" attr(href) "]";}
