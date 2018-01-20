@@ -112,6 +112,10 @@ public class GestioneRicercaTirocinio extends HttpServlet {
       throws SQLException, ServletException, IOException {
     String categoria = request.getParameter("categoria");
     String chiave = request.getParameter("chiave");
+    
+    if (categoria.equals("nome")) {
+      categoria = "nomeaziendaRappresentata";
+    }
 
     ArrayList<PaginaAziendaBean> pabList = model.ricerca(categoria,chiave);
     request.removeAttribute("listaAziende");

@@ -56,7 +56,7 @@
 						<form action="GestioneTf" method="get">
 							<input type="hidden" id="thisField" name="action"
 								value="ricercaPagina">
-							<li><input type="radio" name="categoria" value="ambito">
+							<li><input type="radio" name="categoria" value="ambito" checked="checked">
 								<label for="ambitoChoice">Ambito</label></li>
 							<li><input type="radio" name="categoria" value="skill">
 								<label for="skillChoice">Skill</label></li>
@@ -67,7 +67,7 @@
 					</ul>
 					<div class="navbar-form navbar-left">
 						<div class="form-group">
-							<input type="text" class="form-control" name="Inserisci una chiave di ricerca"
+							<input type="text" class="form-control" name="chiave"
 								placeholder="Chiave">
 						</div>
 					</div>

@@ -115,11 +115,35 @@ public class PaginaAziendaModel {
           + "FROM " + TABLE_NAME_PAGINA
           + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
           + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = " 
-          + UtenteModel.TABLE_NAME_AZIENDA + ".mail WHERE " + categoria + " LIKE ?";
+          + UtenteModel.TABLE_NAME_AZIENDA + ".mail WHERE " + categoria + " LIKE ? ";
 
+      if (categoria.equals("skill")) {
+        selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id,nomeSkill " 
+                    + "FROM " + TABLE_NAME_PAGINA
+                    + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
+                    + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = " 
+                    + UtenteModel.TABLE_NAME_AZIENDA + ".mail"
+                    + " JOIN skill ON "
+                    + TABLE_NAME_PAGINA + ".id = skill.paginaAziendaID " 
+                    + " WHERE nomeSkill LIKE ?";
+        
+        
+      }
+      
+      if (categoria.equals("ambito")) {
+        selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id,nomeAmbito " 
+            + "FROM " + TABLE_NAME_PAGINA
+            + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
+            + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = "
+            + UtenteModel.TABLE_NAME_AZIENDA + ".mail"
+            + " JOIN ambito ON "
+            + TABLE_NAME_PAGINA + ".id = ambito.paginaAziendaID " 
+            + " WHERE nomeAmbito LIKE ?";
+        
+      }
+      
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, chiave);
-
+      preparedStatement.setString(1, "%" + chiave + "%");
       ResultSet rs = preparedStatement.executeQuery();
 
       if (rs.first()) {

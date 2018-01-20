@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -38,6 +40,114 @@ public class DocumentoModel {
   public static final String TABLE_NAME_CONVENZIONI = "DomandaConvenzioneAzienda";
   public static final String TABLE_NAME_QUESTIONARI = "QuestionarioValutazioneAzienda";
 
+  /**
+   * Ricerca tutti i documenti convenzione bean.
+   * @return lista con tutti i documenti
+   * @throws SQLException eccezzioni sql
+   */
+  public synchronized ArrayList<DocumentoConvenzioneBean>
+      getTuttiDocumentiConvenzioneAzienda() throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ArrayList<DocumentoConvenzioneBean> listaDocumenti = new ArrayList<DocumentoConvenzioneBean>();
+    try {
+      connection = ds.getConnection();
+      String selectSql = "SELECT * FROM" + TABLE_NAME_CONVENZIONI ;
+      
+      preparedStatement = connection.prepareStatement(selectSql);
+      ResultSet rs = preparedStatement.executeQuery();
+      if (rs.first()) {
+        do {
+          DocumentoConvenzioneBean documento = new DocumentoConvenzioneBean();
+          documento.setPartitaIva(rs.getString(1));
+          documento.setNomeAzienda(rs.getString(2));
+          documento.setSedeLegale(rs.getString(3));
+          documento.setCitta(rs.getString(4));
+          documento.setRappresentanteLegale(rs.getString(5));
+          documento.setDataNascitaRappresentanteLegale(rs.getString(6));
+          documento.setLuogoNascitaRappresentanteLegale(rs.getString(7));
+          documento.setApprovato(rs.getBoolean(8));
+          listaDocumenti.add(documento);
+        } while (rs.next()) ;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      } finally {
+        if (connection != null) {
+          try { 
+            connection.close();
+          } catch  (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }
+    
+    return listaDocumenti;
+  }
+ 
+  
+  /**
+   * Ricerca tutti i documenti questionari.
+   * @return lista con tutti i documenti
+   * @throws SQLException eccezzioni sql
+   */
+  public synchronized ArrayList<DocumentoQuestionarioBean>
+      getTuttiDocumentiQuestionari() throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ArrayList<DocumentoQuestionarioBean> listaDocumenti = 
+        new ArrayList<DocumentoQuestionarioBean>();
+    try {
+      connection = ds.getConnection();
+      String selectSql = "SELECT * FROM" + TABLE_NAME_QUESTIONARI ;
+      
+      preparedStatement = connection.prepareStatement(selectSql);
+      ResultSet rs = preparedStatement.executeQuery();
+      if (rs.first()) {
+        do {
+          DocumentoQuestionarioBean documento = new DocumentoQuestionarioBean();
+          documento.setInformazioniSulTirocinio(rs.getString(2));
+          documento.setGradoDiSoddisfazioneDelTirocinante(rs.getString(3));
+          documento.setCommenti(rs.getString(4));
+          documento.setSuggerimenti(rs.getString(5));
+          documento.setAnnoAccademico(rs.getString(6));
+          documento.setApprovato(rs.getBoolean(7));
+          documento.setMailStudente(rs.getString(9));
+          listaDocumenti.add(documento);
+        } while (rs.next()) ;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      } finally {
+        if (connection != null) {
+          try { 
+            connection.close();
+          } catch  (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }
+    
+    return listaDocumenti;
+  }  
+  
+  
   /**
    * Conta il numero di questionari approvati in un anno indicato.
    * @param anno l'anno in cui contare
