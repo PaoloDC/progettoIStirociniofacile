@@ -364,8 +364,6 @@ public class PaginaAziendaModel {
     PreparedStatement preparedStatementSkill = null;
     PreparedStatement preparedStatementAmbito = null;
 
-   
-
     try {
       connection = ds.getConnection();
       String insertSqlPagAzienda = "INSERT INTO " + TABLE_NAME_PAGINA

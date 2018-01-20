@@ -39,7 +39,7 @@
 					Carica il documento <br>(file supportati: pdf)
 				</h1>
 				<form method="post" action="GestioneTf" id="form1"
-					onsubmit="return isOk();">
+					onsubmit="return isOk();" enctype="multipart/form-data">
 					<input type="hidden" id="thisField" name="action"
 						value="caricaDocumento">
 					<div class="form-group">

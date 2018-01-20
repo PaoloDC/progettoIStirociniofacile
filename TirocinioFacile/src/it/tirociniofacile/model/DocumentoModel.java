@@ -5,6 +5,7 @@ import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 import it.tirociniofacile.bean.PaginaAziendaBean;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
 
@@ -312,9 +314,10 @@ public class DocumentoModel {
    * @param pdf il documento da salvare
    * @param id id che collega il pdf ad un documento (convenzione o questionario)
    * @throws SQLException 
+   * @throws IOException 
    */
-  public synchronized void salvaPdfConvenzione(File pdf, String email) 
-      throws SQLException {
+  public synchronized void salvaPdfConvenzione(String url, String email) 
+      throws SQLException, IOException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -337,6 +340,8 @@ public class DocumentoModel {
       if (!fileSaveDir.exists()) {
         fileSaveDir.mkdir();
       }
+      
+      
       
       String updateSql = "UPDATE " + TABLE_NAME_QUESTIONARI 
           + " SET url = ? WHERE id = ?";
@@ -364,8 +369,10 @@ public class DocumentoModel {
     }  
   }
   
-  public synchronized void salvaPdfQuestionario(File pdf,String email) 
-      throws SQLException {
+ 
+  
+  public synchronized void salvaPdfQuestionario(String url,String email) 
+      throws SQLException, IOException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -387,6 +394,8 @@ public class DocumentoModel {
         fileSaveDir.mkdir();
       }
       
+      
+      
       String updateSql = "UPDATE " + TABLE_NAME_QUESTIONARI 
           + " SET url = ? WHERE id = ?";
       
@@ -394,7 +403,7 @@ public class DocumentoModel {
       int id = rs.getInt(1);
       
       preparedStatement = connection.prepareStatement(updateSql);
-      preparedStatement.setString(1, savePath);
+      preparedStatement.setString(1, url);
       preparedStatement.setInt(2, id);
       
       preparedStatement.executeUpdate();
