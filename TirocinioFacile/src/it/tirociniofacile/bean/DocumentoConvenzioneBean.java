@@ -17,9 +17,10 @@ public class DocumentoConvenzioneBean {
    * @param luogoNascitaRappresentanteLegale luogo di nascita del rappresentante legale dell'azienda
    * @param dataNascitaRappresentanteLegale data di nascita del rappresentante legale dell'azienda
    */
-  public DocumentoConvenzioneBean(boolean approvato, String nomeAzienda, String sedeLegale, 
+  public DocumentoConvenzioneBean(String partitaIva,boolean approvato, String nomeAzienda, String sedeLegale, 
       String citta, String rappresentanteLegale, String luogoNascitaRappresentanteLegale, 
       String dataNascitaRappresentanteLegale) {
+    this.partitaIva=partitaIva;
     this.approvato = approvato;
     this.nomeAzienda = nomeAzienda;
     this.sedeLegale = sedeLegale;
@@ -48,6 +49,14 @@ public class DocumentoConvenzioneBean {
   
   public String getCitta() {
     return citta;
+  }
+  
+  public void setPartitaIva(String partitaIva) {
+    this.partitaIva = partitaIva;
+  }
+  
+  public String getPartitaIva() {
+    return partitaIva;
   }
   
   public void setCitta(String citta) {
@@ -86,6 +95,7 @@ public class DocumentoConvenzioneBean {
     this.dataNascitaRappresentanteLegale = dataNascitaRappresentanteLegale;
   }
   
+  private String partitaIva;
   private boolean approvato;
   private String nomeAzienda;
   private String citta;
