@@ -246,7 +246,7 @@ public class GestioneDocumento extends HttpServlet {
     }
     request.setAttribute("indice", indice); 
     
-    RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumentoConvenzione.jsp");  
+    RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");  
     rd.forward(request, response);
    
   }
@@ -273,7 +273,7 @@ public class GestioneDocumento extends HttpServlet {
     }
     request.setAttribute("indice", indice); 
      
-    RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumentoConvenzione.jsp");  
+    RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");  
     rd.forward(request, response);
     
   }
