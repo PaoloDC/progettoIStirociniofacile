@@ -18,6 +18,17 @@
  </welcome-file-list>
  
  
+ 
+ <servlet>
+   <servlet-name>GestioneDocumento</servlet-name>
+   <servlet-class>it.tirociniofacile.control.GestioneDocumento</servlet-class>
+ </servlet>
+ 
+ <servlet-mapping>
+   <servlet-name>GestioneDocumento</servlet-name>
+   <url-pattern>/GestioneDocumento</url-pattern>
+ </servlet-mapping>
+ 
  <servlet>
    <servlet-name>GestioneRicercaTirocinio</servlet-name>
    <servlet-class>it.tirociniofacile.control.GestioneRicercaTirocinio</servlet-class>

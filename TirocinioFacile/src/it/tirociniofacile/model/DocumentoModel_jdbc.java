@@ -234,7 +234,7 @@ public class DocumentoModel_jdbc {
       if (rs.first()) {
         dqb = new DocumentoQuestionarioBean();
 
-        dqb.setInformazioniSulTirocinio(rs.getString(2));
+      /*  dqb.setInformazioniSulTirocinio(rs.getString(2));
         dqb.setGradoDiSoddisfazioneDelTirocinante(rs.getString(3));
         dqb.setCommenti(rs.getString(4));
         dqb.setSuggerimenti(rs.getString(5));
@@ -243,7 +243,7 @@ public class DocumentoModel_jdbc {
         dqb.setMailStudente(rs.getString(8));
         dqb.setGiudizioEsperienza(rs.getString(10));
         dqb.setGiudizioAzienda(rs.getString(11));
-        dqb.setGiudizioUniversita(rs.getString(12));;
+        dqb.setGiudizioUniversita(rs.getString(12));;*/
 
       }
     } catch (SQLException e) {

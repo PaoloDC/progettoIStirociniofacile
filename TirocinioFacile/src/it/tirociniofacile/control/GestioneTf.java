@@ -60,7 +60,9 @@ public class GestioneTf extends HttpServlet {
       } else if (action.equals("visualizzaDocumento") 
           || action.equals("scaricaDocumento") || action.equals("caricaDocumento") 
           || action.equals("convalidaDocumento") || action.equals("compilaConvenzioneAzienda")
-          || action.equals("compilaQuestionario")) {
+          || action.equals("compilaQuestionario") 
+          || action.equals("ricercaTuttiDocumentiConvenzioneAzienda") 
+          || action.equals("ricercaTuttiDocumentiQuestionariAzienda")) {
         RequestDispatcher rd = request.getRequestDispatcher("GestioneDocumento");
         rd.forward(request, response);
       }

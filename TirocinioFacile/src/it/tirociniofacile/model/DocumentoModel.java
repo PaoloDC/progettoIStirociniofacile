@@ -52,7 +52,7 @@ public class DocumentoModel {
     ArrayList<DocumentoConvenzioneBean> listaDocumenti = new ArrayList<DocumentoConvenzioneBean>();
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT * FROM" + TABLE_NAME_CONVENZIONI ;
+      String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI ;
       
       preparedStatement = connection.prepareStatement(selectSql);
       ResultSet rs = preparedStatement.executeQuery();
@@ -107,15 +107,15 @@ public class DocumentoModel {
         new ArrayList<DocumentoQuestionarioBean>();
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT * FROM" + TABLE_NAME_QUESTIONARI ;
+      String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI ;
       
       preparedStatement = connection.prepareStatement(selectSql);
       ResultSet rs = preparedStatement.executeQuery();
       if (rs.first()) {
         do {
           DocumentoQuestionarioBean documento = new DocumentoQuestionarioBean();
-          documento.setInformazioniSulTirocinio(rs.getString(2));
-          documento.setGradoDiSoddisfazioneDelTirocinante(rs.getString(3));
+       /*   documento.setInformazioniSulTirocinio(rs.getString(2));
+          documento.setGradoDiSoddisfazioneDelTirocinante(rs.getString(3));*/
           documento.setCommenti(rs.getString(4));
           documento.setSuggerimenti(rs.getString(5));
           documento.setAnnoAccademico(rs.getString(6));
@@ -389,7 +389,7 @@ public class DocumentoModel {
 
       if (rs.first()) {
         dqb = new DocumentoQuestionarioBean();
-
+/*
         dqb.setInformazioniSulTirocinio(rs.getString(2));
         dqb.setGradoDiSoddisfazioneDelTirocinante(rs.getString(3));
         dqb.setCommenti(rs.getString(4));
@@ -400,7 +400,7 @@ public class DocumentoModel {
         dqb.setGiudizioEsperienza(rs.getString(10));
         dqb.setGiudizioAzienda(rs.getString(11));
         dqb.setGiudizioUniversita(rs.getString(12));;
-
+*/
       }
     } finally {
       try {

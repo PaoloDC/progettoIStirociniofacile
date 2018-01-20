@@ -81,7 +81,8 @@
 				</ul>
 			</div>
 			<a href="GestioneTf?action=ricercaTuttePagine"
-				class="btn btn-success btn-block">Cerca tutte le aziende <span class="glyphicon glyphicon-hdd"> </span> <i class="fa fa-angle-right"></a> <!-- /.navbar-collapse -->
+				class="btn btn-success btn-block">Cerca tutte le aziende <span class="glyphicon glyphicon-hdd"> </span> <i class="fa fa-angle-right"></a> 
+				<!-- /.navbar-collapse -->
 			<div class="container">
 				<div class="row">
 					<div class="panel-group">
@@ -100,7 +101,7 @@
 													<div class="panel-heading"><%=listaAziende.get(i).getNomeAzienda()%></div>
 													<div class="panel-body"><%=listaAziende.get(i).getDescrizione()%></div>
 													<center>
-														<a href="GestioneTf?action=visualizzaPagina&id=<%=listaAziende.get(i).getId()%>"><button type="submit" class="btn btn-default">Vai Alla
+														<a href="GestioneTf?action=visualizzaPagina&id=<%=listaAziende.get(i).getId()%>"><button type="submit" class="btn btn-info">Vai Alla
 															Pagina</button></a>
 													</center>
 												</div>
