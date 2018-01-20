@@ -41,7 +41,6 @@ public class GestioneDocumento extends HttpServlet {
     System.out.println("Gestione Documento Action: " + action);
     try {
       if (action != null) {
-
         if (action.equals("visualizzaDocumento")) {
           visualizzaDocumento(request);
         } else if (action.equals("scaricaDocumento")) {
