@@ -2,7 +2,10 @@
 	pageEncoding="ISO-8859-1" import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
 	<%
 	
-	//PaginaAziendaBean  pagina = (PaginaAziendaBean) request.getAttribute("pagina");
+	DocumentoConvenzioneBean documento = (DocumentoConvenzioneBean) request.getAttribute("convenzione");
+	DocumentoQuestionarioBean documento1 = (DocumentoQuestionarioBean) request.getAttribute("questionario");
+	
+	System.out.println("Convenzione "+ documento);
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -36,6 +39,14 @@
 			<div class="col-4 col-sm-4">
 				<h3><span class="glyphicon glyphicon-ok"></span> Documento da approvare</h3>
 			</div>
+							
+						<div class="col-3 col-sm-3">
+							<div class="panel panel-default panel-modest" style="max-width: 80%; margin: 5px; max-height: 60%;">
+								<div class="panel-heading"><%=documento1.getMailStudente()%></div>
+									<div class="panel-body"> <%= documento1.getAnnoAccademico()%></div>
+									
+									</div>
+								</div>
 		<div class="row">
 			<div class="col-2 col-sm-2">
 			<br> </br>  <br> </br>

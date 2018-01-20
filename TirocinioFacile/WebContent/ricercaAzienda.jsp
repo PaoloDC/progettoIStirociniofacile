@@ -80,8 +80,12 @@
 
 				</ul>
 			</div>
+			<div class= " col-sm-6">
 			<a href="GestioneTf?action=ricercaTuttePagine"
-				class="btn btn-success btn-block">Cerca tutte le aziende <span class="glyphicon glyphicon-hdd"> </span> <i class="fa fa-angle-right"></a> 
+				class="btn btn-success btn-block">Cerca tutte le aziende 
+				<span class="glyphicon glyphicon-hdd"> </span> 
+				<i class="fa fa-angle-right">
+			</a> 
 				<!-- /.navbar-collapse -->
 			<div class="container">
 				<div class="row">
@@ -95,14 +99,13 @@
 										if( i >=indiceIniziale && i<indice){	
 											%>
 											<div class="col-3 col-sm-3">
-					
 												<div class="panel panel-default panel-modest"
 													style="max-width: 80%; margin: 5px; max-height: 60%;">
 													<div class="panel-heading"><%=listaAziende.get(i).getNomeAzienda()%></div>
-													<div class="panel-body"><%=listaAziende.get(i).getDescrizione()%></div>
+													<div class="panel-body" style="max-width: 80%; margin: 5px; max-height: 60%;" ><%=listaAziende.get(i).getDescrizione()%></div>
 													<center>
-														<a href="GestioneTf?action=visualizzaPagina&id=<%=listaAziende.get(i).getId()%>"><button type="submit" class="btn btn-info">Vai Alla
-															Pagina</button></a>
+														<a href="GestioneTf?action=visualizzaPagina&id=<%=listaAziende.get(i).getId()%>">
+														<button type="submit" class="btn btn-info">Vai alla pagina</button></a>
 													</center>
 												</div>
 											</div>

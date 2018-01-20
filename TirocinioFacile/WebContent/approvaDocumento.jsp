@@ -45,7 +45,7 @@
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
 		<center>
-			<h2><span class="glyphicon glyphicon-ok"></span> Approva documenti convenzione azienda </h2>
+			<h2><span class="glyphicon glyphicon-ok"></span> Approva documenti  </h2>
 			<hr class = "line">
 		</center>
 		<div class="container">
@@ -105,7 +105,7 @@
 								<div class="panel-heading"><%=listaDocumentiConvenzione.get(i).getNomeAzienda() %></div>
 									<div class="panel-body"> <%= listaDocumentiConvenzione.get(i).getRappresentanteLegale() %></div>
 										<center> 
-											<a href="GestioneTf?action=visualizzaDocumento&id=1>"><button type="submit" class="btn btn-info">vai al documento</button></a>
+											<a href="GestioneTf?action=visualizzaDocumento&partitaIva=<%=listaDocumentiConvenzione.get(i).getPartitaIva()%>"><button type="submit" class="btn btn-info">Visualizza convenzione</button></a>
 										</center>
 									</div>
 								</div>		
@@ -202,7 +202,7 @@
 								<div class="panel-heading"><%=listaDocumentiQuestionari.get(i).getAnnoAccademico() %></div>
 									<div class="panel-body"> <%= listaDocumentiQuestionari.get(i).getMailStudente() %></div>
 										<center> 
-											<a href="GestioneTf?action=visualizzaDocumento&id=1>"><button type="submit" class="btn btn-info">vai al documento</button></a>
+											<a href="GestioneTf?action=visualizzaDocumento&id=<%=listaDocumentiQuestionari.get(i).getId()%>"><button type="submit" class="btn btn-info">Visualizza questionari</button></a>
 										</center>
 									</div>
 								</div>		
