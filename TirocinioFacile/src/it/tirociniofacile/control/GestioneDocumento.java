@@ -1,6 +1,7 @@
 package it.tirociniofacile.control;
 
 import it.tirociniofacile.bean.DocumentoConvenzioneBean;
+import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 import it.tirociniofacile.model.DocumentoModel;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -62,7 +63,7 @@ public class GestioneDocumento extends HttpServlet {
         } else if (action.equals("ricercaTuttiDocumentiConvenzioneAzienda")) {
           ricercaTuttiDocumentiConvenzioneAzienda(request, response);
         } else if (action.equals("ricercaTuttiDocumentiQuestionariAzienda")) {
-          ricercaTuttiDocumentiQuestionariAzienda(request);
+          ricercaTuttiDocumentiQuestionariAzienda(request, response);
         }
       }
     } catch (SQLException e) {
@@ -230,6 +231,7 @@ public class GestioneDocumento extends HttpServlet {
         model.getTuttiDocumentiConvenzioneAzienda();
     
     request.removeAttribute("listaDocumentiConvenzione");
+    request.removeAttribute("listaDocumentiQuestionari");
     request.setAttribute("listaDocumentiConvenzione", listaDocumentiConvenzione);
     
     if (request.getParameter("indice") != null) {
@@ -242,8 +244,30 @@ public class GestioneDocumento extends HttpServlet {
    
   }
   
-  public void ricercaTuttiDocumentiQuestionariAzienda(HttpServletRequest request)
-      throws SQLException {
+  /**
+   * 
+   * @param request
+   * @param response
+   * @throws SQLException
+   * @throws ServletException
+   * @throws IOException
+   */
+   public void ricercaTuttiDocumentiQuestionariAzienda(HttpServletRequest request, 
+      HttpServletResponse response) throws SQLException , ServletException, IOException  {
+    ArrayList<DocumentoQuestionarioBean> listaDocumentiQuestionari =
+         model.getTuttiDocumentiQuestionari();
+    
+    request.removeAttribute("listaDocumentiConvenzione");
+    request.removeAttribute("listaDocumentiQuestionari");
+    request.setAttribute("listaDocumentiQuestionari", listaDocumentiQuestionari);
+     
+    if (request.getParameter("indice") != null) {
+      this.indice = Integer.parseInt(request.getParameter("indice")); 
+    }
+    request.setAttribute("indice", indice); 
+     
+    RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumentoConvenzione.jsp");  
+    rd.forward(request, response);
     
   }
 
