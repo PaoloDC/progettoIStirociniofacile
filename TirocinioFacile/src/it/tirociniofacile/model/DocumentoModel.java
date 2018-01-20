@@ -493,6 +493,7 @@ public class DocumentoModel {
         dqb.setAnnoAccademico(rs.getString(4));
         dqb.setApprovato(rs.getBoolean(5));
         dqb.setMailStudente(rs.getString(7));
+       // dqb.setGiudizioEsperienza(rs.getFloat(9));
     
 
       }
