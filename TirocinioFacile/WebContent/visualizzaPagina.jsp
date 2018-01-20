@@ -33,36 +33,41 @@
 	<div class="container">
 		<%@ include file="header.jsp"%>
 		<div class="row">
-			<div class="col-4 col-sm-4">
-				<img src="logo_documento.png" width="40%" height="40%">
+			<div class="col-3 col-sm-3">
+				<img src="logo_documento.png" width="60%" height="60%">
 				<h2><%=pagina.getNomeAzienda()%></h2>
 			</div>
-
+			
+			
 			<div class="col-8 col-sm-8">
-				<h1>
-					<span class="glyphicon glyphicon-list-alt"></span> Tutte le
-					informazione sull'azienda
-				</h1>
-				<h2>
-					<span class="glyphicon glyphicon-home"></span> Indirizzo
-				</h2>
-				<h3>
-					<p><%=pagina.getLocalita()%></p>
-				</h3>
-				<h2>
-					<span class="glyphicon glyphicon-star"></span> Skill Richieste
-				</h2>
-				<h3>
-					<p><%=pagina.getSkill()%></p>
-				</h3>
-				<h2>
-					<span class="glyphicon glyphicon-folder-open"></span> Ambito
-				</h2>
-				<h3>
-					<p>
-						<%=pagina.getAmbito()%></p>
-				</h3>
-			</div>
+				<div class="panel panel-default panel-modest"
+					style="max-width: 100%; margin-top : 5px; max-height: 100%;">
+						<div class="panel-heading">	
+							<h1>
+								<span class="glyphicon glyphicon-list-alt"></span> Tutte le informazione sull'azienda
+							</h1>
+						</div>
+							<div class="panel-body" style="max-width: 100%; margin: 5px; max-height: 100%;" >
+							
+							<h2><span class="glyphicon glyphicon-pencil"></span> Descrizione</h2>
+							<h3><p> <%=pagina.getDescrizione()%></p></h3>	
+										
+							<h2><span class="glyphicon glyphicon-home"></span> Indirizzo</h2>
+							<h3><p><%=pagina.getLocalita()%></p></h3>
+							
+							<h2><span class="glyphicon glyphicon-star"></span> Skill Richieste</h2>
+							<h3><p><%=pagina.getSkill()%></p></h3>
+							
+							<h2><span class="glyphicon glyphicon-folder-open"></span> Ambito</h2>
+							<h3><p>	<%=pagina.getAmbito()%></p></h3>
+							
+					
+							</div>
+						</div>
+			
+
+			
+			
 		</div>
 		<div class="row">
 			<div class="col-4 col-sm-4"></div>

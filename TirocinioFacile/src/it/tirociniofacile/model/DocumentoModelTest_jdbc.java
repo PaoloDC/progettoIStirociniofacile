@@ -57,18 +57,24 @@ public class DocumentoModelTest_jdbc  extends TestCase{
     }
   }
   
+  /**
+   * Salva documento convenzione sul db.
+   */
   public void testSalvaConvenzione() {
     try {
       model.salvaConvenzione("pivaProva", "test", "test", "test", "test","test","test");
       model.salvaConvenzione("pivaProva", "test", "test", "test", "test","test","test");
     } catch (SQLException e) {
-      if (e.getErrorCode() == MYSQL_DUPLICATE_PK ) {
+      if (e.getErrorCode() == MYSQL_DUPLICATE_PK) {
         fail("Partita Iva gia usata");
       }
       e.printStackTrace();
     }
   }
   
+  /**
+   * Test RicercaConvenzione per id.
+   */
   public void testRicercaConvenzionePerId() {
     try {
       model.salvaConvenzione("pivaProva", "test", "test", "test", "test", "test","test");
@@ -93,6 +99,9 @@ public class DocumentoModelTest_jdbc  extends TestCase{
     }
   }
 
+  /**test ricerca questionario per id.
+   * 
+   */
   public void testRicercaQuestionarioPerId() {
     try {
       model.salvaQuestionario("test","test","test","test",1,1,1,"test");

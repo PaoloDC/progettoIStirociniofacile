@@ -74,8 +74,8 @@ public class GestioneRicercaTirocinio extends HttpServlet {
    * Servlet che ricerca tutte le pagine.
    * @param request la richiesta http
    * @throws SQLException eccezione lanciato dal metodo del model
-   * @throws IOException 
-   * @throws ServletException 
+   * @throws IOException  eccezzioni input output
+   * @throws ServletException  eccezzioni servlet
    */
   public void ricercaTuttePagine(HttpServletRequest request, HttpServletResponse response) 
       throws SQLException, ServletException, IOException {
@@ -104,10 +104,10 @@ public class GestioneRicercaTirocinio extends HttpServlet {
 
   /**
    * Servlet che ricerca le pagine per una categoria e una chiave.
-   * @param request la richiesta http
+    * @param request la richiesta http
    * @throws SQLException eccezione lanciato dal metodo del model
-   * @throws IOException 
-   * @throws ServletException 
+   * @throws IOException  eccezzioni input output
+   * @throws ServletException  eccezzioni servlet
    */
   public void ricercaPagina(HttpServletRequest request, HttpServletResponse response) 
       throws SQLException, ServletException, IOException {
@@ -127,12 +127,11 @@ public class GestioneRicercaTirocinio extends HttpServlet {
   }
 
   /**
-   * 
-   * @param request
-   * @param response
-   * @throws SQLException
-   * @throws ServletException
-   * @throws IOException
+   * visualizza pagina  per id e partita iva.
+   * @param request la richiesta http
+   * @throws SQLException eccezione lanciato dal metodo del model
+   * @throws IOException  eccezzioni input output
+   * @throws ServletException  eccezzioni servlet
    */
   public void visualizzaPagina(HttpServletRequest request, HttpServletResponse response) 
       throws SQLException, ServletException, IOException {

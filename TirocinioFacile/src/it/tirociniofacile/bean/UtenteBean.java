@@ -43,10 +43,10 @@ public class UtenteBean implements Serializable {
   }
   
   /**
-   * Permette di serializzare i parametri dell'utente bean su di un file
-   * @param input 
-   * @throws IOException
-   * @throws ClassNotFoundException
+   * Permette di serializzare i parametri dell'utente bean su di un file.
+   * @param input ObjectInputStream input
+   * @throws IOException eccezzioni input output 
+   * @throws ClassNotFoundException eccezzione file non trovato
    */
   private void readObject(ObjectInputStream input) throws IOException, ClassNotFoundException {
     //parchiConvenzionati= (ArrayList<Parco>) input.readObject();

@@ -1,9 +1,11 @@
 package it.tirociniofacile.model;
 
+
+
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import it.tirociniofacile.bean.ProfiloAziendaBean;
 import it.tirociniofacile.bean.ProfiloStudenteBean;
 import it.tirociniofacile.bean.UtenteBean;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,7 +18,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -29,7 +30,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 /**
  * 

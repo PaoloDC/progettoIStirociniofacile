@@ -38,6 +38,13 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
+		
+		<!-- scrip per far comparire il tooltip -->
+						<script>
+							$(document).ready(function(){
+   							$('[data-toggle="tooltip"]').tooltip();   
+						   });
+						</script>
 
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
@@ -52,7 +59,7 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
+					<ul class="nav navbar-nav" data-toggle="tooltip" title="Selezione categoria di ricerca">
 						<form action="GestioneTf" method="get">
 							<input type="hidden" id="thisField" name="action"
 								value="ricercaPagina">
@@ -73,7 +80,7 @@
 					</div>
 					<ul class="nav navbar-nav navbar-right">
 						<div class="navbar-form navbar-right">
-							<button type="submit" class="btn btn-default">Cerca</button>
+							<button type="submit" class="btn btn-default" data-toggle="tooltip"title="Cerca l'azienda " >Cerca</button>
 						</div>
 						</form>
 				</div>
@@ -81,9 +88,8 @@
 				</ul>
 			</div>
 			<div class= " col-sm-6">
-			<a href="GestioneTf?action=ricercaTuttePagine"
-				class="btn btn-success btn-block">Cerca tutte le aziende 
-				<span class="glyphicon glyphicon-hdd"> </span> 
+			<a href="GestioneTf?action=ricercaTuttePagine" class="btn btn-success btn-block"  data-toggle="tooltip"  
+			title="Cerca tutte le aziende" >Cerca tutte le aziende <span class="glyphicon glyphicon-hdd"> </span> 
 				<i class="fa fa-angle-right">
 			</a> 
 				<!-- /.navbar-collapse -->
@@ -101,11 +107,12 @@
 											<div class="col-3 col-sm-3">
 												<div class="panel panel-default panel-modest"
 													style="max-width: 80%; margin: 5px; max-height: 60%;">
-													<div class="panel-heading"><%=listaAziende.get(i).getNomeAzienda()%></div>
-													<div class="panel-body" style="max-width: 80%; margin: 5px; max-height: 60%;" ><%=listaAziende.get(i).getDescrizione()%></div>
+													<div class="panel-heading" ><%=listaAziende.get(i).getNomeAzienda()%></div>
+													<div class="panel-body" style="max-width: 80%; margin: 5px; max-height: 60%;" >
+													<p><%=listaAziende.get(i).getDescrizione()%></p></div>
 													<center>
 														<a href="GestioneTf?action=visualizzaPagina&id=<%=listaAziende.get(i).getId()%>">
-														<button type="submit" class="btn btn-info">Vai alla pagina</button></a>
+														<button type="submit" class="btn btn-info" data-toggle="tooltip"  title="Visualizza la pagina"  >Vai alla pagina</button></a>
 													</center>
 												</div>
 											</div>
@@ -172,7 +179,8 @@
 					    %>
 				
 					    <li class="page-item">
-							<a class="page-link" href="GestioneTf?action=ricercaTuttePagine&indice=<%=indice+NUM_ELE_PAG%>" aria-label="Next">
+							<a class="page-link" href="GestioneTf?action=ricercaTuttePagine&indice=<%=indice+NUM_ELE_PAG%>" aria-label="Next" data-toggle="tooltip"  
+								title="Next" >
 				        		<span aria-hidden="true">&raquo;</span>
 				        		<span class="sr-only">Next</span>
 				     		 </a>

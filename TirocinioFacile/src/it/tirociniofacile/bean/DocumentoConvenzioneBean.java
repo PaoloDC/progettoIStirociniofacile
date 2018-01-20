@@ -17,10 +17,11 @@ public class DocumentoConvenzioneBean {
    * @param luogoNascitaRappresentanteLegale luogo di nascita del rappresentante legale dell'azienda
    * @param dataNascitaRappresentanteLegale data di nascita del rappresentante legale dell'azienda
    */
-  public DocumentoConvenzioneBean(String partitaIva,boolean approvato, String nomeAzienda, String sedeLegale, 
+  public DocumentoConvenzioneBean(String partitaIva,
+      boolean approvato, String nomeAzienda, String sedeLegale, 
       String citta, String rappresentanteLegale, String luogoNascitaRappresentanteLegale, 
       String dataNascitaRappresentanteLegale) {
-    this.partitaIva=partitaIva;
+    this.partitaIva = partitaIva;
     this.approvato = approvato;
     this.nomeAzienda = nomeAzienda;
     this.sedeLegale = sedeLegale;

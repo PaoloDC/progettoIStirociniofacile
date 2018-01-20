@@ -1,5 +1,8 @@
 package it.tirociniofacile.model;
 
+import com.mysql.jdbc.Statement;
+
+import it.tirociniofacile.bean.PaginaAziendaBean;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,9 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mysql.jdbc.Statement;
 
-import it.tirociniofacile.bean.PaginaAziendaBean;
 
 public class PaginaAziendaModel_jdbc {
   //variabili di istanza

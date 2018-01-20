@@ -66,7 +66,8 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
    * @throws ServletException eccezzioni servlet 
    * @throws IOException eccezzioni input output
    */
-  public void visualizzaInformazioniPerAnnoAccademico(HttpServletRequest request, HttpServletResponse response)
+  public void visualizzaInformazioniPerAnnoAccademico(HttpServletRequest request, 
+      HttpServletResponse response)
       throws SQLException, ServletException, IOException {
     String anno = request.getParameter("anno");
     request.removeAttribute("numeroQuestionari");
@@ -76,7 +77,16 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
     rd.forward(request, response);
   }
   
-  public void visualizzaInformazioniPerAzienda(HttpServletRequest request, HttpServletResponse response) 
+  /**
+   * Metodo visuallizza informazioni per azienda.
+   * @param request richiesta http
+   * @param response risposta servlet http
+   * @throws SQLException eccezzione sql 
+   * @throws ServletException eccazzione servlet
+   * @throws IOException eccazzioni input output
+   */
+  public void visualizzaInformazioniPerAzienda(HttpServletRequest request,
+      HttpServletResponse response) 
       throws SQLException, ServletException, IOException {
     String azienda = request.getParameter("azienda");
     request.removeAttribute("numeroQuestionari");

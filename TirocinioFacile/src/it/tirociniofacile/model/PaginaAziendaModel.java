@@ -66,8 +66,7 @@ public class PaginaAziendaModel {
       }
     } catch (SQLException e) {
       e.printStackTrace();
-    }
-    finally {
+    } finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
@@ -78,8 +77,7 @@ public class PaginaAziendaModel {
         if (connection != null) {
           try {
             connection.close();
-          }
-          catch (SQLException e) {
+          } catch (SQLException e) {
             e.printStackTrace();
           }
         }

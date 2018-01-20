@@ -122,8 +122,8 @@ public class GestioneUtente extends HttpServlet {
   /**
    * RegistrazioneAzienda effettua la registrazione di un account azienda.
    * 
-   * @param request
-   * @throws SQLException
+   * @param request richiesta http
+   * @throws SQLException eccezzioni sql
    */
   public void registrazioneAzienda(HttpServletRequest request) {
     String email = (request.getParameter("email"));
@@ -139,7 +139,8 @@ public class GestioneUtente extends HttpServlet {
     String dataDiNascitaRappLegale = request.getParameter("dataDiNascitaRappLegale");
 
     System.out.println("\n" + email + "\n" + password + "\n" + nomeazienda + "\n" + piva + "\n" 
-    + sedeLegale + "\n" + citta + "\n" + rappLegale + "\n" + luogoDiNascitaRappLegale + "\n" + dataDiNascitaRappLegale);
+        + sedeLegale + "\n" + citta + "\n" + rappLegale + "\n" +
+        luogoDiNascitaRappLegale + "\n" + dataDiNascitaRappLegale);
     
     try {
       docModel.salvaConvenzione(piva, nomeazienda, sedeLegale, citta, rappLegale,
@@ -152,10 +153,10 @@ public class GestioneUtente extends HttpServlet {
   /**
    * Genera nuove credenziali per gli utenti Impiegati uff. tirocini e presidente area didattica.
    * 
-   * @param request
-   * @param response
-   * @throws ServletException
-   * @throws IOException
+   * @param request la richiesta http
+   * @throws SQLException eccezione lanciato dal metodo del model
+   * @throws IOException  eccezzioni input output
+   * @throws ServletException  eccezzioni servlet
    */
   public void generaCredenziali(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -176,12 +177,10 @@ public class GestioneUtente extends HttpServlet {
   /**
    * Effettua la log in.
    * 
-   * @param request
-   *          richiesta http
-   * @throws SQLException
-   *           eccezzione sql
-   * @throws IOException
-   * @throws ServletException
+   * @param request  richiesta http
+   * @throws SQLException eccezzione sql
+   * @throws IOException input output eccezzioni
+   * @throws ServletException servlet eccezzioni
    */
   public void logIn(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
