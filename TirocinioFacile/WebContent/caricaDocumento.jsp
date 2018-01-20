@@ -38,11 +38,12 @@
 				<h1>
 					Carica il documento <br>(file supportati: pdf)
 				</h1>
-				<form method="post" action="GestioneTf" id="form1">
+				<form method="post" action="GestioneTf" id="form1"
+					onsubmit="return isOk();">
 					<input type="hidden" id="thisField" name="action"
 						value="caricaDocumento">
 					<div class="form-group">
-						<input type="file" name="file">
+						<input type="file" name="file" id="theFile" accept=".pdf">
 					</div>
 
 					<button type="submit" class="btn btn-primary">Carica
@@ -63,18 +64,8 @@
 
 	<script>
 		function isOk() {
-			if (ValidateEmailStudente(document.getElementById("theEmail"),
-					document.getElementById("txtErrEmail"))
-					&& ValidateMatricola(document
-							.getElementById("theMatricola"), document
-							.getElementById("txtErrMatricola"))
-					&& ValidatePassword(document.getElementById("thePass"),
-							document.getElementById("txtErrPass"))) {
-				if (ValidatePasswordUguali(document.getElementById("thePass"),
-						document.getElementById("theConfPass"), document
-								.getElementById("matchPass"))) {
-					return true;
-				}
+			if (ValidateFile(document.getElementById("theFile"))) {
+				return true;
 			}
 			return false;
 		}
