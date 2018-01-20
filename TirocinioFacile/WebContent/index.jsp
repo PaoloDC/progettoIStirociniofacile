@@ -37,13 +37,12 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-4 col-md-4">
-				<form method="post" action="GestioneTf" id="form1"
-					onsubmit="return isOk();">
+				<form method="post" action="GestioneTf" id="form1">
 					<input type="hidden" id="thisField" name="action" value="log-in">
 					<div class="form-group">
 						<label for="exampleInputEmail1" id="txtErrEmail">Email</label> <input
 							type="email" class="form-control" id="theEmail"
-							aria-describedby="emailHelp" placeholder="Enter email"
+							aria-describedby="emailHelp" placeholder="Email"
 							name="email">
 					</div>
 					<div class="form-group">
@@ -88,18 +87,5 @@
 
 	</div>
 	<%@ include file="footer.jsp"%>
-
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/js/validate.js"></script>
-
-	<script>
-		function isOk() {
-			if (ValidateEmail(document.getElementById("theEmail"), document
-					.getElementById("txtErrEmail"))) {
-				return true;
-			}
-			return false;
-		}
-	</script>
 </body>
 </html>
