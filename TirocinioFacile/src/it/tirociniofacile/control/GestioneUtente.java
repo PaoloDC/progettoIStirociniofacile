@@ -206,12 +206,12 @@ public class GestioneUtente extends HttpServlet {
       } else if (utente.getEmail().contains("@unisa.it")) {
         request.getSession().setAttribute("tipologiaAccount", "impiegato");
 
-        RequestDispatcher rd = request.getRequestDispatcher("/");
+        RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumentoConvenzione.jsp");
         rd.forward(request, response);
       } else {
         request.getSession().setAttribute("tipologiaAccount", "azienda");
 
-        RequestDispatcher rd = request.getRequestDispatcher("/");
+        RequestDispatcher rd = request.getRequestDispatcher("/creaPagina.jsp");
         rd.forward(request, response);
       }
     } else {
