@@ -93,6 +93,12 @@ public class PaginaAziendaModel {
    * Cerca nel db tutte le pagine azienda corrispondenti alla chiave per quella categoria.
    * @return lista di pagina azienda
    */
+  /**
+   * Cerca nel db tutte le pagine azienda corrispondenti alla chiave per quella categoria.
+   * @param categoria un parametro per cui ricercare (deve essere: 
+   * @param chiave
+   * @return un arraylist di paginaAziendaBean che soddisfano la ricerca
+   */
   public synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave)  {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
