@@ -99,20 +99,17 @@ public class GestioneDocumento extends HttpServlet {
       HttpServletResponse response) throws SQLException, ServletException, IOException {
     
     String partitaIva = (request.getParameter("partitaIva"));
- 
-    int id1 = null;
-    if( request.getParameter("id") != null) {
-      String id = (request.getParameter("id"));
-      id1 = Integer.parseInt(id);
-    }
     if (model.ricercaConvenzionePerPartitaIva(partitaIva) != null) {
       request.removeAttribute("convenzione");
       request.setAttribute("convenzione", model.ricercaConvenzionePerPartitaIva(partitaIva));
       RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");  
       rd.forward(request, response);
     } else {
+      String id = (request.getParameter("id"));
+      int  id1 = Integer.parseInt(id);
       request.removeAttribute("questionario");
       request.setAttribute("questionario", model.ricercaQuestionarioPerId(id1));
+      System.out.println("Questionarioooooo"+ model.ricercaQuestionarioPerId(id1));
       RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");  
       rd.forward(request, response);
     }

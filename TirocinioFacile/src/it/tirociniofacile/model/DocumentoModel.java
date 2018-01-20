@@ -115,13 +115,12 @@ public class DocumentoModel {
       if (rs.first()) {
         do {
           DocumentoQuestionarioBean documento = new DocumentoQuestionarioBean();
-       /*   documento.setInformazioniSulTirocinio(rs.getString(2));
-          documento.setGradoDiSoddisfazioneDelTirocinante(rs.getString(3));*/
-          documento.setCommenti(rs.getString(4));
-          documento.setSuggerimenti(rs.getString(5));
-          documento.setAnnoAccademico(rs.getString(6));
-          documento.setApprovato(rs.getBoolean(7));
-          documento.setMailStudente(rs.getString(9));
+          documento.setId(rs.getInt(1));
+          documento.setCommenti(rs.getString(2));
+          documento.setSuggerimenti(rs.getString(3));
+          documento.setAnnoAccademico(rs.getString(4));
+          documento.setApprovato(rs.getBoolean(5));
+          documento.setMailStudente(rs.getString(7));
           listaDocumenti.add(documento);
         } while (rs.next()) ;
       }
@@ -487,18 +486,15 @@ public class DocumentoModel {
 
       if (rs.first()) {
         dqb = new DocumentoQuestionarioBean();
-/*
-        dqb.setInformazioniSulTirocinio(rs.getString(2));
-        dqb.setGradoDiSoddisfazioneDelTirocinante(rs.getString(3));
-        dqb.setCommenti(rs.getString(4));
-        dqb.setSuggerimenti(rs.getString(5));
-        dqb.setAnnoAccademico(rs.getString(6));
-        dqb.setApprovato(rs.getBoolean(7));
-        dqb.setMailStudente(rs.getString(8));
-        dqb.setGiudizioEsperienza(rs.getString(10));
-        dqb.setGiudizioAzienda(rs.getString(11));
-        dqb.setGiudizioUniversita(rs.getString(12));;
-*/
+
+       
+        dqb.setCommenti(rs.getString(2));
+        dqb.setSuggerimenti(rs.getString(3));
+        dqb.setAnnoAccademico(rs.getString(4));
+        dqb.setApprovato(rs.getBoolean(5));
+        dqb.setMailStudente(rs.getString(7));
+    
+
       }
     } finally {
       try {

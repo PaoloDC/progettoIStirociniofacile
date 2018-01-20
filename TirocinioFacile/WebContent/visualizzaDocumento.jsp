@@ -2,17 +2,17 @@
 	pageEncoding="ISO-8859-1" import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
 	<%
 	
-	DocumentoConvenzioneBean documento = (DocumentoConvenzioneBean) request.getAttribute("convenzione");
-	DocumentoQuestionarioBean documento1 = (DocumentoQuestionarioBean) request.getAttribute("questionario");
+	DocumentoConvenzioneBean convenzione = (DocumentoConvenzioneBean) request.getAttribute("convenzione");
+	DocumentoQuestionarioBean questionario = (DocumentoQuestionarioBean) request.getAttribute("questionario");
 	
-	System.out.println("Convenzione "+ documento);
+	System.out.println("questionario "+ questionario);
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>TirocinioFacile - Visualizza documento convenzione</title>
+<title>TirocinioFacile - Visualizza documento </title>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -39,26 +39,50 @@
 			<div class="col-4 col-sm-4">
 				<h3><span class="glyphicon glyphicon-ok"></span> Documento da approvare</h3>
 			</div>
-							
+			<%
+					if(convenzione != null){		
+			%>
 						<div class="col-3 col-sm-3">
 							<div class="panel panel-default panel-modest" style="max-width: 80%; margin: 5px; max-height: 60%;">
-								<div class="panel-heading"><%=documento1.getMailStudente()%></div>
-									<div class="panel-body"> <%= documento1.getAnnoAccademico()%></div>
+								<div class="panel-heading"><%=convenzione.getNomeAzienda()%></div>
+									<div class="panel-body"> <%= convenzione.getRappresentanteLegale()%></div>
 									
 									</div>
 								</div>
-		<div class="row">
-			<div class="col-2 col-sm-2">
-			<br> </br>  <br> </br>
-				<center>
-					<img src="http://miosito.it/miaImmagine.png" weight = "100px" height="100px" alt="Mia Immagine">
-					<button  type="submit" class=" btn btn-success""> Approva</button>
-					<button type="submit" class="btn btn-danger"> Elimina</button>	
-				</center>	
-			</div>
-			</div>
-		</div>
-
+								<div class="row">
+									<div class="col-2 col-sm-2">
+									<br> </br>  <br> </br>
+										<center>
+											<img src="http://miosito.it/miaImmagine.png" weight = "100px" height="100px" alt="Mia Immagine">
+											<button  type="submit" class=" btn btn-success""> Approva</button>
+											<button type="submit" class="btn btn-danger"> Elimina</button>	
+										</center>	
+									</div>
+									</div>
+								</div>
+			<%} else if(questionario != null){ %>
+								<div class="col-3 col-sm-3">
+							<div class="panel panel-default panel-modest" style="max-width: 80%; margin: 5px; max-height: 60%;">
+								<div class="panel-heading"><%=questionario.getMailStudente()%></div>
+									<div class="panel-body"> <%= questionario.getAnnoAccademico()%></div>
+									
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-2 col-sm-2">
+									<br> </br>  <br> </br>
+										<center>
+											<img src="http://miosito.it/miaImmagine.png" weight = "100px" height="100px" alt="Mia Immagine">
+											<button  type="submit" class=" btn btn-success""> Approva</button>
+											<button type="submit" class="btn btn-danger"> Elimina</button>	
+										</center>	
+									</div>
+									</div>
+								</div>
+			<%} %>
+			
+			
+			
 	</div>
 	<%@ include file="footer.jsp"%>
 </body>
