@@ -41,6 +41,12 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
+	<!-- scrip per far comparire il tooltip -->
+						<script>
+							$(document).ready(function(){
+   							$('[data-toggle="tooltip"]').tooltip();   
+						   });
+						</script>
 
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
@@ -72,12 +78,12 @@
 			<div class= " col-sm-6">
 			
 					<a href="GestioneTf?action=ricercaTuttiDocumentiConvenzioneAzienda&indice=4"
-						class="btn btn-success btn-block">Cerca tutte le convenzioni azienda
+						class="btn btn-success btn-block" data-toggle="tooltip" title="Cerca tutte le convenzioni nel db">Cerca tutte le convenzioni azienda
 						 <span class="glyphicon glyphicon-hdd"> </span> <i class="fa fa-angle-right"></a> 
 			</div>
 			<div class= " col-sm-6">			 
 						 <a href="GestioneTf?action=ricercaTuttiDocumentiQuestionariAzienda&indice=4"
-						class="btn btn-success btn-block">Cerca tutte i questionari 
+						class="btn btn-success btn-block"data-toggle="tooltip" title="Cerca tutti i questionari nel db" >Cerca tutte i questionari 
 						 <span class="glyphicon glyphicon-hdd"> </span> <i class="fa fa-angle-right"></a>		
 			</div>
 		 </div>

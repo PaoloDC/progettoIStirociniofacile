@@ -181,16 +181,22 @@ public class GestioneDocumento extends HttpServlet {
    *          richiesta http
    * @throws SQLException
    *           eccazzioni sql
+   * @throws IOException  inout output eccezzioni
+   * @throws ServletException  eccezzioni della servlet
    */
   public void convalidaDocumento(HttpServletRequest request ,
-      HttpServletResponse response) throws SQLException {
+      HttpServletResponse response) throws SQLException, ServletException, IOException {
     String id = (request.getParameter("id"));
     String approvato = (request.getParameter("approvato"));
 
     if (approvato.equals("false")) {
       model.cancellaDocumento(id);
+      RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");  
+      rd.forward(request, response);
     } else {
       model.approvaDocumento(id);
+      RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");  
+      rd.forward(request, response);
     }
   }
 

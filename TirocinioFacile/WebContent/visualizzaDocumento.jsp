@@ -37,47 +37,47 @@
 		<div class="row">
 			<div class="col-4 col-sm-4">
 				<h3><span class="glyphicon glyphicon-ok"></span> Documento da approvare</h3>
+				<%
+				 if(convenzione != null){		
+				%>
+				<br> <br> <br>
+					<a href="GestioneTf?action=convalidaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=true" >
+						<button  type="submit" class=" btn btn-success"  > Approva</button>
+					</a>
+					<a href="GestioneTf?action=eliminaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=false">
+				    	<button type="submit" class="btn btn-danger"   > Elimina</button>
+				    </a>
 			</div>
-			<%
-					if(convenzione != null){		
-			%>
-						<div class="col-3 col-sm-3">
-							<div class="panel panel-default panel-modest" style="max-width: 80%; margin: 5px; max-height: 60%;">
-								<div class="panel-heading"><%=convenzione.getNomeAzienda()%></div>
-									<div class="panel-body"> <%= convenzione.getRappresentanteLegale()%></div>
-									
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-2 col-sm-2">
-									<br> </br>  <br> </br>
-										<center>
-											<img src="http://miosito.it/miaImmagine.png" weight = "100px" height="100px" alt="Mia Immagine">
-											<button  type="submit" class=" btn btn-success""> Approva</button>
-											<button type="submit" class="btn btn-danger"> Elimina</button>	
-										</center>	
-									</div>
-									</div>
-								</div>
-			<%} else if(questionario != null){ %>
-								<div class="col-3 col-sm-3">
-							<div class="panel panel-default panel-modest" style="max-width: 80%; margin: 5px; max-height: 60%;">
-								<div class="panel-heading"><%=questionario.getMailStudente()%></div>
-									<div class="panel-body"> <%= questionario.getAnnoAccademico()%></div>
-									
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-2 col-sm-2">
-									<br> </br>  <br> </br>
-										<center>
-											<img src="http://miosito.it/miaImmagine.png" weight = "100px" height="100px" alt="Mia Immagine">
-											<button  type="submit" class=" btn btn-success""> Approva</button>
-											<button type="submit" class="btn btn-danger"> Elimina</button>	
-										</center>	
-									</div>
-									</div>
-								</div>
+			<div class="row">
+				<div class="col-6 col-sm-6">
+					<center>
+						<iframe src="pdf/prova.pdf" allowTransparency frameborder="0"
+							style="overflow: hidden; margin-top: 1px; width: 550px; height: 520px"></iframe>
+						<br> <br> <br> <br>
+					</center>
+
+				</div>
+				<%
+					} else if (questionario != null) {
+				%>
+				<br> <br> <br>
+					<a href="GestioneTf?action=convalidaDocumento&id=<%=questionario.getId()%>&approvato=true">
+						<button  type="submit" class=" btn btn-success"   > Approva</button>
+					</a> 
+					<a href="GestioneTf?action=eliminaDocumento&id=<%=questionario.getId()%>&approvato=false">
+					    <button type="submit" class="btn btn-danger"   > Elimina</button>
+					</a>	
+						</div>
+						<div class="row">
+							<div class="col-6 col-sm-6">
+								<center>
+									<iframe src="pdf/prova.pdf" allowTransparency frameborder="0"
+										style="overflow: hidden; margin-top: 1px; width: 550px; height: 520px"></iframe>
+									<br> <br> <br> <br>
+								</center>
+							</div>
+							</div>
+						</div>
 			<%} else {%>
 					<center>
 							<h2>Nessuna Documento</h2>

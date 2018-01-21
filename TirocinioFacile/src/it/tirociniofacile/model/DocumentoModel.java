@@ -55,7 +55,8 @@ public class DocumentoModel {
     ArrayList<DocumentoConvenzioneBean> listaDocumenti = new ArrayList<DocumentoConvenzioneBean>();
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI ;
+      String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI 
+          +   " WHERE approvato = " + "0 ;"   ;
       
       preparedStatement = connection.prepareStatement(selectSql);
       ResultSet rs = preparedStatement.executeQuery();
@@ -110,7 +111,8 @@ public class DocumentoModel {
         new ArrayList<DocumentoQuestionarioBean>();
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI ;
+      String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI 
+          +   " WHERE approvato = " + "0 ;"   ;
       
       preparedStatement = connection.prepareStatement(selectSql);
       ResultSet rs = preparedStatement.executeQuery();
@@ -448,6 +450,7 @@ public class DocumentoModel {
       if (rs.first()) {
         dcb = new DocumentoConvenzioneBean();
         
+        dcb.setPartitaIva(rs.getString(1));
         dcb.setNomeAzienda(rs.getString(2));
         dcb.setSedeLegale(rs.getString(3));
         dcb.setCitta(rs.getString(4));
@@ -495,8 +498,7 @@ public class DocumentoModel {
 
       if (rs.first()) {
         dqb = new DocumentoQuestionarioBean();
-
-       
+        dqb.setId(rs.getInt(1));
         dqb.setCommenti(rs.getString(2));
         dqb.setSuggerimenti(rs.getString(3));
         dqb.setAnnoAccademico(rs.getString(4));
