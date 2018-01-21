@@ -44,7 +44,7 @@
 					<a href="GestioneTf?action=convalidaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=true" >
 						<button  type="submit" class=" btn btn-success"  > Approva</button>
 					</a>
-					<a href="GestioneTf?action=eliminaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=false">
+					<a href="GestioneTf?action=convalidaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=false">
 				    	<button type="submit" class="btn btn-danger"   > Elimina</button>
 				    </a>
 			</div>
@@ -64,7 +64,7 @@
 					<a href="GestioneTf?action=convalidaDocumento&id=<%=questionario.getId()%>&approvato=true">
 						<button  type="submit" class=" btn btn-success"   > Approva</button>
 					</a> 
-					<a href="GestioneTf?action=eliminaDocumento&id=<%=questionario.getId()%>&approvato=false">
+					<a href="GestioneTf?action=convalidaDocumento&id=<%=questionario.getId()%>&approvato=false">
 					    <button type="submit" class="btn btn-danger"   > Elimina</button>
 					</a>	
 						</div>

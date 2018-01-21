@@ -541,12 +541,15 @@ public class DocumentoModel {
       preparedStatement.executeUpdate();
 
       String insertSqlConv = "DELETE " + TABLE_NAME_CONVENZIONI 
-          + " WHERE id = ?";
+          + " WHERE partitaIva = ?";
       preparedStatement = connection.prepareStatement(insertSqlConv);
       preparedStatement.setString(1, id);
 
 
       preparedStatement.executeUpdate();
+      
+    } catch (Exception e) {
+      e.printStackTrace();
     } finally { 
       try {
         if (preparedStatement != null) {
@@ -571,21 +574,29 @@ public class DocumentoModel {
     PreparedStatement preparedStatement = null;
     try {
       connection = ds.getConnection();
+     
       String insertSqlQuest = "UPDATE " + TABLE_NAME_QUESTIONARI 
-          + "SET approvato = 1 WHERE id = ?";
+          + " SET approvato = ? WHERE id = ?";
       preparedStatement = connection.prepareStatement(insertSqlQuest);
-      preparedStatement.setString(1, id);
+     
+      preparedStatement.setInt(1, 1);
+      preparedStatement.setString(2, id);
 
       preparedStatement.executeUpdate();
-
+     
       String insertSqlConv = "UPDATE " + TABLE_NAME_CONVENZIONI 
-          + "SET approvato = 1 WHERE partitaIva = ?";
+          + " SET approvato = ? WHERE partitaIva = ?";
       preparedStatement = connection.prepareStatement(insertSqlConv);
-      preparedStatement.setString(1, id);
-
+      preparedStatement.setInt(1, 1);
+      
+      preparedStatement.setString(2, id);
 
       preparedStatement.executeUpdate();
-    } finally { 
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    finally { 
       try {
         if (preparedStatement != null) {
           preparedStatement.close();

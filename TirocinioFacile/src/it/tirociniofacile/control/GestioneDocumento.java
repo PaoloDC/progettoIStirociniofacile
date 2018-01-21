@@ -62,6 +62,7 @@ public class GestioneDocumento extends HttpServlet {
         } else if (action.equals("caricaDocumento")) {
           caricaDocumento(request, response);
         } else if (action.equals("convalidaDocumento")) {
+          
           convalidaDocumento(request, response);
         } else if (action.equals("compilaConvenzioneAzienda")) {
           compilaConvenzioneAzienda(request, response);
@@ -188,6 +189,7 @@ public class GestioneDocumento extends HttpServlet {
       HttpServletResponse response) throws SQLException, ServletException, IOException {
     String id = (request.getParameter("id"));
     String approvato = (request.getParameter("approvato"));
+
 
     if (approvato.equals("false")) {
       model.cancellaDocumento(id);
