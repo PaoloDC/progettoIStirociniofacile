@@ -233,35 +233,62 @@ public class DocumentoModel {
    * @param giudizioUniversita grado di giudizio sull'università
    * @param matricola identificativo dello studente
    */
-  public synchronized void salvaQuestionario(String informazioniSulTirocinio, 
-      String commenti, String suggerimenti, String annoAccademico, float giudizioEsperienza,
-      float giudizioAzienda, float giudizioUniversita, String matricola) throws SQLException {
+  /**
+   * 
+   * @param commenti
+   * @param suggerimenti
+   * @param annoAccademico
+   * @param mailStudente
+   * @param paginaAziendaId
+   * @param matricola
+   * @param giudizioEsperienza
+   * @param giudizioAzienda
+   * @param giudizioUniversita
+   */
+  public synchronized void salvaQuestionario(String commenti, String suggerimenti, 
+      String annoAccademico,  String mailStudente, int paginaAziendaId, String matricola,
+      float giudizioEsperienza, float giudizioAzienda, float giudizioUniversita) {
+    
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
       connection = ds.getConnection();
-      String insertSql = "INSERT INTO " + TABLE_NAME_QUESTIONARI + "(informazioniSulTirocinio,"
-          + " commenti, suggerimenti, annoAccademico, giudizioEsperienza,"
-          + " giudizioAzienda, giudizioUniversita) VALUES(?,?,?,?,?,?,?,?)";
+      String insertSql = "INSERT INTO " + TABLE_NAME_QUESTIONARI + " (commenti, suggerimenti,"
+          + " annoAccademico, approvato, mailStudente, paginaAziendaID,"
+          + " giudizioEsperienza, giudizioAzienda, giudizioUniversita) "
+          + " VALUES(?,?,?,?,?,?,?,?,?)";
+      
       preparedStatement = connection.prepareStatement(insertSql);
 
-      preparedStatement.setString(1, informazioniSulTirocinio);
-      preparedStatement.setString(2, commenti);
-      preparedStatement.setString(3, suggerimenti);
-      preparedStatement.setString(4, annoAccademico);
-      preparedStatement.setFloat(5, giudizioEsperienza);
-      preparedStatement.setFloat(6, giudizioAzienda);
-      preparedStatement.setFloat(7, giudizioUniversita);
-      preparedStatement.setString(8, matricola);
+      preparedStatement.setString(1, commenti);
+      preparedStatement.setString(2, suggerimenti);
+      preparedStatement.setString(3, annoAccademico);
+      preparedStatement.setInt(4, 0);
+      preparedStatement.setString(5, mailStudente);
+      preparedStatement.setInt(6, paginaAziendaId);
+      preparedStatement.setFloat(7, giudizioEsperienza);
+      preparedStatement.setFloat(8, giudizioAzienda);
+      preparedStatement.setFloat(9, giudizioUniversita);
+      
+      System.out.println(preparedStatement);
+      
       preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
     } finally { 
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
         }
+      } catch (SQLException e) {
+        e.printStackTrace();
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
       }
     }
@@ -533,14 +560,14 @@ public class DocumentoModel {
     PreparedStatement preparedStatement = null;
     try {
       connection = ds.getConnection();
-      String insertSqlQuest = "DELETE " + TABLE_NAME_QUESTIONARI 
+      String insertSqlQuest = "DELETE FROM " + TABLE_NAME_QUESTIONARI 
           + " WHERE id = ?";
       preparedStatement = connection.prepareStatement(insertSqlQuest);
       preparedStatement.setString(1, id);
 
       preparedStatement.executeUpdate();
 
-      String insertSqlConv = "DELETE " + TABLE_NAME_CONVENZIONI 
+      String insertSqlConv = "DELETE FROM " + TABLE_NAME_CONVENZIONI 
           + " WHERE partitaIva = ?";
       preparedStatement = connection.prepareStatement(insertSqlConv);
       preparedStatement.setString(1, id);

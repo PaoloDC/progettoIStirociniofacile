@@ -1,13 +1,28 @@
+<%@page import="it.tirociniofacile.model.PaginaAziendaModel"%>
+<%@page import="it.tirociniofacile.bean.PaginaAziendaBean"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="it.tirociniofacile.bean.UtenteBean"%>
 <%@page import="it.tirociniofacile.model.UtenteModel"%>
 <%@page import="it.tirociniofacile.bean.ProfiloStudenteBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%
-	//da passare nella sessione il profilo studente bean
+	//da passare nella sessione il profilo studente bean e la lista delle aziende
 	UtenteModel um = new UtenteModel();
 	UtenteBean ub = um.caricaAccount("paolo@studenti.unisa.it", "paolo");
 	ProfiloStudenteBean psb = (ProfiloStudenteBean) ub;
+
+	PaginaAziendaModel pabmodel = new PaginaAziendaModel();
+	ArrayList<PaginaAziendaBean> listaAzienda = pabmodel.ricerca();
+	System.out.println(listaAzienda);
+	
+	request.setAttribute("mailStudente", psb.getEmail());
+
+	/*
+	ProfiloStudenteBean psb = (ProfiloStudenteBean) session.getAttribute("studente");	
+	ArrayList<PaginaAziendaBean> listaAzienda = 
+		(ArrayList<PaginaAziendaBean>) session.getAttribute("listaAziende");
+	*/
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,12 +38,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		crossorigin="anonymous"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
-
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
 
@@ -40,6 +57,7 @@
 				<form action="GestioneTf?action=compilaQuestionario" method="post">
 					<div class="col-8 col-sm-8">
 						<div>
+						<input type="hidden" name = "mailStudente" value="<%=psb.getEmail() %>">
 							<div id="parte1" style="background: #42d9f4">
 								<label id="titoloParte">PARTE I : INFORMAZIONI SUL
 									LAUREATO</label>
@@ -74,8 +92,19 @@
 								</div>
 								<div class="form-group">
 									<label> 11. Azienda/Laboratorio Interno ospitante il
-										tirocinante </label> <input name="azienda"
-										placeholder="Azienda/Laboratorio Interno ospitante il tirocinante">
+										tirocinante </label> 
+										
+									<select name="azienda">
+									<% if(listaAzienda != null){
+										for (int i=0; i < listaAzienda.size(); i++) { %>
+									
+										<option value="<%=listaAzienda.get(i).getId() + "," + listaAzienda.get(i).getNomeAzienda()%>">
+											<%=listaAzienda.get(i).getNomeAzienda()%>
+										</option>
+									<% }} %>
+									</select>
+						
+
 								</div>
 								<div class="form-group">
 									<label> 12. Comune dell'Azienda / Laboratorio </label> <input
@@ -86,10 +115,16 @@
 								</div>
 								<div class="form-group">
 									<label> 14. Sesso </label> <select name="sesso">
-										<option value="maschio">Maschio</option>
-										<option value="fermmina">Fermmina</option>
+										<option value="Maschio">Maschio</option>
+										<option value="Fermmina">Fermmina</option>
 									</select> <label> 15. Data di nascita </label> <input name="datanascita"
 										placeholder="Data di nascita">
+								</div>
+								<div class="form-group">
+									<label> 16. Data </label> 
+									<input name="data" placeholder="Giorno"> / 
+									<input name="data" placeholder="Mese"> / 
+									<input name="data" placeholder="Anno">
 								</div>
 							</div>
 							<div id="parte2" style="background: #5bf441">
@@ -97,48 +132,71 @@
 									STAGE / TIROCINIO</label>
 								<div class="form-group">
 
-									<fieldset name="parte2dom1">
+									<fieldset>
 										<legend>1. Come &egrave; avvenuta la scelta dello
 											stage?</legend>
-										<input type="radio" /> Tramite indicazioni da parte del tutor
-										interno <br> <input type="radio" /> Tramite indicazioni
-										da parte dell'azienda <br> <input type="radio" /> In
+										<input type="radio" name="parte2dom1"
+											value="Tramite indicazioni da parte del tutor interno"
+											checked="checked"> Tramite indicazioni da parte del
+										tutor interno <br> <input type="radio" name="parte2dom1"
+											value="Tramite indicazioni da parte dell'azienda">
+										Tramite indicazioni da parte dell'azienda <br> <input
+											type="radio" name="parte2dom1"
+											value="In base ai propri interessi/motivazioni"> In
 										base ai propri interessi/motivazioni <br> <input
-											type="radio" /> In base al proprio curriculum <br> <input
-											type="radio" name="parte2dom1altro" /> Altro, Spec <input>
+											type="radio" name="parte2dom1"
+											value="In base al proprio curriculum"> In base al
+										proprio curriculum <br> <input type="radio"
+											name="parte2dom1" value="altro"> Altro, Specificare
+										<input name="parte2dom1altro">
 									</fieldset>
 
-									<fieldset name="parte2dom2">
+									<fieldset>
 										<legend>2. Lo stage &egrave; stato svolto:</legend>
 										<input type="radio" disabled="disabled" /> all'interno <br>
 										<input type="radio" checked="checked" readonly="readonly" />
 										all'esterno <br>
 									</fieldset>
 
-									<fieldset name="parte2dom3">
+									<fieldset>
 										<legend>3. Qual &egrave; stato il ruolo del tutor
 											aziendale durante lo stage?</legend>
-										<input type="radio" /> Definire e strutturare il progetto di
-										stage <br> <input type="radio" /> Supervisionare lo
-										svolgimento dello stage, risolvendo eventuali difficoltà
-										incontrate dal tirocinante <br> <input type="radio" />
+
+										<input type="radio" name="parte2dom3"
+											value="Definire e strutturare il progetto di stage"
+											checked="checked"> Definire e strutturare il progetto
+										di stage <br> <input type="radio" name="parte2dom3"
+											value="Supervisionare lo svolgimento dello stage, risolvendo eventuali difficoltà incontrate dal tirocinante">
+										Supervisionare lo svolgimento dello stage, risolvendo
+										eventuali difficoltà incontrate dal tirocinante <br> <input
+											type="radio" name="parte2dom3"
+											value="Garantire il raggiungimento degli obiettivi formativi contenuti nel Progetto di stage">
 										Garantire il raggiungimento degli obiettivi formativi
-										contenuti nel Progetto di stage <br> <input type="radio" />
-										Nessun ruolo <br> <input type="radio"
-											name="parte2dom4altro" /> Altro, Spec <input>
+										contenuti nel Progetto di stage <br> <input type="radio"
+											name="parte2dom3" value="Nessun ruolo"> Nessun ruolo
+										<br> <input type="radio" name="parte2dom3" value="altro">
+										Altro, Specificare <input name="parte2dom3altro">
 									</fieldset>
 
 									<fieldset name="parte2dom4">
 										<legend>4. Qual &egrave; stato il ruolo del tutor
 											universitario durante lo stage?</legend>
-										<input type="radio" /> Definire e strutturare il progetto di
-										stage <br> <input type="radio" /> Supervisionare lo
-										svolgimento dello stage, risolvendo eventuali difficoltà
-										incontrate dal tirocinante <br> <input type="radio" />
+
+										<input type="radio" name="parte2dom4"
+											value="Definire e strutturare il progetto di stage"
+											checked="checked" checked="checked"> Definire e
+										strutturare il progetto di stage <br> <input type="radio"
+											name="parte2dom4"
+											value="Supervisionare lo svolgimento dello stage, risolvendo eventuali difficoltà incontrate dal tirocinante">
+										Supervisionare lo svolgimento dello stage, risolvendo
+										eventuali difficoltà incontrate dal tirocinante <br> <input
+											type="radio" name="parte2dom4"
+											value="Garantire il raggiungimento degli obiettivi formativi contenuti nel Progetto di stage">
 										Garantire il raggiungimento degli obiettivi formativi
-										contenuti nel Progetto di stage <br> <input type="radio" />
-										Nessun ruolo <br> <input type="radio"
-											name="parte2dom4altro" /> Altro, Spec <input>
+										contenuti nel Progetto di stage <br> <input type="radio"
+											name="parte2dom4" value="Nessun ruolo"> Nessun ruolo
+										<br> <input type="radio" name="parte2dom4" value="altro">
+										Altro, Specificare <input name="parte2dom4altro">
 									</fieldset>
 									<fieldset>
 										<legend>5. In che misura lei possedeva le seguenti
@@ -146,7 +204,7 @@
 										<table>
 											<tr>
 												<td>Capacit&agrave; relazionali e di comunicazione</td>
-												<td><select name="cinque1">
+												<td><select name="cinque">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -156,7 +214,7 @@
 											</tr>
 											<tr>
 												<td>Capacit&agrave; di lavorare in gruppo</td>
-												<td><select name="cinque2">
+												<td><select name="cinque">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -166,7 +224,7 @@
 											</tr>
 											<tr>
 												<td>Iniziativa / Autonomia</td>
-												<td><select name="cinque3">
+												<td><select name="cinque">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -177,7 +235,7 @@
 											<tr>
 												<td>Abilit&agrave; nell'uso degli strumenti e tecniche
 													specifiche</td>
-												<td><select name="cinque4">
+												<td><select name="cinque">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -187,7 +245,7 @@
 											</tr>
 											<tr>
 												<td>Conoscenza di base</td>
-												<td><select name="cinque5">
+												<td><select name="cinque">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -197,7 +255,7 @@
 											</tr>
 											<tr>
 												<td>Conoscenze linguistiche</td>
-												<td><select name="cinque6">
+												<td><select name="cinque">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -207,7 +265,7 @@
 											</tr>
 											<tr>
 												<td>Conoscenze tecniche</td>
-												<td><select name="cinque7">
+												<td><select name="cinque">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -224,7 +282,7 @@
 										<table>
 											<tr>
 												<td>Capacit&agrave; relazionali e di comunicazione</td>
-												<td><select name="cinque1">
+												<td><select name="sei">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -234,7 +292,7 @@
 											</tr>
 											<tr>
 												<td>Capacit&agrave; di lavorare in gruppo</td>
-												<td><select name="cinque2">
+												<td><select name="sei">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -244,7 +302,7 @@
 											</tr>
 											<tr>
 												<td>Iniziativa / Autonomia</td>
-												<td><select name="cinque3">
+												<td><select name="sei">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -255,7 +313,7 @@
 											<tr>
 												<td>Abilit&agrave; nell'uso degli strumenti e tecniche
 													specifiche</td>
-												<td><select name="cinque4">
+												<td><select name="sei">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -265,7 +323,7 @@
 											</tr>
 											<tr>
 												<td>Conoscenza di base</td>
-												<td><select name="cinque5">
+												<td><select name="sei">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -275,7 +333,7 @@
 											</tr>
 											<tr>
 												<td>Conoscenze linguistiche</td>
-												<td><select name="cinque6">
+												<td><select name="sei">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -285,7 +343,7 @@
 											</tr>
 											<tr>
 												<td>Conoscenze tecniche</td>
-												<td><select name="cinque7">
+												<td><select name="sei">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>

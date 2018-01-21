@@ -231,11 +231,38 @@ public class GestioneDocumento extends HttpServlet {
    * @throws SQLException
    *           eccezzioni sql
    */
-  public void compilaQuestionario(HttpServletRequest request , HttpServletResponse response) {
+  public void compilaQuestionario(HttpServletRequest request, HttpServletResponse response) {
 
-    String commenti = (request.getParameter("commenti"));
-    String suggerimenti = (request.getParameter("suggerimenti"));
+    //PARTE 1 OK
+    String cognome = request.getParameter("cognome");
+    String nome = request.getParameter("nome");
+    String telefono1 = request.getParameter("telefono1");
+    String telefono2 = request.getParameter("telefono2");
+    String email = request.getParameter("email");
+    String comune = request.getParameter("comune");
+    String provincia = request.getParameter("provincia");
+    String annoimm = request.getParameter("annoimm");
+    String cdlimm = request.getParameter("cdlimm");
+    String valAzienda = request.getParameter("azienda"); //QUISTO
+    String provazienda = request.getParameter("provazienda");
+    String sesso = request.getParameter("sesso");
+    String datanascita = request.getParameter("datanascita");
 
+    String[] a = valAzienda.split(",");    
+    String nomeAzienda = a[1];
+    
+    //PARTE 2
+    String parte2dom1 = request.getParameter("parte2dom1");
+    String parte2dom1altro = request.getParameter("parte2dom1altro");
+    String parte2dom3 = request.getParameter("parte2dom3");
+    String parte2dom3altro = request.getParameter("parte2dom3altro");
+    String parte2dom4 = request.getParameter("parte2dom4");
+    String parte2dom4altro = request.getParameter("parte2dom4altro");
+    
+    String[] cinque = request.getParameterValues("cinque");
+    String[] sei = request.getParameterValues("sei");
+
+    //PARTE 3 OK
     int giudizioEsperienza = 0;
     int giudizioAzienda = 0;
     int giudizioUniversita = 0;
@@ -254,25 +281,20 @@ public class GestioneDocumento extends HttpServlet {
     giudizioEsperienza = giudizioEsperienza / 5;
     giudizioAzienda = giudizioAzienda / 5;
     giudizioUniversita = giudizioUniversita / 6;
-    System.out.println("giudizioEsperienza: " + giudizioEsperienza);
-    System.out.println("giudizioAzienda: " + giudizioAzienda);
-    System.out.println("giudizioUniversita: " + giudizioUniversita);
-
-    /*
-     * String informazioniSulTirocinio = (request.getParameter("informazioniSulTirocinio"));
-     * 
-     * String annoAccademico = (request.getParameter("annoAccademico")); String giudizioEsperienza =
-     * (request.getParameter("giudizioEsperienza")); float giudizioEsperienzaD =
-     * Float.parseFloat(giudizioEsperienza); String giudizioAzienda =
-     * (request.getParameter("giudizioAzienda")); float giudizioAziendaD =
-     * Float.parseFloat(giudizioAzienda); String giudizioUniversita =
-     * (request.getParameter("giudizioUniversita")); float giudizioUniversitaD =
-     * Float.parseFloat(giudizioUniversita); String matricola = (request.getParameter("matricola"));
-     * 
-     * try { // model.salvaQuestionario(informazioniSulTirocinio, commenti, suggerimenti, //
-     * annoAccademico, giudizioEsperienzaD, giudizioAziendaD, giudizioUniversitaD, matricola); }
-     * catch (SQLException e) { e.printStackTrace(); }
-     */
+    
+    String[] data = request.getParameterValues("data");
+    String annoAccademico = data[2];
+    String mailStudente = request.getParameter("mailStudente");
+    System.out.println("Mail: " + mailStudente);
+    String id = a[0];
+    String commenti = request.getParameter("commenti");
+    String suggerimenti = request.getParameter("suggerimenti");
+    String matricola = request.getParameter("matricola");
+    
+    model.salvaQuestionario(commenti, suggerimenti, annoAccademico, 
+        mailStudente, Integer.parseInt(id), 
+        matricola, giudizioEsperienza, giudizioAzienda, giudizioUniversita);
+    
   }
   
   /**
@@ -283,7 +305,7 @@ public class GestioneDocumento extends HttpServlet {
    * @throws ServletException
    * @throws IOException
    */
-  public void ricercaTuttiDocumentiConvenzioneAzienda(HttpServletRequest request ,
+  public void ricercaTuttiDocumentiConvenzioneAzienda(HttpServletRequest request,
       HttpServletResponse response)  throws SQLException, ServletException, IOException {
     ArrayList<DocumentoConvenzioneBean> listaDocumentiConvenzione =
         model.getTuttiDocumentiConvenzioneAzienda();
