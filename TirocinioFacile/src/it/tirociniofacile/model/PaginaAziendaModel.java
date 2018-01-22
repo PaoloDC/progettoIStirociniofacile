@@ -109,34 +109,34 @@ public class PaginaAziendaModel {
       // categoria sta ad indicare un capo della tabella azienda (es. descrizione, località)
       // la chiave permette una ricerca dei valori in quel campo scelto
 
-      String selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id "
+      String selectSql = "SELECT DISTINCT descrizione,localita,nomeaziendaRappresentata,id "
           + "FROM " + TABLE_NAME_PAGINA
           + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
           + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = " 
           + UtenteModel.TABLE_NAME_AZIENDA + ".mail WHERE " + categoria + " LIKE ? ";
 
       if (categoria.equals("skill")) {
-        selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id,nomeSkill " 
+        selectSql = "SELECT DISTINCT descrizione,localita,nomeaziendaRappresentata,id,nomeSkill " 
                     + "FROM " + TABLE_NAME_PAGINA
                     + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
                     + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = " 
                     + UtenteModel.TABLE_NAME_AZIENDA + ".mail"
                     + " JOIN skill ON "
                     + TABLE_NAME_PAGINA + ".id = skill.paginaAziendaID " 
-                    + " WHERE nomeSkill LIKE ?";
+                    + " WHERE nomeSkill LIKE ? GROUP BY id";
         
         
       }
       
       if (categoria.equals("ambito")) {
-        selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id,nomeAmbito " 
+        selectSql = "SELECT DISTINCT descrizione,localita,nomeaziendaRappresentata,id,nomeAmbito " 
             + "FROM " + TABLE_NAME_PAGINA
             + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
             + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = "
             + UtenteModel.TABLE_NAME_AZIENDA + ".mail"
             + " JOIN ambito ON "
             + TABLE_NAME_PAGINA + ".id = ambito.paginaAziendaID " 
-            + " WHERE nomeAmbito LIKE ?";
+            + " WHERE nomeAmbito LIKE ? GROUP BY id";
         
       }
       
