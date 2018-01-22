@@ -91,41 +91,51 @@ public class DocumentoModel_jdbc {
   }
 
   /**
-   * Salva il questionario all'interno del database.
-   * @param informazioniSulTirocinio informazioni generiche sul tirocinio
-   * @param commenti commenti dello studente sull'esperienza
-   * @param suggerimenti suggerimenti dello studente sull'esperienza
-   * @param annoAccademico l'anno in cui è stato svolto il tirocinio
-   * @param giudizioEsperienza grado di giudizio sull'esperienza
-   * @param giudizioAzienda grado di giudizio sull'azienda
-   * @param giudizioUniversita grado di giudizio sull'università
-   * @param matricola identificativo dello studente
+   * Metodo che consente di salvare un nuovo questionario sul database.
+   * @param commenti eventuali commenti dello studente, allegati al questionario
+   * @param suggerimenti eventuali suggerimenti dello studente, allegati al questionario
+   * @param annoAccademico indica l'anno in cui è stato svolto il tirocinio
+   * @param mailStudente mail dello studente che ha svolto il tirocinio
+   * @param paginaAziendaId riferimento all'identificativo sul database 
+   *     della pagina dell'azienda in cui è stato svolto il tirocinio
+   * @param matricola matricola dello studente che ha svolto il tirocinio
+   * @param giudizioEsperienza media dei giudizi sull'esperienza del tirocinio
+   * @param giudizioAzienda  media dei giudizi sull'azienda che ha ospitato del tirocinio
+   * @param giudizioUniversita media dei giudizi sull'università che ha  del tirocinio
    */
-  public synchronized void salvaQuestionario(String informazioniSulTirocinio, 
-      String commenti, String suggerimenti, String annoAccademico, float giudizioEsperienza,
-      float giudizioAzienda, float giudizioUniversita, String matricola) throws SQLException {
-    Connection connection = con;
+  public synchronized void salvaQuestionario(String commenti, String suggerimenti, 
+      String annoAccademico,  String mailStudente, int paginaAziendaId, String matricola,
+      float giudizioEsperienza, float giudizioAzienda, float giudizioUniversita) {
+    
+    Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
-      String insertSql = "INSERT INTO " + TABLE_NAME_QUESTIONARI + "(informazioniSulTirocinio,"
-          + " commenti, suggerimenti, annoAccademico, giudizioesperienza,"
-          + " giudizioAzienda, giudizioUniversita) VALUES(?,?,?,?,?,?,?,?)";
+      connection = con;
+      String insertSql = "INSERT INTO " + TABLE_NAME_QUESTIONARI + " (commenti, suggerimenti,"
+          + " annoAccademico, approvato, mailStudente, paginaAziendaID,"
+          + " giudizioEsperienza, giudizioAzienda, giudizioUniversita) "
+          + " VALUES(?,?,?,?,?,?,?,?,?)";
+      
       preparedStatement = connection.prepareStatement(insertSql);
 
-      preparedStatement.setString(1, informazioniSulTirocinio);
-      preparedStatement.setString(2, commenti);
-      preparedStatement.setString(3, suggerimenti);
-      preparedStatement.setString(4, annoAccademico);
-      preparedStatement.setFloat(5, giudizioEsperienza);
-      preparedStatement.setFloat(6, giudizioAzienda);
-      preparedStatement.setFloat(7, giudizioUniversita);
-      preparedStatement.setString(8, matricola);
+      preparedStatement.setString(1, commenti);
+      preparedStatement.setString(2, suggerimenti);
+      preparedStatement.setString(3, annoAccademico);
+      preparedStatement.setInt(4, 0);
+      preparedStatement.setString(5, mailStudente);
+      preparedStatement.setInt(6, paginaAziendaId);
+      preparedStatement.setFloat(7, giudizioEsperienza);
+      preparedStatement.setFloat(8, giudizioAzienda);
+      preparedStatement.setFloat(9, giudizioUniversita);
+      
+      System.out.println(preparedStatement);
+      
       preparedStatement.executeUpdate();
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
-
+    
   /**
    * Salva il documento di convenzione all'interno del database.
    * @param nomeAzienda nome univoco dell'azienda che si convenziona

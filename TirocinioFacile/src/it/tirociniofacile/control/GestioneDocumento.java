@@ -233,7 +233,7 @@ public class GestioneDocumento extends HttpServlet {
    */
   public void compilaQuestionario(HttpServletRequest request, HttpServletResponse response) {
 
-    //PARTE 1 OK
+    /*    //PARTE 1 OK
     String cognome = request.getParameter("cognome");
     String nome = request.getParameter("nome");
     String telefono1 = request.getParameter("telefono1");
@@ -243,15 +243,16 @@ public class GestioneDocumento extends HttpServlet {
     String provincia = request.getParameter("provincia");
     String annoimm = request.getParameter("annoimm");
     String cdlimm = request.getParameter("cdlimm");
-    String valAzienda = request.getParameter("azienda"); //QUISTO
     String provazienda = request.getParameter("provazienda");
     String sesso = request.getParameter("sesso");
     String datanascita = request.getParameter("datanascita");
-
-    String[] a = valAzienda.split(",");    
-    String nomeAzienda = a[1];
+    */
+    
+        
+    //String nomeAzienda = a[1];
     
     //PARTE 2
+    /*
     String parte2dom1 = request.getParameter("parte2dom1");
     String parte2dom1altro = request.getParameter("parte2dom1altro");
     String parte2dom3 = request.getParameter("parte2dom3");
@@ -261,7 +262,8 @@ public class GestioneDocumento extends HttpServlet {
     
     String[] cinque = request.getParameterValues("cinque");
     String[] sei = request.getParameterValues("sei");
-
+    */
+    
     //PARTE 3 OK
     int giudizioEsperienza = 0;
     int giudizioAzienda = 0;
@@ -285,7 +287,8 @@ public class GestioneDocumento extends HttpServlet {
     String[] data = request.getParameterValues("data");
     String annoAccademico = data[2];
     String mailStudente = request.getParameter("mailStudente");
-    System.out.println("Mail: " + mailStudente);
+    String valAzienda = request.getParameter("azienda"); 
+    String[] a = valAzienda.split(",");
     String id = a[0];
     String commenti = request.getParameter("commenti");
     String suggerimenti = request.getParameter("suggerimenti");
@@ -299,7 +302,7 @@ public class GestioneDocumento extends HttpServlet {
   
   /**
    * Ricerca tutti i DocumentiConvenzioneAzienda.
-   * @param request
+   * @param request 
    * @param response
    * @throws SQLException
    * @throws ServletException

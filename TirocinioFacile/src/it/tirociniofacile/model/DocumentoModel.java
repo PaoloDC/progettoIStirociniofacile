@@ -2,7 +2,6 @@ package it.tirociniofacile.model;
 
 import it.tirociniofacile.bean.DocumentoConvenzioneBean;
 import it.tirociniofacile.bean.DocumentoQuestionarioBean;
-import it.tirociniofacile.bean.PaginaAziendaBean;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
 
@@ -56,7 +54,7 @@ public class DocumentoModel {
     try {
       connection = ds.getConnection();
       String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI 
-          +   " WHERE approvato = " + "0 ;"   ;
+          +   " WHERE approvato = 0 ";
       
       preparedStatement = connection.prepareStatement(selectSql);
       ResultSet rs = preparedStatement.executeQuery();
@@ -72,7 +70,7 @@ public class DocumentoModel {
           documento.setLuogoNascitaRappresentanteLegale(rs.getString(7));
           documento.setApprovato(rs.getBoolean(8));
           listaDocumenti.add(documento);
-        } while (rs.next()) ;
+        } while (rs.next());
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -112,7 +110,7 @@ public class DocumentoModel {
     try {
       connection = ds.getConnection();
       String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI 
-          +   " WHERE approvato = " + "0 ;"   ;
+          +   " WHERE approvato = 0 ";
       
       preparedStatement = connection.prepareStatement(selectSql);
       ResultSet rs = preparedStatement.executeQuery();
@@ -126,7 +124,7 @@ public class DocumentoModel {
           documento.setApprovato(rs.getBoolean(5));
           documento.setMailStudente(rs.getString(7));
           listaDocumenti.add(documento);
-        } while (rs.next()) ;
+        } while (rs.next());
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -223,27 +221,17 @@ public class DocumentoModel {
   }
 
   /**
-   * Salva il questionario all'interno del database.
-   * @param informazioniSulTirocinio informazioni generiche sul tirocinio
-   * @param commenti commenti dello studente sull'esperienza
-   * @param suggerimenti suggerimenti dello studente sull'esperienza
-   * @param annoAccademico l'anno in cui è stato svolto il tirocinio
-   * @param giudizioEsperienza grado di giudizio sull'esperienza
-   * @param giudizioAzienda grado di giudizio sull'azienda
-   * @param giudizioUniversita grado di giudizio sull'università
-   * @param matricola identificativo dello studente
-   */
-  /**
-   * 
-   * @param commenti
-   * @param suggerimenti
-   * @param annoAccademico
-   * @param mailStudente
-   * @param paginaAziendaId
-   * @param matricola
-   * @param giudizioEsperienza
-   * @param giudizioAzienda
-   * @param giudizioUniversita
+   * Metodo che consente di salvare un nuovo questionario sul database.
+   * @param commenti eventuali commenti dello studente, allegati al questionario
+   * @param suggerimenti eventuali suggerimenti dello studente, allegati al questionario
+   * @param annoAccademico indica l'anno in cui è stato svolto il tirocinio
+   * @param mailStudente mail dello studente che ha svolto il tirocinio
+   * @param paginaAziendaId riferimento all'identificativo sul database 
+   *     della pagina dell'azienda in cui è stato svolto il tirocinio
+   * @param matricola matricola dello studente che ha svolto il tirocinio
+   * @param giudizioEsperienza media dei giudizi sull'esperienza del tirocinio
+   * @param giudizioAzienda  media dei giudizi sull'azienda che ha ospitato del tirocinio
+   * @param giudizioUniversita media dei giudizi sull'università che ha  del tirocinio
    */
   public synchronized void salvaQuestionario(String commenti, String suggerimenti, 
       String annoAccademico,  String mailStudente, int paginaAziendaId, String matricola,
@@ -339,11 +327,12 @@ public class DocumentoModel {
   }
 
   /**
-   * Salva il documento PDF all'interno del database.
-   * @param pdf il documento da salvare
-   * @param id id che collega il pdf ad un documento (convenzione o questionario)
-   * @throws SQLException 
-   * @throws IOException 
+   * Metodo che salva il pdf, documento di convenzione dell'azienda, come file
+   *   e mantiene un riferimento all'url del pdf sul database.
+   * @param url riferimento alla posizione del file pdf
+   * @param email mail dell'azienda di cui si sta salvando il documento
+   * @throws SQLException in caso di errata connessione al database
+   * @throws IOException in caso di errato salvataggio del file
    */
   public synchronized void salvaPdfConvenzione(String url, String email) 
       throws SQLException, IOException {
@@ -376,15 +365,15 @@ public class DocumentoModel {
           + " SET url = ? WHERE id = ?";
       
       rs.next();
-      String piva = rs.getString(1);
+      preparedStatement.close();
       
+      String piva = rs.getString(1);
       preparedStatement = connection.prepareStatement(updateSql);
       preparedStatement.setString(1, savePath);
       preparedStatement.setString(2, piva);
       
       preparedStatement.executeUpdate();
-      
-      
+    
     } finally { 
       try {
         if (preparedStatement != null) {
@@ -399,7 +388,14 @@ public class DocumentoModel {
   }
   
  
-  
+  /**
+   * Metodo che permette il salvataggio di un documento pdf, 
+   * mantenendo un riferimento, alla posizione del file, sul database.
+   * @param url riferimento alla posizione del pdf
+   * @param email indica la mail dello studente o dell'azienda che sta salvando il documento
+   * @throws SQLException in caso di errato salvataggio sul database
+   * @throws IOException in caso di errato salvataggio del file
+   */
   public synchronized void salvaPdfQuestionario(String url,String email) 
       throws SQLException, IOException {
     Connection connection = null;
@@ -424,13 +420,13 @@ public class DocumentoModel {
       }
       
       
-      
       String updateSql = "UPDATE " + TABLE_NAME_QUESTIONARI 
           + " SET url = ? WHERE id = ?";
       
       rs.next();
-      int id = rs.getInt(1);
+      preparedStatement.close();
       
+      int id = rs.getInt(1);
       preparedStatement = connection.prepareStatement(updateSql);
       preparedStatement.setString(1, url);
       preparedStatement.setInt(2, id);
@@ -451,11 +447,13 @@ public class DocumentoModel {
   }
   
 
+
   /**
-   * Permette di ricercare un documento convenzione fornendo l'id.
-   * @param id identificativo del documento da ricercare 
-   * @return un documento convenzione
-   * @throws SQLException in caso di errata connessione
+   * Metodo che permette di ricercare un documento di convenzione 
+   *    di un'azienda inserendo il suo identificativo.
+   * @param partitaIva l'identificativo dell'azienda
+   * @return un documento di convenzione bean
+   * @throws SQLException in caso di problemi di connessione al database
    */
   public synchronized DocumentoConvenzioneBean ricercaConvenzionePerPartitaIva(String partitaIva)
       throws SQLException {
@@ -531,7 +529,6 @@ public class DocumentoModel {
         dqb.setAnnoAccademico(rs.getString(4));
         dqb.setApprovato(rs.getBoolean(5));
         dqb.setMailStudente(rs.getString(7));
-       // dqb.setGiudizioEsperienza(rs.getFloat(9));
     
 
       }
@@ -558,37 +555,19 @@ public class DocumentoModel {
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    try {
-      connection = ds.getConnection();
-      String insertSqlQuest = "DELETE FROM " + TABLE_NAME_QUESTIONARI 
-          + " WHERE id = ?";
-      preparedStatement = connection.prepareStatement(insertSqlQuest);
-      preparedStatement.setString(1, id);
+    connection = ds.getConnection();
+    String insertSqlQuest = "DELETE FROM " + TABLE_NAME_QUESTIONARI 
+        + " WHERE id = ?";
+    preparedStatement = connection.prepareStatement(insertSqlQuest);
+    preparedStatement.setString(1, id);
 
-      preparedStatement.executeUpdate();
+    preparedStatement.executeUpdate();
 
-      String insertSqlConv = "DELETE FROM " + TABLE_NAME_CONVENZIONI 
-          + " WHERE partitaIva = ?";
-      preparedStatement = connection.prepareStatement(insertSqlConv);
-      preparedStatement.setString(1, id);
-
-
-      preparedStatement.executeUpdate();
-      
-    } catch (Exception e) {
-      e.printStackTrace();
-    } finally { 
-      try {
-        if (preparedStatement != null) {
-          preparedStatement.close();
-        }
-      } finally {
-        if (connection != null) {
-          connection.close();
-        }
-      } 
-      return;
-    }
+    String insertSqlConv = "DELETE FROM " + TABLE_NAME_CONVENZIONI 
+        + " WHERE partitaIva = ?";
+    preparedStatement = connection.prepareStatement(insertSqlConv);
+    preparedStatement.setString(1, id);
+    preparedStatement.executeUpdate();
   }
 
 
@@ -613,6 +592,8 @@ public class DocumentoModel {
      
       String insertSqlConv = "UPDATE " + TABLE_NAME_CONVENZIONI 
           + " SET approvato = ? WHERE partitaIva = ?";
+      
+      preparedStatement.close();
       preparedStatement = connection.prepareStatement(insertSqlConv);
       preparedStatement.setInt(1, 1);
       
@@ -622,8 +603,7 @@ public class DocumentoModel {
       
     } catch (Exception e) {
       e.printStackTrace();
-    }
-    finally { 
+    } finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
@@ -632,8 +612,8 @@ public class DocumentoModel {
         if (connection != null) {
           connection.close();
         }
-      } 
-      return;
+      }
     }
+    return;
   }
 }

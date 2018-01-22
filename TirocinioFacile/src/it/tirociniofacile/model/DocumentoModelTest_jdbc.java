@@ -104,8 +104,7 @@ public class DocumentoModelTest_jdbc  extends TestCase{
    */
   public void testRicercaQuestionarioPerId() {
     try {
-      model.salvaQuestionario("test","test","test","test",1,1,1,"test");
-      
+      model.salvaQuestionario("prova", "prova", "prova", "prova", 99, "prova", 1, 1, 1);
       assertNotNull(model.ricercaQuestionarioPerId(0));
       
       //supponendo che ci siano meno di 55 questionari
