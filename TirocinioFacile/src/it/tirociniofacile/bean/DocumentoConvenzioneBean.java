@@ -30,6 +30,7 @@ public class DocumentoConvenzioneBean {
     this.luogoNascitaRappresentanteLegale = luogoNascitaRappresentanteLegale;
     this.dataNascitaRappresentanteLegale = dataNascitaRappresentanteLegale;
     
+    
   }
   
   public boolean isApprovato() {
@@ -95,7 +96,17 @@ public class DocumentoConvenzioneBean {
   public void setDataNascitaRappresentanteLegale(String dataNascitaRappresentanteLegale) {
     this.dataNascitaRappresentanteLegale = dataNascitaRappresentanteLegale;
   }
-  
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+
+
   private String partitaIva;
   private boolean approvato;
   private String nomeAzienda;
@@ -104,4 +115,5 @@ public class DocumentoConvenzioneBean {
   private String rappresentanteLegale;
   private String luogoNascitaRappresentanteLegale;
   private String dataNascitaRappresentanteLegale;
+  private String url;
 }

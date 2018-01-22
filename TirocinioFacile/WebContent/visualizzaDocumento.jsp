@@ -1,17 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1" import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
-	<%
-	
+	pageEncoding="ISO-8859-1"
+	import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
+<%
+	String tipo = (String) session.getAttribute("tipologiaAccount");
+
+	if (tipo != null) {
+		if (!(tipo.equals("impiegato"))) {
+			response.sendRedirect("./index.jsp");
+		}
+	} else {
+		response.sendRedirect("./index.jsp");
+	}
+
 	DocumentoConvenzioneBean convenzione = (DocumentoConvenzioneBean) request.getAttribute("convenzione");
 	DocumentoQuestionarioBean questionario = (DocumentoQuestionarioBean) request.getAttribute("questionario");
-	
-
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>TirocinioFacile - Visualizza documento </title>
+<title>TirocinioFacile - Visualizza documento</title>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -36,22 +44,24 @@
 		<%@ include file="header.jsp"%>
 		<div class="row">
 			<div class="col-4 col-sm-4">
-				<h3><span class="glyphicon glyphicon-ok"></span> Documento da approvare</h3>
+				<h3>
+					<span class="glyphicon glyphicon-ok"></span> Documento da approvare
+				</h3>
 				<%
-				 if(convenzione != null){		
+					if (convenzione != null) {
 				%>
-				<br> <br> <br>
-					<a href="GestioneTf?action=convalidaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=true" >
-						<button  type="submit" class=" btn btn-success"  > Approva</button>
-					</a>
-					<a href="GestioneTf?action=convalidaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=false">
-				    	<button type="submit" class="btn btn-danger"   > Elimina</button>
-				    </a>
+				<br> <br> <br> <a
+					href="GestioneTf?action=convalidaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=true">
+					<button type="submit" class=" btn btn-success">Approva</button>
+				</a> <a
+					href="GestioneTf?action=convalidaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=false">
+					<button type="submit" class="btn btn-danger">Elimina</button>
+				</a>
 			</div>
 			<div class="row">
 				<div class="col-6 col-sm-6">
 					<center>
-						<iframe src="pdf/prova.pdf" allowTransparency frameborder="0"
+						<iframe src="<%=convenzione.getUrl() %>" allowTransparency frameborder="0"
 							style="overflow: hidden; margin-top: 1px; width: 550px; height: 520px"></iframe>
 						<br> <br> <br> <br>
 					</center>
@@ -60,30 +70,35 @@
 				<%
 					} else if (questionario != null) {
 				%>
-				<br> <br> <br>
-					<a href="GestioneTf?action=convalidaDocumento&id=<%=questionario.getId()%>&approvato=true">
-						<button  type="submit" class=" btn btn-success"   > Approva</button>
-					</a> 
-					<a href="GestioneTf?action=convalidaDocumento&id=<%=questionario.getId()%>&approvato=false">
-					    <button type="submit" class="btn btn-danger"   > Elimina</button>
-					</a>	
-						</div>
-						<div class="row">
-							<div class="col-6 col-sm-6">
-								<center>
-									<iframe src="pdf/prova.pdf" allowTransparency frameborder="0"
-										style="overflow: hidden; margin-top: 1px; width: 550px; height: 520px"></iframe>
-									<br> <br> <br> <br>
-								</center>
-							</div>
-							</div>
-						</div>
-			<%} else {%>
+				<br> <br> <br> <a
+					href="GestioneTf?action=convalidaDocumento&id=<%=questionario.getId()%>&approvato=true">
+					<button type="submit" class=" btn btn-success">Approva</button>
+				</a> <a
+					href="GestioneTf?action=convalidaDocumento&id=<%=questionario.getId()%>&approvato=false">
+					<button type="submit" class="btn btn-danger">Elimina</button>
+				</a>
+			</div>
+			<div class="row">
+				<div class="col-6 col-sm-6">
 					<center>
-							<h2>Nessuna Documento</h2>
-						</center>
-			<%} %>
+						<iframe src="<%=questionario.getUrl() %>" allowTransparency frameborder="0"
+							style="overflow: hidden; margin-top: 1px; width: 550px; height: 520px"></iframe>
+						<br> <br> <br> <br>
+					</center>
+				</div>
+			</div>
+		</div>
+		<%
+			} else {
+		%>
+		<center>
+			<h2>Nessuna Documento</h2>
+		</center>
+		<%
+			}
+		%>
 	</div>
 	<%@ include file="footer.jsp"%>
 </body>
-</html></html>
+</html>
+</html>

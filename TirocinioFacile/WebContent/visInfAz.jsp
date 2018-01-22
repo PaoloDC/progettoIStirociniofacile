@@ -2,11 +2,17 @@
 	pageEncoding="ISO-8859-1"
 	import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
 <%
-	ArrayList<PaginaAziendaBean> listaAzienda = 
-		(ArrayList<PaginaAziendaBean>) session.getAttribute("listaAziende");
+	String tipo = (String) session.getAttribute("tipologiaAccount");
+
+	if (tipo == null || !(tipo.equals("presidente"))) {
+		response.sendRedirect("./index.jsp");
+	}
+
+	ArrayList<PaginaAziendaBean> listaAzienda = (ArrayList<PaginaAziendaBean>) session
+			.getAttribute("listaAziende");
 
 	int numQuest = -1;
-	if(request.getAttribute("numeroQuestionari") != null) {
+	if (request.getAttribute("numeroQuestionari") != null) {
 		numQuest = (int) request.getAttribute("numeroQuestionari");
 		System.out.println("Entrato" + numQuest);
 	}
@@ -52,13 +58,21 @@
 						- <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<% if (listaAzienda != null) { %>
-						<% for(int i = 0; i < listaAzienda.size(); i++ ) { %>
+						<%
+							if (listaAzienda != null) {
+						%>
+						<%
+							for (int i = 0; i < listaAzienda.size(); i++) {
+						%>
 						<li><a
 							href="GestioneTf?action=visualizzaInformazioniPerAzienda&azienda=
 							<%=listaAzienda.get(i).getNomeAzienda()%>"><%=listaAzienda.get(i).getNomeAzienda()%></a></li>
-						<% } %>
-						<% } %>
+						<%
+							}
+						%>
+						<%
+							}
+						%>
 					</ul>
 				</div>
 
@@ -73,11 +87,17 @@
 			<div class="col-8 col-md-8">
 				<h2>Il numero di tirocini conclusi per questa azienda e':</h2>
 				<center>
-					<%if (numQuest == -1) { %>
-						<h2>Seleziona un'azienda!</h2>
-					<% } else { %>
-						<h2><%=numQuest%></h2>
-					<% } %>
+					<%
+						if (numQuest == -1) {
+					%>
+					<h2>Seleziona un'azienda!</h2>
+					<%
+						} else {
+					%>
+					<h2><%=numQuest%></h2>
+					<%
+						}
+					%>
 				</center>
 			</div>
 			<div class="col-2 col-md-2">

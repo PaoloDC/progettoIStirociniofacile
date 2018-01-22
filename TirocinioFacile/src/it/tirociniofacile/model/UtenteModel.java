@@ -168,8 +168,9 @@ public class UtenteModel {
    */
   public ArrayList<UtenteBean> caricaUtentiDaFile() {
     try {
-
+      
       File f = new File(FILE_NAME);
+      System.out.println(f);
       if (f.exists()) {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
         ArrayList<UtenteBean> listaUtentiRead = (ArrayList<UtenteBean>) in.readObject();
@@ -254,6 +255,11 @@ public class UtenteModel {
           return pa;
         } else {
 
+          ArrayList<UtenteBean> lista = new ArrayList<UtenteBean>();
+          lista.add(new UtenteBean("fferrucci@unisa.it","admintirocinio"));
+          lista.add(new UtenteBean("impiegato@unisa.it","impiegatotirocinio"));
+          salvaUtentiNelFile(lista);
+          
           ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
           for (int i = 0; i < listaUtenti.size(); i++) {
             UtenteBean ub = listaUtenti.get(i);

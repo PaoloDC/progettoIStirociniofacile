@@ -164,7 +164,6 @@ public class GestioneUtente extends HttpServlet {
     request.removeAttribute("account");
 
     UtenteBean utente = model.caricaAccount(email, password);
-
     if (utente != null) {
       request.getSession().setAttribute("account", utente);
       if (utente.getEmail().equals("fferrucci@unisa.it")) {

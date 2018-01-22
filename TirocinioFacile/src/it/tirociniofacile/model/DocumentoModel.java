@@ -358,10 +358,8 @@ public class DocumentoModel {
       if (!fileSaveDir.exists()) {
         fileSaveDir.mkdir();
       }
-      
-      
-      
-      String updateSql = "UPDATE " + TABLE_NAME_QUESTIONARI 
+
+      String updateSql = "UPDATE " + TABLE_NAME_CONVENZIONI 
           + " SET url = ? WHERE id = ?";
       
       rs.next();
@@ -483,6 +481,7 @@ public class DocumentoModel {
         dcb.setDataNascitaRappresentanteLegale(rs.getString(6));
         dcb.setLuogoNascitaRappresentanteLegale(rs.getString(7));
         dcb.setApprovato(rs.getBoolean(8));
+        dcb.setUrl(rs.getString(9));
       }
       
     } finally {

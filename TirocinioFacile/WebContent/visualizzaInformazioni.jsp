@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"
+	import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
+
+<%
+	String tipo = (String) session.getAttribute("tipologiaAccount");
+
+	if (tipo == null || !(tipo.equals("presidente"))) {
+		response.sendRedirect("./index.jsp");
+	}
+%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,8 +45,9 @@
 
 		<div class="row">
 			<div class="container-fluid">
-				
-				<a class="btn btn-primary btn-lg btn-block" href="GestioneTf?action=ricercaTuttePagine&tirocini=true"
+
+				<a class="btn btn-primary btn-lg btn-block"
+					href="GestioneTf?action=ricercaTuttePagine&tirocini=true"
 					role="button">Tirocini Conclusi Per Azienda</a>
 			</div>
 			<br> <br> <br>
@@ -43,8 +55,8 @@
 
 		<div class="row">
 			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block" href="ricercaAzienda.jsp"
-					role="button">Ricerca Pagina Azienda</a>
+				<a class="btn btn-primary btn-lg btn-block"
+					href="ricercaAzienda.jsp" role="button">Ricerca Pagina Azienda</a>
 			</div>
 			<br> <br> <br>
 		</div>

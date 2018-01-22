@@ -26,7 +26,7 @@
 		<br> <br> <br>
 		<div class="row">
 			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block" href="visInfAnno.jsp"
+				<a class="btn btn-primary btn-lg btn-block" href="compilaQuestionario.jsp"
 					role="button">Compila Questionario Valutazione Azienda</a>
 			</div>
 			<br> <br> <br>
@@ -34,7 +34,7 @@
 
 		<div class="row">
 			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block" href="visInfAnno.jsp"
+				<a class="btn btn-primary btn-lg btn-block" href="ricercaAzienda.jsp"
 					role="button">Ricerca Pagina Azienda</a>
 			</div>
 			<br> <br> <br>

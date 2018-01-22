@@ -4,6 +4,16 @@
 
 <%
 	UtenteBean utente = (UtenteBean) session.getAttribute("account");
+
+	String tipo = (String) session.getAttribute("tipologiaAccount");
+
+	if (tipo != null) {
+		if (!(tipo.equals("azienda")) && !(tipo.equals("studente"))) {
+			response.sendRedirect("./index.jsp");
+		}
+	} else {
+		response.sendRedirect("./index.jsp");
+	}
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

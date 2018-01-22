@@ -3,6 +3,20 @@
 
 <%
 	String messaggioErrore = (String) request.getAttribute("noUtente");
+
+	String utente = (String) session.getAttribute("tipologiaAccount");
+	
+	if(utente != null) {
+		if(utente.equals("studente")) {
+			response.sendRedirect("./homeStudente.jsp");
+		} else if (utente.equals("impiegato")) {
+			response.sendRedirect("./approvaDocumento.jsp");
+		} else if (utente.equals("presidente")) {
+			response.sendRedirect("./visualizzaInformazioni.jsp");
+		} else if (utente.equals("azienda")) {
+			response.sendRedirect("./creaPagina.jsp");
+		}
+	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

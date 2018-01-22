@@ -3,6 +3,11 @@
 	import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
 
 <%
+	String tipo = (String) session.getAttribute("tipologiaAccount");
+
+	if (tipo == null || !(tipo.equals("presidente"))) {
+		response.sendRedirect("./index.jsp");
+	}
 
 	int numQuest = -1;
 	if (request.getAttribute("numeroQuestionari") != null) {
@@ -43,15 +48,14 @@
 
 			<div class="container">
 				<h3>Anno Accademico:</h3>
-				
+
 				<div class="dropdown">
 					<button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="true">
-						-
-					</button>
+						aria-expanded="true">-</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li><a href="GestioneTf?action=visualizzaInformazioniPerAnnoAccademico&anno=2018">2018</a></li>
+						<li><a
+							href="GestioneTf?action=visualizzaInformazioniPerAnnoAccademico&anno=2018">2018</a></li>
 					</ul>
 				</div>
 
@@ -66,13 +70,20 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-8 col-md-8">
-				<h2>Il numero di tirocini conclusi per questo anno accademico e':</h2>
+				<h2>Il numero di tirocini conclusi per questo anno accademico
+					e':</h2>
 				<center>
-					<%if (numQuest == -1) { %>
-						<h2>Seleziona un anno!</h2>
-					<% } else { %>
-						<h2><%=numQuest%></h2>
-					<% } %>
+					<%
+						if (numQuest == -1) {
+					%>
+					<h2>Seleziona un anno!</h2>
+					<%
+						} else {
+					%>
+					<h2><%=numQuest%></h2>
+					<%
+						}
+					%>
 				</center>
 			</div>
 			<div class="col-2 col-md-2">

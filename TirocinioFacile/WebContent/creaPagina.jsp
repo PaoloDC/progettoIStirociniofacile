@@ -4,6 +4,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%
+	String tipo = (String) session.getAttribute("tipologiaAccount");
+
+	if (tipo != null) {
+		if (!(tipo.equals("studente"))) {
+			response.sendRedirect("./index.jsp");
+		}
+	} else {
+		response.sendRedirect("./index.jsp");
+	}
 	//da passare nella sessione il profilo azienda bean
 	UtenteModel um = new UtenteModel();
 	UtenteBean ub = um.caricaAccount("kineton@info.com", "kineton");
