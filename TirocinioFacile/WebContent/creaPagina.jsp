@@ -7,7 +7,7 @@
 	String tipo = (String) session.getAttribute("tipologiaAccount");
 
 	if (tipo != null) {
-		if (!(tipo.equals("studente"))) {
+		if (!(tipo.equals("azienda"))) {
 			response.sendRedirect("./index.jsp");
 		}
 	} else {

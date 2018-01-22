@@ -57,7 +57,7 @@
 					onsubmit="return isOk();" enctype="multipart/form-data">
 					<input type="hidden" id="thisField" name="action"
 						value="caricaDocumento">
-					<input type="hidden" name="email" value="<%=utente.getEmail() %>">
+					<input type="hidden" name="email" value=<%=utente.getEmail() %>>
 					
 					<div class="form-group">
 						<input type="file" name="file" id="theFile" accept="application/pdf" >

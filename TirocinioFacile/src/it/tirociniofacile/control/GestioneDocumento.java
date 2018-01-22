@@ -133,22 +133,30 @@ public class GestioneDocumento extends HttpServlet {
    * @param request
    *          richiesta http
    * @throws SQLException
-   *           eccezzioni sql
+   *           eccezioni sql
    * @throws ServletException 
    * @throws IOException 
    */
   public void caricaDocumento(HttpServletRequest request, HttpServletResponse response) 
       throws SQLException, IOException, ServletException {
     
+    String tipologiaAccount = (String) request.getSession().getAttribute("tipologiaAccount");
+    
     String email = request.getParameter("email");
     
     Part pdf = request.getPart("file");
     
     String fileName = extractFileName(pdf);
+    System.out.println(DocumentoModel.SAVE_PATH + fileName);
+    
     pdf.write(DocumentoModel.SAVE_PATH + fileName);
     
-    model.salvaPdfConvenzione(fileName, email);
-    
+    if (tipologiaAccount.equals("studente")) {
+      model.salvaPdfQuestionario(fileName, email);
+    } else if (tipologiaAccount.equals("azienda")) {
+      model.salvaPdfConvenzione(fileName, email);
+    }
+
   }
   
   private String extractFileName(Part part) {
@@ -172,7 +180,7 @@ public class GestioneDocumento extends HttpServlet {
    * @throws IOException  inout output eccezzioni
    * @throws ServletException  eccezzioni della servlet
    */
-  public void convalidaDocumento(HttpServletRequest request ,
+  public void convalidaDocumento(HttpServletRequest request,
       HttpServletResponse response) throws SQLException, ServletException, IOException {
     String id = (request.getParameter("id"));
     String approvato = (request.getParameter("approvato"));

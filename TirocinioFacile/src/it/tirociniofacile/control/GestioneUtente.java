@@ -183,7 +183,7 @@ public class GestioneUtente extends HttpServlet {
         rd.forward(request, response);
       } else {
         request.getSession().setAttribute("tipologiaAccount", "azienda");
-
+        
         RequestDispatcher rd = request.getRequestDispatcher("/creaPagina.jsp");
         rd.forward(request, response);
       }

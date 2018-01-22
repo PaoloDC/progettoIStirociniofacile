@@ -25,7 +25,8 @@ import javax.sql.DataSource;
  */
 public class DocumentoModel {
   private static DataSource ds;
-  public static final String SAVE_PATH = "C:\\pdf\\";
+  public static final String SAVE_PATH = 
+      "C:/Users/PC1/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
   
   static {
     try {
@@ -360,19 +361,14 @@ public class DocumentoModel {
       ResultSet rs = preparedStatement.executeQuery();
       
       
-      File fileSaveDir = new File(SAVE_PATH);
-      if (!fileSaveDir.exists()) {
-        fileSaveDir.mkdir();
-      }
-
       String updateSql = "UPDATE " + TABLE_NAME_CONVENZIONI 
-          + " SET url = ? WHERE id = ?";
+          + " SET url = ? WHERE partitaIva = ?";
       
       rs.next();
       
       String piva = rs.getString(1);
       preparedStatement = connection.prepareStatement(updateSql);
-      preparedStatement.setString(1, SAVE_PATH);
+      preparedStatement.setString(1, SAVE_PATH + url);
       preparedStatement.setString(2, piva);
       
       preparedStatement.executeUpdate();
