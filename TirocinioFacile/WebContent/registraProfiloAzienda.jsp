@@ -15,7 +15,11 @@
 </head>
 
 <body>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		crossorigin="anonymous"></script>
 	<!-- Latest compiled and minified JavaScript -->
+
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
@@ -29,66 +33,66 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-8 col-md-8">
-				<form action="GestioneTf?action=registrazioneAzienda" method="post">
+				<form action="GestioneTf?action=registrazioneAzienda" method="post" onsubmit="return isOk();" >
 					<div class="col-6 col-sm-6">
 						<div class="form-group">
-							<label for="exampleInputEmail1">Email</label> <input type="email"
+							<label for="exampleInputEmail1">Email</label> <input type="text"
 								class="form-control" id="exampleInputEmail1" name="email"
 								aria-describedby="emailHelp" placeholder="Enter email">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputPassword1">Password</label> <input
-								type="password" class="form-control" id="exampleInputPassword1"
+							<label id="txtErrPass" for="exampleInputPassword1">Password</label> <input
+								type="password" class="form-control" id="thePass"
 								placeholder="Password" name="password">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputPassword1">Conferma Password</label> <input
-								type="password" class="form-control" id="exampleInputPassword1"
+							<label id="txtErrConfPass" for="exampleInputPassword1">Conferma Password</label> <input
+								type="password" class="form-control" id="theConfPass"
 								placeholder="Password">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail1">Nome Azienda</label> <input
-								type="text" class="form-control" placeholder="Nome Azienda"
+							<label id="txtErrNomeAzienda" for="exampleInputEmail1">Nome Azienda</label> <input
+								type="text" class="form-control" id="theAzienda" placeholder="Nome Azienda"
 								name="nomeazienda">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputPassword1">Citta</label> <input
-								type="text" class="form-control" id="exampleInputPassword1"
+							<label id="txtErrCitta" for="exampleInputPassword1">Citta</label> <input
+								type="text" class="form-control" id="theCity"
 								placeholder="Citta" name="citta">
 						</div>
 					</div>
 					<div class="col-6 col-sm-6">
 						<div class="form-group">
-							<label for="exampleInputEmail1">Partita Iva</label> <input
-								type="text" class="form-control" id="exampleInputEmail1"
+							<label id ="txtErrPartitaIva" for="exampleInputEmail1">Partita Iva</label> <input
+								type="text" class="form-control" id="thePartitaIva"
 								aria-describedby="emailHelp" placeholder="Partita Iva"
 								name="piva">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputPassword1">Sede Legale</label> <input
-								type="text" class="form-control" id="exampleInputPassword1"
+							<label id="txtErrSedeLegale" for="exampleInputPassword1">Sede Legale</label> <input
+								type="text" class="form-control" id="theSedeLegale"
 								placeholder="Sede" name="sedeLegale">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputPassword1">Luogo Di Nascita del
+							<label id="txtErrLuogoDiNascita" for="exampleInputPassword1">Luogo Di Nascita del
 								rappresentante</label> <input type="text" class="form-control"
-								id="exampleInputPassword1" placeholder="Luogo Nascita"
+								id="theLuogoDiNascita" placeholder="Luogo Nascita"
 								name="luogoDiNascitaRappLegale">
 						</div>
 
 					</div>
 					<div class="col-6 col-sm-6">
 						<div class="form-group">
-							<label for="exampleInputPassword1">Rappresentante Legale</label>
+							<label id="txtErrRappresentanteLegale" for="exampleInputPassword1">Rappresentante Legale</label>
 							<input type="text" class="form-control"
-								id="exampleInputPassword1" placeholder="Rappresentante"
+								id="theRappresentanteLegale" placeholder="Rappresentante"
 								name="rappLegale">
 						</div>
 
 						<div class="form-group">
-							<label for="exampleInputPassword1">Data Di Nascita del
+							<label id = "txtErrDataNascita" for="exampleInputPassword1">Data Di Nascita del
 								rappresentante</label> <input type="text" class="form-control"
-								id="exampleInputPassword1" placeholder="Data Nascita"
+								id="theDataNascita" placeholder="Data Nascita"
 								name="dataDiNascitaRappLegale">
 						</div>
 						<button type="submit" class="btn btn-primary">Invia La
@@ -105,5 +109,23 @@
 
 	</div>
 	<%@ include file="footer.jsp"%>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/js/validate.js"></script>
+	<script>
+	function isOk(){
+		if(ValidatePassword(document.getElementById("thePass"),document.getElementById("txtErrPass"))
+				&& ValidatePasswordUguali(document.getElementById("thePass"), document.getElementById("theConfPass"), document.getElementById("txtErrConfPass"))
+				&& ValidateLetter(document.getElementById("theAzienda"), document.getElementById("txtErrNomeAzienda"))
+				&& ValidateLetter(document.getElementById("theCity"), document.getElementById("txtErrCitta"))
+				&& ValidateLetter(document.getElementById("theSedeLegale"), document.getElementById("txtErrSedeLegale"))
+				&& ValidateLetter(document.getElementById("theLuogoDiNascita"), document.getElementById("txtErrLuogoDiNascita"))
+				&& ValidateLetter(document.getElementById("theRappresentanteLegale"), document.getElementById("txtErrRappresentanteLegale"))
+				&& ValidatePartitaIva(document.getElementById("thePartitaIva"), document.getElementById("txtErrPartitaIva"))
+				){
+			return true;
+		}
+		return false;
+	}
+	</script>
 </body>
 </html>
