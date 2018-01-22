@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"
-	import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>%>
+	import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
 
 <%
-	ArrayList<String> listaAnni = (ArrayList<String>) session.getAttribute("listaAnni");
 
 	int numQuest = -1;
 	if (request.getAttribute("numeroQuestionari") != null) {
@@ -44,11 +43,12 @@
 
 			<div class="container">
 				<h3>Anno Accademico:</h3>
+				
 				<div class="dropdown">
 					<button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="true">
-						- <span class="caret"></span>
+						-
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						<li><a href="GestioneTf?action=visualizzaInformazioniPerAnnoAccademico&anno=2018">2018</a></li>
