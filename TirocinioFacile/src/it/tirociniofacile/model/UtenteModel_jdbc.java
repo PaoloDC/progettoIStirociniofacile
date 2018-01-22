@@ -120,52 +120,7 @@ public class UtenteModel_jdbc {
     return;
   }
 
-  /**
-   * Salva le credenziali generate per un nuovo account amministrativo (presidente area didattica 
-   * o impiegato ufficio tirocini).
-   * @param email email da salvare nel file per il nuovo account amministrativo
-   * @return true se genera correttamente le credenziali, false se l'utente esiste già
-   */
-  public synchronized boolean generaCredenziali(String email) {
-
-    if (email.contains("@unisa.it")) {
-      ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
-
-      for (int i = 0; i < listaUtenti.size(); i++) {
-        if (listaUtenti.get(i).getEmail().equalsIgnoreCase(email)) {
-          return false;
-        }
-      }
-
-      Random gen = new Random();
-
-      String maiuscole = "QWERTYUIOPASDFGHJKLZXCVBNM";
-      String minuscole = "qwertyuiopasdfghjklzxcvbnm";
-      String cifre = "0123456789";
-
-      String nuovaPassword = "";
-      while (nuovaPassword.length() < LUNGHEZZA_PASSWORD) {
-        nuovaPassword += maiuscole.substring(gen.nextInt(maiuscole.length()));
-        nuovaPassword += minuscole.substring(gen.nextInt(minuscole.length()));
-        nuovaPassword += cifre.substring(gen.nextInt(cifre.length()));
-      }
-
-      listaUtenti.add(new UtenteBean(email,nuovaPassword));
-      this.salvaUtentiNelFile(listaUtenti);
-
-      String mailMittente = Email.USER_NAME;
-      String passwordMittente = Email.PASSWORD;
-      String[] destinari = { email }; // list of recipient email addresses
-      String oggetto = "Nuova Password Tirocinio Facile";
-      String corpo = "Salve utente, questa è la sua nuova password per accedere alla piattaforma"
-          + " tirocinio facile: ' " + nuovaPassword + " '.\nBuona navigazione.";
-
-      Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);
-      return true;
-
-    }
-    return false;
-  }
+  
 
   /**
    * Carica tutti gli utenti dal file.

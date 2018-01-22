@@ -86,15 +86,7 @@ public class UtenteModelTest_jdbc extends TestCase {
   }
 
 
-  public void testGeneraCredenziali() {
-    UtenteBean utenteRandom = new UtenteBean("gino@gmail.com","gino");
-    boolean generato1 = model.generaCredenziali(utenteRandom.getEmail());
-    assertFalse(generato1);
 
-    UtenteBean utenteAmministrativo = new UtenteBean("presidente@unisa.it","presidente");
-    boolean generato2 = model.generaCredenziali(utenteAmministrativo.getEmail());
-    assertTrue(generato2);
-  }
 
 
   public void testCaricaUtentiDaFile() {

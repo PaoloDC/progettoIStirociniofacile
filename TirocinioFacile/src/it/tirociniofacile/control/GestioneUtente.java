@@ -82,9 +82,6 @@ public class GestioneUtente extends HttpServlet {
         } else if (action.equals("registrazioneAzienda")) {
           registrazioneAzienda(request);
 
-        } else if (action.equals("generaCredenziali")) {
-          generaCredenziali(request, response);
-
         } else if (action.equals("log-in")) {
           logIn(request, response);
 
@@ -150,29 +147,7 @@ public class GestioneUtente extends HttpServlet {
     }
   }
 
-  /**
-   * Genera nuove credenziali per gli utenti Impiegati uff. tirocini e presidente area didattica.
-   * 
-   * @param request la richiesta http
-   * @throws SQLException eccezione lanciato dal metodo del model
-   * @throws IOException  eccezzioni input output
-   * @throws ServletException  eccezzioni servlet
-   */
-  public void generaCredenziali(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
 
-    String email = (request.getParameter("email"));
-    boolean corretto = model.generaCredenziali(email);
-
-    String msg = "Dominio mail non valido, utlizzare mail '...@unisa.it'. ";
-    if (corretto) {
-      msg = "Credenziali generate, buona navigazione su TirocinioFacile";
-    }
-
-    request.setAttribute("mailCorretta", msg);
-    RequestDispatcher rd = request.getRequestDispatcher("/generaCredenziali.jsp");
-    rd.forward(request, response);
-  }
 
   /**
    * Effettua la log in.
@@ -205,7 +180,7 @@ public class GestioneUtente extends HttpServlet {
       } else if (utente.getEmail().contains("@unisa.it")) {
         request.getSession().setAttribute("tipologiaAccount", "impiegato");
 
-        RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumentoConvenzione.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");
         rd.forward(request, response);
       } else {
         request.getSession().setAttribute("tipologiaAccount", "azienda");
