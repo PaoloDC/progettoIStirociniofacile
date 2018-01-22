@@ -100,6 +100,7 @@ function ValidateFile(file) {
 	}
 	return true;
 }
+//kkk
 function ValidatePartitaIva(str, txt) {
 	var valid = isNaN(str.value);
 	if (valid) {

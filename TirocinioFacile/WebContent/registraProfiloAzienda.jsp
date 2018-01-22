@@ -112,6 +112,7 @@
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/js/validate.js"></script>
 	<script>
+	<% //ciao  %>
 	function isOk(){
 		if(ValidatePassword(document.getElementById("thePass"),document.getElementById("txtErrPass"))
 				&& ValidatePasswordUguali(document.getElementById("thePass"), document.getElementById("theConfPass"), document.getElementById("txtErrConfPass"))
