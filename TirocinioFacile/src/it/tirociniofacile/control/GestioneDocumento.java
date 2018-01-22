@@ -1,10 +1,5 @@
 package it.tirociniofacile.control;
 
-import it.tirociniofacile.bean.DocumentoConvenzioneBean;
-import it.tirociniofacile.bean.DocumentoQuestionarioBean;
-import it.tirociniofacile.model.DocumentoModel;
-
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import it.tirociniofacile.bean.DocumentoConvenzioneBean;
+import it.tirociniofacile.bean.DocumentoQuestionarioBean;
+import it.tirociniofacile.bean.UtenteBean;
+import it.tirociniofacile.model.DocumentoModel;
 
 
 /**
@@ -42,7 +42,7 @@ public class GestioneDocumento extends HttpServlet {
     super();
   }
   
-  public static final String SAVE_DIR = "TirocinioFacile/WebContent/pdf";
+  public static final String SAVE_DIR = "pdf";
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -139,32 +139,19 @@ public class GestioneDocumento extends HttpServlet {
    */
   public void caricaDocumento(HttpServletRequest request, HttpServletResponse response) 
       throws SQLException, IOException, ServletException {
-    //UtenteBean utente = (UtenteBean) request.getSession().getAttribute("account");
-    //String email = utente.getEmail();
+    
+    String email = request.getParameter("email");
     
     Part pdf = request.getPart("file");
     
-    String filePath = new File("").getPath();
-    System.out.println("path: " + new File("").getPath()
-        + "absolute path: " + new File("").getAbsolutePath()
-        + "parent file: " + new File("").getParentFile());
-    
     String fileName = extractFileName(pdf);
-    pdf.write(SAVE_DIR + File.separator + fileName);
+    pdf.write(DocumentoModel.SAVE_PATH + fileName);
     
-    model.salvaPdfConvenzione(fileName, "spinvector@info.com");
+    model.salvaPdfConvenzione(fileName, email);
     
-    
-    
-   /* if (utente instanceof ProfiloAziendaBean) {
-      model.salvaPdfConvenzione(pdf,email);
-    } else if (utente instanceof ProfiloStudenteBean) {
-      model.salvaPdfQuestionario(pdf,email);
-    }*/
   }
   
   private String extractFileName(Part part) {
-    System.out.println("Part: " + part);
     String contentDisp = part.getHeader("content-disposition");
     String[] items = contentDisp.split(";");
     for (String s : items) {

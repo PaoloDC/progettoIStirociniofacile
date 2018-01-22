@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.naming.Context;
@@ -24,7 +25,8 @@ import javax.sql.DataSource;
  */
 public class DocumentoModel {
   private static DataSource ds;
-
+  public static final String SAVE_PATH = "C:\\pdf\\";
+  
   static {
     try {
       Context initCtx = new InitialContext();
@@ -39,7 +41,6 @@ public class DocumentoModel {
   //variabili di istanza
   public static final String TABLE_NAME_CONVENZIONI = "DomandaConvenzioneAzienda";
   public static final String TABLE_NAME_QUESTIONARI = "QuestionarioValutazioneAzienda";
-  public static final String SAVE_DIR = "pdf";
 
   /**
    * Ricerca tutti i documenti convenzione bean.
@@ -232,8 +233,9 @@ public class DocumentoModel {
    * @param giudizioEsperienza media dei giudizi sull'esperienza del tirocinio
    * @param giudizioAzienda  media dei giudizi sull'azienda che ha ospitato del tirocinio
    * @param giudizioUniversita media dei giudizi sull'università che ha  del tirocinio
+   * @return un intero che corrisponde all'id del questionario, -1 in caso di errato salvataggio
    */
-  public synchronized void salvaQuestionario(String commenti, String suggerimenti, 
+  public synchronized int salvaQuestionario(String commenti, String suggerimenti, 
       String annoAccademico,  String mailStudente, int paginaAziendaId, String matricola,
       float giudizioEsperienza, float giudizioAzienda, float giudizioUniversita) {
     
@@ -246,7 +248,7 @@ public class DocumentoModel {
           + " giudizioEsperienza, giudizioAzienda, giudizioUniversita) "
           + " VALUES(?,?,?,?,?,?,?,?,?)";
       
-      preparedStatement = connection.prepareStatement(insertSql);
+      preparedStatement = connection.prepareStatement(insertSql,Statement.RETURN_GENERATED_KEYS);
 
       preparedStatement.setString(1, commenti);
       preparedStatement.setString(2, suggerimenti);
@@ -261,6 +263,12 @@ public class DocumentoModel {
       System.out.println(preparedStatement);
       
       preparedStatement.executeUpdate();
+      ResultSet rs = preparedStatement.getGeneratedKeys();
+      rs.next();
+      int autoId = rs.getInt(1);
+      
+      return autoId;
+      
     } catch (SQLException e) {
       e.printStackTrace();
     } finally { 
@@ -280,6 +288,7 @@ public class DocumentoModel {
         }
       }
     }
+    return -1;
   }
 
   /**
@@ -350,11 +359,8 @@ public class DocumentoModel {
       preparedStatement.setString(1, email);
       ResultSet rs = preparedStatement.executeQuery();
       
-      String savePath = "C:/Users/PC1/git/progettoIStirociniofacile/"
-          + "TirocinioFacile/WebContent"
-          + "/" + SAVE_DIR;
       
-      File fileSaveDir = new File(savePath);
+      File fileSaveDir = new File(SAVE_PATH);
       if (!fileSaveDir.exists()) {
         fileSaveDir.mkdir();
       }
@@ -363,11 +369,10 @@ public class DocumentoModel {
           + " SET url = ? WHERE id = ?";
       
       rs.next();
-      preparedStatement.close();
       
       String piva = rs.getString(1);
       preparedStatement = connection.prepareStatement(updateSql);
-      preparedStatement.setString(1, savePath);
+      preparedStatement.setString(1, SAVE_PATH);
       preparedStatement.setString(2, piva);
       
       preparedStatement.executeUpdate();
@@ -407,12 +412,8 @@ public class DocumentoModel {
       preparedStatement = connection.prepareStatement(selectSql);
       preparedStatement.setString(1, email);
       ResultSet rs = preparedStatement.executeQuery();
-
-      String savePath = "C:/Users/PC1/git/progettoIStirociniofacile/"
-          + "TirocinioFacile/WebContent"
-          + "/" + SAVE_DIR;
       
-      File fileSaveDir = new File(savePath);
+      File fileSaveDir = new File(SAVE_PATH);
       if (!fileSaveDir.exists()) {
         fileSaveDir.mkdir();
       }
@@ -422,7 +423,6 @@ public class DocumentoModel {
           + " SET url = ? WHERE id = ?";
       
       rs.next();
-      preparedStatement.close();
       
       int id = rs.getInt(1);
       preparedStatement = connection.prepareStatement(updateSql);
@@ -592,7 +592,6 @@ public class DocumentoModel {
       String insertSqlConv = "UPDATE " + TABLE_NAME_CONVENZIONI 
           + " SET approvato = ? WHERE partitaIva = ?";
       
-      preparedStatement.close();
       preparedStatement = connection.prepareStatement(insertSqlConv);
       preparedStatement.setInt(1, 1);
       
