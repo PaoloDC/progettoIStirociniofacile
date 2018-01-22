@@ -1,13 +1,5 @@
 package it.tirociniofacile.control;
 
-import it.tirociniofacile.bean.DocumentoConvenzioneBean;
-import it.tirociniofacile.bean.DocumentoQuestionarioBean;
-import it.tirociniofacile.bean.ProfiloAziendaBean;
-import it.tirociniofacile.bean.ProfiloStudenteBean;
-import it.tirociniofacile.bean.UtenteBean;
-import it.tirociniofacile.model.DocumentoModel;
-
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,6 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import it.tirociniofacile.bean.DocumentoConvenzioneBean;
+import it.tirociniofacile.bean.DocumentoQuestionarioBean;
+import it.tirociniofacile.bean.UtenteBean;
+import it.tirociniofacile.model.DocumentoModel;
+
 
 /**
  * . Servlet implementation class GestioneDocumento
@@ -135,33 +133,30 @@ public class GestioneDocumento extends HttpServlet {
    * @param request
    *          richiesta http
    * @throws SQLException
-   *           eccezzioni sql
+   *           eccezioni sql
    * @throws ServletException 
    * @throws IOException 
    */
   public void caricaDocumento(HttpServletRequest request, HttpServletResponse response) 
       throws SQLException, IOException, ServletException {
-    //UtenteBean utente = (UtenteBean) request.getSession().getAttribute("account");
-    //String email = utente.getEmail();
     
-    Part pdf = request.getPart("pdf");
+    String tipologiaAccount = (String) request.getSession().getAttribute("tipologiaAccount");
     
-    String savePath = "C:/Users/PC1/git/progettoIStirociniofacile/"
-        + "TirocinioFacile/WebContent"
-        + "/" + SAVE_DIR;
+    String email = request.getParameter("email");
+    
+    Part pdf = request.getPart("file");
     
     String fileName = extractFileName(pdf);
-    pdf.write(savePath + File.separator + fileName);
-    //prova
-    model.salvaPdfConvenzione(fileName, "spinvector@info.com");
+    System.out.println(DocumentoModel.SAVE_PATH + fileName);
     
+    pdf.write(DocumentoModel.SAVE_PATH + fileName);
     
-    
-   /* if (utente instanceof ProfiloAziendaBean) {
-      model.salvaPdfConvenzione(pdf,email);
-    } else if (utente instanceof ProfiloStudenteBean) {
-      model.salvaPdfQuestionario(pdf,email);
-    }*/
+    if (tipologiaAccount.equals("studente")) {
+      model.salvaPdfQuestionario(fileName, email);
+    } else if (tipologiaAccount.equals("azienda")) {
+      model.salvaPdfConvenzione(fileName, email);
+    }
+
   }
   
   private String extractFileName(Part part) {
@@ -185,7 +180,7 @@ public class GestioneDocumento extends HttpServlet {
    * @throws IOException  inout output eccezzioni
    * @throws ServletException  eccezzioni della servlet
    */
-  public void convalidaDocumento(HttpServletRequest request ,
+  public void convalidaDocumento(HttpServletRequest request,
       HttpServletResponse response) throws SQLException, ServletException, IOException {
     String id = (request.getParameter("id"));
     String approvato = (request.getParameter("approvato"));
