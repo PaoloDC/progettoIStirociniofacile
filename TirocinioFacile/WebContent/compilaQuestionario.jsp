@@ -14,8 +14,7 @@
 
 	PaginaAziendaModel pabmodel = new PaginaAziendaModel();
 	ArrayList<PaginaAziendaBean> listaAzienda = pabmodel.ricerca();
-	System.out.println(listaAzienda);
-	
+
 	request.setAttribute("mailStudente", psb.getEmail());
 
 	/*
@@ -32,20 +31,14 @@
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-		crossorigin="anonymous"></script>
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
 
@@ -57,7 +50,8 @@
 				<form action="GestioneTf?action=compilaQuestionario" method="post">
 					<div class="col-8 col-sm-8">
 						<div>
-						<input type="hidden" name = "mailStudente" value="<%=psb.getEmail() %>">
+							<input type="hidden" name="mailStudente"
+								value="<%=psb.getEmail()%>">
 							<div id="parte1" style="background: #42d9f4">
 								<label id="titoloParte">PARTE I : INFORMAZIONI SUL
 									LAUREATO</label>
@@ -92,18 +86,22 @@
 								</div>
 								<div class="form-group">
 									<label> 11. Azienda/Laboratorio Interno ospitante il
-										tirocinante </label> 
-										
-									<select name="azienda">
-									<% if(listaAzienda != null){
-										for (int i=0; i < listaAzienda.size(); i++) { %>
-									
-										<option value="<%=listaAzienda.get(i).getId() + "," + listaAzienda.get(i).getNomeAzienda()%>">
+										tirocinante </label> <select name="azienda">
+										<%
+											if (listaAzienda != null) {
+												for (int i = 0; i < listaAzienda.size(); i++) {
+										%>
+
+										<option
+											value="<%=listaAzienda.get(i).getId() + "," + listaAzienda.get(i).getNomeAzienda()%>">
 											<%=listaAzienda.get(i).getNomeAzienda()%>
 										</option>
-									<% }} %>
+										<%
+											}
+											}
+										%>
 									</select>
-						
+
 
 								</div>
 								<div class="form-group">
@@ -121,10 +119,10 @@
 										placeholder="Data di nascita">
 								</div>
 								<div class="form-group">
-									<label> 16. Data </label> 
-									<input name="data" placeholder="Giorno"> / 
-									<input name="data" placeholder="Mese"> / 
-									<input name="data" placeholder="Anno">
+									<label> 16. Data </label> <input name="data"
+										placeholder="Giorno"> / <input name="data"
+										placeholder="Mese"> / <input name="data"
+										placeholder="Anno">
 								</div>
 							</div>
 							<div id="parte2" style="background: #5bf441">
@@ -147,8 +145,8 @@
 											type="radio" name="parte2dom1"
 											value="In base al proprio curriculum"> In base al
 										proprio curriculum <br> <input type="radio"
-											name="parte2dom1" value="altro"> Altro, Specificare
-										<input name="parte2dom1altro">
+											name="parte2dom1" value="altro"> Altro, Specificare <input
+											name="parte2dom1altro">
 									</fieldset>
 
 									<fieldset>
@@ -635,6 +633,13 @@
 							</div>
 							<button type="submit" class="btn btn-primary">Invia
 								Questionario</button>
+							<button class="btn btn-primary" onclick="myFunction()">Print
+								this page</button>
+							<script>
+								function myFunction() {
+									window.print();
+								}
+							</script>
 
 							<br> <br> <br> <br> <br> <br> <br>
 							<br>
