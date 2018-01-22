@@ -59,7 +59,8 @@
 					<input type="hidden" id="thisField" name="action"
 						value="caricaDocumento">
 					<div class="form-group">
-						<input type="file" name="file" id="theFile" accept=".pdf">
+						<input type="file" name="file" id="theFile" accept="application/pdf" >
+						
 					</div>
 					<button type="submit" class="btn btn-primary">Carica
 						Documento</button>

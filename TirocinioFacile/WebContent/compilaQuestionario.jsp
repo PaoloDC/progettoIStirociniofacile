@@ -1,9 +1,7 @@
-<%@page import="it.tirociniofacile.model.PaginaAziendaModel"%>
 <%@page import="it.tirociniofacile.bean.PaginaAziendaBean"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="it.tirociniofacile.bean.UtenteBean"%>
-<%@page import="it.tirociniofacile.model.UtenteModel"%>
 <%@page import="it.tirociniofacile.bean.ProfiloStudenteBean"%>
+<%@page import="it.tirociniofacile.bean.UtenteBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%
@@ -16,22 +14,10 @@
 	} else {
 		response.sendRedirect("./index.jsp");
 	}
-	
-	//da passare nella sessione il profilo studente bean e la lista delle aziende
-	UtenteModel um = new UtenteModel();
-	UtenteBean ub = um.caricaAccount("paolo@studenti.unisa.it", "paolo");
+	UtenteBean ub = (UtenteBean) session.getAttribute("account");
 	ProfiloStudenteBean psb = (ProfiloStudenteBean) ub;
-
-	PaginaAziendaModel pabmodel = new PaginaAziendaModel();
-	ArrayList<PaginaAziendaBean> listaAzienda = pabmodel.ricerca();
-
-	request.setAttribute("mailStudente", psb.getEmail());
-
-	/*
-	ProfiloStudenteBean psb = (ProfiloStudenteBean) session.getAttribute("studente");	
-	ArrayList<PaginaAziendaBean> listaAzienda = 
-		(ArrayList<PaginaAziendaBean>) session.getAttribute("listaAziende");
-	*/
+	ArrayList<PaginaAziendaBean> listaAzienda = (ArrayList<PaginaAziendaBean>) session
+			.getAttribute("listaAziende");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

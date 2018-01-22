@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%
+	
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,9 +29,11 @@
 		<br> <br> <br>
 		<div class="row">
 			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block" href="compilaQuestionario.jsp"
+				<a class="btn btn-primary btn-lg btn-block"
+					href="GestioneTf?action=ricercaTuttePagine&compila=true"
 					role="button">Compila Questionario Valutazione Azienda</a>
 			</div>
+				
 			<br> <br> <br>
 		</div>
 

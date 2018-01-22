@@ -2,9 +2,6 @@ package it.tirociniofacile.control;
 
 import it.tirociniofacile.bean.DocumentoConvenzioneBean;
 import it.tirociniofacile.bean.DocumentoQuestionarioBean;
-import it.tirociniofacile.bean.ProfiloAziendaBean;
-import it.tirociniofacile.bean.ProfiloStudenteBean;
-import it.tirociniofacile.bean.UtenteBean;
 import it.tirociniofacile.model.DocumentoModel;
 
 import java.io.File;
@@ -20,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
 
 /**
  * . Servlet implementation class GestioneDocumento
@@ -44,7 +42,7 @@ public class GestioneDocumento extends HttpServlet {
     super();
   }
   
-  public static final String SAVE_DIR = "pdf";
+  public static final String SAVE_DIR = "TirocinioFacile/WebContent/pdf";
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -144,15 +142,16 @@ public class GestioneDocumento extends HttpServlet {
     //UtenteBean utente = (UtenteBean) request.getSession().getAttribute("account");
     //String email = utente.getEmail();
     
-    Part pdf = request.getPart("pdf");
+    Part pdf = request.getPart("file");
     
-    String savePath = "C:/Users/PC1/git/progettoIStirociniofacile/"
-        + "TirocinioFacile/WebContent"
-        + "/" + SAVE_DIR;
+    String filePath = new File("").getPath();
+    System.out.println("path: " + new File("").getPath()
+        + "absolute path: " + new File("").getAbsolutePath()
+        + "parent file: " + new File("").getParentFile());
     
     String fileName = extractFileName(pdf);
-    pdf.write(savePath + File.separator + fileName);
-    //prova
+    pdf.write(SAVE_DIR + File.separator + fileName);
+    
     model.salvaPdfConvenzione(fileName, "spinvector@info.com");
     
     
@@ -165,6 +164,7 @@ public class GestioneDocumento extends HttpServlet {
   }
   
   private String extractFileName(Part part) {
+    System.out.println("Part: " + part);
     String contentDisp = part.getHeader("content-disposition");
     String[] items = contentDisp.split(";");
     for (String s : items) {
