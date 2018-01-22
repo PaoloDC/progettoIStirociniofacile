@@ -33,8 +33,8 @@
 				<h2>Sei una Azienda che vuole convenzionarsi e mostrarsi agli
 					studenti di UNISA informatica?</h2>
 				<center>
-					<button type="submit" class="btn btn-primary">Registrati
-						Subito</button>
+					<a href="registraProfiloAzienda.jsp"><button type="submit" class="btn btn-primary" ">Registrati
+						Subito</button></a>
 				</center>
 			</div>
 			<div class="col-4 col-md-4">
@@ -50,15 +50,21 @@
 				<h2>Sei uno Studente che vuole iniziare l'iter per il proprio
 					tirocinio esterno?</h2>
 				<center>
-					<button type="submit" class="btn btn-primary">Registrati
-						Subito</button>
+					<a href="registraProfiloStudente.jsp"><button type="submit"
+							class="btn btn-primary">Registrati Subito</button></a>
 				</center>
 			</div>
+			<br>
 			<div class="col-4 col-md-4">
 				<!-- usato per centrare -->
 			</div>
+				<div class="col-4 col-md-4">
+			<br>
+				<div class="col-4 col-md-4">
+					<!-- usato per centrare -->
+				</div>
+			</div>
 		</div>
-	</div>
-	<%@ include file="footer.jsp"%>
+		<%@ include file="footer.jsp"%>
 </body>
 </html>

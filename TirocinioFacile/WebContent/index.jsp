@@ -71,13 +71,14 @@
 						QUI</a>
 				</h4>
 				<h4>
-					Se sei un Impiegato o il Presidente dell'area didattica <a
-						href="generaCredenziali.jsp">clicca QUI</a>
-				</h4>
-				<h5>
 					Hai dimenticato la password? <a href="recuperaPassword.jsp">clicca
 						QUI</a>
-				</h5>
+				</h4>
+				<h4>
+					Se un impiegato dell'ufficio tirocini ha necessità di iscriversi
+					alla piattaforma, prego inviare mail all'indirizzo:
+					<h4 style="color: blue;">tirociniofacile@gmail.com</h4>
+				</h4>
 			</div>
 		</div>
 		<div class="col-4 col-md-4">
