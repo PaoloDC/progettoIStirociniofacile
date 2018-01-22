@@ -34,7 +34,7 @@ function ValidateMatricola(matricola, txt) {
 }
 
 function ValidatePassword(pass, txt) {
-	var passwordFormat = /^[A-Za-z0-9]{8,200}$/;
+	var passwordFormat = /^[A-Za-z0-9_@./#&+-]{8,200}$/;
 	if (pass.value.match(passwordFormat)) {
 		$(txt).html("Password");
 		pass.style.border = "2px solid green";
