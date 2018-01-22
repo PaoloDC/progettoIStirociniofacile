@@ -11,7 +11,8 @@
 	} else {
 		response.sendRedirect("./index.jsp");
 	}
-
+		
+	String action = (String)request.getAttribute("action");
 	ArrayList<PaginaAziendaBean> listaAziende = (ArrayList<PaginaAziendaBean>) request
 			.getAttribute("listaAziende");
 	int indice = 4;
@@ -158,7 +159,7 @@
 												/*Se è la prima pagina non visualizzare il precedente */
 												if (indice != NUM_ELE_PAG) {
 									%> <a class="page-link"
-									href="GestioneTf?action=ricercaTuttePagine&indice=<%=indice - NUM_ELE_PAG%>"
+									href="GestioneTf?action=<%=action%>&indice=<%=indice - NUM_ELE_PAG%>"
 									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 										<span class="sr-only">Previous</span>
 								</a> <%
@@ -182,7 +183,7 @@
 								%>
 
 								<li class="page-item "><a class="page-link"
-									href="GestioneTf?action=ricercaTuttePagine&indice=<%=indici%>"><%=indicePag%></a></li>
+									href="GestioneTf?action=<%=action%>&indice=<%=indici%>"><%=indicePag%></a></li>
 
 								<%
 									indici = indici + NUM_ELE_PAG;
@@ -199,7 +200,7 @@
 								%>
 
 								<li class="page-item"><a class="page-link"
-									href="GestioneTf?action=ricercaTuttePagine&indice=<%=indice + NUM_ELE_PAG%>"
+									href="GestioneTf?action=<%=action%>&indice=<%=indice + NUM_ELE_PAG%>"
 									aria-label="Next" data-toggle="tooltip" title="Next"> <span
 										aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span>
 								</a></li>

@@ -91,11 +91,13 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     ArrayList<PaginaAziendaBean> pabList = model.ricerca();
     request.removeAttribute("listaAziende");
     request.setAttribute("listaAziende", pabList);
+    request.setAttribute("action", "ricercaTuttePagine");
 
     if (request.getParameter("indice") != null) {
       this.indice = Integer.parseInt(request.getParameter("indice"));
     }
-    request.setAttribute("indice", indice);
+    request.removeAttribute("indice");
+    request.setAttribute("indice", this.indice);
 
     String tirocini = request.getParameter("tirocini");
     String compila = request.getParameter("compila");
@@ -134,19 +136,39 @@ public class GestioneRicercaTirocinio extends HttpServlet {
    */
   public void ricercaPagina(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
+    
     String categoria = request.getParameter("categoria");
     String chiave = request.getParameter("chiave");
-
-    if (categoria.equals("nome")) {
-      categoria = "nomeaziendaRappresentata";
+    
+    if(categoria != null) {
+      if (categoria.equals("nome")) {
+        categoria = "nomeaziendaRappresentata";
+      }
+    } 
+    if(chiave!= null) {
+      if(chiave.equals("")) {
+        ricercaTuttePagine(request,response);
+      }
+      if(!chiave.equals("")) {
+        if (request.getParameter("indice") != null) {
+          this.indice = Integer.parseInt(request.getParameter("indice"));
+        }
+        request.removeAttribute("indice");
+        request.setAttribute("indice", this.indice);
+        
+        ArrayList<PaginaAziendaBean> pabList = model.ricerca(categoria,chiave);
+        request.removeAttribute("listaAziende");
+        request.setAttribute("listaAziende", pabList);  
+        
+        request.removeAttribute("action");
+        request.setAttribute("action", "ricercaPagina"+"&categoria="+categoria+"&chiave="+chiave);
+        RequestDispatcher rd = request.getRequestDispatcher("/ricercaAzienda.jsp");
+        rd.forward(request, response);
     }
+   
 
-    ArrayList<PaginaAziendaBean> pabList = model.ricerca(categoria, chiave);
-    request.removeAttribute("listaAziende");
-    request.setAttribute("listaAziende", pabList);
-
-    RequestDispatcher rd = request.getRequestDispatcher("/ricercaAzienda.jsp");
-    rd.forward(request, response);
+      
+    }
   }
 
   /**
