@@ -45,7 +45,7 @@
 				<!-- usato per centrare -->
 			</div>
 			<div>
-				<form action="GestioneTf?action=compilaQuestionario" method="post">
+				<form action="GestioneTf?action=compilaQuestionario" method="post"  onsubmit="return isOk();">
 					<div class="col-8 col-sm-8">
 						<div>
 							<input type="hidden" name="mailStudente"
@@ -71,9 +71,11 @@
 								</div>
 								<div class="form-group">
 									<label> 7. Provincia </label> <input name="provincia"
-										placeholder="Provincia"> <label> 8. Anno
+										placeholder="Provincia"> <label id="txtErrAnno1"> 8. Anno
 										accademico di immatricolazione </label> <input name="annoimm"
-										placeholder="Anno accademico di immatricolazione">
+										placeholder="Anno accademico di immatricolazione" id="theAnno1">
+										<label id="txtErrAnno2"> / </label> <input name="annoimm"
+										placeholder="Anno accademico di immatricolazione" id="theAnno2">
 
 								</div>
 								<div class="form-group">
@@ -620,14 +622,14 @@
 							</div>
 
 							<div class="form-group">
-								<label for="commenti">Commenti</label>
+								<label for="commenti" id="txtErrComm">Commenti</label>
 								<textarea class="form-control" rows="5" cols="15"
-									name="commenti" placeholder="Commenti"></textarea>
+									name="commenti" placeholder="Commenti" id="theComm"></textarea>
 							</div>
 							<div class="form-group">
-								<label for="suggerimenti">Suggerimenti</label>
+								<label for="suggerimenti" id="txtErrSugg">Suggerimenti</label>
 								<textarea rows="5" cols="15" class="form-control"
-									name="suggerimenti" placeholder="Suggerimenti"></textarea>
+									name="suggerimenti" placeholder="Suggerimenti" id="theSugg"></textarea>
 							</div>
 							<button type="submit" class="btn btn-primary">Invia
 								Questionario</button>
@@ -655,5 +657,23 @@
 
 	</div>
 	<%@ include file="footer.jsp"%>
+		<script type="text/javascript"
+		src="${pageContext.request.contextPath}/js/validate.js"></script>
+
+	<script>
+			function isOk() {
+				if (ValidateAnno(document.getElementById("theAnno1"),document.getElementById("txtErrAnno1"))&&
+						ValidateAnno(document.getElementById("theAnno2"),document.getElementById("txtErrAnno2"))&&
+							ValidateAnnoMagg(document.getElementById("theAnno1"),document.getElementById("txtErrAnno1"),
+								document.getElementById("theAnno2"),document.getElementById("txtErrAnno2"))&&
+									ValidateAlfa(document.getElementById("theComm"),document.getElementById("txtErrComm"))&&
+										ValidateAlfa(document.getElementById("theSugg"),document.getElementById("txtErrSugg"))
+				) {
+					return true;
+					}
+				
+				return false;
+			}
+		</script>
 </body>
 </html>

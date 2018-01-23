@@ -130,3 +130,28 @@ function ValidateAmbSki(str , txt){
 	str.style.border = "2px solid green";
 	return true; 
 }	
+function ValidateAnno(str , txt){
+	var date =/[2]{1}[0-9]{3}/;
+	if (!(str.value.match(date))) {
+		str.style.border = "2px solid red";
+		$(txt).html("Data non valida");
+		return false;
+	}
+	$(txt).html("");
+	str.style.border = "2px solid green";
+	return true; 
+}
+function ValidateAnnoMagg(str1 , txt ,str2 , txt){
+	
+	if (str2.value > str1.value) {
+		if((str2.value - str1.value) ==1){
+			str.style.border = "2px solid green";
+			$(txt).html("Data non valida");
+			return true;
+		}
+		
+	}
+	$(txt).html("");
+	str.style.border = "2px solid red";
+	return false; 
+}	
