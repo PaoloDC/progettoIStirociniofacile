@@ -16,8 +16,10 @@ import javax.servlet.http.Part;
 
 import it.tirociniofacile.bean.DocumentoConvenzioneBean;
 import it.tirociniofacile.bean.DocumentoQuestionarioBean;
+import it.tirociniofacile.bean.PaginaAziendaBean;
 import it.tirociniofacile.bean.UtenteBean;
 import it.tirociniofacile.model.DocumentoModel;
+import it.tirociniofacile.model.PaginaAziendaModel;
 
 /**
  * . Servlet implementation class GestioneDocumento
@@ -70,6 +72,8 @@ public class GestioneDocumento extends HttpServlet {
           ricercaTuttiDocumentiConvenzioneAzienda(request, response);
         } else if (action.equals("ricercaTuttiDocumentiQuestionariAzienda")) {
           ricercaTuttiDocumentiQuestionariAzienda(request, response);
+        } else if (action.equals("ricercaQuestionariNonApprovatiPerStudente")) {
+          ricercaQuestionariNonApprovatiPerStudente(request,response);
         }
       }
     } catch (SQLException e) {
@@ -294,8 +298,8 @@ public class GestioneDocumento extends HttpServlet {
       PrintWriter out = response.getWriter();
       out.println("<script type=\"text/javascript\">");
       out.println("alert('Questionario inviato correttamente');");
+      out.println("location='homeStudente.jsp';");
       out.println("</script>");
-      response.sendRedirect("homeStudente.jsp");
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -341,11 +345,11 @@ public class GestioneDocumento extends HttpServlet {
    */
   public void ricercaTuttiDocumentiQuestionariAzienda(HttpServletRequest request,
       HttpServletResponse response) throws SQLException, ServletException, IOException {
+
     ArrayList<DocumentoQuestionarioBean> listaDocumentiQuestionari = model
         .getTuttiDocumentiQuestionari();
 
     request.removeAttribute("listaDocumentiConvenzione");
-    request.removeAttribute("listaDocumentiQuestionari");
     request.setAttribute("listaDocumentiQuestionari", listaDocumentiQuestionari);
 
     if (request.getParameter("indice") != null) {
@@ -356,6 +360,37 @@ public class GestioneDocumento extends HttpServlet {
     RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");
     rd.forward(request, response);
 
+  }
+
+  /**
+   * 
+   * @param request
+   * @param response
+   * @throws SQLException
+   * @throws ServletException
+   * @throws IOException
+   */
+  public void ricercaQuestionariNonApprovatiPerStudente(HttpServletRequest request,
+      HttpServletResponse response) throws SQLException, ServletException, IOException {
+
+    String mailStudente = request.getParameter("mailStudente");
+    System.out.println("mailStudente: " + mailStudente);
+
+    ArrayList<DocumentoQuestionarioBean> questionariStudente = 
+        model.ricercaQuestionariNonApprovatiPerStudente(mailStudente);
+    
+    request.removeAttribute("questionariStudente");
+    request.setAttribute("questionariStudente", questionariStudente);
+    
+    System.out.println(questionariStudente.size());
+    
+    /*
+    PaginaAziendaModel pam = new PaginaAziendaModel();
+    ArrayList<PaginaAziendaBean> listaPagine = pam.ricerca();
+    
+    request.removeAttribute("listaPagine");
+    request.setAttribute("listaPagine", listaPagine);
+    */
   }
 
 }

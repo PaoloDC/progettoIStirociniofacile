@@ -88,6 +88,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
    */
   public void ricercaTuttePagine(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
+    
     ArrayList<PaginaAziendaBean> pabList = model.ricerca();
     request.removeAttribute("listaAziende");
     request.setAttribute("listaAziende", pabList);
@@ -101,8 +102,9 @@ public class GestioneRicercaTirocinio extends HttpServlet {
 
     String tirocini = request.getParameter("tirocini");
     String compila = request.getParameter("compila");
-    System.out.println("tirocini: " + tirocini + ", compila: " + compila);
 
+    System.out.println(this.getServletName() + " tirocini: " + tirocini + ", compila: " + compila);
+    
     if (tirocini != null) {
       if (tirocini.equals("true")) {
         request.getSession().setAttribute("listaAziende", pabList);

@@ -1,7 +1,8 @@
+<%@page import="it.tirociniofacile.bean.UtenteBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%
-	
+	UtenteBean ub = (UtenteBean) session.getAttribute("account");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -27,6 +28,15 @@
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
 		<br> <br> <br>
+
+		<div class="row">
+			<div class="container-fluid">
+				<a class="btn btn-primary btn-lg btn-block" href="ricercaAzienda.jsp"
+					role="button">Ricerca Pagina Azienda</a>
+			</div>
+			<br> <br> <br>
+		</div>
+
 		<div class="row">
 			<div class="container-fluid">
 				<a class="btn btn-primary btn-lg btn-block"
@@ -39,15 +49,9 @@
 
 		<div class="row">
 			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block" href="ricercaAzienda.jsp"
-					role="button">Ricerca Pagina Azienda</a>
-			</div>
-			<br> <br> <br>
-		</div>
-		<div class="row">
-			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block" href="caricaDocumento.jsp"
-					role="button">Carica Questionario per Approvazione</a>
+				<a class="btn btn-primary btn-lg btn-block"
+					href="GestioneTf?action=ricercaQuestionariNonApprovatiPerStudente&mailStudente=<%=ub.getEmail() %>"
+					role="button"> Carica Questionario per Approvazione</a>
 			</div>
 			<br> <br> <br>
 		</div>

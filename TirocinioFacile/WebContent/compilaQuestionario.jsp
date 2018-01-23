@@ -15,7 +15,9 @@
 		response.sendRedirect("./index.jsp");
 	}
 	UtenteBean ub = (UtenteBean) session.getAttribute("account");
+	
 	ProfiloStudenteBean psb = (ProfiloStudenteBean) ub;
+	
 	ArrayList<PaginaAziendaBean> listaAzienda = (ArrayList<PaginaAziendaBean>) session
 			.getAttribute("listaAziende");
 %>
