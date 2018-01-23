@@ -75,6 +75,8 @@ public class GestioneUtente extends HttpServlet {
         if (action.equals("log-out")) {
           synchronized (session) {
             session.invalidate();
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            rd.forward(request, response);
           }
         } else if (action.equals("registrazioneStudente")) {
           registrazioneStudente(request);
