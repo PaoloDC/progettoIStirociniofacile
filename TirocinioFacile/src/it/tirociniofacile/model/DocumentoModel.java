@@ -261,8 +261,6 @@ public class DocumentoModel {
       preparedStatement.setFloat(8, giudizioAzienda);
       preparedStatement.setFloat(9, giudizioUniversita);
       
-      System.out.println(preparedStatement);
-      
       preparedStatement.executeUpdate();
       ResultSet rs = preparedStatement.getGeneratedKeys();
       rs.next();

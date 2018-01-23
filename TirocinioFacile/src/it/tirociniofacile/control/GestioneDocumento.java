@@ -1,6 +1,7 @@
 package it.tirociniofacile.control;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -18,7 +19,6 @@ import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 import it.tirociniofacile.bean.UtenteBean;
 import it.tirociniofacile.model.DocumentoModel;
 
-
 /**
  * . Servlet implementation class GestioneDocumento
  */
@@ -28,7 +28,7 @@ public class GestioneDocumento extends HttpServlet {
   static DocumentoModel model;
 
   int indice = 4;
-  
+
   static {
     model = new DocumentoModel();
   }
@@ -41,7 +41,7 @@ public class GestioneDocumento extends HttpServlet {
   public GestioneDocumento() {
     super();
   }
-  
+
   public static final String SAVE_DIR = "pdf";
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -60,7 +60,7 @@ public class GestioneDocumento extends HttpServlet {
         } else if (action.equals("caricaDocumento")) {
           caricaDocumento(request, response);
         } else if (action.equals("convalidaDocumento")) {
-          
+
           convalidaDocumento(request, response);
         } else if (action.equals("compilaConvenzioneAzienda")) {
           compilaConvenzioneAzienda(request, response);
@@ -92,34 +92,36 @@ public class GestioneDocumento extends HttpServlet {
    * Servlet visualizzaDocumento.
    * 
    * @param request
-   *          richoesta
+   *          richiesta
    * @throws SQLException
    *           eccezzioni di sql
-   * @throws IOException  eccezzioni di input e output
-   * @throws ServletException  servlet exception
+   * @throws IOException
+   *           eccezzioni di input e output
+   * @throws ServletException
+   *           servlet exception
    */
-  public void visualizzaDocumento(HttpServletRequest request ,
-      HttpServletResponse response) throws SQLException, ServletException, IOException {
-    
+  public void visualizzaDocumento(HttpServletRequest request, HttpServletResponse response)
+      throws SQLException, ServletException, IOException {
+
     String partitaIva = (request.getParameter("partitaIva"));
-    
+
     if (model.ricercaConvenzionePerPartitaIva(partitaIva) != null) {
-      
+
       request.removeAttribute("convenzione");
       request.setAttribute("convenzione", model.ricercaConvenzionePerPartitaIva(partitaIva));
-      RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");  
+      RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");
       rd.forward(request, response);
-      
+
     } else {
-      
+
       String id = (request.getParameter("id"));
-      int  id1 = Integer.parseInt(id);
+      int id1 = Integer.parseInt(id);
       request.removeAttribute("questionario");
       request.setAttribute("questionario", model.ricercaQuestionarioPerId(id1));
-      RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");  
+      RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");
       rd.forward(request, response);
     }
-    
+
   }
 
   public void scaricaDocumento(HttpServletRequest request) throws SQLException {
@@ -134,23 +136,22 @@ public class GestioneDocumento extends HttpServlet {
    *          richiesta http
    * @throws SQLException
    *           eccezioni sql
-   * @throws ServletException 
-   * @throws IOException 
+   * @throws ServletException
+   * @throws IOException
    */
-  public void caricaDocumento(HttpServletRequest request, HttpServletResponse response) 
+  public void caricaDocumento(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, IOException, ServletException {
-    
+
     String tipologiaAccount = (String) request.getSession().getAttribute("tipologiaAccount");
-    
+
     String email = request.getParameter("email");
-    
+
     Part pdf = request.getPart("file");
-    
+
     String fileName = extractFileName(pdf);
-    System.out.println(DocumentoModel.SAVE_PATH + fileName);
-    
+
     pdf.write(DocumentoModel.SAVE_PATH + fileName);
-    
+
     if (tipologiaAccount.equals("studente")) {
       model.salvaPdfQuestionario(fileName, email);
     } else if (tipologiaAccount.equals("azienda")) {
@@ -158,7 +159,7 @@ public class GestioneDocumento extends HttpServlet {
     }
 
   }
-  
+
   private String extractFileName(Part part) {
     String contentDisp = part.getHeader("content-disposition");
     String[] items = contentDisp.split(";");
@@ -177,22 +178,23 @@ public class GestioneDocumento extends HttpServlet {
    *          richiesta http
    * @throws SQLException
    *           eccazzioni sql
-   * @throws IOException  inout output eccezzioni
-   * @throws ServletException  eccezzioni della servlet
+   * @throws IOException
+   *           inout output eccezzioni
+   * @throws ServletException
+   *           eccezzioni della servlet
    */
-  public void convalidaDocumento(HttpServletRequest request,
-      HttpServletResponse response) throws SQLException, ServletException, IOException {
+  public void convalidaDocumento(HttpServletRequest request, HttpServletResponse response)
+      throws SQLException, ServletException, IOException {
     String id = (request.getParameter("id"));
     String approvato = (request.getParameter("approvato"));
 
-
     if (approvato.equals("false")) {
       model.cancellaDocumento(id);
-      RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");  
+      RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");
       rd.forward(request, response);
     } else {
       model.approvaDocumento(id);
-      RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");  
+      RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");
       rd.forward(request, response);
     }
   }
@@ -205,8 +207,8 @@ public class GestioneDocumento extends HttpServlet {
    * @throws SQLException
    *           eccezzioni sql
    */
-  public void compilaConvenzioneAzienda(HttpServletRequest request ,
-      HttpServletResponse response) throws SQLException {
+  public void compilaConvenzioneAzienda(HttpServletRequest request, HttpServletResponse response)
+      throws SQLException {
     String piva = (request.getParameter("piva"));
     String nomeAzienda = (request.getParameter("nomeAzienda"));
     String sedeLegale = (request.getParameter("sedeLegale"));
@@ -228,38 +230,33 @@ public class GestioneDocumento extends HttpServlet {
    */
   public void compilaQuestionario(HttpServletRequest request, HttpServletResponse response) {
 
-    /*    //PARTE 1 OK
-    String cognome = request.getParameter("cognome");
-    String nome = request.getParameter("nome");
-    String telefono1 = request.getParameter("telefono1");
-    String telefono2 = request.getParameter("telefono2");
-    String email = request.getParameter("email");
-    String comune = request.getParameter("comune");
-    String provincia = request.getParameter("provincia");
-    String annoimm = request.getParameter("annoimm");
-    String cdlimm = request.getParameter("cdlimm");
-    String provazienda = request.getParameter("provazienda");
-    String sesso = request.getParameter("sesso");
-    String datanascita = request.getParameter("datanascita");
-    */
-    
-        
-    //String nomeAzienda = a[1];
-    
-    //PARTE 2
     /*
-    String parte2dom1 = request.getParameter("parte2dom1");
-    String parte2dom1altro = request.getParameter("parte2dom1altro");
-    String parte2dom3 = request.getParameter("parte2dom3");
-    String parte2dom3altro = request.getParameter("parte2dom3altro");
-    String parte2dom4 = request.getParameter("parte2dom4");
-    String parte2dom4altro = request.getParameter("parte2dom4altro");
-    
-    String[] cinque = request.getParameterValues("cinque");
-    String[] sei = request.getParameterValues("sei");
-    */
-    
-    //PARTE 3 OK
+     * //PARTE 1 OK String cognome = request.getParameter("cognome"); String nome =
+     * request.getParameter("nome"); String telefono1 = request.getParameter("telefono1"); String
+     * telefono2 = request.getParameter("telefono2"); String email = request.getParameter("email");
+     * String comune = request.getParameter("comune"); String provincia =
+     * request.getParameter("provincia"); String annoimm = request.getParameter("annoimm"); String
+     * cdlimm = request.getParameter("cdlimm"); String provazienda =
+     * request.getParameter("provazienda"); String sesso = request.getParameter("sesso"); String
+     * datanascita = request.getParameter("datanascita");
+     */
+
+    // String nomeAzienda = a[1];
+
+    // PARTE 2
+    /*
+     * String parte2dom1 = request.getParameter("parte2dom1"); String parte2dom1altro =
+     * request.getParameter("parte2dom1altro"); String parte2dom3 =
+     * request.getParameter("parte2dom3"); String parte2dom3altro =
+     * request.getParameter("parte2dom3altro"); String parte2dom4 =
+     * request.getParameter("parte2dom4"); String parte2dom4altro =
+     * request.getParameter("parte2dom4altro");
+     * 
+     * String[] cinque = request.getParameterValues("cinque"); String[] sei =
+     * request.getParameterValues("sei");
+     */
+
+    // PARTE 3 OK
     int giudizioEsperienza = 0;
     int giudizioAzienda = 0;
     int giudizioUniversita = 0;
@@ -278,50 +275,62 @@ public class GestioneDocumento extends HttpServlet {
     giudizioEsperienza = giudizioEsperienza / 5;
     giudizioAzienda = giudizioAzienda / 5;
     giudizioUniversita = giudizioUniversita / 6;
-    
+
     String[] data = request.getParameterValues("data");
     String annoAccademico = data[2];
     String mailStudente = request.getParameter("mailStudente");
-    String valAzienda = request.getParameter("azienda"); 
+    String valAzienda = request.getParameter("azienda");
     String[] a = valAzienda.split(",");
     String id = a[0];
     String commenti = request.getParameter("commenti");
     String suggerimenti = request.getParameter("suggerimenti");
     String matricola = request.getParameter("matricola");
-    
-    model.salvaQuestionario(commenti, suggerimenti, annoAccademico, 
-        mailStudente, Integer.parseInt(id), 
-        matricola, giudizioEsperienza, giudizioAzienda, giudizioUniversita);
-    
+
+    model.salvaQuestionario(commenti, suggerimenti, annoAccademico, mailStudente,
+        Integer.parseInt(id), matricola, giudizioEsperienza, giudizioAzienda, giudizioUniversita);
+
+    try {
+      response.setContentType("text/html;charset=UTF-8");
+      PrintWriter out = response.getWriter();
+      out.println("<script type=\"text/javascript\">");
+      out.println("alert('Questionario inviato correttamente');");
+      out.println("</script>");
+      response.sendRedirect("homeStudente.jsp");
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
   }
-  
+
   /**
    * Ricerca tutti i DocumentiConvenzioneAzienda.
-   * @param request 
+   * 
+   * @param request
    * @param response
    * @throws SQLException
    * @throws ServletException
    * @throws IOException
    */
   public void ricercaTuttiDocumentiConvenzioneAzienda(HttpServletRequest request,
-      HttpServletResponse response)  throws SQLException, ServletException, IOException {
-    ArrayList<DocumentoConvenzioneBean> listaDocumentiConvenzione =
-        model.getTuttiDocumentiConvenzioneAzienda();
-    
+      HttpServletResponse response) throws SQLException, ServletException, IOException {
+    ArrayList<DocumentoConvenzioneBean> listaDocumentiConvenzione = model
+        .getTuttiDocumentiConvenzioneAzienda();
+
     request.removeAttribute("listaDocumentiConvenzione");
     request.removeAttribute("listaDocumentiQuestionari");
     request.setAttribute("listaDocumentiConvenzione", listaDocumentiConvenzione);
-    
+
     if (request.getParameter("indice") != null) {
-      this.indice = Integer.parseInt(request.getParameter("indice")); 
+      this.indice = Integer.parseInt(request.getParameter("indice"));
     }
-    request.setAttribute("indice", indice); 
-    
-    RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");  
+    request.setAttribute("indice", indice);
+
+    RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");
     rd.forward(request, response);
-   
+
   }
-  
+
   /**
    * 
    * @param request
@@ -330,23 +339,23 @@ public class GestioneDocumento extends HttpServlet {
    * @throws ServletException
    * @throws IOException
    */
-   public void ricercaTuttiDocumentiQuestionariAzienda(HttpServletRequest request, 
-      HttpServletResponse response) throws SQLException , ServletException, IOException  {
-    ArrayList<DocumentoQuestionarioBean> listaDocumentiQuestionari =
-         model.getTuttiDocumentiQuestionari();
-    
+  public void ricercaTuttiDocumentiQuestionariAzienda(HttpServletRequest request,
+      HttpServletResponse response) throws SQLException, ServletException, IOException {
+    ArrayList<DocumentoQuestionarioBean> listaDocumentiQuestionari = model
+        .getTuttiDocumentiQuestionari();
+
     request.removeAttribute("listaDocumentiConvenzione");
     request.removeAttribute("listaDocumentiQuestionari");
     request.setAttribute("listaDocumentiQuestionari", listaDocumentiQuestionari);
-     
+
     if (request.getParameter("indice") != null) {
-      this.indice = Integer.parseInt(request.getParameter("indice")); 
+      this.indice = Integer.parseInt(request.getParameter("indice"));
     }
-    request.setAttribute("indice", indice); 
-     
-    RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");  
+    request.setAttribute("indice", indice);
+
+    RequestDispatcher rd = request.getRequestDispatcher("/approvaDocumento.jsp");
     rd.forward(request, response);
-    
+
   }
 
 }

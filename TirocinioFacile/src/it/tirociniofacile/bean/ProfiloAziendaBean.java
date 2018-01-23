@@ -6,11 +6,12 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class ProfiloAziendaBean extends UtenteBean implements Serializable {
-
+  //variabili di istanza
+  private static final long serialVersionUID = 4L;
   private String nomeAzienda;
   
+  //costruttore vuoto
   public ProfiloAziendaBean() {
-
   }
   
   public ProfiloAziendaBean(String email, String password,String nomeAzienda) {
@@ -33,21 +34,12 @@ public class ProfiloAziendaBean extends UtenteBean implements Serializable {
     output.writeObject(nomeAzienda);
   }
   
-  /**
-   * 
-   * @param input
-   * @throws IOException
-   * @throws ClassNotFoundException
-   */
   private void readObject(ObjectInputStream input) throws IOException, ClassNotFoundException {
     this.setEmail((String) input.readObject());
     this.setPassword((String) input.readObject());
     nomeAzienda = (String) input.readObject();
   }
 
-  /**
-   * 
-   */
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof ProfiloAziendaBean) {

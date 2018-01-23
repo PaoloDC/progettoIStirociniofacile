@@ -44,6 +44,13 @@
 			</div>
 			<br> <br> <br>
 		</div>
+		<div class="row">
+			<div class="container-fluid">
+				<a class="btn btn-primary btn-lg btn-block" href="caricaDocumento.jsp"
+					role="button">Carica Questionario per Approvazione</a>
+			</div>
+			<br> <br> <br>
+		</div>
 
 	</div>
 	<%@ include file="footer.jsp"%>
