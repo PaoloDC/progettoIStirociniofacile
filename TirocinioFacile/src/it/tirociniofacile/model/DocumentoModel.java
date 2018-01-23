@@ -152,34 +152,32 @@ public class DocumentoModel {
 
 
   
-  public synchronized ArrayList<DocumentoQuestionarioBean> 
+  public synchronized ArrayList<String> 
       ricercaQuestionariNonApprovatiPerStudente(String mailStudente) {
     
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     
-    ArrayList<DocumentoQuestionarioBean> listaDocumenti = 
-        new ArrayList<DocumentoQuestionarioBean>();
+    ArrayList<String> lista = new ArrayList<String>();
     
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI 
-          + " WHERE approvato = 0 AND mailStudente = ?";
-
+      String selectSql = "SELECT id,annoAccademico,nomeAzienda FROM " + TABLE_NAME_QUESTIONARI 
+          + " JOIN " + TABLE_NAME_CONVENZIONI + " ON "
+          + TABLE_NAME_QUESTIONARI + ".paginaAziendaID = "
+          + TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE "
+          + TABLE_NAME_QUESTIONARI + ".approvato = 0 AND mailStudente = ? ";
+      
       preparedStatement = connection.prepareStatement(selectSql);
       preparedStatement.setString(1, mailStudente);
       ResultSet rs = preparedStatement.executeQuery();
       
       if (rs.first()) {
         do {
-          DocumentoQuestionarioBean documento = new DocumentoQuestionarioBean();
-          documento.setId(rs.getInt(1));
-          documento.setCommenti(rs.getString(2));
-          documento.setSuggerimenti(rs.getString(3));
-          documento.setAnnoAccademico(rs.getString(4));
-          documento.setApprovato(rs.getBoolean(5));
-          documento.setMailStudente(rs.getString(7));
-          listaDocumenti.add(documento);
+          String id = rs.getString(1);
+          String annoAccademico = rs.getString(2);
+          String nomeAzienda = rs.getString(3);
+          lista.add(id + ";" + annoAccademico + ";" + nomeAzienda);
         } while (rs.next());
       }
     } catch (SQLException e) {
@@ -202,7 +200,7 @@ public class DocumentoModel {
       }
     }
 
-    return listaDocumenti;
+    return lista;
   }
 
   /**

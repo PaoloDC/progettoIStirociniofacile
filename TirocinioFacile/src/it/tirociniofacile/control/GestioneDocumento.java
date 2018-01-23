@@ -376,21 +376,20 @@ public class GestioneDocumento extends HttpServlet {
     String mailStudente = request.getParameter("mailStudente");
     System.out.println("mailStudente: " + mailStudente);
 
-    ArrayList<DocumentoQuestionarioBean> questionariStudente = 
-        model.ricercaQuestionariNonApprovatiPerStudente(mailStudente);
+    if (mailStudente != null) {
+      ArrayList<String> questionariStudente = 
+          model.ricercaQuestionariNonApprovatiPerStudente(mailStudente);
+      
+      PaginaAziendaModel pam = new PaginaAziendaModel();
+      ArrayList<PaginaAziendaBean> listaPagine = pam.ricerca();
+      
+      request.getSession().setAttribute("questionariStudente", questionariStudente);
+      request.getSession().setAttribute("listaPagine", listaPagine);
+      
+      RequestDispatcher rd = request.getRequestDispatcher("/caricaDocumento.jsp");
+      rd.forward(request, response);
+    }
     
-    request.removeAttribute("questionariStudente");
-    request.setAttribute("questionariStudente", questionariStudente);
-    
-    System.out.println(questionariStudente.size());
-    //ciao
-    /*
-    PaginaAziendaModel pam = new PaginaAziendaModel();
-    ArrayList<PaginaAziendaBean> listaPagine = pam.ricerca();
-    
-    request.removeAttribute("listaPagine");
-    request.setAttribute("listaPagine", listaPagine);
-    */
   }
 
 }

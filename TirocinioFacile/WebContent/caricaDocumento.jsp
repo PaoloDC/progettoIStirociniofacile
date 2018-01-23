@@ -5,7 +5,7 @@
 <%
 	UtenteBean utente = (UtenteBean) session.getAttribute("account");
 	String tipo = (String) session.getAttribute("tipologiaAccount");
-	
+
 	if (tipo != null) {
 		if (!(tipo.equals("azienda")) && !(tipo.equals("studente"))) {
 			response.sendRedirect("./index.jsp");
@@ -13,12 +13,8 @@
 	} else {
 		response.sendRedirect("./index.jsp");
 	}
-	
-	ArrayList<DocumentoQuestionarioBean> listaDocumentiQuestionari = 
-			(ArrayList<DocumentoQuestionarioBean>) session.getAttribute("listaDocumentiQuestionari");
-	
-	System.out.println("caricaDocumento: listaDocumentiQuestionari: " + listaDocumentiQuestionari);
-	
+
+	ArrayList<String> questionariStudente = (ArrayList<String>) session.getAttribute("questionariStudente");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -47,39 +43,86 @@
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
 
-	<div class="container-fluid">
+	<center>
 		<%@ include file="header.jsp"%>
 
+		<%
+			if (questionariStudente.size() == 0) {
+		%>
 		<div class="row">
 			<div class="col-4 col-md-4">
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-4 col-md-4">
 				<br> <br> <br> <br> <br> <br>
-				<h1>
-					Carica il documento <br>(file supportati: pdf)
-				</h1>
-				<form method="post" action="GestioneTf" id="form1"
-					onsubmit="return isOk();" enctype="multipart/form-data">
-					<input type="hidden" id="thisField" name="action"
-						value="caricaDocumento">
-					<input type="hidden" name="email" value=<%=utente.getEmail() %>>
-					
-					<div class="form-group">
-						<input type="file" name="file" id="theFile" accept="application/pdf" >
-						
-					</div>
-					<button type="submit" class="btn btn-primary">Carica
-						Documento</button>
-				</form>
+				<h1>Nessun documento da caricare.</h1>
 			</div>
+
 			<div class="col-4 col-md-4">
 				<!-- usato per centrare -->
 			</div>
 		</div>
 
+		<%
+			} else {
+				for (int i = 0; i < questionariStudente.size(); i++) {
+					String[] all = questionariStudente.get(i).split(";");
+					String id = all[0];
+					String annoAccademico = all[1];
+					String nomeAzienda = all[2];
+					System.out.println("id " + id + ", anno: " + annoAccademico + " nome azienda: " + nomeAzienda);
+		%>
 
-	</div>
+
+		<%
+			if (i % 2 == 0) {
+		%>
+		<div class="col-12 col-md-12" style="background: #d3d3d3;">
+			<%
+				} else {
+			%>
+			<div class="col-12 col-md-12">
+				<%
+					}
+				%>
+
+				<form class="form-horizontal" method="post" action="GestioneTf"
+					id="form1" onsubmit="return isOk();" enctype="multipart/form-data">
+
+					<div class="row">
+						<div class="col-4 col-md-4">
+							<h4 name="id" value="<%=id%>">
+								ID:
+								<%=id%>
+
+								Nome Azienda:
+								<%=nomeAzienda%>
+
+								Anno Accademico:
+								<%=annoAccademico%>
+							</h4>
+						</div>
+						<div class="col-4 col-md-4">
+							<input type="file" name="file" id="theFile"
+								accept="application/pdf">
+						</div>
+						<button type="submit" class="btn btn-primary">Carica
+							Documento</button>
+					</div>
+
+					<input type="hidden" id="thisField" name="action"
+						value="caricaDocumento"> <input type="hidden" name="email"
+						value="<%=utente.getEmail()%>">
+
+				</form>
+			</div>
+			<br>
+			<%
+				}
+				}
+			%>
+		
+	</center>
 	<%@ include file="footer.jsp"%>
 
 	<script type="text/javascript"
