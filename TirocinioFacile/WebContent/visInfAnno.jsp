@@ -46,19 +46,40 @@
 
 		<div class="row">
 
+
 			<div class="container">
 				<h3>Anno Accademico:</h3>
-
+				<%
+					if (numQuest == -1) {
+				%>
 				<div class="dropdown">
 					<button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="true">-</button>
+						aria-expanded="true">
+						- <span class="caret"></span>
+					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						<li><a
 							href="GestioneTf?action=visualizzaInformazioniPerAnnoAccademico&anno=2018">2018</a></li>
 					</ul>
 				</div>
-
+				<%
+					} else {
+				%>
+					<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button"
+						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="true">
+						<%=request.getParameter("anno") %> <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li><a
+							href="GestioneTf?action=visualizzaInformazioniPerAnnoAccademico&anno=2018">2018</a></li>
+					</ul>
+				</div>
+				<%
+					}
+				%>
 			</div>
 			<br> <br> <br>
 		</div>
@@ -76,7 +97,7 @@
 					<%
 						if (numQuest == -1) {
 					%>
-					<h2>Seleziona un anno!</h2>
+					<h2>Seleziona un anno</h2>
 					<%
 						} else {
 					%>
