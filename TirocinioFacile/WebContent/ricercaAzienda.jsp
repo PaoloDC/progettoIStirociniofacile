@@ -154,17 +154,17 @@
 								<li class="page-item">
 									<%
 										int numPag = 1;
-												int indicePag = 1;
-												int indici = NUM_ELE_PAG;
+										int indicePag = 1;
+										int indici = NUM_ELE_PAG;
 												/*Se è la prima pagina non visualizzare il precedente */
-												if (indice != NUM_ELE_PAG) {
+										if (indice != NUM_ELE_PAG) {
 									%> <a class="page-link"
 									href="GestioneTf?action=<%=action%>&indice=<%=indice - NUM_ELE_PAG%>"
 									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 										<span class="sr-only">Previous</span>
 								</a> <%
- 	}
- %>
+									 	}
+									 %>
 								</li>
 								<%
 									if (listaAziende != null)
@@ -193,8 +193,7 @@
 								%>
 
 								<%
-									//System.out.println("indice="+ indice);
-											//System.out.println("indici="+ indici);
+							
 											/*Sela pagina successiva non contiene nulla */
 											if (indice < indici - NUM_ELE_PAG) {
 								%>

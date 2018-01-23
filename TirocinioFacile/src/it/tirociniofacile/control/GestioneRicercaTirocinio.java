@@ -89,6 +89,8 @@ public class GestioneRicercaTirocinio extends HttpServlet {
   public void ricercaTuttePagine(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
     
+    this.indice = 4;
+    
     ArrayList<PaginaAziendaBean> pabList = model.ricerca();
     request.removeAttribute("listaAziende");
     request.setAttribute("listaAziende", pabList);
@@ -113,7 +115,6 @@ public class GestioneRicercaTirocinio extends HttpServlet {
       }
     } else if (compila != null) {
       if (compila.equals("true")) {
-        System.out.println("SONO QUI");
         request.getSession().setAttribute("listaAziende", pabList);
         RequestDispatcher rd = request.getRequestDispatcher("/compilaQuestionario.jsp");
         rd.forward(request, response);
@@ -139,22 +140,23 @@ public class GestioneRicercaTirocinio extends HttpServlet {
   public void ricercaPagina(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
     
+    this.indice = 4;
     String categoria = request.getParameter("categoria");
     String chiave = request.getParameter("chiave");
     
-    if(categoria != null) {
+    if (categoria != null) {
       if (categoria.equals("nome")) {
         categoria = "nomeaziendaRappresentata";
       }
     } 
-    if(chiave!= null) {
-      if(chiave.equals("")) {
+    if (chiave != null) {
+      if (chiave.equals("")) {
         ricercaTuttePagine(request,response);
       }
-      if(!chiave.equals("")) {
+      if (!chiave.equals("")) {
         if (request.getParameter("indice") != null) {
           this.indice = Integer.parseInt(request.getParameter("indice"));
-        }
+        } 
         request.removeAttribute("indice");
         request.setAttribute("indice", this.indice);
         
@@ -163,10 +165,12 @@ public class GestioneRicercaTirocinio extends HttpServlet {
         request.setAttribute("listaAziende", pabList);  
         
         request.removeAttribute("action");
-        request.setAttribute("action", "ricercaPagina"+"&categoria="+categoria+"&chiave="+chiave);
+        request.setAttribute("action", "ricercaPagina" + "&categoria=" 
+            + categoria + "&chiave=" + chiave);
+        
         RequestDispatcher rd = request.getRequestDispatcher("/ricercaAzienda.jsp");
         rd.forward(request, response);
-    }
+      }
    
 
       
