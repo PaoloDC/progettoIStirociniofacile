@@ -51,6 +51,9 @@
 
 			<div class="container">
 				<h3>Azienda:</h3>
+				<%
+					if (numQuest == -1) {
+				%>
 				<div class="dropdown">
 					<button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
@@ -75,7 +78,36 @@
 						%>
 					</ul>
 				</div>
-
+				<%
+					} else {
+				%>
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button"
+						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="true">
+						<%=request.getParameter("azienda")%> <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<%
+							if (listaAzienda != null) {
+						%>
+						<%
+							for (int i = 0; i < listaAzienda.size(); i++) {
+						%>
+						<li><a
+							href="GestioneTf?action=visualizzaInformazioniPerAzienda&azienda=
+							<%=listaAzienda.get(i).getNomeAzienda()%>"><%=listaAzienda.get(i).getNomeAzienda()%></a></li>
+						<%
+							}
+						%>
+						<%
+							}
+						%>
+					</ul>
+				</div>
+				<%
+					}
+				%>
 			</div>
 			<br> <br> <br>
 		</div>

@@ -19,6 +19,10 @@
 </head>
 
 <body>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		crossorigin="anonymous"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -34,11 +38,11 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-4 col-md-4">
-				<form action="GestioneTf?action=recuperaPassword" method="post">
+				<form action="GestioneTf?action=recuperaPassword" method="post" onsubmit="return isOk();">
 					<div class="form-group">
-						<label for="exampleInputEmail1">Email</label> <input type="email"
+						<label for="exampleInputEmail1">Email</label> <input type="text"
 							class="form-control" id="exampleInputEmail1" name="email"
-							aria-describedby="emailHelp" placeholder="Enter email">
+							aria-describedby="emailHelp" placeholder="Email">
 					</div>
 					<button type="submit" class="btn btn-primary">Invia</button>
 					<%
@@ -66,5 +70,6 @@
 
 	</div>
 	<%@ include file="footer.jsp"%>
+
 </body>
 </html>
