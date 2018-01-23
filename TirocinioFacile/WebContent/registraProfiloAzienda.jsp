@@ -122,6 +122,7 @@
 				&& ValidateLetter(document.getElementById("theLuogoDiNascita"), document.getElementById("txtErrLuogoDiNascita"))
 				&& ValidateLetter(document.getElementById("theRappresentanteLegale"), document.getElementById("txtErrRappresentanteLegale"))
 				&& ValidatePartitaIva(document.getElementById("thePartitaIva"), document.getElementById("txtErrPartitaIva"))
+				&& ValidateDataDiNascita(document.getElementById("theDataNascita"), document.getElementById("txtErrDataNascita"))
 				){
 			return true;
 		}

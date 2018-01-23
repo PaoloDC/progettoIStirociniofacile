@@ -155,3 +155,15 @@ function ValidateAnnoMagg(str1 , txt ,str2 , txt){
 	str.style.border = "2px solid red";
 	return false; 
 }	
+function ValidateData(str1,  txt){
+	var data = /^(0?[1-9]|[12][0-9]|3[01])[/-](0?[1-9]|1[012])[/-]\d{4}$/;
+	if (!(str.value.match(data))) {
+		str.style.border = "2px solid red";
+		$(txt).html("Campo non valido");
+		return false;
+	}
+	$(txt).html("");
+	str.style.border = "2px solid green";
+	return true; 
+			
+}
