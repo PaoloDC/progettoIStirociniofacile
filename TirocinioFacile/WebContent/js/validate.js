@@ -100,7 +100,7 @@ function ValidateFile(file) {
 	}
 	return true;
 }
-//kkk
+
 function ValidatePartitaIva(str, txt) {
 	var valid = isNaN(str.value);
 	if (valid) {
@@ -117,7 +117,16 @@ function ValidatePartitaIva(str, txt) {
 		str.style.border = "2px solid red";
 	    $(txt).html("Partita Iva non valida");
 	    return false;
-	    }
-	
-	
+	}	
 }
+function ValidateAmbSki(str , txt){
+	var letters = /^[-\w\s,+.]+$/;
+	if (!(str.value.match(letters))) {
+		str.style.border = "2px solid red";
+		$(txt).html("Campo non valido");
+		return false;
+	}
+	$(txt).html("");
+	str.style.border = "2px solid green";
+	return true; 
+}	
