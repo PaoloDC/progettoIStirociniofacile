@@ -17,8 +17,6 @@
 	UtenteModel um = new UtenteModel();
 	UtenteBean ub = um.caricaAccount("kineton@info.com", "kineton");
 	ProfiloAziendaBean pab = (ProfiloAziendaBean) ub;
-	
-	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -54,46 +52,46 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-8 col-md-8">
-				<form action="GestioneTf?action=creaPagina" method="post" onsubmit="return isOk();">
+				<form action="GestioneTf?action=creaPagina" method="post"
+					onsubmit="return isOk();">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Nome Azienda</label> <input
 							type="text" class="form-control" id="nomeAzienda"
 							value="<%=pab.getNomeAzienda()%>" readonly="readonly">
 					</div>
-					
+
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email Profilo Azienda</label> <input
 							type="text" class="form-control" name="mailAzienda"
 							value="<%=pab.getEmail()%>" readonly="readonly">
 					</div>
-					
+
 					<div class="form-group">
-						<label for="exampleInputEmail1" id="txtErrLoc">Località</label> 
-						<input type="text" class="form-control" id="theLoc"
-							name="localita" aria-describedby="emailHelp"
-							placeholder="Località">
+						<label for="exampleInputEmail1" id="txtErrLoc">Località</label> <input
+							type="text" class="form-control" id="theLoc" name="localita"
+							aria-describedby="emailHelp" placeholder="Località">
 					</div>
-					
+
 					<div class="form-group">
 						<label for="exampleInputEmail1" id="txtErrDes">Descrizione</label>
 						<textarea class="form-control" rows="5" id="theDes"
 							name="descrizione" placeholder="Descrizione"></textarea>
 					</div>
-					
+
 					<div class="form-group">
-						<label for="exampleInputPassword1" id="txtErrAmb">Ambiti (Per inserire
-							più di un ambito usa la , Es. Web Development, Reti)</label> <input
-							type="text" class="form-control" id="theAmb"
+						<label for="exampleInputPassword1" id="txtErrAmb">Ambiti
+							(Per inserire più di un ambito usa la , Es. Web Development,
+							Reti)</label> <input type="text" class="form-control" id="theAmb"
 							name="ambito" placeholder="Ambito">
 					</div>
-					
+
 					<div class="form-group">
-						<label for="exampleInputPassword1" id="txtErrSki">Skill (Per inserire più
-							di una skill usa la , Es. C++, Test)</label> <input type="text"
-							name="skill" class="form-control" id="theSki"
+						<label for="exampleInputPassword1" id="txtErrSki">Skill
+							(Per inserire più di una skill usa la , Es. C++, Test)</label> <input
+							type="text" name="skill" class="form-control" id="theSki"
 							placeholder="Skill Richieste">
 					</div>
-					
+
 					<button type="submit" class="btn btn-primary">Crea</button>
 				</form>
 			</div>
@@ -104,25 +102,32 @@
 
 
 	</div>
+	<br>
+	<br>
+	<br>
+	<br>
 	<%@ include file="footer.jsp"%>
-	
+
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/js/validate.js"></script>
 
 	<script>
-			function isOk() {
-				if (ValidateLetter(document.getElementById("theLoc"),document.getElementById("txtErrLoc"))&&
-						ValidateAlfa(document.getElementById("theDes"),document.getElementById("txtErrDes"))&&
-							ValidateAmbSki(document.getElementById("theAmb"),document.getElementById("txtErrAmb"))&&
-								ValidateAmbSki(document.getElementById("theSki"),document.getElementById("txtErrSki"))
-						) {
-					return true;
-					}
-				
-				return false;
+		function isOk() {
+			if (ValidateLetter(document.getElementById("theLoc"), document
+					.getElementById("txtErrLoc"))
+					&& ValidateAlfa(document.getElementById("theDes"), document
+							.getElementById("txtErrDes"))
+					&& ValidateAmbSki(document.getElementById("theAmb"),
+							document.getElementById("txtErrAmb"))
+					&& ValidateAmbSki(document.getElementById("theSki"),
+							document.getElementById("txtErrSki"))) {
+				return true;
 			}
-		</script>
-	
-	
+
+			return false;
+		}
+	</script>
+
+
 </body>
 </html>

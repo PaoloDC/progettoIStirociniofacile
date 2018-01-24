@@ -1,8 +1,10 @@
-function ValidateEmailStudente(email,txt) {
+function ValidateEmailStudente(email, txt) {
 	var emailFormat = /^[a-z]{1}[.]{1}[a-z]*[0-9]{2}$/;
-	
-	if(email.value.match(emailFormat)) {
-		$(txt).html("Email Istituzionale inserire solo cio' che viene prima di @studenti.unisa.it)");
+
+	if (email.value.match(emailFormat)) {
+		$(txt)
+				.html(
+						"Email Istituzionale inserire solo cio' che viene prima di @studenti.unisa.it)");
 		email.style.border = "2px solid green";
 		return true;
 	}
@@ -11,18 +13,18 @@ function ValidateEmailStudente(email,txt) {
 	return false;
 }
 
-function ValidatePasswordUguali(pass,conferma,txt) {
-		if(pass.value.localeCompare(conferma.value) == 0) {
-			$(txt).html("");
-			return true;
-		}
-		$(txt).html("Le Password non sono uguali");
-		return false;
+function ValidatePasswordUguali(pass, conferma, txt) {
+	if (pass.value.localeCompare(conferma.value) == 0) {
+		$(txt).html("");
+		return true;
+	}
+	$(txt).html("Le Password non sono uguali");
+	return false;
 }
 
 function ValidateMatricola(matricola, txt) {
 	var matr = /^[0-9]{5}$/;
-	
+
 	if (matricola.value.match(matr)) {
 		$(txt).html("Matricola");
 		matricola.style.border = "2px solid green";
@@ -107,19 +109,18 @@ function ValidatePartitaIva(str, txt) {
 		str.style.border = "2px solid red";
 		$(txt).html("Partita Iva non valida");
 		return false;
-		
+
 	}
-	if(str.value.length == 11) {
+	if (str.value.length == 11) {
 		str.style.border = "2px solid green";
 		return true;
-	}
-	else {
+	} else {
 		str.style.border = "2px solid red";
-	    $(txt).html("Partita Iva non valida");
-	    return false;
-	}	
+		$(txt).html("Partita Iva non valida");
+		return false;
+	}
 }
-function ValidateAmbSki(str , txt){
+function ValidateAmbSki(str, txt) {
 	var letters = /^[-\w\s,+.]+$/;
 	if (!(str.value.match(letters))) {
 		str.style.border = "2px solid red";
@@ -128,10 +129,10 @@ function ValidateAmbSki(str , txt){
 	}
 	$(txt).html("");
 	str.style.border = "2px solid green";
-	return true; 
-}	
-function ValidateAnno(str , txt){
-	var date =/[2]{1}[0-9]{3}/;
+	return true;
+}
+function ValidateAnno(str, txt) {
+	var date = /[2]{1}[0-9]{3}/;
 	if (!(str.value.match(date))) {
 		str.style.border = "2px solid red";
 		$(txt).html("Data non valida");
@@ -139,23 +140,26 @@ function ValidateAnno(str , txt){
 	}
 	$(txt).html("");
 	str.style.border = "2px solid green";
-	return true; 
+	return true;
 }
-function ValidateAnnoMagg(str1 , txt ,str2 , txt){
-	
-	if (str2.value > str1.value) {
-		if((str2.value - str1.value) ==1){
-			str.style.border = "2px solid green";
-			$(txt).html("Data non valida");
-			return true;
+function ValidateAnnoMagg(str1, txt1, str2, txt2) {
+
+	if (ValidateAnno(str1, txt1) && ValidateAnno(str1, txt2)) {
+		if (str2.value > str1.value) {
+			var scarto = str2.value - str1.value;
+			if (scarto == 1) {
+				str1.style.border = "2px solid green";
+				$(txt1).html("Anno di immatricolazione");
+				return true;
+			}
 		}
-		
 	}
-	$(txt).html("");
-	str.style.border = "2px solid red";
-	return false; 
-}	
-function ValidateData(str1,  txt){
+	$(txt1).html("Data non valida");
+	str1.style.border = "2px solid red";
+	return false;
+}
+
+function ValidateData(str, txt) {
 	var data = /^(0?[1-9]|[12][0-9]|3[01])[/-](0?[1-9]|1[012])[/-]\d{4}$/;
 	if (!(str.value.match(data))) {
 		str.style.border = "2px solid red";
@@ -164,6 +168,9 @@ function ValidateData(str1,  txt){
 	}
 	$(txt).html("");
 	str.style.border = "2px solid green";
-	return true; 
-			
+	return true;
+}
+
+function ValidateGiornoRapp(str,txt) {
+	var data = /[1-31]/;
 }
