@@ -79,10 +79,10 @@ public class GestioneUtente extends HttpServlet {
             rd.forward(request, response);
           }
         } else if (action.equals("registrazioneStudente")) {
-          registrazioneStudente(request);
+          registrazioneStudente(request, response);
 
         } else if (action.equals("registrazioneAzienda")) {
-          registrazioneAzienda(request);
+          registrazioneAzienda(request, response);
 
         } else if (action.equals("log-in")) {
           logIn(request, response);
@@ -106,8 +106,10 @@ public class GestioneUtente extends HttpServlet {
    *          richiesta http
    * @throws SQLException
    *           eccezzione sql
+   * @throws IOException 
+   * @throws ServletException 
    */
-  public void registrazioneStudente(HttpServletRequest request) throws SQLException {
+  public void registrazioneStudente(HttpServletRequest request,HttpServletResponse response) throws SQLException, ServletException, IOException {
 
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));
@@ -116,15 +118,20 @@ public class GestioneUtente extends HttpServlet {
     String emailIntera = email + "@studenti.unisa.it";
 
     model.salvaAccountStudente(emailIntera, password, matricola);
+    
+    RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+    rd.forward(request, response);
   }
 
   /**
    * RegistrazioneAzienda effettua la registrazione di un account azienda.
    * 
    * @param request richiesta http
+   * @throws IOException 
+   * @throws ServletException 
    * @throws SQLException eccezzioni sql
    */
-  public void registrazioneAzienda(HttpServletRequest request) {
+  public void registrazioneAzienda(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));
     String nomeazienda = (request.getParameter("nomeazienda"));
@@ -144,6 +151,8 @@ public class GestioneUtente extends HttpServlet {
     try {
       docModel.salvaConvenzione(piva, nomeazienda, sedeLegale, citta, rappLegale,
           luogoDiNascitaRappLegale, dataDiNascitaRappLegale);
+      RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+      rd.forward(request, response);
     } catch (SQLException e) {
       e.printStackTrace();
     }

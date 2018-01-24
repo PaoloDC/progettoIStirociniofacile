@@ -158,8 +158,12 @@ public class GestioneDocumento extends HttpServlet {
 
     if (tipologiaAccount.equals("studente")) {
       model.salvaPdfQuestionario(fileName, email);
+      RequestDispatcher rd = request.getRequestDispatcher("/homeStudente.jsp");
+      rd.forward(request, response);
     } else if (tipologiaAccount.equals("azienda")) {
       model.salvaPdfConvenzione(fileName, email);
+      RequestDispatcher rd = request.getRequestDispatcher("/creaPagina.jsp");
+      rd.forward(request, response);
     }
 
   }
