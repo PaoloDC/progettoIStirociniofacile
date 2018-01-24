@@ -3,7 +3,7 @@
 	import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
 
 <%
-	UtenteBean utente = (UtenteBean) session.getAttribute("account");
+	UtenteBean tipoUtente = (UtenteBean) session.getAttribute("account");
 	String tipo = (String) session.getAttribute("tipologiaAccount");
 
 	if (tipo != null) {
@@ -47,6 +47,7 @@
 		<%@ include file="header.jsp"%>
 
 		<%
+			if(questionariStudente != null)
 			if (questionariStudente.size() == 0) {
 		%>
 		<div class="row">

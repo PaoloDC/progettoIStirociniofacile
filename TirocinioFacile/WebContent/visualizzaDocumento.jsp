@@ -15,7 +15,7 @@
 	DocumentoConvenzioneBean convenzione = (DocumentoConvenzioneBean) request.getAttribute("convenzione");
 	DocumentoQuestionarioBean questionario = (DocumentoQuestionarioBean) request.getAttribute("questionario");
 	
-	System.out.println("ASDASDA" + convenzione.getUrl());
+	//System.out.println("ASDASDA" + convenzione.getUrl());
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

@@ -4,10 +4,12 @@
 <%
 	String tipo = (String) session.getAttribute("tipologiaAccount");
 
-	if (tipo == null) {
+	if (tipo != null) {
 		if (!(tipo.equals("presidente")) && !(tipo.equals("studente"))) {
 			response.sendRedirect("./index.jsp");
 		}
+	}else{
+		response.sendRedirect("./index.jsp");
 	}
 	
 	PaginaAziendaBean pagina = (PaginaAziendaBean) request.getAttribute("pagina");
