@@ -214,11 +214,15 @@
 								if (listaAziende == null) {
 							%>
 							<center>
-								<h2>Nessuna Azienda</h2>
+								<h2>Nessuna Azienda disponibile</h2>
 							</center>
 							<%
-								} /*end else*/
+								} else if (listaAziende.size()==0) {/*end else*/
 							%>
+							<center>
+								<h2>Nessuna Azienda trovata !</h2>
+							</center>
+							<%} %>
 						</div>
 					</div>
 				</div>
