@@ -574,9 +574,11 @@ public class DocumentoModel {
 
     try {
       connection = ds.getConnection();
-
+      
       String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI + " JOIN "
-          + PaginaAziendaModel.TABLE_NAME_PAGINA + " WHERE partitaIva = ?";
+          + PaginaAziendaModel.TABLE_NAME_PAGINA + " ON " 
+          + TABLE_NAME_CONVENZIONI + ".paginaAziendaID = " + PaginaAziendaModel.TABLE_NAME_PAGINA
+          + ".id WHERE partitaIva = ? AND url IS NOT NULL";
 
       preparedStatement = connection.prepareStatement(selectSql);
       preparedStatement.setString(1, "" + partitaIva);
