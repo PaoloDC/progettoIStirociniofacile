@@ -3,20 +3,25 @@
 <%@page import="it.tirociniofacile.bean.ProfiloStudenteBean"%>
 <%@page import="it.tirociniofacile.bean.UtenteBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1" %>
 <%
-	String tipo = (String) session.getAttribute("tipologiaAccount");
+String tipo = (String) session.getAttribute("tipologiaAccount");
 
 	if (tipo != null) {
 		if (!(tipo.equals("studente"))) {
-			response.sendRedirect("./index.jsp");
+			//response.sendRedirect("./index.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+	        rd.forward(request, response);
 		}
 	} else {
-		response.sendRedirect("./index.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+        rd.forward(request, response);
 	}
 	UtenteBean ub = (UtenteBean) session.getAttribute("account");
 	
+	
 	ProfiloStudenteBean psb = (ProfiloStudenteBean) ub;
+	
 	
 	ArrayList<PaginaAziendaBean> listaAzienda = (ArrayList<PaginaAziendaBean>) session
 			.getAttribute("listaAziende");

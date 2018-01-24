@@ -4,16 +4,16 @@
 <%
 	String messaggioErrore = (String) request.getAttribute("noUtente");
 
-	String Tipoutente = (String) session.getAttribute("tipologiaAccount");
+	String tipoUtente = (String) session.getAttribute("tipologiaAccount");
 	
-	if(Tipoutente != null) {
-		if(Tipoutente.equals("studente")) {
+	if(tipoUtente != null) {
+		if(tipoUtente.equals("studente")) {
 			response.sendRedirect("./homeStudente.jsp");
-		} else if (Tipoutente.equals("impiegato")) {
+		} else if (tipoUtente.equals("impiegato")) {
 			response.sendRedirect("./approvaDocumento.jsp");
-		} else if (Tipoutente.equals("presidente")) {
+		} else if (tipoUtente.equals("presidente")) {
 			response.sendRedirect("./visualizzaInformazioni.jsp");
-		} else if (Tipoutente.equals("azienda")) {
+		} else if (tipoUtente.equals("azienda")) {
 			response.sendRedirect("./creaPagina.jsp");
 		}
 	}
