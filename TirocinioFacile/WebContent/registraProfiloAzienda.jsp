@@ -96,8 +96,7 @@
 								placeholder="Mese" style="width:4em;"> / <input id="theAnno" name="data"
 								placeholder="Anno" style="width:4em;">
 						</div>
-						<button type="submit" class="btn btn-primary">Invia La
-							Richiesta Di Convenzione e Aspetta La Convalida</button>
+						<button type="submit" class="btn btn-primary">Genera La Convenzione</button>
 					</div>
 				</form>
 

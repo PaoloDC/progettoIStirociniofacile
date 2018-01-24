@@ -171,6 +171,3 @@ function ValidateData(str, txt) {
 	return true;
 }
 
-function ValidateGiornoRapp(str,txt) {
-	var data = /[1-31]/;
-}
