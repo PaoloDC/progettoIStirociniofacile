@@ -108,7 +108,8 @@ public class DocumentoModel {
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    ArrayList<DocumentoQuestionarioBean> listaDocumenti = new ArrayList<DocumentoQuestionarioBean>();
+    ArrayList<DocumentoQuestionarioBean> listaDocumenti = 
+        new ArrayList<DocumentoQuestionarioBean>();
     try {
       connection = ds.getConnection();
       String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI + " WHERE approvato = 0 ";
@@ -124,6 +125,60 @@ public class DocumentoModel {
           documento.setAnnoAccademico(rs.getString(4));
           documento.setApprovato(rs.getBoolean(5));
           documento.setMailStudente(rs.getString(7));
+          listaDocumenti.add(documento);
+        } while (rs.next());
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      } finally {
+        if (connection != null) {
+          try {
+            connection.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }
+
+    return listaDocumenti;
+  }
+  
+  /**
+   * Ricerca tutti i documenti questionari per una pagina id.
+   * 
+   * @return lista con tutti i documenti
+   * @throws SQLException
+   *           eccezzioni sql
+   */
+  public synchronized ArrayList<DocumentoQuestionarioBean> 
+      getTuttiDocumentiQuestionariPerPagina(int id)
+      throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ArrayList<DocumentoQuestionarioBean> listaDocumenti = 
+        new ArrayList<DocumentoQuestionarioBean>();
+    try {
+      connection = ds.getConnection();
+      String selectSql = "SELECT commenti,suggerimenti FROM " 
+          + TABLE_NAME_QUESTIONARI + " WHERE paginaAziendaId = ? ";
+
+      
+      preparedStatement = connection.prepareStatement(selectSql);
+      preparedStatement.setInt(1, id);
+      ResultSet rs = preparedStatement.executeQuery();
+      if (rs.first()) {
+        do {
+          DocumentoQuestionarioBean documento = new DocumentoQuestionarioBean();
+          documento.setCommenti(rs.getString(1));
+          documento.setSuggerimenti(rs.getString(2));
           listaDocumenti.add(documento);
         } while (rs.next());
       }

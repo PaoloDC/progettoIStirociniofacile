@@ -1,6 +1,8 @@
 package it.tirociniofacile.control;
 
+import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 import it.tirociniofacile.bean.PaginaAziendaBean;
+import it.tirociniofacile.model.DocumentoModel;
 import it.tirociniofacile.model.PaginaAziendaModel;
 
 import java.io.IOException;
@@ -22,10 +24,15 @@ import javax.servlet.http.HttpSession;
 public class GestioneRicercaTirocinio extends HttpServlet {
   private static final long serialVersionUID = 1L;
   static PaginaAziendaModel model;
+  static DocumentoModel modelDoc;
   int indice = 4;
 
   static {
     model = new PaginaAziendaModel();
+  }
+  
+  static {
+    modelDoc = new DocumentoModel();
   }
 
   /**
@@ -194,9 +201,12 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     String id = request.getParameter("id");
 
     PaginaAziendaBean pab = model.ricerca(Integer.parseInt(id));
-
+    ArrayList<DocumentoQuestionarioBean> listaDoc = 
+        modelDoc.getTuttiDocumentiQuestionariPerPagina(pab.getId());
+    
     request.removeAttribute("pagina");
     request.setAttribute("pagina", pab);
+    request.setAttribute("commSugg", listaDoc);
 
     RequestDispatcher rd = request.getRequestDispatcher("/visualizzaPagina.jsp");
     rd.forward(request, response);

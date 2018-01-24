@@ -8,11 +8,13 @@
 		if (!(tipo.equals("presidente")) && !(tipo.equals("studente"))) {
 			response.sendRedirect("./index.jsp");
 		}
-	}else{
+	} else {
 		response.sendRedirect("./index.jsp");
 	}
-	
+
 	PaginaAziendaBean pagina = (PaginaAziendaBean) request.getAttribute("pagina");
+	ArrayList<DocumentoQuestionarioBean> listaDoc = (ArrayList<DocumentoQuestionarioBean>) request
+			.getAttribute("commSugg");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -44,7 +46,7 @@
 		<%@ include file="header.jsp"%>
 		<div class="row">
 			<div class="col-3 col-sm-3">
-				<img src="logo_documento.png" width="60%" height="60%">
+				<h2>Nome:</h2>
 				<h2><%=pagina.getNomeAzienda()%></h2>
 			</div>
 
@@ -95,15 +97,36 @@
 					</div>
 				</div>
 
-
-
-
 			</div>
 			<div class="row">
 				<div class="col-4 col-sm-4"></div>
 				<div class="col-4 col-sm-4">
-					<h3>Commenti e Suggerimenti</h3>
+
+					<%
+						if (listaDoc != null) {
+					%>
+						<h3>Suggerimenti</h3>
+					<%
+						for (int i = 0; i < listaDoc.size(); i++) {
+					%>
+						<h4><%=listaDoc.get(i).getSuggerimenti()%></h4>
+					<%
+						}
+					%>
+						<h3>Commenti</h3>
+					<%
+						for (int i = 0; i < listaDoc.size(); i++) {
+					%>
+						<h4><%=listaDoc.get(i).getCommenti()%></h4>
+					<%
+						}
+					%>
+					<%
+						}
+					%>
+					<br> <br> <br> <br> <br> <br>
 				</div>
+
 				<div class="col-4 col-sm-4"></div>
 			</div>
 		</div>
