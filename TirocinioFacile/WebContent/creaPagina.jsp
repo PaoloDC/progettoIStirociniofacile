@@ -13,11 +13,11 @@
 	} else {
 		response.sendRedirect("./index.jsp");
 	}
-	//da passare nella sessione il profilo azienda bean
-	UtenteModel um = new UtenteModel();
-	UtenteBean ub = um.caricaAccount("kineton@info.com", "kineton");
+
+	UtenteBean ub = (UtenteBean) session.getAttribute("account");
 	ProfiloAziendaBean pab = (ProfiloAziendaBean) ub;
 %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
