@@ -12,18 +12,36 @@
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+<script>
+	var $j = jQuery.noConflict();
+
+	$j(function() {
+
+		$j("#datepicker").datepicker({
+			changeYear : true,
+			yearRange : "1900:2000",
+			setDate: new Date(1996, 11, 15),
+			defaultDate: new Date(1996, 11, 15)
+		});
+	});
+</script>
 </head>
 
 <body>
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-		crossorigin="anonymous"></script>
 	<!-- Latest compiled and minified JavaScript -->
 
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-		crossorigin="anonymous"></script>
+
+
+
 
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
@@ -37,8 +55,8 @@
 					onsubmit="return isOk();">
 					<div class="col-6 col-sm-6">
 						<div class="form-group">
-							<label for="exampleInputEmail1">Email</label> <input type="text"
-								class="form-control" id="exampleInputEmail1" name="email"
+							<label for="txtErrEmail">Email</label> <input type="text"
+								class="form-control" id="theEmail" name="email"
 								aria-describedby="emailHelp" placeholder="Enter email">
 						</div>
 						<div class="form-group">
@@ -91,12 +109,11 @@
 						</div>
 
 						<div class="form-group">
-							<label id="txtErrData" >Data Nascita Rappr Legale</label> <input id="theGiorno"
-								name="data" placeholder="Giorno" style="width:4em;"> / <input id="theMese" name="data"
-								placeholder="Mese" style="width:4em;"> / <input id="theAnno" name="data"
-								placeholder="Anno" style="width:4em;">
+							<label id="txtErrData">Data Nascita Rappr Legale</label> <input
+								type="text" id="datepicker" value="11/15/1996">
 						</div>
-						<button type="submit" class="btn btn-primary">Genera La Convenzione</button>
+						<button type="submit" class="btn btn-primary">Genera La
+							Convenzione</button>
 					</div>
 				</form>
 
@@ -108,12 +125,17 @@
 
 
 	</div>
+
 	<%@ include file="footer.jsp"%>
+
+
+
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/js/validate.js"></script>
 	<script>
 		function isOk() {
-			if (ValidatePassword(document.getElementById("thePass"), document
+			if (ValidateEmail(document.getElementById("theEmail"), document.getElementById("txtErrEmail"))
+					&& ValidatePassword(document.getElementById("thePass"), document
 					.getElementById("txtErrPass"))
 					&& ValidatePasswordUguali(document
 							.getElementById("thePass"), document
@@ -130,12 +152,14 @@
 							.getElementById("txtErrLuogoDiNascita"))
 					&& ValidateLetter(
 							document.getElementById("theRappresentanteLegale"),
-							document.getElementById("txtErrRappresentanteLegale"))
+							document
+									.getElementById("txtErrRappresentanteLegale"))
 					&& ValidatePartitaIva(document
 							.getElementById("thePartitaIva"), document
 							.getElementById("txtErrPartitaIva"))
-					&& ValidateGiornoRapp(document.getElementById("theGiorno"),document.getElementById("txtErrData"))
-				    	
+					&& ValidateGiornoRapp(document.getElementById("theGiorno"),
+							document.getElementById("txtErrData"))
+
 			) {
 				return true;
 			}

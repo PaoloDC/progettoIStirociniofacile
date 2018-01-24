@@ -120,6 +120,7 @@ function ValidatePartitaIva(str, txt) {
 		return false;
 	}
 }
+
 function ValidateAmbSki(str, txt) {
 	var letters = /^[-\w\s,+.]+$/;
 	if (!(str.value.match(letters))) {
