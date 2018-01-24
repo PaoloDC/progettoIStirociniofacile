@@ -24,8 +24,11 @@ import javax.sql.DataSource;
  * @author Paolo De Cristofaro
  */
 public class DocumentoModel {
+  
   private static DataSource ds;
-  public static final String SAVE_PATH = "C:/Users/PC1/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
+  public static final String SAVE_PATH = "D:/pdf/";
+  // public static final String SAVE_PATH =
+  // "C:/Users/PC1/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
 
   static {
     try {
@@ -108,8 +111,7 @@ public class DocumentoModel {
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    ArrayList<DocumentoQuestionarioBean> listaDocumenti = 
-        new ArrayList<DocumentoQuestionarioBean>();
+    ArrayList<DocumentoQuestionarioBean> listaDocumenti = new ArrayList<DocumentoQuestionarioBean>();
     try {
       connection = ds.getConnection();
       String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI + " WHERE approvato = 0 ";
@@ -150,7 +152,7 @@ public class DocumentoModel {
 
     return listaDocumenti;
   }
-  
+
   /**
    * Ricerca tutti i documenti questionari per una pagina id.
    * 
@@ -158,19 +160,16 @@ public class DocumentoModel {
    * @throws SQLException
    *           eccezzioni sql
    */
-  public synchronized ArrayList<DocumentoQuestionarioBean> 
-      getTuttiDocumentiQuestionariPerPagina(int id)
-      throws SQLException {
+  public synchronized ArrayList<DocumentoQuestionarioBean> getTuttiDocumentiQuestionariPerPagina(
+      int id) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    ArrayList<DocumentoQuestionarioBean> listaDocumenti = 
-        new ArrayList<DocumentoQuestionarioBean>();
+    ArrayList<DocumentoQuestionarioBean> listaDocumenti = new ArrayList<DocumentoQuestionarioBean>();
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT commenti,suggerimenti FROM " 
-          + TABLE_NAME_QUESTIONARI + " WHERE paginaAziendaId = ? ";
+      String selectSql = "SELECT commenti,suggerimenti FROM " + TABLE_NAME_QUESTIONARI
+          + " WHERE paginaAziendaId = ? ";
 
-      
       preparedStatement = connection.prepareStatement(selectSql);
       preparedStatement.setInt(1, id);
       ResultSet rs = preparedStatement.executeQuery();
@@ -205,28 +204,25 @@ public class DocumentoModel {
     return listaDocumenti;
   }
 
+  public synchronized ArrayList<String> ricercaQuestionariNonApprovatiPerStudente(
+      String mailStudente) {
 
-  
-  public synchronized ArrayList<String> 
-      ricercaQuestionariNonApprovatiPerStudente(String mailStudente) {
-    
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    
+
     ArrayList<String> lista = new ArrayList<String>();
-    
+
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT id,annoAccademico,nomeAzienda FROM " + TABLE_NAME_QUESTIONARI 
-          + " JOIN " + TABLE_NAME_CONVENZIONI + " ON "
-          + TABLE_NAME_QUESTIONARI + ".paginaAziendaID = "
-          + TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE "
+      String selectSql = "SELECT id,annoAccademico,nomeAzienda FROM " + TABLE_NAME_QUESTIONARI
+          + " JOIN " + TABLE_NAME_CONVENZIONI + " ON " + TABLE_NAME_QUESTIONARI
+          + ".paginaAziendaID = " + TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE "
           + TABLE_NAME_QUESTIONARI + ".approvato = 0 AND mailStudente = ? ";
-      
+
       preparedStatement = connection.prepareStatement(selectSql);
       preparedStatement.setString(1, mailStudente);
       ResultSet rs = preparedStatement.executeQuery();
-      
+
       if (rs.first()) {
         do {
           String id = rs.getString(1);
@@ -526,17 +522,12 @@ public class DocumentoModel {
    * @throws IOException
    *           in caso di errato salvataggio del file
    */
-  public synchronized void salvaPdfQuestionario(String url, String email)
+  public synchronized void salvaPdfQuestionario(String url, String email, String id)
       throws SQLException, IOException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT id FROM " + TABLE_NAME_QUESTIONARI + " WHERE mailStudente = ? ";
-
-      preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, email);
-      ResultSet rs = preparedStatement.executeQuery();
 
       File fileSaveDir = new File(SAVE_PATH);
       if (!fileSaveDir.exists()) {
@@ -545,12 +536,9 @@ public class DocumentoModel {
 
       String updateSql = "UPDATE " + TABLE_NAME_QUESTIONARI + " SET url = ? WHERE id = ?";
 
-      rs.next();
-
-      int id = rs.getInt(1);
       preparedStatement = connection.prepareStatement(updateSql);
       preparedStatement.setString(1, url);
-      preparedStatement.setInt(2, id);
+      preparedStatement.setString(2, id);
 
       preparedStatement.executeUpdate();
 

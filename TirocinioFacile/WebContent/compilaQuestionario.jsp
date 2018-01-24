@@ -50,7 +50,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 				<!-- usato per centrare -->
 			</div>
 			<div>
-				<form action="GestioneTf?action=compilaQuestionario" method="post"  onsubmit="return isOk();">
+				<form action="GestioneTf?action=compilaQuestionario" method="post" onsubmit="return isOk();">
 					<div class="col-8 col-sm-8">
 						<div>
 							<input type="hidden" name="mailStudente"

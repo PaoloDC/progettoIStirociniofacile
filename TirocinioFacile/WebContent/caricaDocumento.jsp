@@ -63,7 +63,7 @@
 				<!-- usato per centrare -->
 			</div>
 		</div>
-
+		
 		<%
 			} else {
 				for (int i = 0; i < questionariStudente.size(); i++) {
@@ -72,15 +72,12 @@
 					String annoAccademico = all[1];
 					String nomeAzienda = all[2];
 					System.out.println("id " + id + ", anno: " + annoAccademico + " nome azienda: " + nomeAzienda);
-		%>
-
-
-		<%
-			if (i % 2 == 0) {
+			
+					if (i % 2 == 0) {
 		%>
 		<div class="col-12 col-md-12" style="background: #d3d3d3;">
 			<%
-				} else {
+					} else {
 			%>
 			<div class="col-12 col-md-12">
 				<%
@@ -92,14 +89,14 @@
 
 					<div class="row">
 						<div class="col-4 col-md-4">
-							<h4 name="id" value="<%=id%>">
-								ID:
+							<h4>
+								<b>ID:</b>
 								<%=id%>
 
-								Nome Azienda:
+								<br><b>Nome Azienda:</b>
 								<%=nomeAzienda%>
 
-								Anno Accademico:
+								<br><b>Anno Accademico:</b>
 								<%=annoAccademico%>
 							</h4>
 						</div>
@@ -110,12 +107,13 @@
 						<button type="submit" class="btn btn-primary">Carica
 							Documento</button>
 					</div>
-
-					<input type="hidden" id="thisField" name="action"
-						value="caricaDocumento"> <input type="hidden" name="email"
-						value="<%=utente.getEmail()%>">
+				
+					<input type="hidden" id="thisField" name="action" value="caricaDocumento"> 
+					<input type="hidden" name="email" value="<%=utente.getEmail()%>">
+					<input type="hidden" name="idDocumento" value="<%=id %>">
 
 				</form>
+			</div>
 			</div>
 			<br>
 			<%

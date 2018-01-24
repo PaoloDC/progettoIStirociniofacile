@@ -2,6 +2,7 @@ package it.tirociniofacile.control;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -62,7 +63,6 @@ public class GestioneDocumento extends HttpServlet {
         } else if (action.equals("caricaDocumento")) {
           caricaDocumento(request, response);
         } else if (action.equals("convalidaDocumento")) {
-
           convalidaDocumento(request, response);
         } else if (action.equals("compilaConvenzioneAzienda")) {
           compilaConvenzioneAzienda(request, response);
@@ -149,21 +149,27 @@ public class GestioneDocumento extends HttpServlet {
     String tipologiaAccount = (String) request.getSession().getAttribute("tipologiaAccount");
 
     String email = request.getParameter("email");
-
+    
     Part pdf = request.getPart("file");
 
     String fileName = extractFileName(pdf);
 
     pdf.write(DocumentoModel.SAVE_PATH + fileName);
 
+    String idDocumento = request.getParameter("idDocumento");
+    
     if (tipologiaAccount.equals("studente")) {
-      model.salvaPdfQuestionario(fileName, email);
+      model.salvaPdfQuestionario(fileName, email, idDocumento);
+      
       RequestDispatcher rd = request.getRequestDispatcher("/homeStudente.jsp");
       rd.forward(request, response);
+      
     } else if (tipologiaAccount.equals("azienda")) {
       model.salvaPdfConvenzione(fileName, email);
+      
       RequestDispatcher rd = request.getRequestDispatcher("/creaPagina.jsp");
       rd.forward(request, response);
+      
     }
 
   }
