@@ -357,6 +357,7 @@ public class PaginaAziendaModel {
    */
   public synchronized int aggiungiPagina(String localita, String descrizione, String email, 
       ArrayList<String> ambito, ArrayList<String> skill) {
+    
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     PreparedStatement preparedStatementSkill = null;

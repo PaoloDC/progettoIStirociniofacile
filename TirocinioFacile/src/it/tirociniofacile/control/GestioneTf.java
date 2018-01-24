@@ -49,7 +49,7 @@ public class GestioneTf extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("GestioneUtente");
         rd.forward(request, response);
       } else if (action.equals("ricercaTuttePagine") || action.equals("ricercaPagina")
-          || action.equals("visualizzaPagina") || action.equals("ceaPagina")) {
+          || action.equals("visualizzaPagina") || action.equals("creaPagina")) {
         RequestDispatcher rd = request.getRequestDispatcher("GestioneRicercaTirocinio");
         rd.forward(request, response);
       } else if (action.equals("visualizzaInformazioniPerAnnoAccademico") 

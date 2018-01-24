@@ -126,7 +126,7 @@ public class UtenteModel {
     try {
       connection = ds.getConnection();
       String insertSql = "INSERT INTO " + TABLE_NAME_AZIENDA
-          + " (mail, password, nomeAzienda) VALUES (?, ?, ?)";
+          + " (mail, password, nomeAziendaRappresentata) VALUES (?, ?, ?)";
       preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, email);
       preparedStatement.setString(2, password);

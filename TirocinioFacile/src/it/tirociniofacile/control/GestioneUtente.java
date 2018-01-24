@@ -131,10 +131,12 @@ public class GestioneUtente extends HttpServlet {
    * @throws ServletException 
    * @throws SQLException eccezzioni sql
    */
-  public void registrazioneAzienda(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+  public void registrazioneAzienda(HttpServletRequest request,HttpServletResponse response) 
+      throws ServletException, IOException {
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));
     String nomeazienda = (request.getParameter("nomeazienda"));
+    
     model.salvaAccountAzienda(email, password, nomeazienda);
 
     String piva = request.getParameter("piva");

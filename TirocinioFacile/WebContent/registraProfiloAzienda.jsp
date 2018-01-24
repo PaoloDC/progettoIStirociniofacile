@@ -110,7 +110,7 @@
 
 						<div class="form-group">
 							<label id="txtErrData">Data Nascita Rappr Legale</label> <input
-								type="text" id="datepicker" value="11/15/1996">
+								type="text" id="datepicker" name="dataDiNascitaRappLegale" value="11/15/1996">
 						</div>
 						<button type="submit" class="btn btn-primary">Genera La
 							Convenzione</button>
