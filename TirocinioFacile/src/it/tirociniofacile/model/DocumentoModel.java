@@ -167,7 +167,8 @@ public class DocumentoModel {
     ArrayList<DocumentoQuestionarioBean> listaDocumenti = new ArrayList<DocumentoQuestionarioBean>();
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT commenti,suggerimenti FROM " + TABLE_NAME_QUESTIONARI
+      String selectSql = "SELECT commenti,suggerimenti,"
+          + "giudizioAzienda,giudizioUniversita,giudizioEsperienza FROM " + TABLE_NAME_QUESTIONARI
           + " WHERE paginaAziendaId = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
@@ -178,6 +179,9 @@ public class DocumentoModel {
           DocumentoQuestionarioBean documento = new DocumentoQuestionarioBean();
           documento.setCommenti(rs.getString(1));
           documento.setSuggerimenti(rs.getString(2));
+          documento.setGiudizioAzienda(rs.getFloat(3));
+          documento.setGiudizioUniversita(rs.getFloat(4));
+          documento.setGiudizioEsperienza(rs.getFloat(5));
           listaDocumenti.add(documento);
         } while (rs.next());
       }
