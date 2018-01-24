@@ -45,89 +45,109 @@
 	<div class="container">
 		<%@ include file="header.jsp"%>
 		<div class="row">
-			<div class="col-3 col-sm-3">
-				<h2>Nome:</h2>
-				<h2><%=pagina.getNomeAzienda()%></h2>
-			</div>
-
-
-			<div class="col-8 col-sm-8">
-				<div class="panel panel-default panel-modest"
-					style="max-width: 100%; margin-top: 5px; max-height: 100%;">
+			<div class="col-8 col-sm-8" style="margin-left: 150px">
+				<div class="panel panel-default panel-modest"style="max-width: 100%; margin-top: 5px; max-height: 100%;">
 					<div class="panel-heading">
 						<h1>
-							<span class="glyphicon glyphicon-list-alt"></span> Tutte le
-							informazione sull'azienda
+							<span class="glyphicon glyphicon-list-alt"></span> Tutte le informazione sull'azienda
 						</h1>
 					</div>
 					<div class="panel-body"
 						style="max-width: 100%; margin: 5px; max-height: 100%;">
+						
+						<h2><span class="glyphicon glyphicon-file"></span>Nome </h2>
+							<h4>
+							
+								<p><%=pagina.getNomeAzienda()%></p>
+							
+							</h4>
 
 						<h2>
 							<span class="glyphicon glyphicon-pencil"></span> Descrizione
 						</h2>
-						<h3>
+						<h4>
 							<p>
 								<%=pagina.getDescrizione()%></p>
-						</h3>
+						</h4>
 
 						<h2>
 							<span class="glyphicon glyphicon-home"></span> Indirizzo
 						</h2>
-						<h3>
+						<h4>
 							<p><%=pagina.getLocalita()%></p>
-						</h3>
+						</h4>
 
 						<h2>
 							<span class="glyphicon glyphicon-star"></span> Skill Richieste
 						</h2>
-						<h3>
+						<h4>
 							<p><%=pagina.getSkill()%></p>
-						</h3>
+						</h4>
 
 						<h2>
 							<span class="glyphicon glyphicon-folder-open"></span> Ambito
 						</h2>
-						<h3>
+						<h4>
 							<p>
 								<%=pagina.getAmbito()%></p>
-						</h3>
+						</h4>
+					</div>
+				</div>
 
+			</div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-8 col-sm-8" style="margin-left: 150px">
+				<div class="panel panel-default panel-modest"style="max-width: 100%; margin-top: 5px; max-height: 100%;">
+					<div class="panel-heading">
+						<h1>
+							<span class="glyphicon glyphicon-pushpin"></span> Note 
+						</h1>
+					</div>
+					<div class="panel-body"
+						style="max-width: 100%; margin: 5px; max-height: 100%;">
+						
+						<%
+								if (listaDoc != null) {
+							%>
+							<div class="panel-heading">
+								<h2>
+									<span class="glyphicon glyphicon-bullhorn"></span> Suggerimenti
+								</h2>
+							</div>
+							<div class="panel-body" style="max-width: 100%; margin: 5px; max-height: 100%;">
+									
+								<%
+									for (int i = 0; i < listaDoc.size(); i++) {
+								%>
+									<h4><%=listaDoc.get(i).getSuggerimenti()%></h4>
+								<%
+									}
+								%>
+							</div>
+							<div class="panel-heading">
+								<h1>
+									<span class="glyphicon glyphicon-comment"></span> Commenti
+								</h1>
+							</div>
+							<div class="panel-body" style="max-width: 100%; margin: 5px; max-height: 100%;">
+								<%
+									for (int i = 0; i < listaDoc.size(); i++) {
+								%>
+									<h4><%=listaDoc.get(i).getCommenti()%></h4>
+								<%
+									}
+								%>
+								<%
+									}
+								%>
 
 					</div>
 				</div>
 
 			</div>
-			<div class="row">
-				<div class="col-4 col-sm-4"></div>
-				<div class="col-4 col-sm-4">
-
-					<%
-						if (listaDoc != null) {
-					%>
-						<h3>Suggerimenti</h3>
-					<%
-						for (int i = 0; i < listaDoc.size(); i++) {
-					%>
-						<h4><%=listaDoc.get(i).getSuggerimenti()%></h4>
-					<%
-						}
-					%>
-						<h3>Commenti</h3>
-					<%
-						for (int i = 0; i < listaDoc.size(); i++) {
-					%>
-						<h4><%=listaDoc.get(i).getCommenti()%></h4>
-					<%
-						}
-					%>
-					<%
-						}
-					%>
-					<br> <br> <br> <br> <br> <br>
-				</div>
-
-				<div class="col-4 col-sm-4"></div>
+			<div class="col-4 col-sm-4"></div>
 			</div>
 		</div>
 

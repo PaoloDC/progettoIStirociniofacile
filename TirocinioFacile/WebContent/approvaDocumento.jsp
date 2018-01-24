@@ -313,8 +313,18 @@
 							<h2>Nessuna Documento</h2>
 						</center>
 						<%
-							} /*end else*/
+							}/*end if*/
+							if((listaDocumentiQuestionari !=null)&& (listaDocumentiQuestionari.size()==0)){
+
 						%>
+						<center>
+							<h2>Nessuna Documento questionario trovato !</h2>
+						</center>
+						<%}  if((listaDocumentiConvenzione !=null)&& (listaDocumentiConvenzione.size()==0)){%>
+						<center>
+							<h2>Nessuna Documento convenzione trovato !</h2>
+						</center>
+						<%}%>
 					</div>
 				</div>
 			</div>
