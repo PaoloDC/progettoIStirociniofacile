@@ -59,7 +59,8 @@ public class DocumentoModel {
     ArrayList<DocumentoConvenzioneBean> listaDocumenti = new ArrayList<DocumentoConvenzioneBean>();
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI + " WHERE approvato = 0 ";
+      String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI 
+          + " WHERE approvato = 0 AND url IS NOT NULL";
 
       preparedStatement = connection.prepareStatement(selectSql);
       ResultSet rs = preparedStatement.executeQuery();
@@ -111,10 +112,11 @@ public class DocumentoModel {
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    ArrayList<DocumentoQuestionarioBean> listaDocumenti = new ArrayList<DocumentoQuestionarioBean>();
+    ArrayList<DocumentoQuestionarioBean> listaDocumenti = new ArrayList<>();
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI + " WHERE approvato = 0 ";
+      String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI 
+          + " WHERE approvato = 0 AND url IS NOT NULL ";
 
       preparedStatement = connection.prepareStatement(selectSql);
       ResultSet rs = preparedStatement.executeQuery();
