@@ -38,7 +38,8 @@
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-4 col-md-4">
-				<form action="GestioneTf?action=recuperaPassword" method="post" onsubmit="return isOk();">
+				<form action="GestioneTf?action=recuperaPassword" method="post"
+					onsubmit="return isOk();">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email</label> <input type="text"
 							class="form-control" id="exampleInputEmail1" name="email"

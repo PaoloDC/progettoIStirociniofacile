@@ -47,8 +47,8 @@
 		<%@ include file="header.jsp"%>
 
 		<%
-			if(questionariStudente != null)
-			if (questionariStudente.size() == 0) {
+			if (questionariStudente != null)
+				if (questionariStudente.size() == 0) {
 		%>
 		<div class="row">
 			<div class="col-4 col-md-4">
@@ -63,21 +63,21 @@
 				<!-- usato per centrare -->
 			</div>
 		</div>
-		
+
 		<%
 			} else {
-				for (int i = 0; i < questionariStudente.size(); i++) {
-					String[] all = questionariStudente.get(i).split(";");
-					String id = all[0];
-					String annoAccademico = all[1];
-					String nomeAzienda = all[2];
-					System.out.println("id " + id + ", anno: " + annoAccademico + " nome azienda: " + nomeAzienda);
-			
-					if (i % 2 == 0) {
+					for (int i = 0; i < questionariStudente.size(); i++) {
+						String[] all = questionariStudente.get(i).split(";");
+						String id = all[0];
+						String annoAccademico = all[1];
+						String nomeAzienda = all[2];
+						System.out.println("id " + id + ", anno: " + annoAccademico + " nome azienda: " + nomeAzienda);
+
+						if (i % 2 == 0) {
 		%>
 		<div class="col-12 col-md-12" style="background: #d3d3d3;">
 			<%
-					} else {
+				} else {
 			%>
 			<div class="col-12 col-md-12">
 				<%
@@ -93,10 +93,12 @@
 								<b>ID:</b>
 								<%=id%>
 
-								<br><b>Nome Azienda:</b>
+								<br>
+								<b>Nome Azienda:</b>
 								<%=nomeAzienda%>
 
-								<br><b>Anno Accademico:</b>
+								<br>
+								<b>Anno Accademico:</b>
 								<%=annoAccademico%>
 							</h4>
 						</div>
@@ -107,20 +109,21 @@
 						<button type="submit" class="btn btn-primary">Carica
 							Documento</button>
 					</div>
-				
-					<input type="hidden" id="thisField" name="action" value="caricaDocumento"> 
-					<input type="hidden" name="email" value="<%=utente.getEmail()%>">
-					<input type="hidden" name="idDocumento" value="<%=id %>">
+
+					<input type="hidden" id="thisField" name="action"
+						value="caricaDocumento"> <input type="hidden" name="email"
+						value="<%=utente.getEmail()%>"> <input type="hidden"
+						name="idDocumento" value="<%=id%>">
 
 				</form>
 			</div>
-			</div>
-			<br>
-			<%
+		</div>
+		<br>
+		<%
+			}
 				}
-				}
-			%>
-		
+		%>
+
 	</center>
 	<%@ include file="footer.jsp"%>
 

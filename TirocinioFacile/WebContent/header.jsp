@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"
 	import="java.util.* , it.tirociniofacile.bean.*,it.tirociniofacile.control.*"%>
-	<% 
-	UtenteBean utente =(UtenteBean) session.getAttribute("account");
-	
-	%>
+<%
+	UtenteBean utente = (UtenteBean) session.getAttribute("account");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -52,14 +51,18 @@
 						</li>
 					</ul>
 				</div>
-				<h3 style="text-align: right;color:orange ">
-				<% if (utente != null ){ %>
-				<span class="glyphicon glyphicon-user">
-				<%=	utente.getEmail()  %>
-					
-				<a href="GestioneTf?action=log-out"><span class="glyphicon glyphicon-log-out"></span> log-out</a>		
-			<%} %>	
-				 </span></h3>
+				<h3 style="text-align: right; color: orange">
+					<%
+						if (utente != null) {
+					%>
+					<span class="glyphicon glyphicon-user"> <%=utente.getEmail()%>
+
+						<a href="GestioneTf?action=log-out"><span
+							class="glyphicon glyphicon-log-out"></span> log-out</a> <%
+ 	}
+ %>
+					</span>
+				</h3>
 			</div>
 			</nav>
 		</div>

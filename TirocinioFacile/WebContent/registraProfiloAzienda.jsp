@@ -175,8 +175,9 @@
 							.getElementById("theLuogoDiNascita"), document
 							.getElementById("txtErrLuogoDiNascita"))
 					&& ValidateLetter(
-							document.getElementById("theRappresentanteLegale"),document
-							.getElementById("txtErrRappresentanteLegale"))
+							document.getElementById("theRappresentanteLegale"),
+							document
+									.getElementById("txtErrRappresentanteLegale"))
 					&& ValidateGiornoRapp(document.getElementById("theGiorno"),
 							document.getElementById("txtErrData"))
 

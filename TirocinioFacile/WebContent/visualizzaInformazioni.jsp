@@ -37,12 +37,14 @@
 		<br> <br> <br>
 		<div class="row">
 			<div class="container-fluid">
-	<script>
-		$(document).ready(function() {
-			$('[data-toggle="tooltip"]').tooltip();
-		});
-	</script>
-				<a class="btn btn-primary btn-lg btn-block" href="visInfAnno.jsp" data-toggle="tooltip" title="Visualizza tirocini conclusi" role="button">Tirocini Conclusi Per Anno Accademico</a>
+				<script>
+					$(document).ready(function() {
+						$('[data-toggle="tooltip"]').tooltip();
+					});
+				</script>
+				<a class="btn btn-primary btn-lg btn-block" href="visInfAnno.jsp"
+					data-toggle="tooltip" title="Visualizza tirocini conclusi"
+					role="button">Tirocini Conclusi Per Anno Accademico</a>
 			</div>
 			<br> <br> <br>
 		</div>
@@ -51,7 +53,8 @@
 			<div class="container-fluid">
 
 				<a class="btn btn-primary btn-lg btn-block"
-					href="GestioneTf?action=ricercaTuttePagine&tirocini=true"   data-toggle="tooltip" title="Visualizza tirocini per azienda"
+					href="GestioneTf?action=ricercaTuttePagine&tirocini=true"
+					data-toggle="tooltip" title="Visualizza tirocini per azienda"
 					role="button">Tirocini Conclusi Per Azienda</a>
 			</div>
 			<br> <br> <br>
@@ -59,8 +62,9 @@
 
 		<div class="row">
 			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block"  data-toggle="tooltip" title="Cerca le pagine"
-					href="ricercaAzienda.jsp" role="button">Ricerca Pagina Azienda</a>
+				<a class="btn btn-primary btn-lg btn-block" data-toggle="tooltip"
+					title="Cerca le pagine" href="ricercaAzienda.jsp" role="button">Ricerca
+					Pagina Azienda</a>
 			</div>
 			<br> <br> <br>
 		</div>

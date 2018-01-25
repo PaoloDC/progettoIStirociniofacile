@@ -11,8 +11,8 @@
 	} else {
 		response.sendRedirect("./index.jsp");
 	}
-		
-	String action = (String)request.getAttribute("action");
+
+	String action = (String) request.getAttribute("action");
 	ArrayList<PaginaAziendaBean> listaAziende = (ArrayList<PaginaAziendaBean>) request
 			.getAttribute("listaAziende");
 	int indice = 4;
@@ -131,8 +131,7 @@
 										<a
 											href="GestioneTf?action=visualizzaPagina&id=<%=listaAziende.get(i).getId()%>">
 											<button type="submit" class="btn btn-info"
-												data-toggle="tooltip" title="Apri">Vai
-												alla pagina</button>
+												data-toggle="tooltip" title="Apri">Vai alla pagina</button>
 										</a>
 									</center>
 								</div>
@@ -154,17 +153,17 @@
 								<li class="page-item">
 									<%
 										int numPag = 1;
-										int indicePag = 1;
-										int indici = NUM_ELE_PAG;
+												int indicePag = 1;
+												int indici = NUM_ELE_PAG;
 												/*Se è la prima pagina non visualizzare il precedente */
-										if (indice != NUM_ELE_PAG) {
+												if (indice != NUM_ELE_PAG) {
 									%> <a class="page-link"
 									href="GestioneTf?action=<%=action%>&indice=<%=indice - NUM_ELE_PAG%>"
 									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 										<span class="sr-only">Previous</span>
 								</a> <%
-									 	}
-									 %>
+ 	}
+ %>
 								</li>
 								<%
 									if (listaAziende != null)
@@ -193,8 +192,7 @@
 								%>
 
 								<%
-							
-											/*Sela pagina successiva non contiene nulla */
+									/*Sela pagina successiva non contiene nulla */
 											if (indice < indici - NUM_ELE_PAG) {
 								%>
 
@@ -217,12 +215,14 @@
 								<h2>Nessuna Azienda disponibile</h2>
 							</center>
 							<%
-								} else if (listaAziende.size()==0) {/*end else*/
+								} else if (listaAziende.size() == 0) {/*end else*/
 							%>
 							<center>
 								<h2>Nessuna Azienda trovata !</h2>
 							</center>
-							<%} %>
+							<%
+								}
+							%>
 						</div>
 					</div>
 				</div>

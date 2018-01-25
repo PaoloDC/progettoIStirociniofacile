@@ -11,7 +11,7 @@
 	} else {
 		response.sendRedirect("./index.jsp");
 	}
-	
+
 	final int NUM_ELE_PAG = 4;
 	ArrayList<DocumentoConvenzioneBean> listaDocumentiConvenzione = (ArrayList<DocumentoConvenzioneBean>) request
 			.getAttribute("listaDocumentiConvenzione");
@@ -86,18 +86,17 @@
 					<a
 						href="GestioneTf?action=ricercaTuttiDocumentiConvenzioneAzienda&indice=4"
 						class="btn btn-success btn-block" data-toggle="tooltip"
-						title="Cerca tutte">Cerca 
-						convenzioni azienda <span class="glyphicon glyphicon-hdd">
-					</span> <i class="fa fa-angle-right">
-					</a>
+						title="Cerca tutte">Cerca convenzioni azienda <span
+						class="glyphicon glyphicon-hdd"> </span> <i
+						class="fa fa-angle-right"></a>
 				</div>
 				<div class=" col-sm-6">
 					<a
 						href="GestioneTf?action=ricercaTuttiDocumentiQuestionariAzienda&indice=4"
 						class="btn btn-success btn-block" data-toggle="tooltip"
-						title="Cerca tutte ">Cerca i questionari <span class="glyphicon glyphicon-hdd"> </span> <i
-						class="fa fa-angle-right">
-					</a>
+						title="Cerca tutte ">Cerca i questionari <span
+						class="glyphicon glyphicon-hdd"> </span> <i
+						class="fa fa-angle-right"></a>
 				</div>
 			</div>
 
@@ -105,7 +104,8 @@
 
 			<div class="container">
 				<h3>
-					<span class="glyphicon glyphicon-folder-open"></span> Documenti da approvare
+					<span class="glyphicon glyphicon-folder-open"></span> Documenti da
+					approvare
 				</h3>
 				<div class="row">
 					<div class="panel-group">
@@ -128,9 +128,10 @@
 								<div class="panel-body">
 									<%=listaDocumentiConvenzione.get(i).getRappresentanteLegale()%></div>
 								<center>
-									<a href="GestioneTf?action=visualizzaDocumento&partitaIva=<%=listaDocumentiConvenzione.get(i).getPartitaIva()%>"><button
-											type="submit" class="btn btn-info" data-toggle="tooltip" title="Apri">Visualizza
-											convenzione</button></a>
+									<a
+										href="GestioneTf?action=visualizzaDocumento&partitaIva=<%=listaDocumentiConvenzione.get(i).getPartitaIva()%>"><button
+											type="submit" class="btn btn-info" data-toggle="tooltip"
+											title="Apri">Visualizza convenzione</button></a>
 								</center>
 							</div>
 						</div>
@@ -310,18 +311,22 @@
 							<h2>Nessuna Documento</h2>
 						</center>
 						<%
-							}/*end if*/
-							if((listaDocumentiQuestionari !=null)&& (listaDocumentiQuestionari.size()==0)){
-
+							} /*end if*/
+							if ((listaDocumentiQuestionari != null) && (listaDocumentiQuestionari.size() == 0)) {
 						%>
 						<center>
 							<h2>Nessuna Documento questionario trovato !</h2>
 						</center>
-						<%}  if((listaDocumentiConvenzione !=null)&& (listaDocumentiConvenzione.size()==0)){%>
+						<%
+							}
+							if ((listaDocumentiConvenzione != null) && (listaDocumentiConvenzione.size() == 0)) {
+						%>
 						<center>
 							<h2>Nessuna Documento convenzione trovato !</h2>
 						</center>
-						<%}%>
+						<%
+							}
+						%>
 					</div>
 				</div>
 			</div>

@@ -46,21 +46,25 @@
 		<%@ include file="header.jsp"%>
 		<div class="row">
 			<div class="col-8 col-sm-8" style="margin-left: 180px">
-				<div class="panel panel-default panel-modest"style="max-width: 100%; margin-top: 5px; max-height: 100%;">
+				<div class="panel panel-default panel-modest"
+					style="max-width: 100%; margin-top: 5px; max-height: 100%;">
 					<div class="panel-heading">
 						<h1>
-							<span class="glyphicon glyphicon-list-alt"></span> Tutte le informazione sull'azienda
+							<span class="glyphicon glyphicon-list-alt"></span> Tutte le
+							informazione sull'azienda
 						</h1>
 					</div>
 					<div class="panel-body"
 						style="max-width: 100%; margin: 5px; max-height: 100%;">
-						
-						<h2><span class="glyphicon glyphicon-file"></span>Nome </h2>
-							<h4>
-							
-								<p><%=pagina.getNomeAzienda()%></p>
-							
-							</h4>
+
+						<h2>
+							<span class="glyphicon glyphicon-file"></span>Nome
+						</h2>
+						<h4>
+
+							<p><%=pagina.getNomeAzienda()%></p>
+
+						</h4>
 
 						<h2>
 							<span class="glyphicon glyphicon-pencil"></span> Descrizione
@@ -94,116 +98,127 @@
 					</div>
 				</div>
 			</div>
-	<div class="container">
-		<div class="row">
-			<div class="col-8 col-sm-8" style="margin-left: 180px">
-				<div class="panel panel-default panel-modest"style="max-width: 100%; margin-top: 5px; max-height: 100%;">
-					<div class="panel-heading">
-						<h1>
-							<span class="glyphicon glyphicon-pushpin"></span> Note 
-						</h1>
-					</div>
-							<div class="panel-body"style="max-width: 100%; margin: 5px; max-height: 100%;">
-									<%
-										if (listaDoc != null) {
-									%>
-									<div class="panel-heading">
-										<h2>
-											<span class="glyphicon glyphicon-bullhorn"></span> Suggerimenti
-										</h2>
-									</div>
-									<div class="panel-body" style="max-width: 100%; margin: 5px; max-height: 100%;">
-											
-										<%
-											for (int i = 0; i < listaDoc.size(); i++) {
-										%>
-											<h4><%=listaDoc.get(i).getSuggerimenti()%></h4>
-										<%
-											}
-										%>
-									</div>
-									<div class="panel-heading">
-										<h1>
-											<span class="glyphicon glyphicon-comment"></span> Commenti
-										</h1>
-									</div>
-									<div class="panel-body" style="max-width: 100%; margin: 5px; max-height: 100%;">
-										<%
-											for (int i = 0; i < listaDoc.size(); i++) {
-										%>
-											<h4><%=listaDoc.get(i).getCommenti()%></h4>
-										<%
-											}
-										%>
-										<%
-											}
-										%>
-		
-									</div>
-							</div>
-				</div>
-			</div>
 			<div class="container">
-					<div class="row">
-						<div class="col-8 col-sm-8" style="margin-left: 180px">
-							<div class="panel panel-default panel-modest"style="max-width: 100%; margin-top: 5px; max-height: 100%;">
+				<div class="row">
+					<div class="col-8 col-sm-8" style="margin-left: 180px">
+						<div class="panel panel-default panel-modest"
+							style="max-width: 100%; margin-top: 5px; max-height: 100%;">
+							<div class="panel-heading">
+								<h1>
+									<span class="glyphicon glyphicon-pushpin"></span> Note
+								</h1>
+							</div>
+							<div class="panel-body"
+								style="max-width: 100%; margin: 5px; max-height: 100%;">
+								<%
+									if (listaDoc != null) {
+								%>
+								<div class="panel-heading">
+									<h2>
+										<span class="glyphicon glyphicon-bullhorn"></span>
+										Suggerimenti
+									</h2>
+								</div>
+								<div class="panel-body"
+									style="max-width: 100%; margin: 5px; max-height: 100%;">
+
+									<%
+										for (int i = 0; i < listaDoc.size(); i++) {
+									%>
+									<h4><%=listaDoc.get(i).getSuggerimenti()%></h4>
+									<%
+										}
+									%>
+								</div>
 								<div class="panel-heading">
 									<h1>
-										<span class="glyphicon glyphicon-stats"></span> Medie
+										<span class="glyphicon glyphicon-comment"></span> Commenti
 									</h1>
 								</div>
 								<div class="panel-body"
-									style="max-width: 100%; margin: 5px; max-height: 100%;">	
+									style="max-width: 100%; margin: 5px; max-height: 100%;">
 									<%
+										for (int i = 0; i < listaDoc.size(); i++) {
+									%>
+									<h4><%=listaDoc.get(i).getCommenti()%></h4>
+									<%
+										}
+									%>
+									<%
+										}
+									%>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="container">
+						<div class="row">
+							<div class="col-8 col-sm-8" style="margin-left: 180px">
+								<div class="panel panel-default panel-modest"
+									style="max-width: 100%; margin-top: 5px; max-height: 100%;">
+									<div class="panel-heading">
+										<h1>
+											<span class="glyphicon glyphicon-stats"></span> Medie
+										</h1>
+									</div>
+									<div class="panel-body"
+										style="max-width: 100%; margin: 5px; max-height: 100%;">
+										<%
 											if (listaDoc != null) {
 										%>
 										<div class="panel-heading">
 											<h2>
-												<span class="glyphicon glyphicon-briefcase"></span> Giudizio Azienda
+												<span class="glyphicon glyphicon-briefcase"></span> Giudizio
+												Azienda
 											</h2>
 										</div>
-											<div class="panel-body" style="max-width: 100%; margin: 5px; max-height: 100%;">
-													
-													<%
-														for (int i = 0; i < listaDoc.size(); i++) {
-													%>
-														<h4><%=listaDoc.get(i).getGiudizioAzienda()%></h4>
-													<%
-														}
-													%>
-											</div>
-											<div class="panel-heading">
-												<h1>
-													<span class="glyphicon glyphicon-education"></span> Giudizio Università
-												</h1>
-											</div>
-											<div class="panel-body" style="max-width: 100%; margin: 5px; max-height: 100%;">
-													<%
-														for (int i = 0; i < listaDoc.size(); i++) {
-													%>
-														<h4><%=listaDoc.get(i).getGiudizioUniversita()%></h4>
-													<%
-														}
-													%>
-													
-											</div>
-											<div class="panel-heading">
-												<h1>
-													<span class="glyphicon glyphicon-book"></span> Giudizio esperienza Studenti
-												</h1>
-											</div>
-											<div class="panel-body" style="max-width: 100%; margin: 5px; max-height: 100%;">
-													<%
-														for (int i = 0; i < listaDoc.size(); i++) {
-													%>
-														<h4><%=listaDoc.get(i).getGiudizioEsperienza()%></h4>
-													<%
-														}
-													%>
-												<%
-														}
-													%>	
-											</div>
+										<div class="panel-body"
+											style="max-width: 100%; margin: 5px; max-height: 100%;">
+
+											<%
+												for (int i = 0; i < listaDoc.size(); i++) {
+											%>
+											<h4><%=listaDoc.get(i).getGiudizioAzienda()%></h4>
+											<%
+												}
+											%>
+										</div>
+										<div class="panel-heading">
+											<h1>
+												<span class="glyphicon glyphicon-education"></span> Giudizio
+												Università
+											</h1>
+										</div>
+										<div class="panel-body"
+											style="max-width: 100%; margin: 5px; max-height: 100%;">
+											<%
+												for (int i = 0; i < listaDoc.size(); i++) {
+											%>
+											<h4><%=listaDoc.get(i).getGiudizioUniversita()%></h4>
+											<%
+												}
+											%>
+
+										</div>
+										<div class="panel-heading">
+											<h1>
+												<span class="glyphicon glyphicon-book"></span> Giudizio
+												esperienza Studenti
+											</h1>
+										</div>
+										<div class="panel-body"
+											style="max-width: 100%; margin: 5px; max-height: 100%;">
+											<%
+												for (int i = 0; i < listaDoc.size(); i++) {
+											%>
+											<h4><%=listaDoc.get(i).getGiudizioEsperienza()%></h4>
+											<%
+												}
+											%>
+											<%
+												}
+											%>
 										</div>
 									</div>
 								</div>
@@ -212,27 +227,28 @@
 					</div>
 				</div>
 			</div>
-</div>
-		<%
-			} else {
-		%>
-		<div class="container">
-			<div class="row">
-				<div class="col-2 col-sm-2"></div>
-				<br> <br> <br> <br> <br> <br> <br>
-				<br> <br> <br> <br> <br>
-				<div class="col-8 col-sm-8">
-					<h2>
-						Ops non esiste questa pagina! Torna alla <a href="index.jsp">home</a>
-					</h2>
-				</div>
-				<div class="col-2 col-sm-2"></div>
-			</div>
 		</div>
-		<%
-			}
-		%>
-	
-		<%@ include file="footer.jsp"%>
+	</div>
+	<%
+		} else {
+	%>
+	<div class="container">
+		<div class="row">
+			<div class="col-2 col-sm-2"></div>
+			<br> <br> <br> <br> <br> <br> <br>
+			<br> <br> <br> <br> <br>
+			<div class="col-8 col-sm-8">
+				<h2>
+					Ops non esiste questa pagina! Torna alla <a href="index.jsp">home</a>
+				</h2>
+			</div>
+			<div class="col-2 col-sm-2"></div>
+		</div>
+	</div>
+	<%
+		}
+	%>
+
+	<%@ include file="footer.jsp"%>
 </body>
 </html>

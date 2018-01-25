@@ -14,7 +14,7 @@
 
 	DocumentoConvenzioneBean convenzione = (DocumentoConvenzioneBean) request.getAttribute("convenzione");
 	DocumentoQuestionarioBean questionario = (DocumentoQuestionarioBean) request.getAttribute("questionario");
-	
+
 	//System.out.println("ASDASDA" + convenzione.getUrl());
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -40,7 +40,7 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
-			<script>
+	<script>
 		$(document).ready(function() {
 			$('[data-toggle="tooltip"]').tooltip();
 		});
@@ -58,10 +58,10 @@
 					if (convenzione != null) {
 				%>
 				<br> <br> <br> <a data-toggle="tooltip"
-						title="Approva convenzione"
+					title="Approva convenzione"
 					href="GestioneTf?action=convalidaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=true">
 					<button type="submit" class=" btn btn-success">Approva</button>
-				</a> <a  data-toggle="tooltip" title="Elimina convenzione "
+				</a> <a data-toggle="tooltip" title="Elimina convenzione "
 					href="GestioneTf?action=convalidaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=false">
 					<button type="submit" class="btn btn-danger">Elimina</button>
 				</a>
@@ -69,7 +69,8 @@
 			<div class="row">
 				<div class="col-6 col-sm-6">
 					<center>
-						<iframe src="<%=convenzione.getUrl() %>" allowTransparency frameborder="0"
+						<iframe src="<%=convenzione.getUrl()%>" allowTransparency
+							frameborder="0"
 							style="overflow: hidden; margin-top: 1px; width: 550px; height: 520px"></iframe>
 						<br> <br> <br> <br>
 					</center>
@@ -78,7 +79,8 @@
 				<%
 					} else if (questionario != null) {
 				%>
-				<br> <br> <br> <a  data-toggle="tooltip" title="Approva questionario"
+				<br> <br> <br> <a data-toggle="tooltip"
+					title="Approva questionario"
 					href="GestioneTf?action=convalidaDocumento&id=<%=questionario.getId()%>&approvato=true">
 					<button type="submit" class=" btn btn-success">Approva</button>
 				</a> <a data-toggle="tooltip" title="Elimina questionario"
@@ -89,7 +91,8 @@
 			<div class="row">
 				<div class="col-6 col-sm-6">
 					<center>
-						<iframe src="<%=questionario.getUrl() %>" allowTransparency frameborder="0"
+						<iframe src="<%=questionario.getUrl()%>" allowTransparency
+							frameborder="0"
 							style="overflow: hidden; margin-top: 1px; width: 550px; height: 520px"></iframe>
 						<br> <br> <br> <br>
 					</center>
