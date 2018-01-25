@@ -17,6 +17,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 /**
  * Classe model per la gestione di lettura e scrittura dei documenti (convenzione e questionario)
  * sul database.
@@ -428,7 +430,7 @@ public class DocumentoModel {
    * @param dataDiNascitaRappLegale
    *          data di nascita del rappresentate legale dell'azienda
    */
-  public synchronized void salvaConvenzione(String piva, String nomeAzienda, String sedeLegale,
+  public synchronized boolean salvaConvenzione(String piva, String nomeAzienda, String sedeLegale,
       String citta, String rappLegale, String luogoDiNascitaRappLegale,
       String dataDiNascitaRappLegale) throws SQLException {
     Connection connection = null;
@@ -449,7 +451,12 @@ public class DocumentoModel {
       preparedStatement.setString(6, luogoDiNascitaRappLegale);
       preparedStatement.setString(7, dataDiNascitaRappLegale);
       preparedStatement.setInt(8, 0);
-      preparedStatement.executeUpdate();
+      
+      try {
+        preparedStatement.executeUpdate();
+      } catch (MySQLIntegrityConstraintViolationException e) {
+        return false;
+      }
     } finally {
       try {
         if (preparedStatement != null) {
@@ -461,6 +468,7 @@ public class DocumentoModel {
         }
       }
     }
+    return true;
   }
 
   /**
@@ -737,4 +745,25 @@ public class DocumentoModel {
     }
     return;
   }
+  
+  /**
+   * Cancella un account azienda.
+   * 
+   * @param email
+   *          identificativo dell'account
+   * @throws SQLException
+   *           in caso di errata connessione al database
+   */
+  public synchronized void cancellaAccountAzienda(String email) throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    connection = ds.getConnection();
+    String deleteSql = "DELETE FROM " + UtenteModel.TABLE_NAME_AZIENDA + " WHERE mail = ?";
+    preparedStatement = connection.prepareStatement(deleteSql);
+    preparedStatement.setString(1, email);
+
+    preparedStatement.executeUpdate();
+
+  }
 }
+
