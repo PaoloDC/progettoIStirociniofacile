@@ -380,6 +380,16 @@ public class PaginaAziendaModel {
       rs.next();
       int autoId = rs.getInt(1);
 
+      //Query per avvalorare il campo paginaAziendaID della convenzione
+      String updateSql = "UPDATE " + DocumentoModel.TABLE_NAME_CONVENZIONI 
+          + " SET paginaAziendaID = ? WHERE nomeAzienda = ( SELECT nomeAziendaRappresentata FROM "
+          + UtenteModel.TABLE_NAME_AZIENDA + " WHERE mail = ? ); ";
+      
+      PreparedStatement preparedStatementUpdate = connection.prepareStatement(updateSql);
+      preparedStatementUpdate.setInt(1, autoId);
+      preparedStatementUpdate.setString(2, email);
+      preparedStatementUpdate.executeUpdate(); 
+      
       String insertSqlSkill = "INSERT INTO " + TABLE_NAME_SKILL
           + " (paginaAziendaID,nomeSkill) VALUES (?,?)";
       preparedStatementSkill = connection.prepareStatement(insertSqlSkill);
