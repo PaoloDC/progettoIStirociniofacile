@@ -94,7 +94,7 @@
 					<ul class="nav navbar-nav navbar-right">
 						<div class="navbar-form navbar-right">
 							<button type="submit" class="btn btn-default"
-								data-toggle="tooltip" title="Cerca l'azienda ">Cerca</button>
+								data-toggle="tooltip" title="Avvia ">Cerca</button>
 						</div>
 						</form>
 				</div>
@@ -104,8 +104,8 @@
 			<div class=" col-sm-6">
 				<a href="GestioneTf?action=ricercaTuttePagine"
 					class="btn btn-success btn-block" data-toggle="tooltip"
-					title="Cerca tutte le aziende">Cerca tutte le aziende <span
-					class="glyphicon glyphicon-hdd"> </span> <i
+					title="Avvia">Cerca tutte le aziende <span
+					class="glyphicon glyphicon-zoom-in"> </span> <i
 					class="fa fa-angle-right"></a>
 				<!-- /.navbar-collapse -->
 				<div class="container">
@@ -131,7 +131,7 @@
 										<a
 											href="GestioneTf?action=visualizzaPagina&id=<%=listaAziende.get(i).getId()%>">
 											<button type="submit" class="btn btn-info"
-												data-toggle="tooltip" title="Visualizza la pagina">Vai
+												data-toggle="tooltip" title="Apri">Vai
 												alla pagina</button>
 										</a>
 									</center>

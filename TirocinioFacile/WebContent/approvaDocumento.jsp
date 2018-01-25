@@ -86,7 +86,7 @@
 					<a
 						href="GestioneTf?action=ricercaTuttiDocumentiConvenzioneAzienda&indice=4"
 						class="btn btn-success btn-block" data-toggle="tooltip"
-						title="Cerca tutte le convenzioni nel db">Cerca tutte le
+						title="Cerca tutte">Cerca 
 						convenzioni azienda <span class="glyphicon glyphicon-hdd">
 					</span> <i class="fa fa-angle-right">
 					</a>
@@ -95,8 +95,7 @@
 					<a
 						href="GestioneTf?action=ricercaTuttiDocumentiQuestionariAzienda&indice=4"
 						class="btn btn-success btn-block" data-toggle="tooltip"
-						title="Cerca tutti i questionari nel db">Cerca tutte i
-						questionari <span class="glyphicon glyphicon-hdd"> </span> <i
+						title="Cerca tutte ">Cerca i questionari <span class="glyphicon glyphicon-hdd"> </span> <i
 						class="fa fa-angle-right">
 					</a>
 				</div>
@@ -106,8 +105,7 @@
 
 			<div class="container">
 				<h3>
-					<span class="glyphicon glyphicon-folder-open"></span> Documenti da
-					approvare
+					<span class="glyphicon glyphicon-folder-open"></span> Documenti da approvare
 				</h3>
 				<div class="row">
 					<div class="panel-group">
@@ -130,9 +128,8 @@
 								<div class="panel-body">
 									<%=listaDocumentiConvenzione.get(i).getRappresentanteLegale()%></div>
 								<center>
-									<a
-										href="GestioneTf?action=visualizzaDocumento&partitaIva=<%=listaDocumentiConvenzione.get(i).getPartitaIva()%>"><button
-											type="submit" class="btn btn-info">Visualizza
+									<a href="GestioneTf?action=visualizzaDocumento&partitaIva=<%=listaDocumentiConvenzione.get(i).getPartitaIva()%>"><button
+											type="submit" class="btn btn-info" data-toggle="tooltip" title="Apri">Visualizza
 											convenzione</button></a>
 								</center>
 							</div>

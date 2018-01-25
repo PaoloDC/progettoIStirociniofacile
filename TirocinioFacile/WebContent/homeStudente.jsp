@@ -29,14 +29,20 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
+	
 
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
 		<br> <br> <br>
-
+	<script>
+		$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
 		<div class="row">
 			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block" href="ricercaAzienda.jsp"
+				<a class="btn btn-primary btn-lg btn-block" href="ricercaAzienda.jsp" data-toggle="tooltip"
+						title="Apri pagina"
 					role="button">Ricerca Pagina Azienda</a>
 			</div>
 			<br> <br> <br>
@@ -45,7 +51,8 @@
 		<div class="row">
 			<div class="container-fluid">
 				<a class="btn btn-primary btn-lg btn-block"
-					href="GestioneTf?action=ricercaTuttePagine&compila=true"
+					href="GestioneTf?action=ricercaTuttePagine&compila=true"  data-toggle="tooltip"
+						title="Apri pagina"
 					role="button">Compila Questionario Valutazione Azienda</a>
 			</div>
 				
@@ -54,7 +61,8 @@
 
 		<div class="row">
 			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block"
+				<a class="btn btn-primary btn-lg btn-block"  data-toggle="tooltip"
+						title="Apri pagina"
 					href="GestioneTf?action=ricercaQuestionariNonApprovatiPerStudente&mailStudente=<%=ub.getEmail() %>"
 					role="button"> Carica Questionario per Approvazione</a>
 			</div>

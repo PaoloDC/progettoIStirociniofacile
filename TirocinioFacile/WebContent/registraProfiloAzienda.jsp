@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>TirocinioFacile - Login</title>
+<title>TirocinioFacile - Registra profilo azienda</title>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -166,18 +166,17 @@
 							document.getElementById("txtErrNomeAzienda"))
 					&& ValidateLetter(document.getElementById("theCity"),
 							document.getElementById("txtErrCitta"))
+					&& ValidatePartitaIva(document
+							.getElementById("thePartitaIva"), document
+							.getElementById("txtErrPartitaIva"))
 					&& ValidateLetter(document.getElementById("theSedeLegale"),
 							document.getElementById("txtErrSedeLegale"))
 					&& ValidateLetter(document
 							.getElementById("theLuogoDiNascita"), document
 							.getElementById("txtErrLuogoDiNascita"))
 					&& ValidateLetter(
-							document.getElementById("theRappresentanteLegale"),
-							document
-									.getElementById("txtErrRappresentanteLegale"))
-					&& ValidatePartitaIva(document
-							.getElementById("thePartitaIva"), document
-							.getElementById("txtErrPartitaIva"))
+							document.getElementById("theRappresentanteLegale"),document
+							.getElementById("txtErrRappresentanteLegale"))
 					&& ValidateGiornoRapp(document.getElementById("theGiorno"),
 							document.getElementById("txtErrData"))
 

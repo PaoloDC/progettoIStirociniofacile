@@ -40,6 +40,11 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 		crossorigin="anonymous"></script>
+			<script>
+		$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
 
 
 	<div class="container">
@@ -52,10 +57,11 @@
 				<%
 					if (convenzione != null) {
 				%>
-				<br> <br> <br> <a
+				<br> <br> <br> <a data-toggle="tooltip"
+						title="Approva convenzione"
 					href="GestioneTf?action=convalidaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=true">
 					<button type="submit" class=" btn btn-success">Approva</button>
-				</a> <a
+				</a> <a  data-toggle="tooltip" title="Elimina convenzione "
 					href="GestioneTf?action=convalidaDocumento&id=<%=convenzione.getPartitaIva()%>&approvato=false">
 					<button type="submit" class="btn btn-danger">Elimina</button>
 				</a>
@@ -72,10 +78,10 @@
 				<%
 					} else if (questionario != null) {
 				%>
-				<br> <br> <br> <a
+				<br> <br> <br> <a  data-toggle="tooltip" title="Approva questionario"
 					href="GestioneTf?action=convalidaDocumento&id=<%=questionario.getId()%>&approvato=true">
 					<button type="submit" class=" btn btn-success">Approva</button>
-				</a> <a
+				</a> <a data-toggle="tooltip" title="Elimina questionario"
 					href="GestioneTf?action=convalidaDocumento&id=<%=questionario.getId()%>&approvato=false">
 					<button type="submit" class="btn btn-danger">Elimina</button>
 				</a>

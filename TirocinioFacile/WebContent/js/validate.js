@@ -114,11 +114,13 @@ function ValidatePartitaIva(str, txt) {
 	if (str.value.length == 11) {
 		str.style.border = "2px solid green";
 		return true;
-	} else {
+	} 
+	if(stri.value.lenght < 11){
 		str.style.border = "2px solid red";
 		$(txt).html("Partita Iva non valida");
 		return false;
 	}
+	return false;
 }
 
 function ValidateAmbSki(str, txt) {
