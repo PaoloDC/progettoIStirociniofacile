@@ -68,7 +68,7 @@ public class UtenteModel {
    * @throws SQLException
    *           eccezione lanciata in caso di record già esistente
    */
-  public synchronized void salvaAccountStudente(String email, String password, String matricola) {
+  public synchronized boolean salvaAccountStudente(String email, String password, String matricola) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
@@ -85,7 +85,7 @@ public class UtenteModel {
         preparedStatement.executeUpdate();
       } catch (MySQLIntegrityConstraintViolationException e) {
         System.out.println("Entry duplicata per studente con email: " + email);
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -106,7 +106,7 @@ public class UtenteModel {
         }
       }
     }
-    return;
+    return true;
   }
 
   /**
@@ -119,7 +119,7 @@ public class UtenteModel {
    * @throws SQLException
    *           eccezione lanciata in caso di record già esistente
    */
-  public synchronized void salvaAccountAzienda(String email, String password, String nomeazienda) {
+  public synchronized boolean salvaAccountAzienda(String email, String password, String nomeazienda) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
@@ -136,7 +136,7 @@ public class UtenteModel {
         preparedStatement.executeUpdate();
       } catch (MySQLIntegrityConstraintViolationException e) {
         System.out.println("Entry duplicata per azienda con email: " + email);
-        return;
+        return false;
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -157,7 +157,7 @@ public class UtenteModel {
         }
       }
     }
-    return;
+    return true;
   }
 
   

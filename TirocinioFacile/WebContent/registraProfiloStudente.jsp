@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	
+
+<%
+	String messaggioErrore = (String) request.getAttribute("noRegistrazione");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,9 +32,10 @@
 
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
-		<% if (utente == null ){
-			System.out.println("Ehii");
-		}
+		<%
+			if (utente == null) {
+				System.out.println("Ehii");
+			}
 		%>
 
 		<div class="row">
@@ -70,6 +74,13 @@
 					<button type="submit" class="btn btn-primary">Registrati</button>
 					<label id="matchPass"></label>
 				</form>
+				<%
+					if (messaggioErrore != null) {
+				%>
+				<h3 style="color: red"><%=messaggioErrore%></h3>
+				<%
+					}
+				%>
 			</div>
 			<div class="col-4 col-md-4">
 				<!-- usato per centrare -->
@@ -87,7 +98,8 @@
 		function isOk() {
 			if (ValidateEmailStudente(document.getElementById("theEmail"),
 					document.getElementById("txtErrEmail"))
-					&& ValidateMatricola(document.getElementById("theMatricola"), document
+					&& ValidateMatricola(document
+							.getElementById("theMatricola"), document
 							.getElementById("txtErrMatricola"))
 					&& ValidatePassword(document.getElementById("thePass"),
 							document.getElementById("txtErrPass"))) {

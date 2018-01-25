@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
+<%
+	String messaggioErroreReg = (String) request.getAttribute("noRegistrazione");
+	String messaggioErroreIva = (String) request.getAttribute("noPartitaIva");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,8 +34,8 @@
 		$j("#datepicker").datepicker({
 			changeYear : true,
 			yearRange : "1900:2000",
-			setDate: new Date(1996, 11, 15),
-			defaultDate: new Date(1996, 11, 15)
+			setDate : new Date(1996, 11, 15),
+			defaultDate : new Date(1996, 11, 15)
 		});
 	});
 </script>
@@ -110,10 +115,25 @@
 
 						<div class="form-group">
 							<label id="txtErrData">Data Nascita Rappr Legale</label> <input
-								type="text" id="datepicker" name="dataDiNascitaRappLegale" value="11/15/1996">
+								type="text" id="datepicker" name="dataDiNascitaRappLegale"
+								value="11/15/1996">
 						</div>
 						<button type="submit" class="btn btn-primary">Genera La
 							Convenzione</button>
+						<%
+							if (messaggioErroreReg != null) {
+						%>
+						<h3 style="color: red"><%=messaggioErroreReg%></h3>
+						<%
+							}
+						%>
+						<%
+							if (messaggioErroreIva != null) {
+						%>
+						<h3 style="color: red"><%=messaggioErroreIva%></h3>
+						<%
+							}
+						%>
 					</div>
 				</form>
 
@@ -134,9 +154,10 @@
 		src="${pageContext.request.contextPath}/js/validate.js"></script>
 	<script>
 		function isOk() {
-			if (ValidateEmail(document.getElementById("theEmail"), document.getElementById("txtErrEmail"))
-					&& ValidatePassword(document.getElementById("thePass"), document
-					.getElementById("txtErrPass"))
+			if (ValidateEmail(document.getElementById("theEmail"), document
+					.getElementById("txtErrEmail"))
+					&& ValidatePassword(document.getElementById("thePass"),
+							document.getElementById("txtErrPass"))
 					&& ValidatePasswordUguali(document
 							.getElementById("thePass"), document
 							.getElementById("theConfPass"), document

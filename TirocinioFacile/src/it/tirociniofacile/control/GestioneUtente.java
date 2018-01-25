@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 /**
  * . Servlet implementation class GestioneUtente
  */
@@ -109,15 +111,24 @@ public class GestioneUtente extends HttpServlet {
    * @throws IOException 
    * @throws ServletException 
    */
-  public void registrazioneStudente(HttpServletRequest request,HttpServletResponse response) throws SQLException, ServletException, IOException {
+  public void registrazioneStudente(HttpServletRequest request,HttpServletResponse response) 
+      throws SQLException, ServletException, IOException {
 
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));
     String matricola = (request.getParameter("matricola"));
 
     String emailIntera = email + "@studenti.unisa.it";
+    String matricolaIntera = "05121" + matricola;
 
-    model.salvaAccountStudente(emailIntera, password, matricola);
+    boolean errore = model.salvaAccountStudente(emailIntera, password, matricolaIntera);
+    
+    if (!errore) {
+      RequestDispatcher rd = request.getRequestDispatcher("/registraProfiloStudente.jsp");
+      request.removeAttribute("noRegistrazione");
+      request.setAttribute("noRegistrazione", "Email o Matricola Gia' Esistenti");
+      rd.forward(request, response);
+    }
     
     RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
     rd.forward(request, response);
@@ -137,26 +148,42 @@ public class GestioneUtente extends HttpServlet {
     String password = (request.getParameter("password"));
     String nomeazienda = (request.getParameter("nomeazienda"));
     
-    model.salvaAccountAzienda(email, password, nomeazienda);
-
-    String piva = request.getParameter("piva");
-    String sedeLegale = request.getParameter("sedeLegale");
-    String citta = request.getParameter("citta");
-    String rappLegale = request.getParameter("rappLegale");
-    String luogoDiNascitaRappLegale = request.getParameter("luogoDiNascitaRappLegale");
-    String dataDiNascitaRappLegale = request.getParameter("dataDiNascitaRappLegale");
-
-    System.out.println("\n" + email + "\n" + password + "\n" + nomeazienda + "\n" + piva + "\n" 
-        + sedeLegale + "\n" + citta + "\n" + rappLegale + "\n" +
-        luogoDiNascitaRappLegale + "\n" + dataDiNascitaRappLegale);
+    boolean errore = model.salvaAccountAzienda(email, password, nomeazienda);
     
-    try {
-      docModel.salvaConvenzione(piva, nomeazienda, sedeLegale, citta, rappLegale,
-          luogoDiNascitaRappLegale, dataDiNascitaRappLegale);
-      RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+    if (!errore) {
+      RequestDispatcher rd = request.getRequestDispatcher("/registraProfiloAzienda.jsp");
+      request.removeAttribute("noRegistrazione");
+      request.setAttribute("noRegistrazione", "Email o Nome Azienda Gia' Esistenti");
       rd.forward(request, response);
-    } catch (SQLException e) {
-      e.printStackTrace();
+    } else {
+      String piva = request.getParameter("piva");
+      String sedeLegale = request.getParameter("sedeLegale");
+      String citta = request.getParameter("citta");
+      String rappLegale = request.getParameter("rappLegale");
+      String luogoDiNascitaRappLegale = request.getParameter("luogoDiNascitaRappLegale");
+      String dataDiNascitaRappLegale = request.getParameter("dataDiNascitaRappLegale");
+
+      System.out.println("\n" + email + "\n" + password + "\n" + nomeazienda + "\n" + piva + "\n" 
+          + sedeLegale + "\n" + citta + "\n" + rappLegale + "\n" +
+          luogoDiNascitaRappLegale + "\n" + dataDiNascitaRappLegale);
+      
+      try {
+        errore = docModel.salvaConvenzione(piva, nomeazienda, sedeLegale, citta, rappLegale,
+            luogoDiNascitaRappLegale, dataDiNascitaRappLegale);
+        
+        if (!errore) {
+          docModel.cancellaAccountAzienda(email);
+          RequestDispatcher rd = request.getRequestDispatcher("/registraProfiloAzienda.jsp");
+          request.removeAttribute("noPartitaIva");
+          request.setAttribute("noPartitaIva", "Partita Iva Gia' Esistente");
+          rd.forward(request, response);
+        }
+    
+        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+        rd.forward(request, response);
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
   }
 
