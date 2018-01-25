@@ -77,9 +77,9 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 								<div class="form-group">
 									<label> 7. Provincia </label> <input name="provincia"
 										placeholder="Provincia"> <label id="txtErrAnno1"> 8. Anno
-										accademico di immatricolazione </label> <input name="annoimm"
+										accademico di immatricolazione </label> <input name="annoimm1"
 										placeholder="Anno accademico di immatricolazione" id="theAnno1">
-										<label id="txtErrAnno2"> / </label> <input name="annoimm"
+										<label id="txtErrAnno2"> / </label> <input name="annoimm2"
 										placeholder="Anno accademico di immatricolazione" id="theAnno2">
 
 								</div>
@@ -374,7 +374,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>A.1 L'esperienza di tirocinio ha arricchito il suo
 												bagaglio di conoscenza?</td>
-											<td><select name="a1">
+											<td><select name="a">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -389,7 +389,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>A.2 L'esperienza di tirocinio &egrave; stata utile
 												dal punto di vista professionale?</td>
-											<td><select name="a2">
+											<td><select name="a">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -404,7 +404,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>A.3 L'esperienza di tirocinio &egrave; stata utile
 												per la sua crescita personale?</td>
-											<td><select name="a3">
+											<td><select name="a">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -419,7 +419,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>A.4 L'accoglienza a lei riservata in azienda
 												&egrave; stata buona?</td>
-											<td><select name="a4">
+											<td><select name="a">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -434,7 +434,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>A.5 Come valuta l'esperienza rispetto alle sue
 												aspettative iniziali?</td>
-											<td><select name="a5">
+											<td><select name="a">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -456,7 +456,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>B.1 Il tutor aziendale l'ha seguito accuratamente
 												durante il tirocinio?</td>
-											<td><select name="b1">
+											<td><select name="b">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -471,7 +471,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>B.2 Il personale l'ha messo in condizione di rendere
 												al meglio?</td>
-											<td><select name="b2">
+											<td><select name="b">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -486,7 +486,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>B.3 Il suo lavoro &egrave; stato preso in seria
 												considerazione?</td>
-											<td><select name="b3">
+											<td><select name="b">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -500,7 +500,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										</tr>
 										<tr>
 											<td>B.4 Il ritmo di lavoro &egrave; stato adeguato?</td>
-											<td><select name="b4">
+											<td><select name="b">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -515,7 +515,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>B.5 Il tempo impiegato &egrave; stato adeguato per
 												lo svolgimento del progetto?</td>
-											<td><select name="b5">
+											<td><select name="b">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -536,7 +536,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 											<td>C.1 Il tempo impiegato per espletare le
 												attivit&agrave; burocratiche per dare inizio
 												dell'attivit&agrave; di tirocinio &egrave; stato adeguato?</td>
-											<td><select name="c1">
+											<td><select name="c">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -550,7 +550,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										</tr>
 										<tr>
 											<td>C.2 L'azienda era nel settore di suo gradimento?</td>
-											<td><select name="c2">
+											<td><select name="c">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -565,7 +565,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>C.3 La gestione dei tirocini le &egrave; sembrata
 												efficiente?</td>
-											<td><select name="c3">
+											<td><select name="c">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -580,7 +580,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>C.4 La preparazione fornita dal Corso di Studi
 												&egrave; stata adeguata ad affrontare l'attivita' proposta?</td>
-											<td><select name="c4">
+											<td><select name="c">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -595,7 +595,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>C.5 Le informazioni che le sono state fornite per
 												affrontare il tirocinio sono state adeguate?</td>
-											<td><select name="c5">
+											<td><select name="c">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -610,7 +610,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 										<tr>
 											<td>C.6 I compiti e le responsabilit&agrave; del tutor
 												interno vanno aumentati?</td>
-											<td><select name="c6">
+											<td><select name="c">
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>

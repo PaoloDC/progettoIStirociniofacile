@@ -362,7 +362,7 @@ public class DocumentoModel {
    */
   public synchronized int salvaQuestionario(String commenti, String suggerimenti,
       String annoAccademico, String mailStudente, int paginaAziendaId, String matricola,
-      float giudizioEsperienza, float giudizioAzienda, float giudizioUniversita) {
+      float giudizioEsperienza, float giudizioAzienda, float giudizioUniversita, String testoQuestionario) {
 
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -370,8 +370,8 @@ public class DocumentoModel {
       connection = ds.getConnection();
       String insertSql = "INSERT INTO " + TABLE_NAME_QUESTIONARI + " (commenti, suggerimenti,"
           + " annoAccademico, approvato, mailStudente, paginaAziendaID,"
-          + " giudizioEsperienza, giudizioAzienda, giudizioUniversita) "
-          + " VALUES(?,?,?,?,?,?,?,?,?)";
+          + " giudizioEsperienza, giudizioAzienda, giudizioUniversita, testoQuestionario) "
+          + " VALUES(?,?,?,?,?,?,?,?,?,?)";
 
       preparedStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
 
@@ -384,6 +384,7 @@ public class DocumentoModel {
       preparedStatement.setFloat(7, giudizioEsperienza);
       preparedStatement.setFloat(8, giudizioAzienda);
       preparedStatement.setFloat(9, giudizioUniversita);
+      preparedStatement.setString(10, testoQuestionario);
 
       preparedStatement.executeUpdate();
       ResultSet rs = preparedStatement.getGeneratedKeys();
