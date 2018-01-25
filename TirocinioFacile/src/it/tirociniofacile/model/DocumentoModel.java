@@ -222,7 +222,8 @@ public class DocumentoModel {
 
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT id,annoAccademico,nomeAzienda FROM " + TABLE_NAME_QUESTIONARI
+      String selectSql = "SELECT id,annoAccademico,nomeAzienda,testoQuestionario FROM "
+          + TABLE_NAME_QUESTIONARI
           + " JOIN " + TABLE_NAME_CONVENZIONI + " ON " + TABLE_NAME_QUESTIONARI
           + ".paginaAziendaID = " + TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE "
           + TABLE_NAME_QUESTIONARI + ".approvato = 0 AND mailStudente = ? ";
@@ -236,7 +237,9 @@ public class DocumentoModel {
           String id = rs.getString(1);
           String annoAccademico = rs.getString(2);
           String nomeAzienda = rs.getString(3);
-          lista.add(id + ";" + annoAccademico + ";" + nomeAzienda);
+          String testoQuest = rs.getString(4);
+          System.out.print(testoQuest);
+          lista.add(id + ";" + annoAccademico + ";" + nomeAzienda + ";" + testoQuest);
         } while (rs.next());
       }
     } catch (SQLException e) {

@@ -22,7 +22,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>TirocinioFacile - Login</title>
-
+<link rel="stylesheet" href="css/print.css" type="text/css"
+	media="print">
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -71,7 +72,10 @@
 						String id = all[0];
 						String annoAccademico = all[1];
 						String nomeAzienda = all[2];
-						System.out.println("id " + id + ", anno: " + annoAccademico + " nome azienda: " + nomeAzienda);
+						String testoQuest = all[3];
+						System.out.println("id " + id + ", anno: " + annoAccademico + " nome azienda: " + nomeAzienda
+								+ "testoQuest: " + testoQuest);
+						String idCount = "" + i;
 
 						if (i % 2 == 0) {
 		%>
@@ -93,12 +97,10 @@
 								<b>ID:</b>
 								<%=id%>
 
-								<br>
-								<b>Nome Azienda:</b>
+								<br> <b>Nome Azienda:</b>
 								<%=nomeAzienda%>
 
-								<br>
-								<b>Anno Accademico:</b>
+								<br> <b>Anno Accademico:</b>
 								<%=annoAccademico%>
 							</h4>
 						</div>
@@ -108,6 +110,10 @@
 						</div>
 						<button type="submit" class="btn btn-primary">Carica
 							Documento</button>
+						<button type="button" class="btn btn-primary"
+							onclick="PrintElem(document.getElementById(<%=idCount%>))">Stampa</button>
+						<div id=<%=idCount%> style="visibility: hidden"><%=testoQuest%></div>
+						
 					</div>
 
 					<input type="hidden" id="thisField" name="action"
@@ -125,6 +131,22 @@
 		%>
 
 	</center>
+	<script>
+		function PrintElem(elem) {
+			
+			var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+			var prova = $(elem).html();
+			mywindow.document.write(prova);
+
+			mywindow.document.close(); // necessary for IE >= 10
+			mywindow.focus(); // necessary for IE >= 10*/
+
+			mywindow.print();
+			mywindow.close();
+
+			return true;
+		}
+	</script>
 	<%@ include file="footer.jsp"%>
 
 	<script type="text/javascript"

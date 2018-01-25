@@ -9,4 +9,11 @@ button {
 	visibility: hidden;
 }
 
+
+
 a:link:after{content: " [" attr(href) "]";}
+
+
+#quest {
+	visibility: hidden;
+}
