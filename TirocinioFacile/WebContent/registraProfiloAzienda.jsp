@@ -154,37 +154,21 @@
 		src="${pageContext.request.contextPath}/js/validate.js"></script>
 	<script>
 		function isOk() {
-			if (ValidateEmail(document.getElementById("theEmail"), document
-					.getElementById("txtErrEmail"))
-					&& ValidatePassword(document.getElementById("thePass"),
-							document.getElementById("txtErrPass"))
-					&& ValidatePasswordUguali(document
-							.getElementById("thePass"), document
-							.getElementById("theConfPass"), document
-							.getElementById("txtErrConfPass"))
-					&& ValidateLetter(document.getElementById("theAzienda"),
-							document.getElementById("txtErrNomeAzienda"))
-					&& ValidateLetter(document.getElementById("theCity"),
-							document.getElementById("txtErrCitta"))
-					&& ValidatePartitaIva(document
-							.getElementById("thePartitaIva"), document
-							.getElementById("txtErrPartitaIva"))
-					&& ValidateLetter(document.getElementById("theSedeLegale"),
-							document.getElementById("txtErrSedeLegale"))
-					&& ValidateLetter(document
-							.getElementById("theLuogoDiNascita"), document
-							.getElementById("txtErrLuogoDiNascita"))
-					&& ValidateLetter(
-							document.getElementById("theRappresentanteLegale"),
-							document
-									.getElementById("txtErrRappresentanteLegale"))
-					&& ValidateGiornoRapp(document.getElementById("theGiorno"),
-							document.getElementById("txtErrData"))
+			if (ValidateEmail(document.getElementById("theEmail"), document.getElementById("txtErrEmail"))
+					&& ValidatePassword(document.getElementById("thePass"),document.getElementById("txtErrPass"))
+					&& ValidatePasswordUguali(document.getElementById("thePass"),document.getElementById("theConfPass"),document.getElementById("txtErrConfPass"))
+					&& ValidateLetter(document.getElementById("theAzienda"),document.getElementById("txtErrNomeAzienda"))
+					&& ValidateLetter(document.getElementById("theCity"),document.getElementById("txtErrCitta"))
+					&& ValidatePartitaIva(document.getElementById("thePartitaIva"),document.getElementById("txtErrPartitaIva"))
+					&& ValidateLetter(document.getElementById("theSedeLegale"),document.getElementById("txtErrSedeLegale"))
+					&& ValidateLetter(document.getElementById("theLuogoDiNascita"),document.getElementById("txtErrLuogoDiNascita"))
+					&& ValidateLetter(document.getElementById("theRappresentanteLegale"),document.getElementById("txtErrRappresentanteLegale"))
+					&& ValidateGiornoRapp(document.getElementById("theGiorno"),document.getElementById("txtErrData"))
 
 			) {
 				return true;
 			}
-			return false;
+			else {return false;}
 		}
 	</script>
 </body>

@@ -181,6 +181,7 @@ public class GestioneUtente extends HttpServlet {
     
         RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
+        
       } catch (SQLException e) {
         e.printStackTrace();
       }

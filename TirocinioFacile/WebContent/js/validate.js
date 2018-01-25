@@ -120,7 +120,6 @@ function ValidatePartitaIva(str, txt) {
 		$(txt).html("Partita Iva non valida");
 		return false;
 	}
-	return false;
 }
 
 function ValidateAmbSki(str, txt) {
