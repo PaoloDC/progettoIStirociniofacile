@@ -133,7 +133,7 @@
 				</form>
 			</div>
 			<div class="col-4 col-md-4">
-				<!-- usato per centrare -->
+				<!-- usato per centraree -->
 			</div>
 		</div>
 
