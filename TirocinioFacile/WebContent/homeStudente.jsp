@@ -68,6 +68,7 @@
 					href="GestioneTf?action=ricercaQuestionariNonApprovatiPerStudente&mailStudente=<%=ub.getEmail()%>"
 					role="button"> Carica Questionario per Approvazione</a>
 				<%
+				//commento
 					} else {
 				%>
 				<a class="btn btn-primary btn-lg btn-block" data-toggle="tooltip"
