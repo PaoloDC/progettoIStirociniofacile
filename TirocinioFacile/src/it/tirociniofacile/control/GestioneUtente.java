@@ -175,7 +175,7 @@ public class GestioneUtente extends HttpServlet {
             luogoDiNascitaRappLegale, dataDiNascitaRappLegale,megaTesto);
         
         if (!errore) {
-          docModel.cancellaAccountAzienda(email);
+          model.cancellaAccountAzienda(email);
           RequestDispatcher rd = request.getRequestDispatcher("/registraProfiloAzienda.jsp");
           request.removeAttribute("noPartitaIva");
           request.setAttribute("noPartitaIva", "Partita Iva Gia' Esistente");

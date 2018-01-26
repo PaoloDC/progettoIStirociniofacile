@@ -797,24 +797,6 @@ public class DocumentoModel {
     return;
   }
   
-  /**
-   * Cancella un account azienda.
-   * 
-   * @param email
-   *          identificativo dell'account
-   * @throws SQLException
-   *           in caso di errata connessione al database
-   */
-  public synchronized void cancellaAccountAzienda(String email) throws SQLException {
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    connection = ds.getConnection();
-    String deleteSql = "DELETE FROM " + UtenteModel.TABLE_NAME_AZIENDA + " WHERE mail = ?";
-    preparedStatement = connection.prepareStatement(deleteSql);
-    preparedStatement.setString(1, email);
 
-    preparedStatement.executeUpdate();
-
-  }
 }
 
