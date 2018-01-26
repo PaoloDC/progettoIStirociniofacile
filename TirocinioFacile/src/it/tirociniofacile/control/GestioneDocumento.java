@@ -263,24 +263,23 @@ public class GestioneDocumento extends HttpServlet {
     String datanascita = request.getParameter("datanascita");
     String[] data = request.getParameterValues("data");
     
-    String megaTesto = 
-        "PARTE I : INFORMAZIONI SUL LAUREATO\n" 
-        + "\n1. Cognome: " + cognome 
-        + "\n2. Nome: " + nome
-        + "\n3. Telefono 1: " + telefono1
-        + "\n4. Telefono 2: " + telefono2
-        + "\n5. E-mail: " + email
-        + "\n6. Comune di Residenza: " + comune 
-        + "\n7. Provincia: "  + provincia
-        + "\n8. Anno accademico di immatricolazione: " + annoimm1 + " / " + annoimm2
-        + "\n9. CdL di Immatricolazione: " + cdlimm
-        + "\n10. Matricola: " + matricola
-        + "\n11. Azienda/Laboratorio Interno ospitante il tirocinante: " + nomeAzienda
-        + "\n12. Comune dell'Azienda / Laboratorio: " + comune
-        + "\n13. Provincia: " + provazienda
-        + "\n14. Sesso: " + sesso
-        + "\n15. Data di nascita: " + datanascita
-        + "\n16. Data: "  + data[0]  + " / " + data[1] + " / " + data[2];
+    String megaTesto = "PARTE I : INFORMAZIONI SUL LAUREATO<br>" 
+        + "<br>1. Cognome: " + cognome 
+        + "<br>2. Nome: " + nome
+        + "<br>3. Telefono 1: " + telefono1
+        + "<br>4. Telefono 2: " + telefono2
+        + "<br>5. E-mail: " + email
+        + "<br>6. Comune di Residenza: " + comune 
+        + "<br>7. Provincia: "  + provincia
+        + "<br>8. Anno accademico di immatricolazione: " + annoimm1 + " / " + annoimm2
+        + "<br>9. CdL di Immatricolazione: " + cdlimm
+        + "<br>10. Matricola: " + matricola
+        + "<br>11. Azienda/Laboratorio Interno ospitante il tirocinante: " + nomeAzienda
+        + "<br>12. Comune dell'Azienda / Laboratorio: " + comune
+        + "<br>13. Provincia: " + provazienda
+        + "<br>14. Sesso: " + sesso
+        + "<br>15. Data di nascita: " + datanascita
+        + "<br>16. Data: "  + data[0]  + " / " + data[1] + " / " + data[2];
 
     // PARTE 2
     String parte2dom1 = request.getParameter("parte2dom1");
@@ -293,8 +292,8 @@ public class GestioneDocumento extends HttpServlet {
     String[] cinque = request.getParameterValues("cinque");
     String[] sei = request.getParameterValues("sei");
     
-    megaTesto += "\n\nPARTE II : INFORMAZIONI SULLO STAGE / TIROCINIO\n"
-        + "\n1. Come è avvenuta la scelta dello stage?\n";
+    megaTesto += "<br><br>PARTE II : INFORMAZIONI SULLO STAGE / TIROCINIO<br>"
+        + "<br>1. Come è avvenuta la scelta dello stage?<br>";
         
     if (parte2dom1.equals("altro")) {
       megaTesto += "Altro, Specificare: " + parte2dom1altro;
@@ -302,15 +301,15 @@ public class GestioneDocumento extends HttpServlet {
       megaTesto += parte2dom1;
     }
           
-    megaTesto += "\n2. Lo stage è stato svolto: all'esterno"
-        + "\n3. Qual è stato il ruolo del tutor aziendale durante lo stage?\n";
+    megaTesto += "<br>2. Lo stage è stato svolto: all'esterno"
+        + "<br>3. Qual è stato il ruolo del tutor aziendale durante lo stage?<br>";
     
     if (parte2dom3.equals("altro")) {
       megaTesto += "Altro, Specificare: " + parte2dom3altro;
     } else {
       megaTesto += parte2dom3;
     }   
-    megaTesto += "\n4. Qual è stato il ruolo del tutor universitario durante lo stage?\r\n"; 
+    megaTesto += "<br>4. Qual è stato il ruolo del tutor universitario durante lo stage?<br>"; 
     if (parte2dom4.equals("altro")) {
       megaTesto += "Altro, Specificare: " + parte2dom4altro;
     } else {
@@ -318,24 +317,24 @@ public class GestioneDocumento extends HttpServlet {
     } 
      
     
-    megaTesto += "\n\n5. In che misura lei possedeva le seguenti caratteristiche "
-        + "al momento dell'inizio dello stage?\n"
+    megaTesto += "<br><br>5. In che misura lei possedeva le seguenti caratteristiche "
+        + "al momento dell'inizio dello stage?<br>"
         + "Capacità relazionali e di comunicazione:\t\t" +  cinque[0]
-        + "\nCapacità di lavorare in gruppo:\t\t\t\t" + cinque[1]
-        + "\nIniziativa / Autonomia:\t\t\t\t\t" + cinque[2]
-        + "\nAbilità nell'uso degli strumenti e tecniche specifiche:\t" + cinque[3]
-        + "\nConoscenza di base:\t\t\t\t\t" + cinque[4]
-        + "\nConoscenze linguistiche:\t\t\t\t" + cinque[5]
-        + "\nConoscenze tecniche:\t\t\t\t\t" + cinque[6]
-        + "\n\n6. Quali delle precedenti caratteristiche lei ritiene di aver potenziato "
-        + "maggiormente al termine dello stage?\n"
+        + "<br>Capacità di lavorare in gruppo:\t\t\t\t" + cinque[1]
+        + "<br>Iniziativa / Autonomia:\t\t\t\t\t" + cinque[2]
+        + "<br>Abilità nell'uso degli strumenti e tecniche specifiche:\t" + cinque[3]
+        + "<br>Conoscenza di base:\t\t\t\t\t" + cinque[4]
+        + "<br>Conoscenze linguistiche:\t\t\t\t" + cinque[5]
+        + "<br>Conoscenze tecniche:\t\t\t\t\t" + cinque[6]
+        + "<br><br>6. Quali delle precedenti caratteristiche lei ritiene di aver potenziato "
+        + "maggiormente al termine dello stage?<br>"
         + "Capacità relazionali e di comunicazione:\t\t" + sei[0]
-        + "\nCapacità di lavorare in gruppo:\t\t\t\t" + sei[1]
-        + "\nIniziativa / Autonomia:\t\t\t\t\t" + sei[2]
-        + "\nAbilità nell'uso degli strumenti e tecniche specifiche: " + sei[3]
-        + "\nConoscenza di base:\t\t\t\t\t" + sei[4]
-        + "\nConoscenze linguistiche:\t\t\t\t" + sei[5]
-        + "\nConoscenze tecniche:\t\t\t\t\t" + sei[6];
+        + "<br>Capacità di lavorare in gruppo:\t\t\t\t" + sei[1]
+        + "<br>Iniziativa / Autonomia:\t\t\t\t\t" + sei[2]
+        + "<br>Abilità nell'uso degli strumenti e tecniche specifiche: " + sei[3]
+        + "<br>Conoscenza di base:\t\t\t\t\t" + sei[4]
+        + "<br>Conoscenze linguistiche:\t\t\t\t" + sei[5]
+        + "<br>Conoscenze tecniche:\t\t\t\t\t" + sei[6];
 
     // PARTE 3 OK
     String[] a = request.getParameterValues("a");
@@ -343,28 +342,28 @@ public class GestioneDocumento extends HttpServlet {
     String[] c = request.getParameterValues("c");
     
     megaTesto +=
-        "\n\nPARTE III : GRADO DI SODDISFAZIONE DEL TIROCINANTE Giudizio sull'Esperienza\r\n"
-        + "\nA.1 L'esperienza di tirocinio ha arricchito il suo bagaglio di conoscenza?\t" + a[0]
-        + "\nA.2 L'esperienza di tirocinio è stata utile dal punto di vista professionale?\t" + a[1]
-        + "\nA.3 L'esperienza di tirocinio è stata utile per la sua crescita personale?\t" + a[2]
-        + "\nA.4 L'accoglienza a lei riservata in azienda è stata buona?\t\t\t" + a[3]
-        + "\nA.5 Come valuta l'esperienza rispetto alle sue aspettative iniziali?\t\t" + a[4] 
-        + "\n\nGiudizio sull'Azienda\r\n"
-        + "\nB.1 Il tutor aziendale l'ha seguito accuratamente durante il tirocinio?\t\t" + b[0]
-        + "\nB.2 Il personale l'ha messo in condizione di rendere al meglio?\t\t\t" + b[1]
-        + "\nB.3 Il suo lavoro è stato preso in seria considerazione?\t\t\t" + b[2]
-        + "\nB.4 Il ritmo di lavoro è stato adeguato?\t\t\t\t\t" + b[3]
-        + "\nB.5 Il tempo impiegato è stato adeguato per lo svolgimento del progetto?\t" + b[4]
-        + "\n\nGiudizio sull'Università\r\n"
-        + "\nC.1 Il tempo impiegato per espletare le attività burocratiche "
+        "<br><br>PARTE III : GRADO DI SODDISFAZIONE DEL TIROCINANTE Giudizio sull'Esperienza<br>"
+        + "<br>A.1 L'esperienza di tirocinio ha arricchito il suo bagaglio di conoscenza?\t" + a[0]
+        + "<br>A.2 L'esperienza di tirocinio è stata utile dal punto di vista professionale?\t" + a[1]
+        + "<br>A.3 L'esperienza di tirocinio è stata utile per la sua crescita personale?\t" + a[2]
+        + "<br>A.4 L'accoglienza a lei riservata in azienda è stata buona?\t\t\t" + a[3]
+        + "<br>A.5 Come valuta l'esperienza rispetto alle sue aspettative iniziali?\t\t" + a[4] 
+        + "<br><br>Giudizio sull'Azienda<br>"
+        + "<br>B.1 Il tutor aziendale l'ha seguito accuratamente durante il tirocinio?\t\t" + b[0]
+        + "<br>B.2 Il personale l'ha messo in condizione di rendere al meglio?\t\t\t" + b[1]
+        + "<br>B.3 Il suo lavoro è stato preso in seria considerazione?\t\t\t" + b[2]
+        + "<br>B.4 Il ritmo di lavoro è stato adeguato?\t\t\t\t\t" + b[3]
+        + "<br>B.5 Il tempo impiegato è stato adeguato per lo svolgimento del progetto?\t" + b[4]
+        + "<br><br>Giudizio sull'Università<br>"
+        + "<br>C.1 Il tempo impiegato per espletare le attività burocratiche "
         + "per dare inizio dell'attività di tirocinio è stato adeguato?\t" + c[0]
-        + "\nC.2 L'azienda era nel settore di suo gradimento?\t\t\t\t\t\t\t\t\t\t" + c[1]
-        + "\nC.3 La gestione dei tirocini le è sembrata efficiente?\t\t\t\t\t\t\t\t\t\t" + c[2]
-        + "\nC.4 La preparazione fornita dal Corso di Studi è stata "
+        + "<br>C.2 L'azienda era nel settore di suo gradimento?\t\t\t\t\t\t\t\t\t\t" + c[1]
+        + "<br>C.3 La gestione dei tirocini le è sembrata efficiente?\t\t\t\t\t\t\t\t\t\t" + c[2]
+        + "<br>C.4 La preparazione fornita dal Corso di Studi è stata "
         + "adeguata ad affrontare l'attivita' proposta?\t\t\t\t" + c[3]
-        + "\nC.5 Le informazioni che le sono state fornite per "
+        + "<br>C.5 Le informazioni che le sono state fornite per "
         + "affrontare il tirocinio sono state adeguate?\t\t\t\t\t" + c[4]
-        + "\nC.6 I compiti e le responsabilità del tutor "
+        + "<br>C.6 I compiti e le responsabilità del tutor "
         + "interno vanno aumentati?\t\t\t\t\t\t\t\t" + c[5];
     
     
@@ -392,7 +391,7 @@ public class GestioneDocumento extends HttpServlet {
     String commenti = request.getParameter("commenti");
     String suggerimenti = request.getParameter("suggerimenti");
     
-    megaTesto += "\n\nCommenti:\n" + commenti + "\n\nSuggerimenti:\n" + suggerimenti;
+    megaTesto += "<br><br>Commenti:<br>" + commenti + "<br><br>Suggerimenti:<br>" + suggerimenti;
     
     System.out.print("MEGAAAAAAAAAAA:\n" + megaTesto);
     
@@ -481,7 +480,6 @@ public class GestioneDocumento extends HttpServlet {
       HttpServletResponse response) throws SQLException, ServletException, IOException {
 
     String mailStudente = request.getParameter("mailStudente");
-    System.out.println("mailStudente: " + mailStudente);
 
     if (mailStudente != null) {
       ArrayList<String> questionariStudente = model
