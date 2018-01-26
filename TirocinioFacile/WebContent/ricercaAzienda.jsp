@@ -59,7 +59,7 @@
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
 		<center>
-			<h2>
+			<h2 >
 				<span class="glyphicon glyphicon-search"></span> Ricerca Aziende
 			</h2>
 			<hr class="line">

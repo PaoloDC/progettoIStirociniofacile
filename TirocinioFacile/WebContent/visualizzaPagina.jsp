@@ -49,24 +49,18 @@
 				<div class="panel panel-default panel-modest"
 					style="max-width: 100%; margin-top: 5px; max-height: 100%;">
 					<div class="panel-heading">
-						<h1>
-							<span class="glyphicon glyphicon-list-alt"></span> Tutte le
-							informazione sull'azienda
-						</h1>
+						<center>
+							<h1 style="color: orange">
+								<span class="glyphicon glyphicon-home"></span>
+								<%=pagina.getNomeAzienda()%>
+							</h1>
+						</center>
 					</div>
 					<div class="panel-body"
 						style="max-width: 100%; margin: 5px; max-height: 100%;">
 
-						<h2>
-							<span class="glyphicon glyphicon-home"></span> Nome
-						</h2>
-						<h4>
 
-							<p><%=pagina.getNomeAzienda()%></p>
-
-						</h4>
-
-						<h2>
+						<h2 style="color: blue">
 							<span class="glyphicon glyphicon-pencil"></span> Descrizione
 						</h2>
 						<h4>
@@ -74,21 +68,21 @@
 								<%=pagina.getDescrizione()%></p>
 						</h4>
 
-						<h2>
+						<h2 style="color: blue">
 							<span class="glyphicon glyphicon-map-marker"></span> Indirizzo
 						</h2>
 						<h4>
 							<p><%=pagina.getLocalita()%></p>
 						</h4>
 
-						<h2>
+						<h2 style="color: blue">
 							<span class="glyphicon glyphicon-star"></span> Skill Richieste
 						</h2>
 						<h4>
 							<p><%=pagina.getSkill()%></p>
 						</h4>
 
-						<h2>
+						<h2 style="color: blue">
 							<span class="glyphicon glyphicon-briefcase"></span> Ambito
 						</h2>
 						<h4>
@@ -104,9 +98,11 @@
 						<div class="panel panel-default panel-modest"
 							style="max-width: 100%; margin-top: 5px; max-height: 100%;">
 							<div class="panel-heading">
-								<h1>
-									<span class="glyphicon glyphicon-pushpin"></span> Note
-								</h1>
+								<center>
+									<h1 style="color: orange">
+										<span class="glyphicon glyphicon-pushpin"></span> Note
+									</h1>
+								</center>
 							</div>
 							<div class="panel-body"
 								style="max-width: 100%; margin: 5px; max-height: 100%;">
@@ -114,7 +110,7 @@
 									if (listaDoc != null) {
 								%>
 								<div class="panel-heading">
-									<h2>
+									<h2 style="color: blue">
 										<span class="glyphicon glyphicon-bullhorn"></span>
 										Suggerimenti
 									</h2>
@@ -131,9 +127,9 @@
 									%>
 								</div>
 								<div class="panel-heading">
-									<h1>
+									<h2 style="color: blue">
 										<span class="glyphicon glyphicon-comment"></span> Commenti
-									</h1>
+									</h2>
 								</div>
 								<div class="panel-body"
 									style="max-width: 100%; margin: 5px; max-height: 100%;">
@@ -158,9 +154,11 @@
 								<div class="panel panel-default panel-modest"
 									style="max-width: 100%; margin-top: 5px; max-height: 100%;">
 									<div class="panel-heading">
-										<h1>
-											<span class="glyphicon glyphicon-stats"></span> Medie
-										</h1>
+										<center>
+											<h1 style="color: orange">
+												<span class="glyphicon glyphicon-stats"></span> Medie
+											</h1>
+										</center>
 									</div>
 									<div class="panel-body"
 										style="max-width: 100%; margin: 5px; max-height: 100%;">
@@ -168,7 +166,7 @@
 											if (listaDoc != null) {
 										%>
 										<div class="panel-heading">
-											<h2>
+											<h2 style="color: blue">
 												<span class="glyphicon glyphicon-thumbs-up"></span> Giudizio
 												Azienda
 											</h2>
@@ -185,7 +183,7 @@
 											%>
 										</div>
 										<div class="panel-heading">
-											<h1>
+											<h1 style="color: blue">
 												<span class="glyphicon glyphicon-education"></span> Giudizio
 												Università
 											</h1>
@@ -202,7 +200,7 @@
 
 										</div>
 										<div class="panel-heading">
-											<h1>
+											<h1 style="color: blue">
 												<span class="glyphicon glyphicon-book"></span> Giudizio
 												esperienza Studenti
 											</h1>

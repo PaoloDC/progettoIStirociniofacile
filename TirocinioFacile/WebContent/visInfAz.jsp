@@ -46,7 +46,12 @@
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
 		<br> <br> <br>
-
+		<center>
+			<h2 >
+				<span class="glyphicon glyphicon-eye-open"></span> Visualizza numero tirocini conclusi
+			</h2>
+			<hr class="line">
+		</center>
 		<div class="row">
 
 			<div class="container">

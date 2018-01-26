@@ -19,7 +19,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>TirocinioFacile - Login</title>
+<title>TirocinioFacile - Visualizza tirocini conclusi in un anno accademico</title>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -42,6 +42,12 @@
 
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
+		<center>
+			<h2 >
+				<span class="glyphicon glyphicon-eye-open"></span> Visualizza numero tirocini conclusi
+			</h2>
+			<hr class="line">
+		</center>
 		<br> <br> <br>
 
 		<div class="row">
