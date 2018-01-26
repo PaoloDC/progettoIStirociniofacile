@@ -89,12 +89,8 @@ public class PaginaAziendaModel {
 
   /**
    * Cerca nel db tutte le pagine azienda corrispondenti alla chiave per quella categoria.
-   * @return lista di pagina azienda
-   */
-  /**
-   * Cerca nel db tutte le pagine azienda corrispondenti alla chiave per quella categoria.
-   * @param categoria un parametro per cui ricercare (deve essere: 
-   * @param chiave
+   * @param categoria un parametro per cui ricercare (deve essere: località, nome, ambito, skill)
+   * @param chiave sequenza di caratteri per effettuare la ricerca
    * @return un arraylist di paginaAziendaBean che soddisfano la ricerca
    */
   public synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave)  {
@@ -160,8 +156,7 @@ public class PaginaAziendaModel {
       }
     } catch (SQLException e) {
       e.printStackTrace();
-    }
-    finally {
+    } finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
@@ -172,8 +167,7 @@ public class PaginaAziendaModel {
         if (connection != null) {
           try {
             connection.close();
-          }
-          catch (SQLException e) {
+          } catch (SQLException e) {
             e.printStackTrace();
           }
         }
@@ -186,8 +180,7 @@ public class PaginaAziendaModel {
    * Cerca nel db una pagina azienda per il suo id.
    * @return una pagina azienda
    */
-  public synchronized PaginaAziendaBean ricerca(int id) 
-      throws SQLException {
+  public synchronized PaginaAziendaBean ricerca(int id) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
@@ -218,8 +211,7 @@ public class PaginaAziendaModel {
       }
     } catch (SQLException e) {
       e.printStackTrace();
-    }
-    finally {
+    } finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
@@ -230,8 +222,7 @@ public class PaginaAziendaModel {
         if (connection != null) {
           try {
             connection.close();
-          }
-          catch (SQLException e) {
+          } catch (SQLException e) {
             e.printStackTrace();
           }
         }
@@ -269,8 +260,7 @@ public class PaginaAziendaModel {
 
     } catch (SQLException e) {
       e.printStackTrace();
-    }
-    finally {
+    } finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
@@ -281,8 +271,7 @@ public class PaginaAziendaModel {
         if (connection != null) {
           try {
             connection.close();
-          }
-          catch (SQLException e) {
+          } catch (SQLException e) {
             e.printStackTrace();
           }
         }
@@ -322,8 +311,7 @@ public class PaginaAziendaModel {
 
     } catch (SQLException e) {
       e.printStackTrace();
-    }
-    finally {
+    } finally {
       try {
         if (preparedStatement != null) {
           preparedStatement.close();
@@ -334,8 +322,7 @@ public class PaginaAziendaModel {
         if (connection != null) {
           try {
             connection.close();
-          }
-          catch (SQLException e) {
+          } catch (SQLException e) {
             e.printStackTrace();
           }
         }
@@ -414,6 +401,9 @@ public class PaginaAziendaModel {
 
       return autoId;
 
+    } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
+      //entry duplicata
+      return -1;
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {
@@ -433,7 +423,7 @@ public class PaginaAziendaModel {
         }
       } 
     }
-    return -1;
+    return -2;
   }
 }
 

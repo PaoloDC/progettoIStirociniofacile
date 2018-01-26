@@ -15,6 +15,8 @@
 	}
 
 	ArrayList<String> questionariStudente = (ArrayList<String>) session.getAttribute("questionariStudente");
+	
+	DocumentoConvenzioneBean doc = (DocumentoConvenzioneBean) request.getAttribute("convenzione");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

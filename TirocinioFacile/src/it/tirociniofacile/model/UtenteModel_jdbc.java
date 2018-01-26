@@ -6,6 +6,7 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
 import it.tirociniofacile.bean.ProfiloAziendaBean;
 import it.tirociniofacile.bean.ProfiloStudenteBean;
 import it.tirociniofacile.bean.UtenteBean;
+import it.tirociniofacile.model.UtenteModel.Email;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -58,48 +59,46 @@ public class UtenteModel_jdbc {
       System.exit(0);
     }
   }
-
-  /**
-   * Inserisce nel db un nuovo studente.
-   * @param email email del nuovo studente da registrare
-   * @param password password del nuovo studente da registrare
-   * @param matricola matricola del nuovo studente da registrare
-   * @throws SQLException eccezione lanciata in caso di record già esistente
-   */
-  public synchronized void salvaAccountStudente(String email, String password, String matricola) {
+  public synchronized boolean salvaAccountStudente(String email, String password,
+      String matricola) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
-    String insertSql = "INSERT INTO " + TABLE_NAME_STUDENTE
-        + " (mail, password, matricola) VALUES (?, ?, ?)";
-
     try {
+      String insertSql = "INSERT INTO " + TABLE_NAME_STUDENTE
+          + " (mail, password, matricola) VALUES (?, ?, ?)";
       preparedStatement = connection.prepareStatement(insertSql);
       preparedStatement.setString(1, email);
       preparedStatement.setString(2, password);
       preparedStatement.setString(3, matricola);
 
-      preparedStatement.executeUpdate();
-    } catch (MySQLIntegrityConstraintViolationException e) {
-      System.out.println("Entry duplicata per studente con email: " + email);
-      e.printStackTrace();
-      return;
+      try {
+        preparedStatement.executeUpdate();
+      } catch (MySQLIntegrityConstraintViolationException e) {
+        System.out.println("Entry duplicata per studente con email: " + email);
+        return false;
+      }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
-    return;
+    return true;
   }
 
   /**
    * Inserisce nel db una nuova azienda.
-   * @param email email della nuova azienda da registrare
-   * @param password password della nuova azienda da registrare
-   * @throws SQLException eccezione lanciata in caso di record già esistente
+   * 
+   * @param email
+   *          email della nuova azienda da registrare
+   * @param password
+   *          password della nuova azienda da registrare
+   * @throws SQLException
+   *           eccezione lanciata in caso di record già esistente
    */
-  public synchronized void salvaAccountAzienda(String email, String password, String nomeazienda) {
+  public synchronized boolean salvaAccountAzienda(String email, String password,
+      String nomeazienda) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
+
     try {
       String insertSql = "INSERT INTO " + TABLE_NAME_AZIENDA
           + " (mail, password, nomeAziendaRappresentata) VALUES (?, ?, ?)";
@@ -107,34 +106,32 @@ public class UtenteModel_jdbc {
       preparedStatement.setString(1, email);
       preparedStatement.setString(2, password);
       preparedStatement.setString(3, nomeazienda);
-
-
+      
       preparedStatement.executeUpdate();
+      
     } catch (MySQLIntegrityConstraintViolationException e) {
       System.out.println("Entry duplicata per azienda con email: " + email);
-      e.printStackTrace();
-      return;
+      return false;
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    return;
+    return true;
   }
-
-  
 
   /**
    * Carica tutti gli utenti dal file.
+   * 
    * @return un arraylist contenente tutti gli utenti presenti sul file
    */
   public ArrayList<UtenteBean> caricaUtentiDaFile() {
     try {
 
       File f = new File(FILE_NAME);
-
       if (f.exists()) {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
         ArrayList<UtenteBean> listaUtentiRead = (ArrayList<UtenteBean>) in.readObject();
         in.close();
+        
         return listaUtentiRead;
       } else {
         return new ArrayList<>();
@@ -147,11 +144,17 @@ public class UtenteModel_jdbc {
 
   /**
    * Salva tutti gli utenti nel file.
-   * @param listaUtenti lista degli utenti da salvare
+   * 
+   * @param listaUtenti
+   *          lista degli utenti da salvare
    */
   public void salvaUtentiNelFile(ArrayList<UtenteBean> listaUtenti) {
-    try {      
-      ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILE_NAME));
+    try {
+      
+      File file = new File(FILE_NAME);
+      file.delete();
+      file.createNewFile();
+      ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
       out.writeObject(listaUtenti);
       out.close();
 
@@ -162,36 +165,38 @@ public class UtenteModel_jdbc {
 
   /**
    * Carica email e password da un db.
-   * @param email email dell'account da cercare nel db
-   * @param password password dell'account da ricercare nel db
+   * 
+   * @param email
+   *          email dell'account da cercare nel db
+   * @param password
+   *          password dell'account da ricercare nel db
    * @return ritorna un bean che rappresenta un utente
-   * @throws SQLException in caso di errore di connesione al db 
+   * @throws SQLException
+   *           in caso di errore di connesione al db
    */
   public synchronized UtenteBean caricaAccount(String email, String password) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
-
     try {
 
-      String selectSqlStudente = "SELECT * FROM " + TABLE_NAME_STUDENTE 
+      String selectSqlStudente = "SELECT * FROM " + TABLE_NAME_STUDENTE
           + " WHERE mail  = ? AND password = ? ";
-
       preparedStatement = connection.prepareStatement(selectSqlStudente);
       preparedStatement.setString(1, email);
       preparedStatement.setString(2, password);
       ResultSet rsStudente = preparedStatement.executeQuery();
 
-      ProfiloStudenteBean ps = new ProfiloStudenteBean();    
+      ProfiloStudenteBean ps = new ProfiloStudenteBean();
 
       if (rsStudente.first()) {
         ps.setEmail(rsStudente.getString(1));
-        ps.setPassword(rsStudente.getString(2)); 
+        ps.setPassword(rsStudente.getString(2));
         ps.setMatricola(rsStudente.getString(3));
 
         return ps;
       } else {
 
-        String selectSqlAzienda = "SELECT * FROM " + TABLE_NAME_AZIENDA 
+        String selectSqlAzienda = "SELECT * FROM " + TABLE_NAME_AZIENDA
             + " WHERE mail  = ? AND password = ? ";
 
         preparedStatement.close();
@@ -202,7 +207,7 @@ public class UtenteModel_jdbc {
 
         ProfiloAziendaBean pa = new ProfiloAziendaBean();
 
-        if (rsAzienda.first()) {     
+        if (rsAzienda.first()) {
           pa.setEmail(rsAzienda.getString(1));
           pa.setPassword(rsAzienda.getString(2));
           pa.setNomeAzienda(rsAzienda.getString(3));
@@ -218,9 +223,8 @@ public class UtenteModel_jdbc {
             }
           }
 
-
         }
-      }   
+      }
     } catch (SQLException e) {
       e.printStackTrace();
     } 
@@ -228,11 +232,11 @@ public class UtenteModel_jdbc {
     return null;
   }
 
-
-
   /**
    * Cerca la password di un utente dalla email e la invia alla mail.
-   * @param email email dell'account da cercare nel db
+   * 
+   * @param email
+   *          email dell'account da cercare nel db
    * @return true se l'utente è presente, false altrimenti
    */
   public synchronized boolean cercaAccountPerEmail(String email) {
@@ -241,7 +245,7 @@ public class UtenteModel_jdbc {
 
     String passwordDaInviare = null;
 
-    //cerca la mail tra gli utenti amministrativi
+    // cerca la mail tra gli utenti amministrativi
     ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
     for (int i = 0; i < listaUtenti.size() && passwordDaInviare != null; i++) {
       UtenteBean ub = listaUtenti.get(i);
@@ -249,12 +253,12 @@ public class UtenteModel_jdbc {
         passwordDaInviare = ub.getPassword();
       }
     }
-    //se non trova la password tra gli utenti amministrativi la cerca tra gli studenti e le aziende
+
+    // se non trova la password tra gli utenti amministrativi la cerca tra gli studenti e le aziende
     if (passwordDaInviare == null) {
       try {
 
-        String selectSql = "SELECT password FROM " + TABLE_NAME_STUDENTE 
-            + " WHERE mail  = ? ";
+        String selectSql = "SELECT password FROM " + TABLE_NAME_STUDENTE + " WHERE mail  = ? ";
 
         preparedStatement = connection.prepareStatement(selectSql);
         preparedStatement.setString(1, email);
@@ -264,8 +268,7 @@ public class UtenteModel_jdbc {
           passwordDaInviare = rs.getString(1);
         } else {
 
-          selectSql = "SELECT password FROM " + TABLE_NAME_AZIENDA 
-              + " WHERE mail  = ? ";
+          selectSql = "SELECT password FROM " + TABLE_NAME_AZIENDA + " WHERE mail  = ? ";
           preparedStatement = connection.prepareStatement(selectSql);
           preparedStatement.setString(1, email);
           rs = preparedStatement.executeQuery();
@@ -273,18 +276,18 @@ public class UtenteModel_jdbc {
             passwordDaInviare = rs.getString(1);
           }
         }
-      } catch (SQLException e) {
+      } catch (Exception e) {
         e.printStackTrace();
       }
     }
 
-    if (passwordDaInviare == null) { 
+    if (passwordDaInviare == null) {
       return false;
-      //eccezione utente non presente
+      // eccezione utente non presente
     } else {
       String mailMittente = Email.USER_NAME;
       String passwordMittente = Email.PASSWORD;
-      String[] destinari = { email }; // list of recipient email addresses
+      String[] destinari = { email }; // lista dei destinatari
       String oggetto = "Recupera Password Tirocinio Facile";
       String corpo = "Salve utente, questa mail le è stata inviata per sua richiesta di "
           + "recupero password.\nLa sua password per accedere alla piattaforma"
@@ -295,27 +298,33 @@ public class UtenteModel_jdbc {
     }
   }
 
-
   /**
-   * Classe interna per l'invio di una mail con le nuove credenziali generate.
+   * Classe interna per l'invio di una mail per il recupero delle credenziali.
+   * 
    * @author Paolo De Cristofaro
    */
   public static class Email {
 
-    //variabili di istanza, parametri della mail utilizzata
-    private static final String USER_NAME = "tirociniofacile"; 
-    private static final String PASSWORD = "tirociniofacile12"; 
+    // variabili di istanza, parametri della mail utilizzata
+    private static final String USER_NAME = "tirociniofacile";
+    private static final String PASSWORD = "tirociniofacile12";
 
     /**
      * Metodo per inviare una email.
-     * @param from email mittente
-     * @param pass password mittente
-     * @param to destinatario
-     * @param subject oggetto della mail
-     * @param body corpo della mail
+     * 
+     * @param from
+     *          email mittente
+     * @param pass
+     *          password mittente
+     * @param to
+     *          destinatario
+     * @param subject
+     *          oggetto della mail
+     * @param body
+     *          corpo della mail
      */
-    public static void sendFromGMail(String from, String pass, String[] to, 
-        String subject, String body) {
+    public static void sendFromGMail(String from, String pass, String[] to, String subject,
+        String body) {
       Properties props = System.getProperties();
       String host = "smtp.gmail.com";
       props.put("mail.smtp.starttls.enable", "true");
@@ -347,17 +356,14 @@ public class UtenteModel_jdbc {
         transport.sendMessage(message, message.getAllRecipients());
         transport.close();
 
+        System.out.println("MAIL INVIATA");
       } catch (AddressException ae) {
         ae.printStackTrace();
       } catch (MessagingException me) {
         me.printStackTrace();
       }
-
     }
   }
-
-  //METODI ACCESSORI PER L'ELIMINAZIONE
-
 
   public synchronized void eliminaProfiloAzienda(ProfiloAziendaBean a) {
     Connection connection = con;
@@ -372,7 +378,7 @@ public class UtenteModel_jdbc {
       e.printStackTrace();
     }   
   }
-
+  
   public synchronized void eliminaProfiloStudente(ProfiloStudenteBean s) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;

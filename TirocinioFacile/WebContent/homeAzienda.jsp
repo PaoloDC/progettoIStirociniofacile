@@ -2,15 +2,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%
-	UtenteBean ub = (UtenteBean) session.getAttribute("account");
-	if (null == ub) {
-		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-		rd.forward(request, response);
-	}
-
 	String tipoUtente = (String) session.getAttribute("tipologiaAccount");
 
 	if (!tipoUtente.equals("azienda")) {
+		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+		rd.forward(request, response);
+	}
+	
+	ProfiloAziendaBean ub = (ProfiloAziendaBean) session.getAttribute("account");
+	if (null == ub) {
 		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
 		rd.forward(request, response);
 	}
@@ -57,7 +57,7 @@
 		<div class="row">
 			<div class="container-fluid">
 				<a class="btn btn-primary btn-lg btn-block"
-					href="GestioneTf?action=ricercaQuestionariNonApprovatiPerStudente&mailStudente=<%=ub.getEmail()%>"
+					href="GestioneTf?action=ricercaConvenzionePerAzienda&nome=<%=ub.getNomeAzienda()%>"
 					data-toggle="tooltip" title="Apri pagina" role="button">Carica
 					Documento</a>
 			</div>

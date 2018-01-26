@@ -1,9 +1,20 @@
 package it.tirociniofacile.model;
 
-import it.tirociniofacile.bean.*;
+import it.tirociniofacile.bean.ProfiloAziendaBean;
+import it.tirociniofacile.bean.ProfiloStudenteBean;
+import it.tirociniofacile.bean.UtenteBean;
+
 import java.util.ArrayList;
+
 import junit.framework.TestCase;
 
+/**
+ * Classe che testa i metodi della classe UtenteModel, 
+ * è stata creata una classe di supporto UtenteModel_jdbc 
+ * che effettua una connessione diretta al database.
+ * @author Paolo De Cristofaro
+ *
+ */
 public class UtenteModelTest_jdbc extends TestCase {
 
   private static UtenteModel_jdbc model;
@@ -12,9 +23,7 @@ public class UtenteModelTest_jdbc extends TestCase {
     model = new UtenteModel_jdbc();
   }
   
-  /**
-   * 
-   */
+
   public void testSalvaAccountStudente() {
 
     ProfiloStudenteBean studente = 
@@ -24,9 +33,17 @@ public class UtenteModelTest_jdbc extends TestCase {
     UtenteBean utente = model.caricaAccount(studente.getEmail(),studente.getPassword());
     assertNull(utente);
 
-    model.salvaAccountStudente(studente.getEmail(), 
+    boolean ins = model.salvaAccountStudente(studente.getEmail(), 
         studente.getPassword(), studente.getMatricola());
 
+    assertTrue(ins);
+    
+    //inserimento duplicato
+    boolean ins2 = model.salvaAccountStudente(studente.getEmail(), 
+        studente.getPassword(), studente.getMatricola());
+
+    assertFalse(ins2);
+    
     UtenteBean utente2 = model.caricaAccount(studente.getEmail(),studente.getPassword());
     assertNotNull(utente2);
 
@@ -39,15 +56,24 @@ public class UtenteModelTest_jdbc extends TestCase {
 
 
   public void testSalvaAccountAzienda() {
+    
     ProfiloAziendaBean azienda = 
         new ProfiloAziendaBean("azienda_test@gmail.com","azienda_test","azienda_test");
 
     UtenteBean utente = model.caricaAccount(azienda.getEmail(),azienda.getPassword());
     assertNull(utente);
 
-    model.salvaAccountAzienda(azienda.getEmail(), 
+    boolean ins = model.salvaAccountAzienda(azienda.getEmail(), 
         azienda.getPassword(), azienda.getNomeAzienda());
 
+    assertTrue(ins);
+    
+    //inserimento duplicato per azienda
+    boolean ins2 = model.salvaAccountAzienda(azienda.getEmail(), 
+        azienda.getPassword(), azienda.getNomeAzienda());
+
+    assertFalse(ins2);
+    
     utente = model.caricaAccount(azienda.getEmail(),azienda.getPassword());
     assertEquals(utente, azienda);
     ProfiloAziendaBean a = (ProfiloAziendaBean) utente;
@@ -85,10 +111,6 @@ public class UtenteModelTest_jdbc extends TestCase {
 
   }
 
-
-
-
-
   public void testCaricaUtentiDaFile() {
     ArrayList<UtenteBean> lista = null;
     assertNull(lista);
@@ -96,61 +118,7 @@ public class UtenteModelTest_jdbc extends TestCase {
     lista = model.caricaUtentiDaFile();
     assertNotNull(lista);
   }
-
-
-  public void testCaricaAccount() {
-
-    ProfiloStudenteBean psb = new ProfiloStudenteBean("studente_prova@studenti.unisa.it",
-        "prova","0512101010");
-    ProfiloAziendaBean pab  = new ProfiloAziendaBean("azienda_prova@gmail.com",
-        "prova","Azienda Prova");
-    UtenteBean ub = new UtenteBean("utente1@unisa.it","utente1");
-
-    //salva un account azienda e un account studente nel db, ed un account amministrativo nel file
-    model.salvaAccountAzienda(pab.getEmail(), pab.getPassword(), pab.getNomeAzienda());
-    model.salvaAccountStudente(psb.getEmail(), psb.getPassword(), psb.getMatricola());
-    ArrayList<UtenteBean> lista = new ArrayList<>();
-    lista.add(ub);
-    model.salvaUtentiNelFile(lista);
-
-
-    //legge lo studente appena salvato
-    UtenteBean utente1 = model.caricaAccount(psb.getEmail(), psb.getPassword());
-    assertNotNull(utente1);
-
-    ProfiloStudenteBean studente = (ProfiloStudenteBean) utente1;
-    assertEquals(studente.getEmail(),psb.getEmail());
-    assertEquals(studente.getPassword(),psb.getPassword());
-    assertEquals(studente.getMatricola(),psb.getMatricola());
-
-    //legge l'azienda appena salvata
-    UtenteBean utente2 = model.caricaAccount(pab.getEmail(), pab.getPassword());
-    assertNotNull(utente2);
-
-    ProfiloAziendaBean azienda = (ProfiloAziendaBean) utente2;
-    assertEquals(azienda.getEmail(),pab.getEmail());
-    assertEquals(azienda.getPassword(),pab.getPassword());
-    assertEquals(azienda.getNomeAzienda(),pab.getNomeAzienda());
-
-    //legge un utente amministrativo
-    UtenteBean utente3 = model.caricaAccount(ub.getEmail(), ub.getPassword());
-    assertNotNull(utente3);
-    assertEquals(utente3.getEmail(),ub.getEmail());
-    assertEquals(utente3.getPassword(),ub.getPassword());
-
-
-    //elimina gli account inseriti per il test
-    model.eliminaProfiloAzienda(pab);
-    model.eliminaProfiloStudente(psb);
-    ArrayList<UtenteBean> svuota = new ArrayList<>();
-    model.salvaUtentiNelFile(svuota);
-
-
-  }
-
-  /**
-   * test meodo cercaaccountperemail.
-   */
+  
   public void testCercaAccountPerEmail() {
 
     ProfiloStudenteBean psb = new ProfiloStudenteBean("decri.paolo@gmail.com",
@@ -167,5 +135,59 @@ public class UtenteModelTest_jdbc extends TestCase {
     model.eliminaProfiloStudente(psb);
 
   }
+  
 
+
+  public void testCaricaAccount() {
+
+    //legge lo studente appena salvato
+    ProfiloStudenteBean psb = new ProfiloStudenteBean("studente_prova@studenti.unisa.it",
+        "prova","0512101010");
+    
+    model.salvaAccountStudente(psb.getEmail(), psb.getPassword(), psb.getMatricola());
+    
+    UtenteBean utente1 = model.caricaAccount(psb.getEmail(), psb.getPassword());
+    assertNotNull(utente1);
+
+    ProfiloStudenteBean studente = (ProfiloStudenteBean) utente1;
+    assertEquals(studente.getEmail(),psb.getEmail());
+    assertEquals(studente.getPassword(),psb.getPassword());
+    assertEquals(studente.getMatricola(),psb.getMatricola());
+
+    model.eliminaProfiloStudente(psb);
+    
+    //legge l'azienda appena salvata
+    ProfiloAziendaBean pab  = new ProfiloAziendaBean("azienda_prova@gmail.com",
+        "prova","Azienda Prova");
+    
+    model.salvaAccountAzienda(pab.getEmail(), pab.getPassword(), pab.getNomeAzienda());
+    
+    UtenteBean utente2 = model.caricaAccount(pab.getEmail(), pab.getPassword());
+    assertNotNull(utente2);
+
+    ProfiloAziendaBean azienda = (ProfiloAziendaBean) utente2;
+    assertEquals(azienda.getEmail(),pab.getEmail());
+    assertEquals(azienda.getPassword(),pab.getPassword());
+    assertEquals(azienda.getNomeAzienda(),pab.getNomeAzienda());
+
+    model.eliminaProfiloAzienda(pab);
+    
+    //legge un utente amministrativo
+    ArrayList<UtenteBean> lista = new ArrayList<>();
+    UtenteBean ub = new UtenteBean("utente1@unisa.it","utente1");
+    lista.add(ub);
+    
+    model.salvaUtentiNelFile(lista);
+    lista = model.caricaUtentiDaFile();
+    
+    UtenteBean utente3 = model.caricaAccount(ub.getEmail(), ub.getPassword());
+    assertNotNull(utente3);
+    assertEquals(utente3.getEmail(),ub.getEmail());
+    assertEquals(utente3.getPassword(),ub.getPassword());
+
+    //elimina gli account inseriti per il test
+    ArrayList<UtenteBean> svuota = new ArrayList<>();
+    model.salvaUtentiNelFile(svuota);
+
+  }
 }
