@@ -28,9 +28,9 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
 public class DocumentoModel {
   
   private static DataSource ds;
-  public static final String SAVE_PATH = "D:/pdf/";
-  // public static final String SAVE_PATH =
-  // "C:/Users/PC1/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
+  //public static final String SAVE_PATH = "D:/pdf/";
+  public static final String SAVE_PATH =
+   "C:/Users/PC1/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
 
   static {
     try {
@@ -494,28 +494,17 @@ public class DocumentoModel {
    * @throws IOException
    *           in caso di errato salvataggio del file
    */
-  public synchronized void salvaPdfConvenzione(String url, String email)
+  public synchronized void salvaPdfConvenzione(String url, String piva)
       throws SQLException, IOException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT partitaIva FROM " + PaginaAziendaModel.TABLE_NAME_PAGINA + " JOIN "
-          + TABLE_NAME_CONVENZIONI + " ON "
-          + " paginaAzienda.id = domandaconvenzioneazienda.paginaaziendaID "
-          + " WHERE paginaazienda.mailAzienda = ? ";
-
-      preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, email);
-      ResultSet rs = preparedStatement.executeQuery();
 
       String updateSql = "UPDATE " + TABLE_NAME_CONVENZIONI + " SET url = ? WHERE partitaIva = ?";
 
-      rs.next();
-
-      String piva = rs.getString(1);
       preparedStatement = connection.prepareStatement(updateSql);
-      preparedStatement.setString(1, SAVE_PATH + url);
+      preparedStatement.setString(1, "pdf/" + url);
       preparedStatement.setString(2, piva);
 
       preparedStatement.executeUpdate();
@@ -561,7 +550,7 @@ public class DocumentoModel {
       String updateSql = "UPDATE " + TABLE_NAME_QUESTIONARI + " SET url = ? WHERE id = ?";
 
       preparedStatement = connection.prepareStatement(updateSql);
-      preparedStatement.setString(1, url);
+      preparedStatement.setString(1, "pdf/" + url);
       preparedStatement.setString(2, id);
 
       preparedStatement.executeUpdate();
@@ -597,9 +586,9 @@ public class DocumentoModel {
       connection = ds.getConnection();
         
       String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI + " JOIN "
-          + PaginaAziendaModel.TABLE_NAME_PAGINA + " ON " 
-          + TABLE_NAME_CONVENZIONI + ".paginaAziendaID = " + PaginaAziendaModel.TABLE_NAME_PAGINA
-          + ".id WHERE mailAzienda = ? ";
+          + UtenteModel.TABLE_NAME_AZIENDA + " ON " 
+          + TABLE_NAME_CONVENZIONI + ".nomeAzienda = " + UtenteModel.TABLE_NAME_AZIENDA
+          + ".nomeAziendaRappresentata WHERE mail = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
       preparedStatement.setString(1, "" + email);
@@ -651,10 +640,8 @@ public class DocumentoModel {
     try {
       connection = ds.getConnection();
       
-      String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI + " JOIN "
-          + PaginaAziendaModel.TABLE_NAME_PAGINA + " ON " 
-          + TABLE_NAME_CONVENZIONI + ".paginaAziendaID = " + PaginaAziendaModel.TABLE_NAME_PAGINA
-          + ".id WHERE partitaIva = ? AND url IS NOT NULL";
+      String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI 
+          + " WHERE partitaIva = ? AND url IS NOT NULL";
 
       preparedStatement = connection.prepareStatement(selectSql);
       preparedStatement.setString(1, "" + piva);

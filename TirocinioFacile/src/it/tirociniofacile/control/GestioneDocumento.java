@@ -17,6 +17,7 @@ import javax.servlet.http.Part;
 import it.tirociniofacile.bean.DocumentoConvenzioneBean;
 import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 import it.tirociniofacile.bean.PaginaAziendaBean;
+import it.tirociniofacile.bean.UtenteBean;
 import it.tirociniofacile.model.DocumentoModel;
 import it.tirociniofacile.model.PaginaAziendaModel;
 
@@ -106,18 +107,15 @@ public class GestioneDocumento extends HttpServlet {
       throws SQLException, ServletException, IOException {
 
     String piva = (request.getParameter("partitaIva"));
-
+    System.out.println("akjsak" + piva);
     if (model.ricercaConvenzionePerPartitaIva(piva) != null) {
-      
-      
-      
+
       request.removeAttribute("convenzione");
       request.setAttribute("convenzione", model.ricercaConvenzionePerPartitaIva(piva));
       RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");
       rd.forward(request, response);
 
     } else {
-
       String id = (request.getParameter("id"));
       int id1 = Integer.parseInt(id);
       request.removeAttribute("questionario");
@@ -159,6 +157,8 @@ public class GestioneDocumento extends HttpServlet {
     String tipologiaAccount = (String) request.getSession().getAttribute("tipologiaAccount");
 
     String email = request.getParameter("email");
+    
+    String piva = request.getParameter("piva");
 
     Part pdf = request.getPart("file");
 
@@ -175,9 +175,16 @@ public class GestioneDocumento extends HttpServlet {
       rd.forward(request, response);
 
     } else if (tipologiaAccount.equals("azienda")) {
-      model.salvaPdfConvenzione(fileName, email);
+      model.salvaPdfConvenzione(fileName, piva);
+      UtenteBean ub = (UtenteBean) request.getSession().getAttribute("account");
 
-      RequestDispatcher rd = request.getRequestDispatcher("/creaPagina.jsp");
+      DocumentoModel docModel = new DocumentoModel();
+      DocumentoConvenzioneBean conv = docModel.ricercaConvenzionePerEmail(ub.getEmail());
+      
+      request.getSession().removeAttribute("convenzioneAzienda");
+      request.getSession().setAttribute("convenzioneAzienda", conv);
+      
+      RequestDispatcher rd = request.getRequestDispatcher("/homeAzienda.jsp");
       rd.forward(request, response);
 
     }

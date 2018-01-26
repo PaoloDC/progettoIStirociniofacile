@@ -19,7 +19,7 @@
 		rd.forward(request, response);
 	}
 
-	DocumentoConvenzioneBean conv = (DocumentoConvenzioneBean) session.getAttribute("convenzione");
+	DocumentoConvenzioneBean conv = (DocumentoConvenzioneBean) session.getAttribute("convenzioneAzienda");
 	System.out.print("CONVENZIONE HOME AZ: " + conv);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -55,30 +55,21 @@
 			$(document).ready(function() {
 				$('[data-toggle="tooltip"]').tooltip();
 			});
-			
-
-			
-			$(document).ready(function() {
-				$("#btnCrea").prop('disabled', true);
-				if ($("#approvata").html() == "Convenzione Approvata.") {
-					$("#btnCrea").attr("href", "http://localhost:8080/TirocinioFacile/creaPagina.jsp");
-					$("#btnCrea").prop('disabled', false);
-				}
-			});
 		</script>
-		<div class="row">
-			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block" href="#"
-					data-toggle="tooltip" title="Crea pagina" role="button"
-					id="btnCrea">Crea Pagina</a>
-			</div>
-			<br> <br> <br>
-		</div>
+
 
 		<%
 			if (conv != null && conv.isApprovato()) {
 				//qui bisogna abilitare il bottone crea pagina
 		%>
+		<div class="row">
+			<div class="container-fluid">
+				<a class="btn btn-primary btn-lg btn-block" href="creaPagina.jsp"
+					data-toggle="tooltip" title="Crea pagina" role="button"
+					>Crea Pagina</a>
+			</div>
+			<br> <br> <br>
+		</div>
 		<div class="row">
 			<div class="col-4 col-md-4">
 				<!-- usato per centrare -->
@@ -96,20 +87,29 @@
 		<%
 			} else {
 		%>
-
+		<div class="row">
+			<div class="container-fluid">
+				<a class="btn btn-primary btn-lg btn-block" href="#"
+					data-toggle="tooltip" title="Crea pagina" role="button" disabled>Per Creare Una Pagina Devi Essere Convenzionato</a>
+			</div>
+			<br> <br> <br>
+		</div>
 		<div class="row">
 			<div class="col-4 col-md-4">
 				<!-- usato per centrare -->
 			</div>
 			<div class="col-4 col-md-4">
 				<h1>
-					<b>ID:</b> Carica il documento <br>(file supportati: pdf)
+					<b>P. Iva:</b> <%=conv.getPartitaIva() %> Carica il documento <br>(file supportati: pdf)
+					<% if (conv.getUrl() != null) { %>
+						<h5><b>Convenzione Caricata In Attesa di Convalida</b></h5>
+					<% } %>
 				</h1>
 				<form method="post" action="GestioneTf" id="form1"
 					onsubmit="return isOk();" enctype="multipart/form-data">
 					<input type="hidden" id="thisField" name="action"
-						value="caricaDocumento"> <input type="hidden" name="email"
-						value=<%=utente.getEmail()%>>
+						value="caricaDocumento"> <input type="hidden" name="piva"
+						value=<%=conv.getPartitaIva()%>>
 
 					<div class="form-group">
 						<input type="file" name="file" id="theFile"

@@ -230,8 +230,8 @@ public class GestioneUtente extends HttpServlet {
         DocumentoModel docModel = new DocumentoModel();
         DocumentoConvenzioneBean conv = docModel.ricercaConvenzionePerEmail(utente.getEmail());
         System.out.println("CONV GEST UTENTE: " + conv);
-        request.getSession().setAttribute("convenzione", conv);
         
+        request.getSession().setAttribute("convenzioneAzienda", conv);
         
         RequestDispatcher rd = request.getRequestDispatcher("/homeAzienda.jsp");
         rd.forward(request, response);

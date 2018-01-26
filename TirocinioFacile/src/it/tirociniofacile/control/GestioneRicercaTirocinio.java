@@ -63,7 +63,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
         } else if (action.equals("visualizzaPagina")) {
           visualizzaPagina(request, response);
         } else if (action.equals("creaPagina")) {
-          creaPagina(request);
+          creaPagina(request,response);
         }
       }
     } catch (SQLException e) {
@@ -218,10 +218,12 @@ public class GestioneRicercaTirocinio extends HttpServlet {
    * 
    * @param request
    *          la richiesta http
+   * @throws IOException 
+   * @throws ServletException 
    * @throws SQLException
    *           eccezione lanciato dal metodo del model
    */
-  public void creaPagina(HttpServletRequest request) {
+  public void creaPagina(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     String localita = request.getParameter("localita");
     String descrizione = request.getParameter("descrizione");
     String mailAzienda = request.getParameter("mailAzienda");
@@ -232,7 +234,11 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     ArrayList<String> ambiti = this.separaValoriStringa(allambito);
     ArrayList<String> skill = this.separaValoriStringa(allskill);
 
-    model.aggiungiPagina(localita, descrizione, mailAzienda, ambiti, skill);
+    int id = model.aggiungiPagina(localita, descrizione, mailAzienda, ambiti, skill);
+    
+    RequestDispatcher rd = 
+        request.getRequestDispatcher("/GestioneTf?action=visualizzaPagina&id=" + id);
+    rd.forward(request, response);
   }
 
   private ArrayList<String> separaValoriStringa(String stringa) {
