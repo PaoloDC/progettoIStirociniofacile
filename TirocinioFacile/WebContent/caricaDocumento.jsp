@@ -75,8 +75,8 @@
 						String annoAccademico = all[1];
 						String nomeAzienda = all[2];
 						String testoQuest = all[3];
-						System.out.println("id " + id + ", anno: " + annoAccademico + " nome azienda: " + nomeAzienda
-								+ "testoQuest: " + testoQuest);
+						System.out.println("\nid " + id + ", \nanno: " + annoAccademico + " \nnome azienda: " + nomeAzienda
+								+ "\ntestoQuest: " + testoQuest);
 						String idCount = "" + i;
 						String docCount = "file" + i;
 
