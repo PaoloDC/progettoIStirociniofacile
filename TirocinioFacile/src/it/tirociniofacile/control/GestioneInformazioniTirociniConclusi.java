@@ -71,7 +71,7 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
       throws SQLException, ServletException, IOException {
     String anno = request.getParameter("anno");
     request.removeAttribute("numeroQuestionari");
-    request.setAttribute("numeroQuestionari",model.conteggioQuestionariApprovatiPerAnno(anno));
+    request.setAttribute("numeroQuestionari", model.conteggioQuestionariApprovatiPerAnno(anno));
     
     RequestDispatcher rd = request.getRequestDispatcher("/visInfAnno.jsp");  
     rd.forward(request, response);

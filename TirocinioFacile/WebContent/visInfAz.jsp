@@ -62,7 +62,8 @@
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						<%
-							if (listaAzienda != null) {
+							if (listaAzienda != null && listaAzienda.size() != 0) {
+								System.out.println("Ma non è vuoto");
 						%>
 						<%
 							for (int i = 0; i < listaAzienda.size(); i++) {
@@ -73,6 +74,11 @@
 						<%
 							}
 						%>
+						<%
+							} else {
+									System.out.println("poopasdpaosidpasoi");
+						%>
+						<li><a>Nessuna Azienda</a></li>
 						<%
 							}
 						%>
@@ -85,11 +91,12 @@
 					<button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="true">
-						<%=request.getParameter("azienda")%> <span class="caret"></span>
+						<%=request.getParameter("azienda")%>
+						<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						<%
-							if (listaAzienda != null) {
+							if (listaAzienda != null && listaAzienda.size() != 0) {
 						%>
 						<%
 							for (int i = 0; i < listaAzienda.size(); i++) {
@@ -100,6 +107,10 @@
 						<%
 							}
 						%>
+						<%
+							} else { System.out.println("poopasdpaosidpasoi");
+						%>
+						<li><a href="#">Nessuna Azienda</a></li>
 						<%
 							}
 						%>
