@@ -632,6 +632,60 @@ public class DocumentoModel {
     }
     return dcb;
   }
+  
+  /**
+   * Metodo che permette di ricercare un documento di convenzione 
+   *  di un'azienda inserendo la email del profilo associato.
+   * @param email la mail del profilo associata al documento di convenzione
+   * @return il documento di convenzione dell'azienda
+   * @throws SQLException in caso di errata connessione al database
+   */
+  public synchronized DocumentoConvenzioneBean ricercaConvenzionePerPartitaIva(String piva)
+      throws SQLException {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+
+    DocumentoConvenzioneBean dcb = null;
+
+    try {
+      connection = ds.getConnection();
+      
+      String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI + " JOIN "
+          + PaginaAziendaModel.TABLE_NAME_PAGINA + " ON " 
+          + TABLE_NAME_CONVENZIONI + ".paginaAziendaID = " + PaginaAziendaModel.TABLE_NAME_PAGINA
+          + ".id WHERE partitaIva = ? AND url IS NOT NULL";
+
+      preparedStatement = connection.prepareStatement(selectSql);
+      preparedStatement.setString(1, "" + piva);
+      ResultSet rs = preparedStatement.executeQuery();
+
+      if (rs.first()) {
+        dcb = new DocumentoConvenzioneBean();
+
+        dcb.setPartitaIva(rs.getString(1));
+        dcb.setNomeAzienda(rs.getString(2));
+        dcb.setSedeLegale(rs.getString(3));
+        dcb.setCitta(rs.getString(4));
+        dcb.setRappresentanteLegale(rs.getString(5));
+        dcb.setDataNascitaRappresentanteLegale(rs.getString(6));
+        dcb.setLuogoNascitaRappresentanteLegale(rs.getString(7));
+        dcb.setApprovato(rs.getBoolean(8));
+        dcb.setUrl(rs.getString(9));
+      }
+
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          preparedStatement.close();
+        }
+      } finally {
+        if (connection != null) {
+          connection.close();
+        }
+      }
+    }
+    return dcb;
+  }
 
   /**
    * Permette di ricercare un documento questionario fornendo l'id.

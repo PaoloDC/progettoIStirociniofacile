@@ -105,12 +105,14 @@ public class GestioneDocumento extends HttpServlet {
   public void visualizzaDocumento(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
 
-    String email = (request.getParameter("email"));
+    String piva = (request.getParameter("partitaIva"));
 
-    if (model.ricercaConvenzionePerEmail(email) != null) {
-
+    if (model.ricercaConvenzionePerPartitaIva(piva) != null) {
+      
+      
+      
       request.removeAttribute("convenzione");
-      request.setAttribute("convenzione", model.ricercaConvenzionePerEmail(email));
+      request.setAttribute("convenzione", model.ricercaConvenzionePerPartitaIva(piva));
       RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");
       rd.forward(request, response);
 

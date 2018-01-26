@@ -103,10 +103,11 @@
 			<!-- /.navbar-collapse -->
 
 			<div class="container">
-				<h3>
-					<span class="glyphicon glyphicon-folder-open"></span> Documenti da
-					approvare
-				</h3>
+				<center>
+					<h3>
+						<span class="glyphicon glyphicon-folder-open"></span> Documenti
+					</h3>
+				</center>
 				<div class="row">
 					<div class="panel-group">
 						<%
@@ -124,7 +125,9 @@
 						<div class="col-3 col-sm-3">
 							<div class="panel panel-default panel-modest"
 								style="max-width: 80%; margin: 5px; max-height: 60%;">
-								<div class="panel-heading"><%=listaDocumentiConvenzione.get(i).getNomeAzienda()%></div>
+								<div class="panel-heading" style="color: orange">
+									<span class="glyphicon glyphicon-home"></span>
+									<%=listaDocumentiConvenzione.get(i).getNomeAzienda()%></div>
 								<div class="panel-body">
 									<%=listaDocumentiConvenzione.get(i).getRappresentanteLegale()%></div>
 								<center>
@@ -224,7 +227,9 @@
 						<div class="col-3 col-sm-3">
 							<div class="panel panel-default panel-modest"
 								style="max-width: 80%; margin: 5px; max-height: 60%;">
-								<div class="panel-heading"><%=listaDocumentiQuestionari.get(i).getAnnoAccademico()%></div>
+								<div class="panel-heading" style="color: orange">
+									<span class="glyphicon glyphicon-calendar"></span>
+									<%=listaDocumentiQuestionari.get(i).getAnnoAccademico()%></div>
 								<div class="panel-body">
 									<%=listaDocumentiQuestionari.get(i).getMailStudente()%></div>
 								<center>
@@ -308,21 +313,21 @@
 							if ((listaDocumentiQuestionari == null) && (listaDocumentiConvenzione == null)) {
 						%>
 						<center>
-							<h2>Nessuna Documento</h2>
+							<h2>Nessun Documento</h2>
 						</center>
 						<%
 							} /*end if*/
 							if ((listaDocumentiQuestionari != null) && (listaDocumentiQuestionari.size() == 0)) {
 						%>
 						<center>
-							<h2>Nessuna Documento questionario trovato !</h2>
+							<h2>Nessun documento questionario trovato !</h2>
 						</center>
 						<%
 							}
 							if ((listaDocumentiConvenzione != null) && (listaDocumentiConvenzione.size() == 0)) {
 						%>
 						<center>
-							<h2>Nessuna Documento convenzione trovato !</h2>
+							<h2>Nessun documento convenzione trovato !</h2>
 						</center>
 						<%
 							}

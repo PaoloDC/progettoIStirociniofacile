@@ -122,7 +122,7 @@
 							<div class="col-3 col-sm-3">
 								<div class="panel panel-default panel-modest"
 									style="max-width: 80%; margin: 5px; max-height: 60%;">
-									<div class="panel-heading"><%=listaAziende.get(i).getNomeAzienda()%></div>
+									<div class="panel-heading"style="color:orange"><span class="glyphicon glyphicon-home" ></span> <%=listaAziende.get(i).getNomeAzienda()%></div>
 									<div class="panel-body"
 										style="max-width: 80%; margin: 5px; max-height: 60%;">
 										<p><%=listaAziende.get(i).getDescrizione()%></p>
