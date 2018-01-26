@@ -1,11 +1,11 @@
 package it.tirociniofacile.model;
 
-
-
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 import it.tirociniofacile.bean.ProfiloAziendaBean;
 import it.tirociniofacile.bean.ProfiloStudenteBean;
 import it.tirociniofacile.bean.UtenteBean;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,7 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-import java.util.Random;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -30,19 +30,17 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-
 /**
  * 
  * @author Paolo
  *
  */
 public class UtenteModel {
-
-  public static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
-  public static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
+  
   private static final String FILE_NAME = "utenti.dat";
   private static DataSource ds;
-  public static final int LUNGHEZZA_PASSWORD = 20;
+  public static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
+  public static final String TABLE_NAME_AZIENDA = "ProfiloAzienda";
 
   // inizializzazione statica
   static {
@@ -68,7 +66,8 @@ public class UtenteModel {
    * @throws SQLException
    *           eccezione lanciata in caso di record già esistente
    */
-  public synchronized boolean salvaAccountStudente(String email, String password, String matricola) {
+  public synchronized boolean salvaAccountStudente(String email, String password,
+      String matricola) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
@@ -119,7 +118,8 @@ public class UtenteModel {
    * @throws SQLException
    *           eccezione lanciata in caso di record già esistente
    */
-  public synchronized boolean salvaAccountAzienda(String email, String password, String nomeazienda) {
+  public synchronized boolean salvaAccountAzienda(String email, String password,
+      String nomeazienda) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
@@ -160,7 +160,6 @@ public class UtenteModel {
     return true;
   }
 
-  
   /**
    * Carica tutti gli utenti dal file.
    * 
@@ -168,7 +167,7 @@ public class UtenteModel {
    */
   public ArrayList<UtenteBean> caricaUtentiDaFile() {
     try {
-      
+
       File f = new File(FILE_NAME);
       if (f.exists()) {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
@@ -192,7 +191,10 @@ public class UtenteModel {
    */
   public void salvaUtentiNelFile(ArrayList<UtenteBean> listaUtenti) {
     try {
-      ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILE_NAME));
+      File file = new File(FILE_NAME);
+      file.delete();
+      file.createNewFile();
+      ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
       out.writeObject(listaUtenti);
       out.close();
 
@@ -255,10 +257,10 @@ public class UtenteModel {
         } else {
 
           ArrayList<UtenteBean> lista = new ArrayList<UtenteBean>();
-          lista.add(new UtenteBean("fferrucci@unisa.it","admintirocinio"));
-          lista.add(new UtenteBean("impiegato@unisa.it","impiegatotirocinio"));
+          lista.add(new UtenteBean("fferrucci@unisa.it", "admintirocinio"));
+          lista.add(new UtenteBean("impiegato@unisa.it", "impiegatotirocinio"));
           salvaUtentiNelFile(lista);
-          
+
           ArrayList<UtenteBean> listaUtenti = caricaUtentiDaFile();
           for (int i = 0; i < listaUtenti.size(); i++) {
             UtenteBean ub = listaUtenti.get(i);
@@ -356,7 +358,7 @@ public class UtenteModel {
           + "recupero password.\nLa sua password per accedere alla piattaforma"
           + " tirocinio facile è: ' " + passwordDaInviare + " '.\n\nBuona navigazione.";
 
-      System.out.println("Prima di inviare: " + email + ", pass: " + passwordDaInviare);
+      // System.out.println("Prima di inviare: " + email + ", pass: " + passwordDaInviare);
 
       Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);
       return true;
@@ -364,7 +366,7 @@ public class UtenteModel {
   }
 
   /**
-   * Classe interna per l'invio di una mail con le nuove credenziali generate.
+   * Classe interna per l'invio di una mail per il recupero delle credenziali.
    * 
    * @author Paolo De Cristofaro
    */
