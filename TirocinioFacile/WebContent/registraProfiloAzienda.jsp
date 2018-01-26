@@ -4,6 +4,20 @@
 <%
 	String messaggioErroreReg = (String) request.getAttribute("noRegistrazione");
 	String messaggioErroreIva = (String) request.getAttribute("noPartitaIva");
+	
+	String tipoUtente = (String) session.getAttribute("tipologiaAccount");
+	
+	if(tipoUtente != null) {
+		if(tipoUtente.equals("studente")) {
+			response.sendRedirect("./homeStudente.jsp");
+		} else if (tipoUtente.equals("impiegato")) {
+			response.sendRedirect("./approvaDocumento.jsp");
+		} else if (tipoUtente.equals("presidente")) {
+			response.sendRedirect("./visualizzaInformazioni.jsp");
+		} else if (tipoUtente.equals("azienda")) {
+			response.sendRedirect("./creaPagina.jsp");
+		}
+	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
