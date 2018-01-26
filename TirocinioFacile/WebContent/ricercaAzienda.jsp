@@ -22,7 +22,7 @@
 	} else {
 		indice = 4;
 	}
-	final int NUM_ELE_PAG = 4;
+	final int NUM_ELE_PAG = 4;//
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
