@@ -164,13 +164,15 @@ public class GestioneUtente extends HttpServlet {
       String luogoDiNascitaRappLegale = request.getParameter("luogoDiNascitaRappLegale");
       String dataDiNascitaRappLegale = request.getParameter("dataDiNascitaRappLegale");
 
-      System.out.println("\n" + email + "\n" + password + "\n" + nomeazienda + "\n" + piva + "\n" 
-          + sedeLegale + "\n" + citta + "\n" + rappLegale + "\n" +
-          luogoDiNascitaRappLegale + "\n" + dataDiNascitaRappLegale);
-      
+      String megaTesto = "L’Azienda/Ente " + nomeazienda + " con sede legale in " + sedeLegale  
+          + ",<br> città " + citta +  ", Partita IVA " + piva 
+          + ",<br> d’ora in poi denominato “Soggetto Ospitante”, rappresentato da<br>" 
+          + rappLegale + ", nato a " + luogoDiNascitaRappLegale + " il " + dataDiNascitaRappLegale 
+          + ",<br>in qualità legale rappresentante";
+            
       try {
         errore = docModel.salvaConvenzione(piva, nomeazienda, sedeLegale, citta, rappLegale,
-            luogoDiNascitaRappLegale, dataDiNascitaRappLegale);
+            luogoDiNascitaRappLegale, dataDiNascitaRappLegale,megaTesto);
         
         if (!errore) {
           docModel.cancellaAccountAzienda(email);

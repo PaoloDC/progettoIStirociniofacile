@@ -442,7 +442,7 @@ public class DocumentoModel {
    */
   public synchronized boolean salvaConvenzione(String piva, String nomeAzienda, String sedeLegale,
       String citta, String rappLegale, String luogoDiNascitaRappLegale,
-      String dataDiNascitaRappLegale) throws SQLException {
+      String dataDiNascitaRappLegale,String testoConvenzione) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -450,7 +450,8 @@ public class DocumentoModel {
       String insertSql = "INSERT INTO " + TABLE_NAME_CONVENZIONI
           + "(partitaIva, nomeAzienda, sedeLegale,"
           + " citta,rappresentanteLegale, luogoDiNascitaRappresentanteLegale,"
-          + " datadiNascitaRappresentanteLegale,approvato) VALUES(?,?,?,?,?,?,?,?)";
+          + " datadiNascitaRappresentanteLegale,approvato,testoConvenzione) "
+          + " VALUES(?,?,?,?,?,?,?,?,?)";
       preparedStatement = connection.prepareStatement(insertSql);
 
       preparedStatement.setString(1, piva);
@@ -461,6 +462,7 @@ public class DocumentoModel {
       preparedStatement.setString(6, luogoDiNascitaRappLegale);
       preparedStatement.setString(7, dataDiNascitaRappLegale);
       preparedStatement.setInt(8, 0);
+      preparedStatement.setString(9, testoConvenzione);
       
       try {
         preparedStatement.executeUpdate();
