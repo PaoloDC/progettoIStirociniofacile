@@ -13,8 +13,8 @@
 	}
 
 	PaginaAziendaBean pagina = (PaginaAziendaBean) request.getAttribute("pagina");
-	ArrayList<DocumentoQuestionarioBean> listaDoc = (ArrayList<DocumentoQuestionarioBean>) request
-			.getAttribute("commSugg");
+	ArrayList<DocumentoQuestionarioBean> listaDoc = (ArrayList<DocumentoQuestionarioBean>) request.getAttribute("commSugg");
+	System.out.println("lista doc=" + listaDoc);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -107,7 +107,7 @@
 							<div class="panel-body"
 								style="max-width: 100%; margin: 5px; max-height: 100%;">
 								<%
-									if (listaDoc != null) {
+									if ((listaDoc != null)&&(listaDoc.size()>0)) {
 								%>
 								<div class="panel-heading">
 									<h2 style="color: blue">
@@ -143,7 +143,7 @@
 										}
 									%>
 									<%
-									if (listaDoc == null) {
+									if (listaDoc.size()==0) {
 								%>
 									<div class="panel-heading">
 										<h2 style="color: blue">
@@ -192,12 +192,12 @@
 										<div class="panel-body"
 											style="max-width: 100%; margin: 5px; max-height: 100%;">
 											<%
-											if (listaDoc != null) {
+											if ((listaDoc != null)&&(listaDoc.size()>0)) {
 										%>
 											<div class="panel-heading">
 												<h2 style="color: blue">
 													<span class="glyphicon glyphicon-thumbs-up"></span>
-													Giudizio Azienda
+													Giudizio azienda
 												</h2>
 											</div>
 											<div class="panel-body"
@@ -212,9 +212,26 @@
 											%>
 											</div>
 											<div class="panel-heading">
-												<h1 style="color: blue">
+												<h2 style="color: blue">
 													<span class="glyphicon glyphicon-education"></span>
-													Giudizio Università
+													Giudizio università
+												</h2>
+											</div>
+											<div class="panel-body"
+												style="max-width: 100%; margin: 5px; max-height: 100%;">
+
+												<%
+												for (int i = 0; i < listaDoc.size(); i++) {
+											%>
+												<h4><%=listaDoc.get(i).getGiudizioEsperienza()%></h4>
+												<%
+												}
+											%>
+											</div>
+											<div class="panel-heading">
+												<h1 style="color: blue">
+													<span class="glyphicon glyphicon-book"></span>
+													Giudizio esperienza
 												</h1>
 											</div>
 											<div class="panel-body"
@@ -228,7 +245,7 @@
 											}
 											%>
 												<%
-											if (listaDoc == null) {
+											if (listaDoc.size()==0) {
 										%>
 												<div class="panel-heading">
 													<h2 style="color: blue">

@@ -130,7 +130,9 @@
 					<button type="button" class="btn btn-primary"
 						onclick="PrintElem(document.getElementById(conv))">Scarica</button>
 					<div id="conv" style="visibility: hidden"><%=conv.getTesto()%></div>
+					<h3><%=conv.getTesto()%></h3>
 				</form>
+				
 			</div>
 			<div class="col-4 col-md-4">
 				<!-- usato per centraree -->

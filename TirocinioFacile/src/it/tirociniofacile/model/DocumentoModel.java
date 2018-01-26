@@ -29,9 +29,11 @@ public class DocumentoModel {
   
   private static DataSource ds;
   //public static final String SAVE_PATH = "D:/pdf/";
+  /*public static final String SAVE_PATH =
+   "C:/Users/PC1/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";*/
   public static final String SAVE_PATH =
-   "C:/Users/PC1/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
-
+      "C:/Users/Andrea95/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
+  
   static {
     try {
       Context initCtx = new InitialContext();
@@ -608,7 +610,9 @@ public class DocumentoModel {
         dcb.setDataNascitaRappresentanteLegale(rs.getString(6));
         dcb.setLuogoNascitaRappresentanteLegale(rs.getString(7));
         dcb.setApprovato(rs.getBoolean(8));
-        dcb.setUrl(rs.getString(9));
+        dcb.setTesto(rs.getNString(9));
+        dcb.setUrl(rs.getString(10));
+        
       }
 
     } finally {
@@ -660,7 +664,8 @@ public class DocumentoModel {
         dcb.setDataNascitaRappresentanteLegale(rs.getString(6));
         dcb.setLuogoNascitaRappresentanteLegale(rs.getString(7));
         dcb.setApprovato(rs.getBoolean(8));
-        dcb.setUrl(rs.getString(9));
+        dcb.setTesto(rs.getNString(9));
+        dcb.setUrl(rs.getString(10));
       }
 
     } finally {

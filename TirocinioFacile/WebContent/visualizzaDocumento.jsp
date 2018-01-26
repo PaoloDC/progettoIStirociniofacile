@@ -72,6 +72,7 @@
 				<div class="col-6 col-sm-6">
 					<center>
 						<iframe src=<%=convenzione.getUrl()%> allowTransparency
+						
 							frameborder="0"
 							style="overflow: hidden; margin-top: 1px; width: 550px; height: 520px"></iframe>
 						<br> <br> <br> <br>
@@ -79,9 +80,11 @@
 
 				</div>
 				<%
-					} else if (questionario != null) {
+					}  if (questionario != null) {
 				%>
-				<br> <br> <br> <a data-toggle="tooltip"
+				
+				<br> <br> <br> 
+				<a data-toggle="tooltip"
 					title="Approva questionario"
 					href="GestioneTf?action=convalidaDocumento&id=<%=questionario.getId()%>&approvato=true">
 					<button type="submit" class=" btn btn-success">Approva</button>
@@ -102,7 +105,7 @@
 			</div>
 		</div>
 		<%
-			} else {
+			} else if((convenzione == null )&& (questionario == null)){
 		%>
 		<center>
 			<h2>Nessuna Documento</h2>
