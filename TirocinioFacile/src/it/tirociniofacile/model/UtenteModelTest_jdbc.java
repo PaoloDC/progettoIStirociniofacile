@@ -8,6 +8,13 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
+/**
+ * Classe che testa i metodi della classe UtenteModel, 
+ * è stata creata una classe di supporto UtenteModel_jdbc 
+ * che effettua una connessione diretta al database.
+ * @author Paolo De Cristofaro
+ *
+ */
 public class UtenteModelTest_jdbc extends TestCase {
 
   private static UtenteModel_jdbc model;
