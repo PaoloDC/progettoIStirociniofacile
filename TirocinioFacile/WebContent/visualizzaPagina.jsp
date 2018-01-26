@@ -89,7 +89,7 @@
 						</h4>
 
 						<h2>
-							<span class="glyphicon glyphicon-folder-open"></span> Ambito
+							<span class="glyphicon glyphicon-briefcase"></span> Ambito
 						</h2>
 						<h4>
 							<p>
@@ -169,7 +169,7 @@
 										%>
 										<div class="panel-heading">
 											<h2>
-												<span class="glyphicon glyphicon-briefcase"></span> Giudizio
+												<span class="glyphicon glyphicon-thumbs-up"></span> Giudizio
 												Azienda
 											</h2>
 										</div>
@@ -229,6 +229,9 @@
 			</div>
 		</div>
 	</div>
+	<br>
+	<br>
+	<br>
 	<%
 		} else {
 	%>

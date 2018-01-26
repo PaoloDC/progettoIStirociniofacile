@@ -53,8 +53,13 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 				<form action="GestioneTf?action=compilaQuestionario" method="post" onsubmit="return isOk();">
 					<div class="col-8 col-sm-8">
 						<div>
+						<% if( psb != null){%>
 							<input type="hidden" name="mailStudente"
 								value="<%=psb.getEmail()%>">
+								<%} else { %>
+								<input type="hidden" name="mailStudente"
+								value="nessuna mail">
+							<%} %>	
 							<div id="parte1" style="background: #42d9f4">
 								<label id="titoloParte">PARTE I : INFORMAZIONI SUL
 									LAUREATO</label>
@@ -86,8 +91,14 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 								<div class="form-group">
 									<label> 9. CdL di Immatricolazione </label> <input
 										name="cdlimm" placeholder="CdL di Immatricolazione"> <label>
-										10. Matricola </label> <input name="matricola" readonly="readonly"
+										10. Matricola </label> 
+										<% if(psb!=null){ %>
+										<input name="matricola" readonly="readonly"
 										value="<%=psb.getMatricola()%>">
+										<%} else { %>
+											<input name="matricola" readonly="readonly"
+										value="nessuna matricola">
+										<%} %>
 								</div>
 								<div class="form-group">
 									<label> 11. Azienda/Laboratorio Interno ospitante il

@@ -60,10 +60,22 @@
 
 		<div class="row">
 			<div class="container-fluid">
+				<%
+					if (null != ub) {
+				%>
 				<a class="btn btn-primary btn-lg btn-block" data-toggle="tooltip"
 					title="Apri pagina"
 					href="GestioneTf?action=ricercaQuestionariNonApprovatiPerStudente&mailStudente=<%=ub.getEmail()%>"
 					role="button"> Carica Questionario per Approvazione</a>
+				<%
+					} else {
+				%>
+				<a class="btn btn-primary btn-lg btn-block" data-toggle="tooltip"
+					title="Apri pagina" href="/index.jsp" role="button"> Carica
+					Questionario per Approvazione</a>
+				<%
+					}
+				%>
 			</div>
 			<br> <br> <br>
 		</div>
