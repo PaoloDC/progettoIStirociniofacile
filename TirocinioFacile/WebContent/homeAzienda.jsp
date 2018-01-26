@@ -10,8 +10,9 @@
 
 	String tipoUtente = (String) session.getAttribute("tipologiaAccount");
 
-	if(!tipoUtente.equals("studente")) {
-		response.sendRedirect("./index.jsp");
+	if (!tipoUtente.equals("azienda")) {
+		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+		rd.forward(request, response);
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -46,9 +47,9 @@
 		</script>
 		<div class="row">
 			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block"
-					href="ricercaAzienda.jsp" data-toggle="tooltip" title="Apri pagina"
-					role="button">Ricerca Pagina Azienda</a>
+				<a class="btn btn-primary btn-lg btn-block" href="creaPagina.jsp"
+					data-toggle="tooltip" title="Crea pagina" role="button">Crea
+					Pagina</a>
 			</div>
 			<br> <br> <br>
 		</div>
@@ -56,37 +57,17 @@
 		<div class="row">
 			<div class="container-fluid">
 				<a class="btn btn-primary btn-lg btn-block"
-					href="GestioneTf?action=ricercaTuttePagine&compila=true"
-					data-toggle="tooltip" title="Apri pagina" role="button">Compila
-					Questionario Valutazione Azienda</a>
-			</div>
-
-			<br> <br> <br>
-		</div>
-
-		<div class="row">
-			<div class="container-fluid">
-				<%
-					if (null != ub) {
-				%>
-				<a class="btn btn-primary btn-lg btn-block" data-toggle="tooltip"
-					title="Apri pagina"
 					href="GestioneTf?action=ricercaQuestionariNonApprovatiPerStudente&mailStudente=<%=ub.getEmail()%>"
-					role="button"> Carica Questionario per Approvazione</a>
-				<%
-					} else {
-				%>
-				<a class="btn btn-primary btn-lg btn-block" data-toggle="tooltip"
-					title="Apri pagina" href="/index.jsp" role="button"> Carica
-					Questionario per Approvazione</a>
-				<%
-					}
-				%>
+					data-toggle="tooltip" title="Apri pagina" role="button">Carica
+					Documento</a>
 			</div>
+
 			<br> <br> <br>
 		</div>
+
+		<br> <br> <br>
+	</div>
 
 	</div>
 	<%@ include file="footer.jsp"%>
 </body>
-</html>

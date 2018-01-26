@@ -76,6 +76,7 @@
 						System.out.println("id " + id + ", anno: " + annoAccademico + " nome azienda: " + nomeAzienda
 								+ "testoQuest: " + testoQuest);
 						String idCount = "" + i;
+						String docCount = "file" + i;
 
 						if (i % 2 == 0) {
 		%>
@@ -89,7 +90,7 @@
 				%>
 
 				<form class="form-horizontal" method="post" action="GestioneTf"
-					id="form1" onsubmit="return isOk(document.getElementById(<%=idCount%>));" enctype="multipart/form-data">
+					id="form1" onsubmit="return isOk(document.getElementById(<%=docCount%>));" enctype="multipart/form-data">
 
 					<div class="row">
 						<div class="col-4 col-md-4">
@@ -105,7 +106,7 @@
 							</h4>
 						</div>
 						<div class="col-4 col-md-4">
-							<input type="file" name="file" id=<%=idCount%>
+							<input type="file" name="file" id=<%=docCount%>
 								accept="application/pdf">
 						</div>
 						<button type="submit" class="btn btn-primary">Carica
