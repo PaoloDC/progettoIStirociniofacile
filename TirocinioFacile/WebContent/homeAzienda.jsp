@@ -64,6 +64,7 @@
 		
 		<%
 			if (conv != null && conv.isApprovato()) {
+				//qui bisogna abilitare il bottone crea pagina
 		%>
 		<div class="row">
 			<div class="col-4 col-md-4">
