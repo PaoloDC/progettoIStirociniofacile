@@ -243,7 +243,7 @@ public class DocumentoModel {
           String annoAccademico = rs.getString(2);
           String nomeAzienda = rs.getString(3);
           String testoQuest = rs.getString(4);
-          System.out.print(testoQuest);
+
           lista.add(id + ";" + annoAccademico + ";" + nomeAzienda + ";" + testoQuest);
         } while (rs.next());
       }
