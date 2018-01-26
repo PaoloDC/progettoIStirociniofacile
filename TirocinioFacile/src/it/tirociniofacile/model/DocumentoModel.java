@@ -583,7 +583,7 @@ public class DocumentoModel {
    * @throws SQLException
    *           in caso di problemi di connessione al database
    */
-  public synchronized DocumentoConvenzioneBean ricercaConvenzionePerPartitaIva(String partitaIva)
+  public synchronized DocumentoConvenzioneBean ricercaConvenzionePerEmail(String email)
       throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -596,10 +596,10 @@ public class DocumentoModel {
       String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI + " JOIN "
           + PaginaAziendaModel.TABLE_NAME_PAGINA + " ON " 
           + TABLE_NAME_CONVENZIONI + ".paginaAziendaID = " + PaginaAziendaModel.TABLE_NAME_PAGINA
-          + ".id WHERE partitaIva = ? AND url IS NOT NULL";
+          + ".id WHERE mailAzienda = ? AND url IS NOT NULL";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, "" + partitaIva);
+      preparedStatement.setString(1, "" + email);
       ResultSet rs = preparedStatement.executeQuery();
 
       if (rs.first()) {

@@ -63,7 +63,8 @@ public class GestioneTf extends HttpServlet {
           || action.equals("compilaQuestionario") 
           || action.equals("ricercaTuttiDocumentiConvenzioneAzienda") 
           || action.equals("ricercaTuttiDocumentiQuestionariAzienda") 
-          || action.equals("ricercaQuestionariNonApprovatiPerStudente")) {
+          || action.equals("ricercaQuestionariNonApprovatiPerStudente")
+          || action.equals("ricercaConvenzionePerAzienda")) {
         RequestDispatcher rd = request.getRequestDispatcher("GestioneDocumento");
         rd.forward(request, response);
       }

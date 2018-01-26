@@ -56,8 +56,6 @@ public class GestioneDocumento extends HttpServlet {
       if (action != null) {
         if (action.equals("visualizzaDocumento")) {
           visualizzaDocumento(request, response);
-        } else if (action.equals("scaricaDocumento")) {
-          scaricaDocumento(request);
         } else if (action.equals("caricaDocumento")) {
           caricaDocumento(request, response);
         } else if (action.equals("convalidaDocumento")) {
@@ -72,6 +70,8 @@ public class GestioneDocumento extends HttpServlet {
           ricercaTuttiDocumentiQuestionariAzienda(request, response);
         } else if (action.equals("ricercaQuestionariNonApprovatiPerStudente")) {
           ricercaQuestionariNonApprovatiPerStudente(request, response);
+        } else if (action.equals("ricercaConvenzionePerAzienda")) {
+          ricercaConvenzionePerAzienda(request,response);
         }
       }
     } catch (SQLException e) {
@@ -105,12 +105,12 @@ public class GestioneDocumento extends HttpServlet {
   public void visualizzaDocumento(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
 
-    String partitaIva = (request.getParameter("partitaIva"));
+    String email = (request.getParameter("email"));
 
-    if (model.ricercaConvenzionePerPartitaIva(partitaIva) != null) {
+    if (model.ricercaConvenzionePerEmail(email) != null) {
 
       request.removeAttribute("convenzione");
-      request.setAttribute("convenzione", model.ricercaConvenzionePerPartitaIva(partitaIva));
+      request.setAttribute("convenzione", model.ricercaConvenzionePerEmail(email));
       RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");
       rd.forward(request, response);
 
@@ -126,8 +126,18 @@ public class GestioneDocumento extends HttpServlet {
 
   }
 
-  public void scaricaDocumento(HttpServletRequest request) throws SQLException {
-    // da discuterne meglio
+  public void ricercaConvenzionePerAzienda(HttpServletRequest request, 
+      HttpServletResponse response) 
+        throws SQLException {
+    String email = request.getParameter("email");
+    
+    DocumentoConvenzioneBean doc = model.ricercaConvenzionePerEmail(email);
+    
+    if (doc != null) {
+      request.removeAttribute("convenzione");
+      request.setAttribute("convenzione", doc);
+      
+    }
 
   }
 
