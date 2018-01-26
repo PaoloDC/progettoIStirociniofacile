@@ -62,7 +62,7 @@ public class GestioneDocumento extends HttpServlet {
         } else if (action.equals("convalidaDocumento")) {
           convalidaDocumento(request, response);
         } else if (action.equals("compilaConvenzioneAzienda")) {
-          compilaConvenzioneAzienda(request, response);
+          //compilaConvenzioneAzienda(request, response);
         } else if (action.equals("compilaQuestionario")) {
           compilaQuestionario(request, response);
         } else if (action.equals("ricercaTuttiDocumentiConvenzioneAzienda")) {
@@ -230,6 +230,7 @@ public class GestioneDocumento extends HttpServlet {
     }
   }
 
+ 
   /**
    * servlet compilaConvenzioneAzienda.
    * 
@@ -238,6 +239,7 @@ public class GestioneDocumento extends HttpServlet {
    * @throws SQLException
    *           eccezzioni sql
    */
+  /*
   public void compilaConvenzioneAzienda(HttpServletRequest request, HttpServletResponse response)
       throws SQLException {
     String piva = (request.getParameter("piva"));
@@ -248,9 +250,9 @@ public class GestioneDocumento extends HttpServlet {
     String luogoDiNascitaRappLegale = (request.getParameter("luogoDiNascitaRappLegale"));
     String dataDiNascitaRappLegale = (request.getParameter("dataDiNascitaRappLegale"));
     model.salvaConvenzione(piva, nomeAzienda, sedeLegale, citta, rappLegale,
-        luogoDiNascitaRappLegale, dataDiNascitaRappLegale);
+        luogoDiNascitaRappLegale, dataDiNascitaRappLegale,null);
   }
-
+*/
   /**
    * servlet compila questionario.
    * 

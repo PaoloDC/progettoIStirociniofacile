@@ -104,7 +104,14 @@ public class DocumentoConvenzioneBean {
   public void setUrl(String url) {
     this.url = url;
   }
+  
+  public String getTesto() {
+    return testo;
+  }
 
+  public void setTesto(String testo) {
+    this.testo = testo;
+  }
 
 
   private String partitaIva;
@@ -116,4 +123,6 @@ public class DocumentoConvenzioneBean {
   private String luogoNascitaRappresentanteLegale;
   private String dataNascitaRappresentanteLegale;
   private String url;
+  private String testo;
+  
 }

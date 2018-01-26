@@ -65,8 +65,8 @@
 		<div class="row">
 			<div class="container-fluid">
 				<a class="btn btn-primary btn-lg btn-block" href="creaPagina.jsp"
-					data-toggle="tooltip" title="Crea pagina" role="button"
-					>Crea Pagina</a>
+					data-toggle="tooltip" title="Crea pagina" role="button">Crea
+					Pagina</a>
 			</div>
 			<br> <br> <br>
 		</div>
@@ -90,7 +90,8 @@
 		<div class="row">
 			<div class="container-fluid">
 				<a class="btn btn-primary btn-lg btn-block" href="#"
-					data-toggle="tooltip" title="Crea pagina" role="button" disabled>Per Creare Una Pagina Devi Essere Convenzionato</a>
+					data-toggle="tooltip" title="Crea pagina" role="button" disabled>Per
+					Creare Una Pagina Devi Essere Convenzionato</a>
 			</div>
 			<br> <br> <br>
 		</div>
@@ -100,10 +101,18 @@
 			</div>
 			<div class="col-4 col-md-4">
 				<h1>
-					<b>P. Iva:</b> <%=conv.getPartitaIva() %> Carica il documento <br>(file supportati: pdf)
-					<% if (conv.getUrl() != null) { %>
-						<h5><b>Convenzione Caricata In Attesa di Convalida</b></h5>
-					<% } %>
+					<b>P. Iva:</b>
+					<%=conv.getPartitaIva()%>
+					Carica il documento <br>(file supportati: pdf)
+					<%
+						if (conv.getUrl() != null) {
+					%>
+					<h5>
+						<b>Convenzione Caricata In Attesa di Convalida</b>
+					</h5>
+					<%
+						}
+					%>
 				</h1>
 				<form method="post" action="GestioneTf" id="form1"
 					onsubmit="return isOk();" enctype="multipart/form-data">
@@ -118,8 +127,9 @@
 					</div>
 					<button type="submit" class="btn btn-primary">Carica
 						Documento</button>
-					<button type="button" class="btn btn-primary">Scarica</button>
-
+					<button type="button" class="btn btn-primary"
+						onclick="PrintElem(document.getElementById(conv))">Scarica</button>
+					<div id="conv" style="visibility: hidden"><%=conv.getTesto()%></div>
 				</form>
 			</div>
 			<div class="col-4 col-md-4">
@@ -133,6 +143,23 @@
 
 		<br> <br> <br>
 	</div>
+
+	<script>
+		function PrintElem(elem) {
+
+			var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+			var prova = $(elem).html();
+			mywindow.document.write(prova);
+
+			mywindow.document.close(); // necessary for IE >= 10
+			mywindow.focus(); // necessary for IE >= 10*/
+
+			mywindow.print();
+			mywindow.close();
+
+			return true;
+		}
+	</script>
 
 	<%@ include file="footer.jsp"%>
 
