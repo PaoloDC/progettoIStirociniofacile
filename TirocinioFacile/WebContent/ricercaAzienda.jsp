@@ -22,7 +22,7 @@
 	} else {
 		indice = 4;
 	}
-	final int NUM_ELE_PAG = 4;
+	final int NUM_ELE_PAG = 4;//
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -59,7 +59,7 @@
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
 		<center>
-			<h2>
+			<h2 >
 				<span class="glyphicon glyphicon-search"></span> Ricerca Aziende
 			</h2>
 			<hr class="line">
@@ -122,7 +122,7 @@
 							<div class="col-3 col-sm-3">
 								<div class="panel panel-default panel-modest"
 									style="max-width: 80%; margin: 5px; max-height: 60%;">
-									<div class="panel-heading"><%=listaAziende.get(i).getNomeAzienda()%></div>
+									<div class="panel-heading"style="color:orange"><span class="glyphicon glyphicon-home" ></span> <%=listaAziende.get(i).getNomeAzienda()%></div>
 									<div class="panel-body"
 										style="max-width: 80%; margin: 5px; max-height: 60%;">
 										<p><%=listaAziende.get(i).getDescrizione()%></p>
