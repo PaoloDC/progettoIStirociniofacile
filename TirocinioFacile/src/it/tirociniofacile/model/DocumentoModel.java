@@ -104,11 +104,9 @@ public class DocumentoModel {
   }
 
   /**
-   * Ricerca tutti i documenti questionari.
-   * 
-   * @return lista con tutti i documenti
-   * @throws SQLException
-   *           eccezzioni sql
+   * Ricerca tutti i documenti questionari non ancora approvati che hanno un pdf allegato.
+   * @return una lista di questionari
+   * @throws SQLException in caso di errata connessione al database 
    */
   public synchronized ArrayList<DocumentoQuestionarioBean> getTuttiDocumentiQuestionari()
       throws SQLException {
@@ -158,17 +156,19 @@ public class DocumentoModel {
   }
 
   /**
-   * Ricerca tutti i documenti questionari per una pagina id.
-   * 
-   * @return lista con tutti i documenti
-   * @throws SQLException
-   *           eccezzioni sql
+   * Ricerca tutti i documenti questionari per una pagina azienda.
+   * @param id l'identificativo della pagina azienda
+   * @return una lista di questionari per una certa pagina
+   * @throws SQLException in caso di errata connessione al database
    */
   public synchronized ArrayList<DocumentoQuestionarioBean> getTuttiDocumentiQuestionariPerPagina(
       int id) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    ArrayList<DocumentoQuestionarioBean> listaDocumenti = new ArrayList<DocumentoQuestionarioBean>();
+    
+    ArrayList<DocumentoQuestionarioBean> listaDocumenti 
+        = new ArrayList<DocumentoQuestionarioBean>();
+    
     try {
       connection = ds.getConnection();
       String selectSql = "SELECT commenti,suggerimenti,"
@@ -212,6 +212,11 @@ public class DocumentoModel {
     return listaDocumenti;
   }
 
+  /**
+   * Metodo che ricerca tutti i questionari non approvati per un determinato studente.
+   * @param mailStudente la mail che identifica lo studente
+   * @return una lista di questionari non approvati
+   */
   public synchronized ArrayList<String> ricercaQuestionariNonApprovatiPerStudente(
       String mailStudente) {
 
@@ -365,7 +370,8 @@ public class DocumentoModel {
    */
   public synchronized int salvaQuestionario(String commenti, String suggerimenti,
       String annoAccademico, String mailStudente, int paginaAziendaId, String matricola,
-      float giudizioEsperienza, float giudizioAzienda, float giudizioUniversita, String testoQuestionario) {
+      float giudizioEsperienza, float giudizioAzienda, float giudizioUniversita, 
+      String testoQuestionario) {
 
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -574,14 +580,11 @@ public class DocumentoModel {
   }
 
   /**
-   * Metodo che permette di ricercare un documento di convenzione di un'azienda inserendo il suo
-   * identificativo.
-   * 
-   * @param partitaIva
-   *          l'identificativo dell'azienda
-   * @return un documento di convenzione bean
-   * @throws SQLException
-   *           in caso di problemi di connessione al database
+   * Metodo che permette di ricercare un documento di convenzione 
+   *  di un'azienda inserendo la email del profilo associato.
+   * @param email la mail del profilo associata al documento di convenzione
+   * @return il documento di convenzione dell'azienda
+   * @throws SQLException in caso di errata connessione al database
    */
   public synchronized DocumentoConvenzioneBean ricercaConvenzionePerEmail(String email)
       throws SQLException {
