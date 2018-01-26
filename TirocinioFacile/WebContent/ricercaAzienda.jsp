@@ -212,7 +212,7 @@
 								if (listaAziende == null) {
 							%>
 							<center>
-								<h2>Nessuna Azienda disponibile</h2>
+								<h2>Avvia la ricerca per visualizzare le aziende </h2>
 							</center>
 							<%
 								} else if (listaAziende.size() == 0) {/*end else*/

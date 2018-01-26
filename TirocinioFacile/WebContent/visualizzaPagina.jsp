@@ -58,7 +58,7 @@
 						style="max-width: 100%; margin: 5px; max-height: 100%;">
 
 						<h2>
-							<span class="glyphicon glyphicon-file"></span>Nome
+							<span class="glyphicon glyphicon-home"></span> Nome
 						</h2>
 						<h4>
 
@@ -75,7 +75,7 @@
 						</h4>
 
 						<h2>
-							<span class="glyphicon glyphicon-home"></span> Indirizzo
+							<span class="glyphicon glyphicon-map-marker"></span> Indirizzo
 						</h2>
 						<h4>
 							<p><%=pagina.getLocalita()%></p>
