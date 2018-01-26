@@ -14,7 +14,7 @@
 		} else if (tipoUtente.equals("presidente")) {
 			response.sendRedirect("./visualizzaInformazioni.jsp");
 		} else if (tipoUtente.equals("azienda")) {
-			response.sendRedirect("./creaPagina.jsp");
+			response.sendRedirect("./homeAzienda.jsp");
 		}
 	}
 %>

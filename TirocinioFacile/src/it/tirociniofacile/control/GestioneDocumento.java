@@ -325,7 +325,6 @@ public class GestioneDocumento extends HttpServlet {
     } else {
       megaTesto += parte2dom4;
     } 
-     
     
     megaTesto += "<br><br>5. In che misura lei possedeva le seguenti caratteristiche "
         + "al momento dell'inizio dello stage?<br>"

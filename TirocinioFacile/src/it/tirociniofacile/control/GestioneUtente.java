@@ -1,5 +1,6 @@
 package it.tirociniofacile.control;
 
+import it.tirociniofacile.bean.DocumentoConvenzioneBean;
 import it.tirociniofacile.bean.UtenteBean;
 import it.tirociniofacile.model.DocumentoModel;
 import it.tirociniofacile.model.UtenteModel;
@@ -225,7 +226,14 @@ public class GestioneUtente extends HttpServlet {
       } else {
         request.getSession().setAttribute("tipologiaAccount", "azienda");
         
-        RequestDispatcher rd = request.getRequestDispatcher("/creaPagina.jsp");
+        //domanda convenzione
+        DocumentoModel docModel = new DocumentoModel();
+        DocumentoConvenzioneBean conv = docModel.ricercaConvenzionePerEmail(utente.getEmail());
+        System.out.println("CONV GEST UTENTE: " + conv);
+        request.getSession().setAttribute("convenzione", conv);
+        
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/homeAzienda.jsp");
         rd.forward(request, response);
       }
     } else {

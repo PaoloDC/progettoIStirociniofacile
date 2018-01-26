@@ -4,6 +4,10 @@
 <%
 	String tipoUtente = (String) session.getAttribute("tipologiaAccount");
 
+	if(null == tipoUtente) {
+		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+		rd.forward(request, response);
+	}
 	if (!tipoUtente.equals("azienda")) {
 		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
 		rd.forward(request, response);
@@ -14,6 +18,10 @@
 		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
 		rd.forward(request, response);
 	}
+	
+	DocumentoConvenzioneBean conv = (DocumentoConvenzioneBean) session.getAttribute("convenzione");
+	System.out.print("CONVENZIONE HOME AZ: " +conv);
+	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -53,21 +61,61 @@
 			</div>
 			<br> <br> <br>
 		</div>
-
+		
+		<%
+			if (conv != null && conv.isApprovato()) {
+		%>
 		<div class="row">
-			<div class="container-fluid">
-				<a class="btn btn-primary btn-lg btn-block"
-					href="GestioneTf?action=ricercaConvenzionePerAzienda&nome=<%=ub.getNomeAzienda()%>"
-					data-toggle="tooltip" title="Apri pagina" role="button">Carica
-					Documento</a>
+			<div class="col-4 col-md-4">
+				<!-- usato per centrare -->
+			</div>
+			<div class="col-4 col-md-4">
+				<br> <br> <br> <br> <br> <br>
+				<h1>Convenzione Approvata.</h1>
 			</div>
 
-			<br> <br> <br>
+			<div class="col-4 col-md-4">
+				<!-- usato per centrare -->
+			</div>
 		</div>
 
+		<%
+			} else {
+		%>
+
+		<div class="row">
+			<div class="col-4 col-md-4">
+				<!-- usato per centrare -->
+			</div>
+			<div class="col-4 col-md-4">
+				<h1>
+					<b>ID:</b>
+					
+					Carica il documento <br>(file supportati: pdf)
+				</h1>
+				<form method="post" action="GestioneTf" id="form1"
+					onsubmit="return isOk();" enctype="multipart/form-data">
+					<input type="hidden" id="thisField" name="action"
+						value="caricaDocumento">
+					<input type="hidden" name="email" value=<%=utente.getEmail() %>>
+					
+					<div class="form-group">
+						<input type="file" name="file" id="theFile" accept="application/pdf" >
+						
+					</div>
+					<button type="submit" class="btn btn-primary">Carica
+						Documento</button>
+				</form>
+			</div>
+			<div class="col-4 col-md-4">
+				<!-- usato per centrare -->
+			</div>
+		</div>
+		
+		<% } %>
+		
 		<br> <br> <br>
 	</div>
 
-	</div>
 	<%@ include file="footer.jsp"%>
 </body>
