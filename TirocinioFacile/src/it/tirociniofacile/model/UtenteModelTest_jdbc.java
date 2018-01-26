@@ -33,9 +33,17 @@ public class UtenteModelTest_jdbc extends TestCase {
     UtenteBean utente = model.caricaAccount(studente.getEmail(),studente.getPassword());
     assertNull(utente);
 
-    model.salvaAccountStudente(studente.getEmail(), 
+    boolean ins = model.salvaAccountStudente(studente.getEmail(), 
         studente.getPassword(), studente.getMatricola());
 
+    assertTrue(ins);
+    
+    //inserimento duplicato
+    boolean ins2 = model.salvaAccountStudente(studente.getEmail(), 
+        studente.getPassword(), studente.getMatricola());
+
+    assertFalse(ins2);
+    
     UtenteBean utente2 = model.caricaAccount(studente.getEmail(),studente.getPassword());
     assertNotNull(utente2);
 
@@ -48,15 +56,24 @@ public class UtenteModelTest_jdbc extends TestCase {
 
 
   public void testSalvaAccountAzienda() {
+    
     ProfiloAziendaBean azienda = 
         new ProfiloAziendaBean("azienda_test@gmail.com","azienda_test","azienda_test");
 
     UtenteBean utente = model.caricaAccount(azienda.getEmail(),azienda.getPassword());
     assertNull(utente);
 
-    model.salvaAccountAzienda(azienda.getEmail(), 
+    boolean ins = model.salvaAccountAzienda(azienda.getEmail(), 
         azienda.getPassword(), azienda.getNomeAzienda());
 
+    assertTrue(ins);
+    
+    //inserimento duplicato per azienda
+    boolean ins2 = model.salvaAccountAzienda(azienda.getEmail(), 
+        azienda.getPassword(), azienda.getNomeAzienda());
+
+    assertFalse(ins2);
+    
     utente = model.caricaAccount(azienda.getEmail(),azienda.getPassword());
     assertEquals(utente, azienda);
     ProfiloAziendaBean a = (ProfiloAziendaBean) utente;

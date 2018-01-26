@@ -1,10 +1,10 @@
 package it.tirociniofacile.model;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import it.tirociniofacile.bean.PaginaAziendaBean;
 import it.tirociniofacile.bean.ProfiloAziendaBean;
+
+import java.util.ArrayList;
+
 import junit.framework.TestCase;
 
 public class PaginaAziendaModelTest_jdbc extends TestCase {
@@ -15,17 +15,9 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     model = new PaginaAziendaModel_jdbc();
   }
 
-  /**
-   * test  metodo ricerca.
-   */
+
   public void testRicerca() {
     try {
-      
-      //da una situazione di db caricato con dati default in sql
-      final int dimensione_iniziale = 8;
-      
-      ArrayList<PaginaAziendaBean> lista = model.ricerca();
-      assertEquals(lista.size(), dimensione_iniziale);
       
       //inserisco una pagina di prova, utilizzando uno stub di profiloAziendaBean
       ArrayList<String> ambiti = new   ArrayList<String>();
@@ -56,6 +48,8 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       um.salvaAccountAzienda(profilo.getEmail(), profilo.getPassword(),
           profilo.getNomeAzienda());
       
+      ArrayList<PaginaAziendaBean> listaIniziale = model.ricerca();
+      
       int id = model.aggiungiPagina(pab.getLocalita(),
           pab.getDescrizione(),
           profilo.getEmail(),
@@ -63,10 +57,10 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
           pab.getSkill());
       
       pab.setId(id);
-      
+            
       ArrayList<PaginaAziendaBean> nuovaLista = model.ricerca();
-      
-      assertEquals(nuovaLista.size(), (dimensione_iniziale + 1));
+
+      assertEquals(nuovaLista.size(), (listaIniziale.size() + 1));
       assertEquals(nuovaLista.contains(pab), true);
       
       model.eliminaPagina(pab.getId());
@@ -77,9 +71,6 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     }
   }
   
-  /**
-   * test metodo ricercaperid.
-   */
   public void testRicercaPerId() {
     try {
       //inserisco una pagina di prova, utilizzando uno stub di profiloAziendaBean
@@ -132,9 +123,6 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     }
   }
   
-  /**
-   * test metodo ricercaparametrica.
-   */
   public void testRicercaParametrica() { 
     try {
   
@@ -176,9 +164,7 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       pab.setId(id);
       
       //eseguo la ricerca per località = "Località Prova"
-      ArrayList<PaginaAziendaBean> lista;
-      
-      lista = model.ricerca("localita", pab.getLocalita());      
+      ArrayList<PaginaAziendaBean> lista = model.ricerca("localita", pab.getLocalita());      
       
       assertEquals(lista.isEmpty(), false);
       PaginaAziendaBean pabRicerca = lista.get(0);
@@ -211,31 +197,34 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     skill.add("Conoscenza di Java  (base)");
     skill.add("Conoscenza dei linguaggi HTML, CSS, JSP");
     
-    
-    ProfiloAziendaBean prof = new ProfiloAziendaBean();
-    prof.setEmail("mail");
-    prof.setNomeAzienda("Ak Informatica");
-    prof.setPassword("mail");
+    ProfiloAziendaBean azienda = new ProfiloAziendaBean();
+    azienda.setEmail("mail");
+    azienda.setNomeAzienda("Ak Informatica");
+    azienda.setPassword("mail");
     
     UtenteModel_jdbc u = new UtenteModel_jdbc();
     
-    u.salvaAccountAzienda(prof.getEmail(), prof.getPassword(), prof.getNomeAzienda());
+    boolean b = u.salvaAccountAzienda(azienda.getEmail(), 
+        azienda.getPassword(), azienda.getNomeAzienda());
+    
+    assertEquals(true, b);
     
     PaginaAziendaBean pab = new PaginaAziendaBean();
     pab.setLocalita("Milano");
     pab.setDescrizione("Affermata azienda nel campo  dello sviluppo web");
     pab.setSkill(skill);
     pab.setAmbito(ambiti);
-    pab.setNomeAzienda(prof.getNomeAzienda());
+    pab.setNomeAzienda(azienda.getNomeAzienda());
     
     int x = model.aggiungiPagina(pab.getLocalita(),
-        pab.getDescrizione(), prof.getEmail(), ambiti, skill);
+        pab.getDescrizione(), azienda.getEmail(), ambiti, skill);
+    
     pab.setId(x);
     
     PaginaAziendaBean nuovapagina = model.ricerca(pab.getId());
     assertEquals(nuovapagina, pab);
     
     model.eliminaPagina(x);
-    u.eliminaProfiloAzienda(prof);
+    u.eliminaProfiloAzienda(azienda);
   }
 }

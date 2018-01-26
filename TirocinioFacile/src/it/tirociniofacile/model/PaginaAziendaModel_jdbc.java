@@ -1,8 +1,5 @@
 package it.tirociniofacile.model;
 
-import com.mysql.jdbc.Statement;
-
-import it.tirociniofacile.bean.PaginaAziendaBean;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,9 +7,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.mysql.jdbc.Statement;
 
+import it.tirociniofacile.bean.PaginaAziendaBean;
 
+/**
+ * Classe che testa i metodi della classe PaginaAziendaModel.
+ * @author Paolo De Cristofaro
+ *
+ */
 public class PaginaAziendaModel_jdbc {
+  
   //variabili di istanza
   private static Statement stmt;
   private static Connection con;
@@ -45,12 +50,12 @@ public class PaginaAziendaModel_jdbc {
    * @return lista di pagina azienda
    */
   public synchronized ArrayList<PaginaAziendaBean> ricerca() {
-    
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
     ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
     try {
+      
       String selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id "
           + "FROM " + TABLE_NAME_PAGINA
           + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
@@ -76,54 +81,57 @@ public class PaginaAziendaModel_jdbc {
       }
     } catch (SQLException e) {
       e.printStackTrace();
-    }
+    } 
     return pabList;
   }
 
 
+
   /**
    * Cerca nel db tutte le pagine azienda corrispondenti alla chiave per quella categoria.
-   * @return lista di pagina azienda
+   * @param categoria un parametro per cui ricercare (deve essere: località, nome, ambito, skill)
+   * @param chiave sequenza di caratteri per effettuare la ricerca
+   * @return un arraylist di paginaAziendaBean che soddisfano la ricerca
    */
   public synchronized ArrayList<PaginaAziendaBean> ricerca(String categoria, String chiave)  {
-    
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
     ArrayList<PaginaAziendaBean> pabList = new ArrayList<PaginaAziendaBean>();
 
     try {
+
       // categoria sta ad indicare un capo della tabella azienda (es. descrizione, località)
       // la chiave permette una ricerca dei valori in quel campo scelto
 
-      String selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id "
+      String selectSql = "SELECT DISTINCT descrizione,localita,nomeaziendaRappresentata,id "
           + "FROM " + TABLE_NAME_PAGINA
           + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
           + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = " 
           + UtenteModel.TABLE_NAME_AZIENDA + ".mail WHERE " + categoria + " LIKE ? ";
 
       if (categoria.equals("skill")) {
-        selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id,nomeSkill " 
+        selectSql = "SELECT DISTINCT descrizione,localita,nomeaziendaRappresentata,id,nomeSkill " 
                     + "FROM " + TABLE_NAME_PAGINA
                     + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
                     + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = " 
                     + UtenteModel.TABLE_NAME_AZIENDA + ".mail"
                     + " JOIN skill ON "
                     + TABLE_NAME_PAGINA + ".id = skill.paginaAziendaID " 
-                    + " WHERE nomeSkill LIKE ?";
+                    + " WHERE nomeSkill LIKE ? GROUP BY id";
         
         
       }
       
       if (categoria.equals("ambito")) {
-        selectSql = "SELECT descrizione,localita,nomeaziendaRappresentata,id,nomeAmbito " 
+        selectSql = "SELECT DISTINCT descrizione,localita,nomeaziendaRappresentata,id,nomeAmbito " 
             + "FROM " + TABLE_NAME_PAGINA
             + " JOIN " + UtenteModel.TABLE_NAME_AZIENDA
             + " ON " + TABLE_NAME_PAGINA + ".mailAzienda = "
             + UtenteModel.TABLE_NAME_AZIENDA + ".mail"
             + " JOIN ambito ON "
             + TABLE_NAME_PAGINA + ".id = ambito.paginaAziendaID " 
-            + " WHERE nomeAmbito LIKE ?";
+            + " WHERE nomeAmbito LIKE ? GROUP BY id";
         
       }
       
@@ -147,7 +155,7 @@ public class PaginaAziendaModel_jdbc {
       }
     } catch (SQLException e) {
       e.printStackTrace();
-    }
+    } 
     return pabList;
   }
 
@@ -155,7 +163,7 @@ public class PaginaAziendaModel_jdbc {
    * Cerca nel db una pagina azienda per il suo id.
    * @return una pagina azienda
    */
-  public synchronized PaginaAziendaBean ricerca(int id)  {
+  public synchronized PaginaAziendaBean ricerca(int id) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
@@ -183,10 +191,9 @@ public class PaginaAziendaModel_jdbc {
         pab.setAmbito(this.caricaAmbito(id));
         pab.setSkill(this.caricaSkill(id));
       }
-    } catch (SQLException e) { 
-      e.printStackTrace(); 
-    }
-
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } 
     return pab;
   }
 
@@ -203,6 +210,7 @@ public class PaginaAziendaModel_jdbc {
     PreparedStatement preparedStatement = null;
 
     try {
+
       String selectSql = "SELECT nomeSkill FROM " + TABLE_NAME_SKILL + " WHERE " 
           + TABLE_NAME_SKILL + ".paginaAziendaID = ? ";
 
@@ -216,7 +224,7 @@ public class PaginaAziendaModel_jdbc {
       }
 
     } catch (SQLException e) {
-      e.printStackTrace(); 
+      e.printStackTrace();
     }
 
     return daRestituire;
@@ -250,7 +258,7 @@ public class PaginaAziendaModel_jdbc {
       }
 
     } catch (SQLException e) {
-      e.printStackTrace(); 
+      e.printStackTrace();
     }
 
     return daRestituire;
@@ -258,22 +266,21 @@ public class PaginaAziendaModel_jdbc {
 
 
   /**
-   * Aggiunge una pagina nel db. 
+   * Aggiunge una pagina nel db.
    * @param localita sede dell'azienda
    * @param descrizione descrizione dell'azienda
-   * @param email mail dell'azienda
-   * @param ambito ambiti dove lavora l'azienda
+   * @param email mail dell'account azienda
+   * @param ambito dove lavora l'azienda
    * @param skill skills richieste dall'azienda
-   * @throws SQLException in caso di lettura errata dal database
+   * @return -1 in caso di errore di salvataggio sul db, altrimenti l'intero 
    */
   public synchronized int aggiungiPagina(String localita, String descrizione, String email, 
       ArrayList<String> ambito, ArrayList<String> skill) {
+    
     Connection connection = con;
     PreparedStatement preparedStatement = null;
     PreparedStatement preparedStatementSkill = null;
     PreparedStatement preparedStatementAmbito = null;
-
-    
 
     try {
       String insertSqlPagAzienda = "INSERT INTO " + TABLE_NAME_PAGINA
@@ -291,6 +298,16 @@ public class PaginaAziendaModel_jdbc {
       rs.next();
       int autoId = rs.getInt(1);
 
+      //Query per avvalorare il campo paginaAziendaID della convenzione
+      String updateSql = "UPDATE " + DocumentoModel.TABLE_NAME_CONVENZIONI 
+          + " SET paginaAziendaID = ? WHERE nomeAzienda = ( SELECT nomeAziendaRappresentata FROM "
+          + UtenteModel.TABLE_NAME_AZIENDA + " WHERE mail = ? ); ";
+      
+      PreparedStatement preparedStatementUpdate = connection.prepareStatement(updateSql);
+      preparedStatementUpdate.setInt(1, autoId);
+      preparedStatementUpdate.setString(2, email);
+      preparedStatementUpdate.executeUpdate(); 
+      
       String insertSqlSkill = "INSERT INTO " + TABLE_NAME_SKILL
           + " (paginaAziendaID,nomeSkill) VALUES (?,?)";
       preparedStatementSkill = connection.prepareStatement(insertSqlSkill);
@@ -314,10 +331,14 @@ public class PaginaAziendaModel_jdbc {
       }
 
       return autoId;
+
+    } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
+      //entry duplicata
+      return -1;
     } catch (SQLException e) {
-      e.printStackTrace(); 
-    }
-    return -1;
+      e.printStackTrace();
+    } 
+    return -2;
   }
   
   public void eliminaPagina(int id) {

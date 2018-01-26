@@ -106,13 +106,12 @@ public class UtenteModel_jdbc {
       preparedStatement.setString(1, email);
       preparedStatement.setString(2, password);
       preparedStatement.setString(3, nomeazienda);
-
-      try {
-        preparedStatement.executeUpdate();
-      } catch (MySQLIntegrityConstraintViolationException e) {
-        System.out.println("Entry duplicata per azienda con email: " + email);
-        return false;
-      }
+      
+      preparedStatement.executeUpdate();
+      
+    } catch (MySQLIntegrityConstraintViolationException e) {
+      System.out.println("Entry duplicata per azienda con email: " + email);
+      return false;
     } catch (SQLException e) {
       e.printStackTrace();
     }
