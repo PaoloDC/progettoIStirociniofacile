@@ -4,6 +4,7 @@ import it.tirociniofacile.bean.ProfiloAziendaBean;
 import it.tirociniofacile.bean.ProfiloStudenteBean;
 import it.tirociniofacile.bean.UtenteBean;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import junit.framework.TestCase;
@@ -188,6 +189,21 @@ public class UtenteModelTest_jdbc extends TestCase {
     //elimina gli account inseriti per il test
     ArrayList<UtenteBean> svuota = new ArrayList<>();
     model.salvaUtentiNelFile(svuota);
+
+  }
+  
+  public void testCancellaAccountAzienda() {
+
+    ProfiloAziendaBean pab  = new ProfiloAziendaBean("azienda_prova@gmail.com",
+        "prova","Azienda Prova");
+    
+    model.salvaAccountAzienda(pab.getEmail(), pab.getPassword(), pab.getNomeAzienda());
+
+    try {
+      model.cancellaAccountAzienda(pab.getEmail());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
 
   }
 }

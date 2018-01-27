@@ -162,8 +162,6 @@
 
 	<%@ include file="footer.jsp"%>
 
-
-
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/js/validate.js"></script>
 	<script>
@@ -182,7 +180,7 @@
 			) {
 				return true;
 			}
-			else {return false;}
+			return false;
 		}
 	</script>
 </body>

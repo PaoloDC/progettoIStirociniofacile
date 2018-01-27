@@ -128,9 +128,8 @@
 					<button type="submit" class="btn btn-primary">Carica
 						Documento</button>
 					<button type="button" class="btn btn-primary"
-						onclick="PrintElem(document.getElementById(conv))">Scarica</button>
+						onclick="PrintElem(document.getElementById('conv'));">Scarica</button>
 					<div id="conv" style="visibility: hidden"><%=conv.getTesto()%></div>
-					<h3><%=conv.getTesto()%></h3>
 				</form>
 				
 			</div>
