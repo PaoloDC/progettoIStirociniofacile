@@ -19,6 +19,9 @@ public class DocumentoQuestionarioBean {
   private float giudizioEsperienza;
   private float giudizioAzienda;
   private float giudizioUniversita;
+  private String testoQuestionario;
+
+  
 
   // costruttore vuoto
   public DocumentoQuestionarioBean() {
@@ -148,7 +151,19 @@ public class DocumentoQuestionarioBean {
   public void setUrl(String url) {
     this.url = url;
   }
-//prova push
+  
+  public String getTestoQuestionario() {
+    return testoQuestionario;
+  }
+
+  public void setTestoQuestionario(String testoQuestionario) {
+    this.testoQuestionario = testoQuestionario;
+  }
+
+  public boolean isApprovato() {
+    return approvato;
+  }
+  
   @Override
   public String toString() {
     return "Questionario [Id: " + id 

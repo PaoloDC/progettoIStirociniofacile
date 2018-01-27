@@ -704,7 +704,7 @@ public class DocumentoModel {
       String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI + " WHERE id = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setString(1, "" + id);
+      preparedStatement.setInt(1,id);
       ResultSet rs = preparedStatement.executeQuery();
 
       if (rs.first()) {
@@ -715,6 +715,8 @@ public class DocumentoModel {
         dqb.setAnnoAccademico(rs.getString(4));
         dqb.setApprovato(rs.getBoolean(5));
         dqb.setMailStudente(rs.getString(7));
+        dqb.setTestoQuestionario(rs.getString(12));
+        dqb.setUrl(rs.getString(6));
 
       }
     } finally {
