@@ -32,6 +32,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     modelUtente = new UtenteModelJdbc();
   }
   
+  /**
+   * Test del metodo getTuttiDocumentiConvezioneAzienda.
+   */
   public void testGetTuttiDocumentiConvenzioneAzienda() {
 
     try {
@@ -59,6 +62,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     }
   }
 
+  /**
+   * Test del metodo getTuttiDocumentiQuestionari.
+   */
   public void testGetTuttiDocumentiQuestionari() {
     try {
 
@@ -112,6 +118,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     }
   }
 
+  /**
+   * Test del metodo getTuttiDocumentiQuestionariPerPagina.
+   */
   public void testGetTuttiDocumentiQuestionariPerPagina() {
     try {
       ArrayList<DocumentoQuestionarioBean> listaDocumenti = model
@@ -128,6 +137,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     }
   }
 
+  /**
+   * Test metodo ricercaQuestionariNonApprovatiPerStudente.
+   */
   public void testricercaQuestionariNonApprovatiPerStudente() {
     try {
       ArrayList<String> lista = new ArrayList<String>();
@@ -142,6 +154,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     }
   }
 
+  /**
+   * Test metodo conteggioQuestionariApprovatiPerAnno.
+   */
   public void testConteggioQuestionariApprovatiPerAnno() {
     // anno che esiste
     String annoEs = "2017";
@@ -162,6 +177,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     }
   }
 
+  /**
+   * Test metodo conteggioQuestionariApprovatiPerAzienda.
+   */
   public void testConteggioQuestionariApprovatiPerAzienda() {
     // azienda che esiste
     ProfiloAziendaBean pab = new ProfiloAziendaBean();
@@ -182,6 +200,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     modelUtente.cancellaAccountAzienda(pab.getEmail());
   }
 
+  /**
+   * Test metodo salvaQuestionario.
+   */
   public void testSalvaQuestionario() {
     try {
 
@@ -231,6 +252,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     }
   }
 
+  /**
+   * Test metodo salvaConvenzione.
+   */
   public void testSalvaConvenzione() {
     try {
 
@@ -248,6 +272,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     }
   }
 
+  /**
+   * Test metodo salvaPdfConvenzione.
+   */
   public void testSalvaPdfConvenzione() {
     String piva = "piva_prova";
     boolean inserito = model.salvaConvenzione(piva, "", "", "", "", "", "", "");
@@ -263,6 +290,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     model.cancellaDocumento(piva);
   }
 
+  /**
+   * Test metodo salvaPdfQuestionario.
+   */
   public void testSalvaPdfQuestionario() {
     try {
 
@@ -318,6 +348,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     }
   }
 
+  /** 
+   * Test metodo ricercaConvenzionePerEmail.
+   */
   public void testRicercaConvenzionePerEmail() {
     try {
 
@@ -346,6 +379,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     }
   }
 
+  /**
+   * Test metodo ricercaConvenzionePerPartitaIva.
+   */
   public void testRicercaConvenzionePerPartitaIva() {
     try {
       String piva = "piva_prova";
@@ -367,6 +403,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     }
   }
 
+  /**
+   * Test metodo ricercaQuestionarioPerId.
+   */
   public void testRicercaQuestionarioPerId() {
     try {
 
@@ -417,6 +456,9 @@ public class DocumentoModelTestJdbc extends TestCase {
     }
   }
 
+  /** 
+   * Test metodo cancellaDocumento.
+   */
   public void testCancellaDocumento() {
 
     ProfiloStudenteBean psb = new ProfiloStudenteBean();
@@ -476,7 +518,9 @@ public class DocumentoModelTestJdbc extends TestCase {
   }
 
   
-  
+  /**
+   * Test metodo approvaDocumento.
+   */
   public void testApprovaDocumento() {
     ProfiloStudenteBean psb = new ProfiloStudenteBean();
     psb.setEmail("studente_prova@studenti.unisa.it");
