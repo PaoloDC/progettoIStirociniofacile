@@ -105,21 +105,15 @@ function ValidateFile(file) {
 
 function ValidatePartitaIva(str, txt) {
 	var valid = isNaN(str.value);
-	if (valid) {
+	if (valid || str.value.length < 11 || str.value.length > 11) {
 		str.style.border = "2px solid red";
 		$(txt).html("Partita Iva non valida");
 		return false;
+	}
+	$(txt).html("Partita Iva");
+	str.style.border = "2px solid green";
+	return true;
 
-	}
-	if (str.value.length == 11) {
-		str.style.border = "2px solid green";
-		return true;
-	} 
-	if(stri.value.lenght < 11){
-		str.style.border = "2px solid red";
-		$(txt).html("Partita Iva non valida");
-		return false;
-	}
 }
 
 function ValidateAmbSki(str, txt) {
@@ -172,4 +166,3 @@ function ValidateData(str, txt) {
 	str.style.border = "2px solid green";
 	return true;
 }
-
