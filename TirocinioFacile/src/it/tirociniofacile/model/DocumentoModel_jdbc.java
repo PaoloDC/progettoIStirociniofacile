@@ -48,10 +48,12 @@ public class DocumentoModel_jdbc {
     }
   }
   /**
- * seleziona i documenti di convenzione dal db.
- * @return
- * @throws SQLException
- */
+   * Ricerca tutti i documenti convenzione bean.
+   * @return
+   * 
+   * @throws SQLException
+   * eccezioni di SQL.
+   */
   
   public synchronized ArrayList<DocumentoConvenzioneBean> getTuttiDocumentiConvenzioneAzienda()
       throws SQLException {
@@ -85,9 +87,11 @@ public class DocumentoModel_jdbc {
     return listaDocumenti;
   }
   /**
-   * seleziona i questionari dal db
+   *  Ricerca tutti i documenti questionari non ancora approvati che hanno un pdf allegato.
    * @return
-   * @throws SQLException 
+   * 
+   * @throws SQLException
+   * eccezione di SQL
    */
 
   public synchronized ArrayList<DocumentoQuestionarioBean> getTuttiDocumentiQuestionari()
@@ -122,17 +126,20 @@ public class DocumentoModel_jdbc {
   }
   
   /**
- * eleziona i questionari dal db in b
- * @param id
- * @return
- * @throws SQLException
- */
+   *Ricerca tutti i documenti questionari per una pagina azienda.
+   * @param id id della pagina dell'azienda
+   * @return
+   * 
+   * @throws SQLException
+   * eccezioni di Sql
+   */
   public synchronized ArrayList<DocumentoQuestionarioBean> getTuttiDocumentiQuestionariPerPagina(
       int id) throws SQLException {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
 
-    ArrayList<DocumentoQuestionarioBean> listaDocumenti = new ArrayList<DocumentoQuestionarioBean>();
+    ArrayList<DocumentoQuestionarioBean> listaDocumenti = 
+        new ArrayList<DocumentoQuestionarioBean>();
 
     try {
 
@@ -160,7 +167,15 @@ public class DocumentoModel_jdbc {
 
     return listaDocumenti;
   }
-
+  /**
+   * Metodo che ricerca tutti i questionari non approvati per un determinato studente.
+   * @param mailStudente indirizzo e-mail di uno studente
+   * @return
+   * 
+   * @throws SQLException
+   * eccezione di SQL.
+   */
+  
   public synchronized ArrayList<String> ricercaQuestionariNonApprovatiPerStudente(
       String mailStudente) throws SQLException {
 
@@ -196,7 +211,15 @@ public class DocumentoModel_jdbc {
 
     return lista;
   }
-
+  /**
+   * Conta il numero di questionari approvati in un anno indicato.
+   * @param anno anno axxademico indicato.
+   * @return
+   * 
+   * @throws SQLException
+   * eccezioni di SQL
+   */
+  
   public synchronized int conteggioQuestionariApprovatiPerAnno(String anno) throws SQLException {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
@@ -215,7 +238,15 @@ public class DocumentoModel_jdbc {
     }
     return numeroQuestionariApprovatiPerAnno;
   }
-
+  /**
+ * Conta il numero di questionari approvati in una certa azienda.
+ * @param azienda nome dell'azienda
+ * @return
+ * 
+ * @throws SQLException
+ * eccezioni di SQL
+ */
+  
   public synchronized int conteggioQuestionariApprovatiPerAzienda(String azienda)
       throws SQLException {
     Connection connection = con;
@@ -239,6 +270,20 @@ public class DocumentoModel_jdbc {
     }
     return numAzienda;
   }
+  /**
+   *  Metodo che consente di salvare un nuovo questionario sul database.
+   * @param commenti commenti sull'azienda
+   * @param suggerimenti suggerimenti all'azienda
+   * @param annoAccademico anno in cui si è svolto il tirocinio.
+   * @param mailStudente indirizzo e-mail dello studente
+   * @param paginaAziendaId id della pagina dell'azienda
+   * @param matricola matricola dello studente
+   * @param giudizioEsperienza voto sull'esperienza
+   * @param giudizioAzienda voto sull'azienda
+   * @param giudizioUniversita voto sull'università
+   * @param testoQuestionario testo del questionario
+   * @return
+   */
   
   public synchronized int salvaQuestionario(String commenti, String suggerimenti,
       String annoAccademico, String mailStudente, int paginaAziendaId, String matricola,
@@ -280,7 +325,19 @@ public class DocumentoModel_jdbc {
     }
     return -1;
   }
-
+  /**
+ * Salva il documento di convenzione all'interno del database.
+ * @param piva partita iva
+ * @param nomeAzienda nome dell'azienda
+ * @param sedeLegale sede legale dell'azienda
+ * @param citta citta dell'azienda
+ * @param rappLegale rappresentante legale dell'azienda
+ * @param luogoDiNascitaRappLegale luogo di nascita del rappresentante  dell'azienda
+ * @param dataDiNascitaRappLegale data di nascita del rappresentante dell'azienda
+ * @param testoConvenzione testo della convenzione
+ * @return
+ */
+  
   public synchronized boolean salvaConvenzione(String piva, String nomeAzienda, String sedeLegale,
       String citta, String rappLegale, String luogoDiNascitaRappLegale,
       String dataDiNascitaRappLegale, String testoConvenzione) {
@@ -317,6 +374,12 @@ public class DocumentoModel_jdbc {
     } 
     return true;
   }
+  /**
+   * Metodo che salva il pdf, documento di convenzione dell'azienda, come file e mantiene un
+   * riferimento all'url del pdf sul database.
+   * @param url url del pdf
+   * @param piva partita iva dell'azienda
+   */
 
   public synchronized void salvaPdfConvenzione(String url, String piva) {
     Connection connection = con;
@@ -335,7 +398,13 @@ public class DocumentoModel_jdbc {
       e.printStackTrace();
     }
   }
-
+  /**
+ * Metodo che permette il salvataggio di un documento pdf, mantenendo un riferimento, alla
+ * posizione del file, sul database.
+ * @param url url del questionario
+ * @param id id del pdf
+ */
+  
   public synchronized void salvaPdfQuestionario(String url, int id) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
@@ -358,7 +427,16 @@ public class DocumentoModel_jdbc {
       e.printStackTrace();
     }
   }
-
+  /**
+ * Metodo che permette di ricercare un documento di convenzione di un'azienda inserendo la email
+ * del profilo associato.
+ * @param email indirizzo e-mail dell'azienda
+ * @return
+ * 
+ * @throws SQLException
+ * eccezione di SQL
+ */
+  
   public DocumentoConvenzioneBean ricercaConvenzionePerEmail(String email) throws SQLException {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
@@ -396,7 +474,13 @@ public class DocumentoModel_jdbc {
     }
     return dcb;
   }
-
+  /**
+ * Metodo che permette di ricercare un documento di convenzione di un'azienda inserendo la email
+ * del profilo associato.
+ * @param piva partita iva dell'azienda
+ * @return
+ */
+  
   public synchronized DocumentoConvenzioneBean ricercaConvenzionePerPartitaIva(String piva) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
@@ -432,7 +516,12 @@ public class DocumentoModel_jdbc {
     } 
     return dcb;
   }
-
+  /**
+ * Permette di ricercare un documento questionario fornendo l'id.
+ * @param id identificativo del questionario
+ * @return
+ */
+  
   public synchronized DocumentoQuestionarioBean ricercaQuestionarioPerId(int id) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
@@ -468,7 +557,11 @@ public class DocumentoModel_jdbc {
     }
     return dqb;
   }
-
+  /**
+ *  Cancella il documento il cui id corrisponde a quello passato.
+ * @param id id del documento
+ */
+  
   public synchronized void cancellaDocumento(String id) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
@@ -488,7 +581,11 @@ public class DocumentoModel_jdbc {
       e.printStackTrace();
     }
   }
-
+  /**
+ * Approva il documento il cui id corrisponde a quello passato.
+ * @param id id del documento
+ */
+  
   public synchronized void approvaDocumento(String id) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
