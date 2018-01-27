@@ -223,7 +223,8 @@ public class GestioneRicercaTirocinio extends HttpServlet {
    * @throws SQLException
    *           eccezione lanciato dal metodo del model
    */
-  public void creaPagina(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  public void creaPagina(HttpServletRequest request, HttpServletResponse response) 
+      throws ServletException, IOException {
     String localita = request.getParameter("localita");
     String descrizione = request.getParameter("descrizione");
     String mailAzienda = request.getParameter("mailAzienda");
