@@ -112,6 +112,19 @@ public class DocumentoConvenzioneBean {
   public void setTesto(String testo) {
     this.testo = testo;
   }
+  public String toString() {
+    return "Convenzione [partita iva: " + partitaIva 
+        + ", approvazione: " + approvato 
+        + ", azienda: " + nomeAzienda
+        + ", sede legale: " + sedeLegale 
+        + ", città: " + città 
+        + ", nome del rappresentante legale: " + rappresentanteLegale
+        + ", luogo di nascita del rappesentante legale: " +luogoNascitaRappresentanteLegale 
+        + ", data di nascita del rappesentante legale: " + dataNascitaRappresentanteLegale
+        + ", url: " + url
+        + ", testo: " + testo
+        + " ]";
+  }
 
 
   private String partitaIva;
