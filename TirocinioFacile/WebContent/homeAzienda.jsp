@@ -65,8 +65,8 @@
 		<div class="row">
 			<div class="container-fluid">
 				<a class="btn btn-primary btn-lg btn-block" href="creaPagina.jsp"
-					data-toggle="tooltip" title="Crea / Aggiorna (se già esistente) la pagina azienda" role="button">Crea
-					Pagina</a>
+					data-toggle="tooltip" title="Crea / Aggiorna (se già esistente) la pagina azienda" role="button">
+					Crea / Aggiorna (se già esistente) la pagina azienda</a>
 			</div>
 			<br> <br> <br>
 		</div>

@@ -18,13 +18,13 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
         rd.forward(request, response);
 	}
 	UtenteBean ub = (UtenteBean) session.getAttribute("account");
-	
-	
+
 	ProfiloStudenteBean psb = (ProfiloStudenteBean) ub;
 	
 	
 	ArrayList<PaginaAziendaBean> listaAzienda = (ArrayList<PaginaAziendaBean>) session
 			.getAttribute("listaAziende");
+
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -49,6 +49,15 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 			<div class="col-2 col-md-2">
 				<!-- usato per centrare -->
 			</div>
+			<% if(listaAzienda.size() == 0) { %>
+				
+				<div class="col-12 col-md-12">
+				<br> <br> <br> <br> <br> <br>
+				<h1>Non sono ancora presenti aziende convenzionate.</h1>
+			</div>
+				
+			<%  } else { %>
+			
 			<div>
 				<form action="GestioneTf?action=compilaQuestionario" method="post" onsubmit="return isOk();">
 					<div class="col-8 col-sm-8">
@@ -667,6 +676,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 
 
 			</div>
+			<% } %>
 			<div class="col-2 col-md-2">
 				<!-- usato per centrare -->
 			</div>

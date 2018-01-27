@@ -76,24 +76,21 @@
 						String nomeAzienda = all[2];
 						String testoQuest = all[3];
 						
-						System.out.println("\nid " + id + ", \nanno: " + annoAccademico + " \nnome azienda: " + nomeAzienda
-								+ "\ntestoQuest: " + testoQuest);
-						
 						String idCount = "" + i;
 						String docCount = "file" + i;
 
 						if (i % 2 == 0) {
 		%>
-		<div class="col-4 col-md-4" style="background: #d3d3d3;">
+		<div class="col-12 col-md-12" class="divQuest" style="background: #d3d3d3;">
 			<%
 				} else {
 			%>
-			<div class="col-4 col-md-4">
+			<div class="col-12 col-md-12" class="divQuest">
 				<%
 					}
 				%>
 
-				<form class="form-horizontal" method="post" action="GestioneTf"
+				<form class="divQuest" method="post" action="GestioneTf"
 					id="form1" onsubmit="return isOk(document.getElementById(<%=docCount%>));" enctype="multipart/form-data">
 
 					<div class="row">
