@@ -178,7 +178,7 @@ public class GestioneDocumento extends HttpServlet {
     String idDocumento = request.getParameter("idDocumento");
 
     if (tipologiaAccount.equals("studente")) {
-      model.salvaPdfQuestionario(fileName, email, idDocumento);
+      model.salvaPdfQuestionario(fileName, idDocumento);
 
       RequestDispatcher rd = request.getRequestDispatcher("/homeStudente.jsp");
       rd.forward(request, response);

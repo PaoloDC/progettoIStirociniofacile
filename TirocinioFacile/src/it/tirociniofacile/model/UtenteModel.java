@@ -30,13 +30,14 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-/** Classe model per la lettura e scritta degli utente nel database e sul file.
+/**
+ * Classe model per la lettura e scritta degli utente nel database e sul file.
  * 
  * @author Paolo
  *
  */
 public class UtenteModel {
-  
+
   private static final String FILE_NAME = "utenti.dat";
   private static DataSource ds;
   public static final String TABLE_NAME_STUDENTE = "ProfiloStudente";
@@ -62,17 +63,21 @@ public class UtenteModel {
    * @throws SQLException
    *           in caso di errata connessione al database
    */
-  public synchronized void cancellaAccountAzienda(String email) throws SQLException {
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    connection = ds.getConnection();
-    String deleteSql = "DELETE FROM " + UtenteModel.TABLE_NAME_AZIENDA + " WHERE mail = ?";
-    preparedStatement = connection.prepareStatement(deleteSql);
-    preparedStatement.setString(1, email);
+  public synchronized void cancellaAccountAzienda(String email) {
+    try {
+      Connection connection = null;
+      PreparedStatement preparedStatement = null;
+      connection = ds.getConnection();
+      String deleteSql = "DELETE FROM " + UtenteModel.TABLE_NAME_AZIENDA + " WHERE mail = ?";
+      preparedStatement = connection.prepareStatement(deleteSql);
+      preparedStatement.setString(1, email);
 
-    preparedStatement.executeUpdate();
-
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
+
   /**
    * Inserisce nel db un nuovo studente.
    * 
@@ -85,7 +90,7 @@ public class UtenteModel {
    * @throws SQLException
    *           eccezione lanciata in caso di record già esistente
    */
-  
+
   public synchronized boolean salvaAccountStudente(String email, String password,
       String matricola) {
     Connection connection = null;

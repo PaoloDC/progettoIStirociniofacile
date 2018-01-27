@@ -64,7 +64,7 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       assertEquals(nuovaLista.contains(pab), true);
       
       model.eliminaPagina(pab.getId());
-      um.eliminaProfiloAzienda(profilo);
+      um.cancellaAccountAzienda(profilo.getEmail());
       
     } catch (Exception e) {
       e.printStackTrace();
@@ -116,7 +116,7 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       assertEquals(pab, paginaCaricata);
       
       model.eliminaPagina(pab.getId());
-      um.eliminaProfiloAzienda(profilo);
+      um.cancellaAccountAzienda(profilo.getEmail());
       
     } catch (Exception e) {
       e.printStackTrace();
@@ -176,7 +176,7 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       assertEquals(pabRicerca,pab);
       
       model.eliminaPagina(pab.getId());
-      um.eliminaProfiloAzienda(profilo);
+      um.cancellaAccountAzienda(profilo.getEmail());
       
     } catch (Exception e) {
       e.printStackTrace();
@@ -225,6 +225,6 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     assertEquals(nuovapagina, pab);
     
     model.eliminaPagina(x);
-    u.eliminaProfiloAzienda(azienda);
+    u.cancellaAccountAzienda(azienda.getEmail());
   }
 }

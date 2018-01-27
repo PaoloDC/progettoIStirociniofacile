@@ -365,20 +365,6 @@ public class UtenteModel_jdbc {
       }
     }
   }
-
-  public synchronized void eliminaProfiloAzienda(ProfiloAziendaBean a) {
-    Connection connection = con;
-    PreparedStatement preparedStatement = null;
-
-    try {
-      String deleteSql = "DELETE FROM " + TABLE_NAME_AZIENDA + " WHERE mail = ? ";
-      preparedStatement = connection.prepareStatement(deleteSql);
-      preparedStatement.setString(1, a.getEmail());
-      preparedStatement.executeUpdate();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }   
-  }
   
   public synchronized void eliminaProfiloStudente(ProfiloStudenteBean s) {
     Connection connection = con;
@@ -402,22 +388,18 @@ public class UtenteModel_jdbc {
     this.salvaUtentiNelFile(lista);
   }
   
-  /**
-   * Cancella un account azienda.
-   * 
-   * @param email
-   *          identificativo dell'account
-   * @throws SQLException
-   *           in caso di errata connessione al database
-   */
-  public synchronized void cancellaAccountAzienda(String email) throws SQLException {
-    Connection connection = con;
-    PreparedStatement preparedStatement = null;
-    String deleteSql = "DELETE FROM " + UtenteModel.TABLE_NAME_AZIENDA + " WHERE mail = ?";
-    preparedStatement = connection.prepareStatement(deleteSql);
-    preparedStatement.setString(1, email);
+  public synchronized void cancellaAccountAzienda(String email) {
+    try {
+      Connection connection = con;
+      PreparedStatement preparedStatement = null;
+      
+      String deleteSql = "DELETE FROM " + UtenteModel.TABLE_NAME_AZIENDA + " WHERE mail = ?";
+      preparedStatement = connection.prepareStatement(deleteSql);
+      preparedStatement.setString(1, email);
 
-    preparedStatement.executeUpdate();
-
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 }

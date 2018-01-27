@@ -27,7 +27,7 @@ public class GestioneUtente extends HttpServlet {
   private static final long serialVersionUID = 1L;
   static UtenteModel model;
   static DocumentoModel docModel;
-  
+
   static {
     model = new UtenteModel();
     docModel = new DocumentoModel();
@@ -109,10 +109,10 @@ public class GestioneUtente extends HttpServlet {
    *          richiesta http
    * @throws SQLException
    *           eccezzione sql
-   * @throws IOException 
-   * @throws ServletException 
+   * @throws IOException
+   * @throws ServletException
    */
-  public void registrazioneStudente(HttpServletRequest request,HttpServletResponse response) 
+  public void registrazioneStudente(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
 
     String email = (request.getParameter("email"));
@@ -123,14 +123,14 @@ public class GestioneUtente extends HttpServlet {
     String matricolaIntera = "05121" + matricola;
 
     boolean errore = model.salvaAccountStudente(emailIntera, password, matricolaIntera);
-    
+
     if (!errore) {
       RequestDispatcher rd = request.getRequestDispatcher("/registraProfiloStudente.jsp");
       request.removeAttribute("noRegistrazione");
       request.setAttribute("noRegistrazione", "Email o Matricola Gia' Esistenti");
       rd.forward(request, response);
     }
-    
+
     RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
     rd.forward(request, response);
   }
@@ -138,19 +138,21 @@ public class GestioneUtente extends HttpServlet {
   /**
    * RegistrazioneAzienda effettua la registrazione di un account azienda.
    * 
-   * @param request richiesta http
-   * @throws IOException 
-   * @throws ServletException 
-   * @throws SQLException eccezzioni sql
+   * @param request
+   *          richiesta http
+   * @throws IOException
+   * @throws ServletException
+   * @throws SQLException
+   *           eccezzioni sql
    */
-  public void registrazioneAzienda(HttpServletRequest request,HttpServletResponse response) 
+  public void registrazioneAzienda(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     String email = (request.getParameter("email"));
     String password = (request.getParameter("password"));
     String nomeazienda = (request.getParameter("nomeazienda"));
-    
+
     boolean errore = model.salvaAccountAzienda(email, password, nomeazienda);
-    
+
     if (!errore) {
       RequestDispatcher rd = request.getRequestDispatcher("/registraProfiloAzienda.jsp");
       request.removeAttribute("noRegistrazione");
@@ -164,42 +166,40 @@ public class GestioneUtente extends HttpServlet {
       String luogoDiNascitaRappLegale = request.getParameter("luogoDiNascitaRappLegale");
       String dataDiNascitaRappLegale = request.getParameter("dataDiNascitaRappLegale");
 
-      String megaTesto = "L’Azienda/Ente " + nomeazienda + " con sede legale in " + sedeLegale  
-          + ",<br> città " + citta +  ", Partita IVA " + piva 
-          + ",<br> d’ora in poi denominato “Soggetto Ospitante”, rappresentato da<br>" 
-          + rappLegale + ", nato a " + luogoDiNascitaRappLegale + " il " + dataDiNascitaRappLegale 
+      String megaTesto = "L’Azienda/Ente " + nomeazienda + " con sede legale in " + sedeLegale
+          + ",<br> città " + citta + ", Partita IVA " + piva
+          + ",<br> d’ora in poi denominato “Soggetto Ospitante”, rappresentato da<br>" + rappLegale
+          + ", nato a " + luogoDiNascitaRappLegale + " il " + dataDiNascitaRappLegale
           + ",<br>in qualità legale rappresentante";
-            
-      try {
-        errore = docModel.salvaConvenzione(piva, nomeazienda, sedeLegale, citta, rappLegale,
-            luogoDiNascitaRappLegale, dataDiNascitaRappLegale,megaTesto);
-        
-        if (!errore) {
-          model.cancellaAccountAzienda(email);
-          RequestDispatcher rd = request.getRequestDispatcher("/registraProfiloAzienda.jsp");
-          request.removeAttribute("noPartitaIva");
-          request.setAttribute("noPartitaIva", "Partita Iva Gia' Esistente");
-          rd.forward(request, response);
-        }
-    
-        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+
+      errore = docModel.salvaConvenzione(piva, nomeazienda, sedeLegale, citta, rappLegale,
+          luogoDiNascitaRappLegale, dataDiNascitaRappLegale, megaTesto);
+
+      if (!errore) {
+        model.cancellaAccountAzienda(email);
+        RequestDispatcher rd = request.getRequestDispatcher("/registraProfiloAzienda.jsp");
+        request.removeAttribute("noPartitaIva");
+        request.setAttribute("noPartitaIva", "Partita Iva Gia' Esistente");
         rd.forward(request, response);
-        
-      } catch (SQLException e) {
-        e.printStackTrace();
       }
+
+      RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+      rd.forward(request, response);
+
     }
   }
-
-
 
   /**
    * Effettua la log in.
    * 
-   * @param request  richiesta http
-   * @throws SQLException eccezzione sql
-   * @throws IOException input output eccezzioni
-   * @throws ServletException servlet eccezzioni
+   * @param request
+   *          richiesta http
+   * @throws SQLException
+   *           eccezzione sql
+   * @throws IOException
+   *           input output eccezzioni
+   * @throws ServletException
+   *           servlet eccezzioni
    */
   public void logIn(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
@@ -227,14 +227,14 @@ public class GestioneUtente extends HttpServlet {
         rd.forward(request, response);
       } else {
         request.getSession().setAttribute("tipologiaAccount", "azienda");
-        
-        //domanda convenzione
+
+        // domanda convenzione
         DocumentoModel docModel = new DocumentoModel();
         DocumentoConvenzioneBean conv = docModel.ricercaConvenzionePerEmail(utente.getEmail());
         System.out.println("CONV GEST UTENTE: " + conv);
-        
+
         request.getSession().setAttribute("convenzioneAzienda", conv);
-        
+
         RequestDispatcher rd = request.getRequestDispatcher("/homeAzienda.jsp");
         rd.forward(request, response);
       }

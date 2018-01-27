@@ -26,14 +26,13 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
  * @author Paolo De Cristofaro
  */
 public class DocumentoModel {
-  
+
   private static DataSource ds;
-  //public static final String SAVE_PATH = "D:/pdf/";
-  public static final String SAVE_PATH =
-   "C:/Users/PC1/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
-  //public static final String SAVE_PATH =
-    //  "C:/Users/Andrea95/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
-  
+  // public static final String SAVE_PATH = "D:/pdf/";
+  public static final String SAVE_PATH = "C:/Users/PC1/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
+  // public static final String SAVE_PATH =
+  // "C:/Users/Andrea95/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
+
   static {
     try {
       Context initCtx = new InitialContext();
@@ -56,14 +55,13 @@ public class DocumentoModel {
    * @throws SQLException
    *           eccezzioni sql
    */
-  public synchronized ArrayList<DocumentoConvenzioneBean> getTuttiDocumentiConvenzioneAzienda()
-      throws SQLException {
+  public synchronized ArrayList<DocumentoConvenzioneBean> getTuttiDocumentiConvenzioneAzienda() {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ArrayList<DocumentoConvenzioneBean> listaDocumenti = new ArrayList<DocumentoConvenzioneBean>();
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI 
+      String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI
           + " WHERE approvato = 0 AND url IS NOT NULL";
 
       preparedStatement = connection.prepareStatement(selectSql);
@@ -107,8 +105,10 @@ public class DocumentoModel {
 
   /**
    * Ricerca tutti i documenti questionari non ancora approvati che hanno un pdf allegato.
+   * 
    * @return una lista di questionari
-   * @throws SQLException in caso di errata connessione al database 
+   * @throws SQLException
+   *           in caso di errata connessione al database
    */
   public synchronized ArrayList<DocumentoQuestionarioBean> getTuttiDocumentiQuestionari()
       throws SQLException {
@@ -117,7 +117,7 @@ public class DocumentoModel {
     ArrayList<DocumentoQuestionarioBean> listaDocumenti = new ArrayList<>();
     try {
       connection = ds.getConnection();
-      String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI 
+      String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI
           + " WHERE approvato = 0 AND url IS NOT NULL ";
 
       preparedStatement = connection.prepareStatement(selectSql);
@@ -159,18 +159,20 @@ public class DocumentoModel {
 
   /**
    * Ricerca tutti i documenti questionari per una pagina azienda.
-   * @param id l'identificativo della pagina azienda
+   * 
+   * @param id
+   *          l'identificativo della pagina azienda
    * @return una lista di questionari per una certa pagina
-   * @throws SQLException in caso di errata connessione al database
+   * @throws SQLException
+   *           in caso di errata connessione al database
    */
   public synchronized ArrayList<DocumentoQuestionarioBean> getTuttiDocumentiQuestionariPerPagina(
       int id) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    
-    ArrayList<DocumentoQuestionarioBean> listaDocumenti 
-        = new ArrayList<DocumentoQuestionarioBean>();
-    
+
+    ArrayList<DocumentoQuestionarioBean> listaDocumenti = new ArrayList<DocumentoQuestionarioBean>();
+
     try {
       connection = ds.getConnection();
       String selectSql = "SELECT commenti,suggerimenti,"
@@ -216,7 +218,9 @@ public class DocumentoModel {
 
   /**
    * Metodo che ricerca tutti i questionari non approvati per un determinato studente.
-   * @param mailStudente la mail che identifica lo studente
+   * 
+   * @param mailStudente
+   *          la mail che identifica lo studente
    * @return una lista di questionari non approvati
    */
   public synchronized ArrayList<String> ricercaQuestionariNonApprovatiPerStudente(
@@ -230,10 +234,10 @@ public class DocumentoModel {
     try {
       connection = ds.getConnection();
       String selectSql = "SELECT id,annoAccademico,nomeAzienda,testoQuestionario FROM "
-          + TABLE_NAME_QUESTIONARI
-          + " JOIN " + TABLE_NAME_CONVENZIONI + " ON " + TABLE_NAME_QUESTIONARI
-          + ".paginaAziendaID = " + TABLE_NAME_CONVENZIONI + ".paginaAziendaID WHERE "
-          + TABLE_NAME_QUESTIONARI + ".approvato = 0 AND mailStudente = ? ";
+          + TABLE_NAME_QUESTIONARI + " JOIN " + TABLE_NAME_CONVENZIONI + " ON "
+          + TABLE_NAME_QUESTIONARI + ".paginaAziendaID = " + TABLE_NAME_CONVENZIONI
+          + ".paginaAziendaID WHERE " + TABLE_NAME_QUESTIONARI
+          + ".approvato = 0 AND mailStudente = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
       preparedStatement.setString(1, mailStudente);
@@ -372,7 +376,7 @@ public class DocumentoModel {
    */
   public synchronized int salvaQuestionario(String commenti, String suggerimenti,
       String annoAccademico, String mailStudente, int paginaAziendaId, String matricola,
-      float giudizioEsperienza, float giudizioAzienda, float giudizioUniversita, 
+      float giudizioEsperienza, float giudizioAzienda, float giudizioUniversita,
       String testoQuestionario) {
 
     Connection connection = null;
@@ -444,7 +448,7 @@ public class DocumentoModel {
    */
   public synchronized boolean salvaConvenzione(String piva, String nomeAzienda, String sedeLegale,
       String citta, String rappLegale, String luogoDiNascitaRappLegale,
-      String dataDiNascitaRappLegale,String testoConvenzione) throws SQLException {
+      String dataDiNascitaRappLegale, String testoConvenzione) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -465,20 +469,30 @@ public class DocumentoModel {
       preparedStatement.setString(7, dataDiNascitaRappLegale);
       preparedStatement.setInt(8, 0);
       preparedStatement.setString(9, testoConvenzione);
-      
+
       try {
         preparedStatement.executeUpdate();
       } catch (MySQLIntegrityConstraintViolationException e) {
         return false;
       }
+    } catch (SQLException e) {
+      e.printStackTrace();
     } finally {
       try {
         if (preparedStatement != null) {
-          preparedStatement.close();
+          try {
+            preparedStatement.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
       }
     }
@@ -498,8 +512,7 @@ public class DocumentoModel {
    * @throws IOException
    *           in caso di errato salvataggio del file
    */
-  public synchronized void salvaPdfConvenzione(String url, String piva)
-      throws SQLException, IOException {
+  public synchronized void salvaPdfConvenzione(String url, String piva) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -513,14 +526,24 @@ public class DocumentoModel {
 
       preparedStatement.executeUpdate();
 
+    } catch (SQLException e) {
+      e.printStackTrace();
     } finally {
       try {
         if (preparedStatement != null) {
-          preparedStatement.close();
+          try {
+            preparedStatement.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
       }
     }
@@ -539,8 +562,7 @@ public class DocumentoModel {
    * @throws IOException
    *           in caso di errato salvataggio del file
    */
-  public synchronized void salvaPdfQuestionario(String url, String email, String id)
-      throws SQLException, IOException {
+  public synchronized void salvaPdfQuestionario(String url, String id) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -559,28 +581,40 @@ public class DocumentoModel {
 
       preparedStatement.executeUpdate();
 
+    } catch (Exception e) {
+      e.printStackTrace();
     } finally {
       try {
         if (preparedStatement != null) {
-          preparedStatement.close();
+          try {
+            preparedStatement.close();
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
         }
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
         }
       }
     }
   }
 
   /**
-   * Metodo che permette di ricercare un documento di convenzione 
-   *  di un'azienda inserendo la email del profilo associato.
-   * @param email la mail del profilo associata al documento di convenzione
+   * Metodo che permette di ricercare un documento di convenzione di un'azienda inserendo la email
+   * del profilo associato.
+   * 
+   * @param email
+   *          la mail del profilo associata al documento di convenzione
    * @return il documento di convenzione dell'azienda
-   * @throws SQLException in caso di errata connessione al database
+   * @throws SQLException
+   *           in caso di errata connessione al database
    */
-  public DocumentoConvenzioneBean ricercaConvenzionePerEmail(String email)
-      throws SQLException {
+  public DocumentoConvenzioneBean ricercaConvenzionePerEmail(String email) throws SQLException {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
@@ -588,15 +622,14 @@ public class DocumentoModel {
 
     try {
       connection = ds.getConnection();
-        
+
       String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI + " JOIN "
-          + UtenteModel.TABLE_NAME_AZIENDA + " ON " 
-          + TABLE_NAME_CONVENZIONI + ".nomeAzienda = " + UtenteModel.TABLE_NAME_AZIENDA
-          + ".nomeAziendaRappresentata WHERE mail = ? ";
+          + UtenteModel.TABLE_NAME_AZIENDA + " ON " + TABLE_NAME_CONVENZIONI + ".nomeAzienda = "
+          + UtenteModel.TABLE_NAME_AZIENDA + ".nomeAziendaRappresentata WHERE mail = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
       preparedStatement.setString(1, "" + email);
-      
+
       ResultSet rs = preparedStatement.executeQuery();
 
       if (rs.first()) {
@@ -612,7 +645,7 @@ public class DocumentoModel {
         dcb.setApprovato(rs.getBoolean(8));
         dcb.setTesto(rs.getNString(9));
         dcb.setUrl(rs.getString(10));
-        
+
       }
 
     } finally {
@@ -628,16 +661,18 @@ public class DocumentoModel {
     }
     return dcb;
   }
-  
+
   /**
-   * Metodo che permette di ricercare un documento di convenzione 
-   *  di un'azienda inserendo la email del profilo associato.
-   * @param email la mail del profilo associata al documento di convenzione
+   * Metodo che permette di ricercare un documento di convenzione di un'azienda inserendo la email
+   * del profilo associato.
+   * 
+   * @param email
+   *          la mail del profilo associata al documento di convenzione
    * @return il documento di convenzione dell'azienda
-   * @throws SQLException in caso di errata connessione al database
+   * @throws SQLException
+   *           in caso di errata connessione al database
    */
-  public synchronized DocumentoConvenzioneBean ricercaConvenzionePerPartitaIva(String piva)
-      throws SQLException {
+  public synchronized DocumentoConvenzioneBean ricercaConvenzionePerPartitaIva(String piva) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
@@ -645,8 +680,8 @@ public class DocumentoModel {
 
     try {
       connection = ds.getConnection();
-      
-      String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI 
+
+      String selectSql = "SELECT * FROM " + TABLE_NAME_CONVENZIONI
           + " WHERE partitaIva = ? AND url IS NOT NULL";
 
       preparedStatement = connection.prepareStatement(selectSql);
@@ -668,14 +703,25 @@ public class DocumentoModel {
         dcb.setUrl(rs.getString(10));
       }
 
+    } catch (SQLException e) {
+      e.printStackTrace();
     } finally {
       try {
         if (preparedStatement != null) {
-          preparedStatement.close();
+          try {
+            preparedStatement.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+
         }
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
       }
     }
@@ -691,8 +737,7 @@ public class DocumentoModel {
    * @throws SQLException
    *           in caso di errata connessione al database
    */
-  public synchronized DocumentoQuestionarioBean ricercaQuestionarioPerId(int id)
-      throws SQLException {
+  public synchronized DocumentoQuestionarioBean ricercaQuestionarioPerId(int id) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
@@ -704,7 +749,7 @@ public class DocumentoModel {
       String selectSql = "SELECT * FROM " + TABLE_NAME_QUESTIONARI + " WHERE id = ? ";
 
       preparedStatement = connection.prepareStatement(selectSql);
-      preparedStatement.setInt(1,id);
+      preparedStatement.setInt(1, id);
       ResultSet rs = preparedStatement.executeQuery();
 
       if (rs.first()) {
@@ -714,19 +759,34 @@ public class DocumentoModel {
         dqb.setSuggerimenti(rs.getString(3));
         dqb.setAnnoAccademico(rs.getString(4));
         dqb.setApprovato(rs.getBoolean(5));
-        dqb.setMailStudente(rs.getString(7));
-        dqb.setTestoQuestionario(rs.getString(12));
         dqb.setUrl(rs.getString(6));
+        dqb.setMailStudente(rs.getString(7));
+        dqb.setPaginaAziendaId(rs.getInt(8));
+        dqb.setGiudizioEsperienza(rs.getFloat(9));
+        dqb.setGiudizioAzienda(rs.getFloat(10));
+        dqb.setGiudizioUniversita(rs.getFloat(11));
+        dqb.setTestoQuestionario(rs.getString(12));
 
       }
+    } catch (SQLException e) {
+      e.printStackTrace();
     } finally {
       try {
         if (preparedStatement != null) {
-          preparedStatement.close();
+          try {
+            preparedStatement.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+
         }
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
       }
     }
@@ -741,20 +801,43 @@ public class DocumentoModel {
    * @throws SQLException
    *           in caso di errata connessione al database
    */
-  public synchronized void cancellaDocumento(String id) throws SQLException {
+  public synchronized void cancellaDocumento(String id) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-    connection = ds.getConnection();
-    String insertSqlQuest = "DELETE FROM " + TABLE_NAME_QUESTIONARI + " WHERE id = ?";
-    preparedStatement = connection.prepareStatement(insertSqlQuest);
-    preparedStatement.setString(1, id);
+    try {
+      connection = ds.getConnection();
+      String insertSqlQuest = "DELETE FROM " + TABLE_NAME_QUESTIONARI + " WHERE id = ?";
+      preparedStatement = connection.prepareStatement(insertSqlQuest);
+      preparedStatement.setString(1, id);
 
-    preparedStatement.executeUpdate();
+      preparedStatement.executeUpdate();
 
-    String insertSqlConv = "DELETE FROM " + TABLE_NAME_CONVENZIONI + " WHERE partitaIva = ?";
-    preparedStatement = connection.prepareStatement(insertSqlConv);
-    preparedStatement.setString(1, id);
-    preparedStatement.executeUpdate();
+      String insertSqlConv = "DELETE FROM " + TABLE_NAME_CONVENZIONI + " WHERE partitaIva = ?";
+      preparedStatement = connection.prepareStatement(insertSqlConv);
+      preparedStatement.setString(1, id);
+      preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        if (preparedStatement != null) {
+          try {
+            preparedStatement.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+
+        }
+      } finally {
+        if (connection != null) {
+          try {
+            connection.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -763,7 +846,7 @@ public class DocumentoModel {
    * @param id
    *          identificativo del documento da ricercare
    */
-  public synchronized void approvaDocumento(String id) throws SQLException {
+  public synchronized void approvaDocumento(String id) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
@@ -793,17 +876,23 @@ public class DocumentoModel {
     } finally {
       try {
         if (preparedStatement != null) {
-          preparedStatement.close();
+          try {
+            preparedStatement.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+
         }
       } finally {
         if (connection != null) {
-          connection.close();
+          try {
+            connection.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
         }
       }
     }
-    return;
   }
-  
 
 }
-
