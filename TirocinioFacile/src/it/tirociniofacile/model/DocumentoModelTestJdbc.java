@@ -12,6 +12,13 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
+/**
+ * Classe che testa i metodi della classe DocumentoModel, è stata creata una classe di supporto
+ * DocumentoModelJdbc che effettua una connessione diretta al database.
+ * 
+ * @author Paolo De Cristofaro
+ *
+ */
 public class DocumentoModelTestJdbc extends TestCase {
 
   private static DocumentoModel_jdbc model;

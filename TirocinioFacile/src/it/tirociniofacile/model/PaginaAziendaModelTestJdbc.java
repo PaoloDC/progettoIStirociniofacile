@@ -7,6 +7,13 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
+/**
+ * Classe che testa i metodi della classe PaginaAziendaModel, è stata creata una classe di supporto
+ * PaginaAziendaModelJdbc che effettua una connessione diretta al database.
+ * 
+ * @author Paolo De Cristofaro
+ *
+ */
 public class PaginaAziendaModelTestJdbc extends TestCase {
   
   private static PaginaAziendaModelJdbc model;

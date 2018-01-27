@@ -190,6 +190,7 @@ public class UtenteModel {
    * 
    * @return un arraylist contenente tutti gli utenti presenti sul file
    */
+  @SuppressWarnings("unchecked")
   public ArrayList<UtenteBean> caricaUtentiDaFile() {
     try {
 

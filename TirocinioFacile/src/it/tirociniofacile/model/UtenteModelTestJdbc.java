@@ -4,14 +4,12 @@ import it.tirociniofacile.bean.ProfiloAziendaBean;
 import it.tirociniofacile.bean.ProfiloStudenteBean;
 import it.tirociniofacile.bean.UtenteBean;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-
 import junit.framework.TestCase;
 
 /**
  * Classe che testa i metodi della classe UtenteModel, è stata creata una classe di supporto
- * UtenteModel_jdbc che effettua una connessione diretta al database.
+ * UtenteModelJdbc che effettua una connessione diretta al database.
  * 
  * @author Paolo De Cristofaro
  *
