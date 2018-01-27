@@ -18,7 +18,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 /**
@@ -54,7 +53,7 @@ public class GestioneDocumento extends HttpServlet {
       throws ServletException, IOException {
     // TODO Auto-generated method stub
     response.getWriter().append("Served at: ").append(request.getContextPath());
-    HttpSession session = request.getSession();
+
     String action = request.getParameter("action");
     System.out.println("Gestione Documento Action: " + action);
     try {
@@ -171,8 +170,6 @@ public class GestioneDocumento extends HttpServlet {
 
     String tipologiaAccount = (String) request.getSession().getAttribute("tipologiaAccount");
 
-    String email = request.getParameter("email");
-    
     String piva = request.getParameter("piva");
 
     Part pdf = request.getPart("file");

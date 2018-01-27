@@ -6,7 +6,6 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
 import it.tirociniofacile.bean.ProfiloAziendaBean;
 import it.tirociniofacile.bean.ProfiloStudenteBean;
 import it.tirociniofacile.bean.UtenteBean;
-import it.tirociniofacile.model.UtenteModel.Email;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,7 +19,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
-import java.util.Random;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -30,7 +28,12 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-
+/**
+ * Classe di supporto per il testing, espone gli stessi metodi della classe UtenteModel, 
+ * ma esegue una connessione diretta al database.
+ * @author Paolo De Cristofaro
+ *
+ */
 public class UtenteModelJdbc {
 
   //variabili di istanza

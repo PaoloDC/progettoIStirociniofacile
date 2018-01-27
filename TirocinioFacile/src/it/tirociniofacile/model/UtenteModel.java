@@ -31,9 +31,10 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 /**
- * Classe model per la lettura e scritta degli utente nel database e sul file.
+ * Classe che offre la gestione degli utenti, fornisce metodi per inserire e rimuovere gli account e
+ * per caricarli.
  * 
- * @author Paolo
+ * @author Paolo De Cristofaro
  *
  */
 public class UtenteModel {

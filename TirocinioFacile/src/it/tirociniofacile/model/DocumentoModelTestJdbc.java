@@ -21,13 +21,13 @@ import junit.framework.TestCase;
  */
 public class DocumentoModelTestJdbc extends TestCase {
 
-  private static DocumentoModel_jdbc model;
+  private static DocumentoModelJdbc model;
   private static PaginaAziendaModelJdbc modelPaginaAzienda;
   private static UtenteModelJdbc  modelUtente;
 
 
   static {
-    model = new DocumentoModel_jdbc();
+    model = new DocumentoModelJdbc();
     modelPaginaAzienda = new PaginaAziendaModelJdbc();
     modelUtente = new UtenteModelJdbc();
   }

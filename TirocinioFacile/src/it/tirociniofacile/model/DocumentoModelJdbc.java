@@ -7,7 +7,6 @@ import it.tirociniofacile.bean.DocumentoConvenzioneBean;
 import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,11 +14,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
-
-
-
-public class DocumentoModel_jdbc {
+/**
+ * Classe di supporto per il testing, espone gli stessi metodi della classe DocumentoModel, 
+ * ma esegue una connessione diretta al database.
+ * @author Paolo De Cristofaro
+ *
+ */
+public class DocumentoModelJdbc {
   // variabili di istanza
   private static Statement stmt;
   private static Connection con;

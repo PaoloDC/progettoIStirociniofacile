@@ -1,6 +1,7 @@
 package it.tirociniofacile.model;
 
 import com.mysql.jdbc.Statement;
+
 import it.tirociniofacile.bean.PaginaAziendaBean;
 
 import java.sql.Connection;
@@ -10,11 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
-
-
 /**
- * Classe che testa i metodi della classe PaginaAziendaModel.
+ * Classe di supporto per il testing, espone gli stessi metodi della classe PaginaAziendaModel, 
+ * ma esegue una connessione diretta al database.
  * @author Paolo De Cristofaro
  *
  */
