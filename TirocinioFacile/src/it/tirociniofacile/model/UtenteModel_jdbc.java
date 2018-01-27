@@ -59,6 +59,7 @@ public class UtenteModel_jdbc {
       System.exit(0);
     }
   }
+  
   public synchronized boolean salvaAccountStudente(String email, String password,
       String matricola) {
     Connection connection = con;

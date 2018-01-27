@@ -166,3 +166,15 @@ function ValidateData(str, txt) {
 	str.style.border = "2px solid green";
 	return true;
 }
+
+function ValidateDescrizione(str, txt) {
+	if(str.value.length > 200) {
+		alert(str.value.length);
+		str.style.border = "2px solid red";
+		$(txt).html("Campo non valido");
+		return false;
+	}
+	$(txt).html("Descrizione");
+	str.style.border = "2px solid green";
+	return true;
+}

@@ -30,7 +30,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-/**
+/** Classe model per la lettura e scritta degli utente nel database e sul file.
  * 
  * @author Paolo
  *
@@ -85,6 +85,7 @@ public class UtenteModel {
    * @throws SQLException
    *           eccezione lanciata in caso di record già esistente
    */
+  
   public synchronized boolean salvaAccountStudente(String email, String password,
       String matricola) {
     Connection connection = null;

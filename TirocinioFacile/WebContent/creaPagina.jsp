@@ -117,6 +117,8 @@
 					.getElementById("txtErrLoc"))
 					&& ValidateAlfa(document.getElementById("theDes"), document
 							.getElementById("txtErrDes"))
+					&& ValidateDescrizione(document.getElementById("theDes"), document
+							.getElementById("txtErrDes"))
 					&& ValidateAmbSki(document.getElementById("theAmb"),
 							document.getElementById("txtErrAmb"))
 					&& ValidateAmbSki(document.getElementById("theSki"),

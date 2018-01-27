@@ -1,5 +1,12 @@
 package it.tirociniofacile.control;
 
+import it.tirociniofacile.bean.DocumentoConvenzioneBean;
+import it.tirociniofacile.bean.DocumentoQuestionarioBean;
+import it.tirociniofacile.bean.PaginaAziendaBean;
+import it.tirociniofacile.bean.UtenteBean;
+import it.tirociniofacile.model.DocumentoModel;
+import it.tirociniofacile.model.PaginaAziendaModel;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -13,13 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-
-import it.tirociniofacile.bean.DocumentoConvenzioneBean;
-import it.tirociniofacile.bean.DocumentoQuestionarioBean;
-import it.tirociniofacile.bean.PaginaAziendaBean;
-import it.tirociniofacile.bean.UtenteBean;
-import it.tirociniofacile.model.DocumentoModel;
-import it.tirociniofacile.model.PaginaAziendaModel;
 
 /**
  * . Servlet implementation class GestioneDocumento
@@ -129,6 +129,12 @@ public class GestioneDocumento extends HttpServlet {
 
   }
 
+  /**
+   * Rierca una azienda prendendo il paremetro email.
+   * @param request richiesta http
+   * @param response risposta http
+   * @throws SQLException eccezione sql
+   */
   public void ricercaConvenzionePerAzienda(HttpServletRequest request, 
       HttpServletResponse response) 
         throws SQLException {
@@ -151,8 +157,8 @@ public class GestioneDocumento extends HttpServlet {
    *          richiesta http
    * @throws SQLException
    *           eccezioni sql
-   * @throws ServletException
-   * @throws IOException
+   * @throws ServletException eccezioni servlet
+   * @throws IOException eccezioni di scrittura e lettura dal file
    */
   public void caricaDocumento(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, IOException, ServletException {
