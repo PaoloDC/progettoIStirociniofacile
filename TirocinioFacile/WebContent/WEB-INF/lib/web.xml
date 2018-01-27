@@ -48,5 +48,9 @@
   <servlet-name>GestioneTf</servlet-name>
   <url-pattern>/GestioneTf</url-pattern>
 </servlet-mapping>
+
+<error-page>
+  <location>/error.jsp</location>
+</error-page>
   
 </web-app>
