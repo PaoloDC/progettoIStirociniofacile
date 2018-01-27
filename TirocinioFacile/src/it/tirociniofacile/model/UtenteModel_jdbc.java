@@ -60,6 +60,18 @@ public class UtenteModel_jdbc {
     }
   }
   
+  /**
+   * Inserisce nel db un nuovo studente.
+   * 
+   * @param email
+   *          email del nuovo studente da registrare
+   * @param password
+   *          password del nuovo studente da registrare
+   * @param matricola
+   *          matricola del nuovo studente da registrare
+   * @throws SQLException
+   *           eccezione lanciata in caso di record già esistente
+   */
   public synchronized boolean salvaAccountStudente(String email, String password,
       String matricola) {
     Connection connection = con;
@@ -365,7 +377,11 @@ public class UtenteModel_jdbc {
       }
     }
   }
-  
+
+  /**
+   * elimina un profilo studente, usato per test.
+   * @param s profilo studente da eliminare
+   */
   public synchronized void eliminaProfiloStudente(ProfiloStudenteBean s) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
@@ -380,6 +396,10 @@ public class UtenteModel_jdbc {
     }   
   }
 
+  /**
+   * elimina un utente dal file, usato per test.
+   * @param u utente da eliminare
+   */
   public synchronized void eliminaAccountAmministrativo(UtenteBean u) {
     ArrayList<UtenteBean> lista = this.caricaUtentiDaFile();
     if (lista.contains(u)) {
@@ -388,6 +408,14 @@ public class UtenteModel_jdbc {
     this.salvaUtentiNelFile(lista);
   }
   
+  /**
+   * Cancella un account azienda.
+   * 
+   * @param email
+   *          identificativo dell'account
+   * @throws SQLException
+   *           in caso di errata connessione al database
+   */
   public synchronized void cancellaAccountAzienda(String email) {
     try {
       Connection connection = con;

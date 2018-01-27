@@ -24,6 +24,10 @@ public class UtenteModelTest_jdbc extends TestCase {
     model = new UtenteModel_jdbc();
   }
 
+  
+  /**
+   * Test del metodo salva account studente.
+   */
   public void testSalvaAccountStudente() {
 
     ProfiloStudenteBean studente = new ProfiloStudenteBean("vittorio@studenti.unisa.it", "vittorio",
@@ -53,6 +57,10 @@ public class UtenteModelTest_jdbc extends TestCase {
 
   }
 
+  
+  /**
+   * Test del metodo salva account azienda.
+   */
   public void testSalvaAccountAzienda() {
 
     ProfiloAziendaBean azienda = new ProfiloAziendaBean("azienda_test@gmail.com", "azienda_test",
@@ -81,6 +89,9 @@ public class UtenteModelTest_jdbc extends TestCase {
 
   }
 
+  /**
+   * Test del metodo salva utenti nel file.
+   */
   public void testSalvaUtentiNelFile() {
     ArrayList<UtenteBean> listaUtenti = new ArrayList<>();
 
@@ -107,6 +118,9 @@ public class UtenteModelTest_jdbc extends TestCase {
 
   }
 
+  /**
+   * Test del metodo carica utenti da file.
+   */
   public void testCaricaUtentiDaFile() {
     ArrayList<UtenteBean> lista = null;
     assertNull(lista);
@@ -115,6 +129,9 @@ public class UtenteModelTest_jdbc extends TestCase {
     assertNotNull(lista);
   }
   
+  /**
+   * Test del metodo cerca account per email.
+   */
   public void testCercaAccountPerEmail() {
 
     ProfiloStudenteBean psb = new ProfiloStudenteBean("decri.paolo@gmail.com", "decri.paolo",
@@ -131,6 +148,10 @@ public class UtenteModelTest_jdbc extends TestCase {
     model.eliminaProfiloStudente(psb);
 
   }
+  
+  /**
+   * Test del metodo carica account.
+   */
 
   public void testCaricaAccount() {
 
@@ -185,6 +206,9 @@ public class UtenteModelTest_jdbc extends TestCase {
 
   }
 
+  /**
+   * Test del metodo cancella account azienda.
+   */
   public void testCancellaAccountAzienda() {
 
     ProfiloAziendaBean pab = new ProfiloAziendaBean("azienda_prova@gmail.com", "prova",
