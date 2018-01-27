@@ -10,7 +10,7 @@ public class Jdbc {
   
   //variabili di istanza
   private static Statement stmt;
-  private static Connection con;
+  private static Connection con;/**/
   
   /**
    * Main per avviare la connessione del database.
