@@ -12,21 +12,18 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
-public class DocumentoModelTest_jdbc extends TestCase {
+public class DocumentoModelTestJdbc extends TestCase {
 
   private static DocumentoModel_jdbc model;
-  private static PaginaAziendaModel_jdbc modelPaginaAzienda;
-  private static UtenteModel_jdbc modelUtente;
+  private static PaginaAziendaModelJdbc modelPaginaAzienda;
+  private static UtenteModelJdbc  modelUtente;
 
 
   static {
     model = new DocumentoModel_jdbc();
-    modelPaginaAzienda = new PaginaAziendaModel_jdbc();
-    modelUtente = new UtenteModel_jdbc();
+    modelPaginaAzienda = new PaginaAziendaModelJdbc();
+    modelUtente = new UtenteModelJdbc();
   }
-  /**
-   * testa il metodo getTuttiDocumentiConvenzioneAzienda.
-   */
   
   public void testGetTuttiDocumentiConvenzioneAzienda() {
 
@@ -54,10 +51,7 @@ public class DocumentoModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
-  /**
-   * testa il metodo getTuttiDocumentiQuestionari.
-   */
-  
+
   public void testGetTuttiDocumentiQuestionari() {
     try {
 
@@ -110,10 +104,7 @@ public class DocumentoModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
-  /**
-   * testa il metodo getTuttiDocumentiQuestionariPerPagina.
-   */
-  
+
   public void testGetTuttiDocumentiQuestionariPerPagina() {
     try {
       ArrayList<DocumentoQuestionarioBean> listaDocumenti = model
@@ -129,10 +120,7 @@ public class DocumentoModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
-  
-  /**
-   * testa il metodo ricercaQuestionariNonApprovatiPerStudente. 
-   */
+
   public void testricercaQuestionariNonApprovatiPerStudente() {
     try {
       ArrayList<String> lista = new ArrayList<String>();
@@ -146,10 +134,7 @@ public class DocumentoModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
-  /**
-   * Testa il metodo conteggioQuestionariApprovatiPerAnno.
-   */
-  
+
   public void testConteggioQuestionariApprovatiPerAnno() {
     // anno che esiste
     String annoEs = "2017";
@@ -169,10 +154,7 @@ public class DocumentoModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
-  /**
-   * testa il metodo conteggioQuestionariApprovatiPerAzienda.
-   */
-  
+
   public void testConteggioQuestionariApprovatiPerAzienda() {
     // azienda che esiste
     ProfiloAziendaBean pab = new ProfiloAziendaBean();
@@ -193,10 +175,6 @@ public class DocumentoModelTest_jdbc extends TestCase {
     modelUtente.cancellaAccountAzienda(pab.getEmail());
   }
 
-  /**
-   * testa il metodo salvaQuestionario.
-   */
-  
   public void testSalvaQuestionario() {
     try {
 
@@ -245,11 +223,7 @@ public class DocumentoModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
-  
-  /**
-   * testa il metodo salvaConvenzione.
-   */
-  
+
   public void testSalvaConvenzione() {
     try {
 
@@ -266,10 +240,7 @@ public class DocumentoModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
-  /**
-   * testa il metodo salvaPdfConvenzione.
-   */
-  
+
   public void testSalvaPdfConvenzione() {
     String piva = "piva_prova";
     boolean inserito = model.salvaConvenzione(piva, "", "", "", "", "", "", "");
@@ -284,10 +255,7 @@ public class DocumentoModelTest_jdbc extends TestCase {
 
     model.cancellaDocumento(piva);
   }
-  /**
-   * testa il metodo salvaPdfQuestionario.
-   */
-  
+
   public void testSalvaPdfQuestionario() {
     try {
 
@@ -342,10 +310,7 @@ public class DocumentoModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
-  /**
-   * testa il metodo ricercaConvenzionePerEmail.
-   */
-  
+
   public void testRicercaConvenzionePerEmail() {
     try {
 
@@ -373,10 +338,7 @@ public class DocumentoModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
-  /**
-   * testa il metodo ricercaConvenzionePerPartitaIva.
-   */
-  
+
   public void testRicercaConvenzionePerPartitaIva() {
     try {
       String piva = "piva_prova";
@@ -397,10 +359,7 @@ public class DocumentoModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
-  /**
-   * testa il metodo ricercaQuestionarioPerId.
-   */
-  
+
   public void testRicercaQuestionarioPerId() {
     try {
 
@@ -450,10 +409,7 @@ public class DocumentoModelTest_jdbc extends TestCase {
       e.printStackTrace();
     }
   }
-  /**
-   * testa il metodo cancellaDocumento.
-   */
-  
+
   public void testCancellaDocumento() {
 
     ProfiloStudenteBean psb = new ProfiloStudenteBean();
@@ -513,9 +469,6 @@ public class DocumentoModelTest_jdbc extends TestCase {
   }
 
   
-  /**
-   * testa il metodo approvaDocumento.
-   */
   
   public void testApprovaDocumento() {
     ProfiloStudenteBean psb = new ProfiloStudenteBean();

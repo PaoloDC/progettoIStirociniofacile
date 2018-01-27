@@ -57,11 +57,6 @@
 
 <body>
 	<!-- Latest compiled and minified JavaScript -->
-
-
-
-
-
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
 

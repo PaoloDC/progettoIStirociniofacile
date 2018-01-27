@@ -16,12 +16,12 @@ import junit.framework.TestCase;
  * @author Paolo De Cristofaro
  *
  */
-public class UtenteModelTest_jdbc extends TestCase {
+public class UtenteModelTestJdbc extends TestCase {
 
-  private static UtenteModel_jdbc model;
+  private static UtenteModelJdbc model;
 
   static {
-    model = new UtenteModel_jdbc();
+    model = new UtenteModelJdbc();
   }
 
   

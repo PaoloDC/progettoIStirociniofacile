@@ -166,11 +166,11 @@ public class GestioneUtente extends HttpServlet {
       String luogoDiNascitaRappLegale = request.getParameter("luogoDiNascitaRappLegale");
       String dataDiNascitaRappLegale = request.getParameter("dataDiNascitaRappLegale");
 
-      String megaTesto = "L’Azienda/Ente " + nomeazienda + " con sede legale in " + sedeLegale
-          + ",<br> città " + citta + ", Partita IVA " + piva
-          + ",<br> d’ora in poi denominato “Soggetto Ospitante”, rappresentato da<br>" + rappLegale
+      String megaTesto = "L'Azienda/Ente " + nomeazienda + " con sede legale in " + sedeLegale
+          + ", città " + citta + ", Partita IVA " + piva
+          + ",<br> d'ora in poi denominato 'Soggetto Ospitante', rappresentato da " + rappLegale
           + ", nato a " + luogoDiNascitaRappLegale + " il " + dataDiNascitaRappLegale
-          + ",<br>in qualità legale rappresentante";
+          + ",<br> in qualità legale rappresentante.";
 
       errore = docModel.salvaConvenzione(piva, nomeazienda, sedeLegale, citta, rappLegale,
           luogoDiNascitaRappLegale, dataDiNascitaRappLegale, megaTesto);
@@ -231,7 +231,6 @@ public class GestioneUtente extends HttpServlet {
         // domanda convenzione
         DocumentoModel docModel = new DocumentoModel();
         DocumentoConvenzioneBean conv = docModel.ricercaConvenzionePerEmail(utente.getEmail());
-        System.out.println("CONV GEST UTENTE: " + conv);
 
         request.getSession().setAttribute("convenzioneAzienda", conv);
 
@@ -265,7 +264,6 @@ public class GestioneUtente extends HttpServlet {
     request.setAttribute("trovato", msg);
     RequestDispatcher rd = request.getRequestDispatcher("/recuperaPassword.jsp");
     rd.forward(request, response);
-    System.out.println("mail: " + email + ", trovato: " + trovato);
 
   }
 }

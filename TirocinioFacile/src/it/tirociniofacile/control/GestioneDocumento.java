@@ -420,13 +420,13 @@ public class GestioneDocumento extends HttpServlet {
     
     float giudizioAzienda = 0;
     for (int i = 0; i < 5; i++) {
-      giudizioEsperienza += (Integer.parseInt(b[i]));
+      giudizioAzienda += (Integer.parseInt(b[i]));
     }
     giudizioAzienda = giudizioAzienda / b.length;
     
     float giudizioUniversita = 0;
     for (int i = 0; i < 6; i++) {
-      giudizioEsperienza += (Integer.parseInt(c[i]));
+      giudizioUniversita += (Integer.parseInt(c[i]));
     }
     giudizioUniversita = giudizioUniversita / c.length;
     

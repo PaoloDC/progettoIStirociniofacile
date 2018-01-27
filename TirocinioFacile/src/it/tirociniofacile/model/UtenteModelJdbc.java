@@ -31,7 +31,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 
-public class UtenteModel_jdbc {
+public class UtenteModelJdbc {
 
   //variabili di istanza
   private static Statement stmt;

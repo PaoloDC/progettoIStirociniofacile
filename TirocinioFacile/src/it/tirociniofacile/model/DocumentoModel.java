@@ -30,12 +30,15 @@ public class DocumentoModel {
 
   private static DataSource ds;
   
-  // public static final String SAVE_PATH = "D:/pdf/";
-  /*path da cambiare*/
- // public static final String SAVE_PATH = "C:/Users/PC1/git/"
- //     + "progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
-   public static final String SAVE_PATH =
-   "C:/Users/Andrea95/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
+  public static final String SAVE_PATH = "D:/pdf/";  //paolo
+  
+  /*
+  public static final String SAVE_PATH = 
+    "C:/Users/PC1/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/"; //ivan
+    
+  public static final String SAVE_PATH = 
+    "C:/Users/Andrea95/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/"; //andrea
+  */
   
   static {
     

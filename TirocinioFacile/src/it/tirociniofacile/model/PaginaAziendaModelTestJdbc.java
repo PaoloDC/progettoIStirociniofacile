@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
-public class PaginaAziendaModelTest_jdbc extends TestCase {
+public class PaginaAziendaModelTestJdbc extends TestCase {
   
-  private static PaginaAziendaModel_jdbc model;
+  private static PaginaAziendaModelJdbc model;
   
   static {
-    model = new PaginaAziendaModel_jdbc();
+    model = new PaginaAziendaModelJdbc();
   }
 
   /**
@@ -45,7 +45,7 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       pab.setDescrizione("Descrizione Prova");
       pab.setNomeAzienda(profilo.getNomeAzienda());
       
-      UtenteModel_jdbc um = new UtenteModel_jdbc();
+      UtenteModelJdbc um = new UtenteModelJdbc();
       
       um.salvaAccountAzienda(profilo.getEmail(), profilo.getPassword(),
           profilo.getNomeAzienda());
@@ -102,7 +102,7 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       pab.setDescrizione("Descrizione Prova");
       pab.setNomeAzienda(profilo.getNomeAzienda());
       
-      UtenteModel_jdbc um = new UtenteModel_jdbc();
+      UtenteModelJdbc um = new UtenteModelJdbc();
       
       um.salvaAccountAzienda(profilo.getEmail(), 
           profilo.getPassword(),
@@ -158,7 +158,7 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
       pab.setDescrizione("Descrizione Prova");
       pab.setNomeAzienda(profilo.getNomeAzienda());
       
-      UtenteModel_jdbc um = new UtenteModel_jdbc();
+      UtenteModelJdbc um = new UtenteModelJdbc();
       
       um.salvaAccountAzienda(profilo.getEmail(), profilo.getPassword(),
           profilo.getNomeAzienda());
@@ -210,7 +210,7 @@ public class PaginaAziendaModelTest_jdbc extends TestCase {
     azienda.setNomeAzienda("Ak Informatica");
     azienda.setPassword("mail");
     
-    UtenteModel_jdbc u = new UtenteModel_jdbc();
+    UtenteModelJdbc u = new UtenteModelJdbc();
     
     boolean b = u.salvaAccountAzienda(azienda.getEmail(), 
         azienda.getPassword(), azienda.getNomeAzienda());

@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * @author Paolo De Cristofaro
  *
  */
-public class PaginaAziendaModel_jdbc {
+public class PaginaAziendaModelJdbc {
   
   //variabili di istanza
   private static Statement stmt;
