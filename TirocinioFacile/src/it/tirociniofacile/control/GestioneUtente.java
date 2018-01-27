@@ -1,10 +1,11 @@
 package it.tirociniofacile.control;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 import it.tirociniofacile.bean.DocumentoConvenzioneBean;
 import it.tirociniofacile.bean.UtenteBean;
 import it.tirociniofacile.model.DocumentoModel;
 import it.tirociniofacile.model.UtenteModel;
-import sun.security.provider.certpath.ResponderId;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,7 +18,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+import sun.security.provider.certpath.ResponderId;
+
+
+
+
+
+
+
 
 /**
  * . Servlet implementation class GestioneUtente

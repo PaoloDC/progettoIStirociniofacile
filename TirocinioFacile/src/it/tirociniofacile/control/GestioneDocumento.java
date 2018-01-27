@@ -45,6 +45,7 @@ public class GestioneDocumento extends HttpServlet {
   }
 
   public static final String SAVE_DIR = "pdf";
+  
   /**.
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
   */
@@ -459,11 +460,11 @@ public class GestioneDocumento extends HttpServlet {
   /**
    * Ricerca tutti i DocumentiConvenzioneAzienda.
    * 
-   * @param request
-   * @param response
-   * @throws SQLException
-   * @throws ServletException
-   * @throws IOException
+   * @param request richiesta http
+   * @param response risposta http
+   * @throws SQLException eccezione sql
+   * @throws ServletException eccezione servlet
+   * @throws IOException eccezione scrittua nel file
    */
   public void ricercaTuttiDocumentiConvenzioneAzienda(HttpServletRequest request,
       HttpServletResponse response) throws SQLException, ServletException, IOException {

@@ -560,8 +560,6 @@ public class DocumentoModel {
    * 
    * @param url
    *          riferimento alla posizione del pdf
-   * @param email
-   *          indica la mail dello studente o dell'azienda che sta salvando il documento
    * @throws SQLException
    *           in caso di errato salvataggio sul database
    * @throws IOException
