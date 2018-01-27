@@ -111,7 +111,7 @@ public class GestioneDocumento extends HttpServlet {
     String piva = (request.getParameter("partitaIva"));
 
     String id = (request.getParameter("id"));
-    int id1 = Integer.parseInt(id);
+   
     
     if (model.ricercaConvenzionePerPartitaIva(piva) != null) {
 
@@ -120,15 +120,17 @@ public class GestioneDocumento extends HttpServlet {
       RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");
       rd.forward(request, response);
 
-    } else if (model.ricercaQuestionarioPerId(id1) != null) {
+    } else  {
       
-      request.removeAttribute("questionario");
-      System.out.println("PIIIIIIIIII" + model.ricercaQuestionarioPerId(id1).getAnnoAccademico());
-      request.setAttribute("questionario", model.ricercaQuestionarioPerId(id1));
-      RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");
-      rd.forward(request, response);
+      int id1 = Integer.parseInt(id);
+      if (model.ricercaQuestionarioPerId(id1) != null) {
+        request.removeAttribute("questionario");
+        System.out.println("PIIIIIIIIII" + model.ricercaQuestionarioPerId(id1).getAnnoAccademico());
+        request.setAttribute("questionario", model.ricercaQuestionarioPerId(id1));
+        RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");
+        rd.forward(request, response);
+      }
     }
-
   }
 
   /**
