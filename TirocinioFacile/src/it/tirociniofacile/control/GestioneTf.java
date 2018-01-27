@@ -24,17 +24,18 @@ public class GestioneTf extends HttpServlet {
   }
 
   /**
-   * doGet.
+   * .
    * 
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     doPost(request, response);
   }
-
   /**
-   * doPost.
+   * .
    * 
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {

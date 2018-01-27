@@ -62,9 +62,9 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
    *  servlet visualizzaInformazioniPerAnnoAccademico.
    * @param request richiesta http
    * @param response risponse http 
-   * @throws SQLException eccezzione sql
-   * @throws ServletException eccezzioni servlet 
-   * @throws IOException eccezzioni input output
+   * @throws SQLException eccezione sql
+   * @throws ServletException eccezioni servlet 
+   * @throws IOException eccezioni input output
    */
   public void visualizzaInformazioniPerAnnoAccademico(HttpServletRequest request, 
       HttpServletResponse response)
@@ -81,9 +81,9 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
    * Metodo visuallizza informazioni per azienda.
    * @param request richiesta http
    * @param response risposta servlet http
-   * @throws SQLException eccezzione sql 
-   * @throws ServletException eccazzione servlet
-   * @throws IOException eccazzioni input output
+   * @throws SQLException eccezione sql 
+   * @throws ServletException eccazione servlet
+   * @throws IOException eccazioni input output
    */
   public void visualizzaInformazioniPerAzienda(HttpServletRequest request,
       HttpServletResponse response) 

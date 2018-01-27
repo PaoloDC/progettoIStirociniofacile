@@ -45,7 +45,9 @@ public class GestioneDocumento extends HttpServlet {
   }
 
   public static final String SAVE_DIR = "pdf";
-
+  /**.
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+  */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     // TODO Auto-generated method stub
@@ -99,7 +101,7 @@ public class GestioneDocumento extends HttpServlet {
    * @throws SQLException
    *           eccezzioni di sql
    * @throws IOException
-   *           eccezzioni di input e output
+   *           eccezioni di input e output
    * @throws ServletException
    *           servlet exception
    */
@@ -217,11 +219,11 @@ public class GestioneDocumento extends HttpServlet {
    * @param request
    *          richiesta http
    * @throws SQLException
-   *           eccazzioni sql
+   *           eccezioni sql
    * @throws IOException
-   *           inout output eccezzioni
+   *           inout output eccezioni
    * @throws ServletException
-   *           eccezzioni della servlet
+   *           eccezioni della servlet
    */
   public void convalidaDocumento(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
@@ -268,7 +270,7 @@ public class GestioneDocumento extends HttpServlet {
    * @param request
    *          richiesta http
    * @throws SQLException
-   *           eccezzioni sql
+   *           eccezioni sql
    */
   public void compilaQuestionario(HttpServletRequest request, HttpServletResponse response) {
 
