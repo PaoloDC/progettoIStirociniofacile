@@ -100,15 +100,7 @@
 		</div>
 
 	</div>
-	<button class="btn btn-primary" onclick="myFunction()">Print
-		this page</button>
 	<%@ include file="footer.jsp"%>
-
-	<script>
-		function myFunction() {
-			window.print();
-		}
-	</script>
 
 </body>
 </html>
