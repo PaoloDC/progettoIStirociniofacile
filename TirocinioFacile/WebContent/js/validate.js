@@ -128,7 +128,7 @@ function ValidateAmbSki(str, txt) {
 	return true;
 }
 function ValidateAnno(str, txt) {
-	var date = /[2]{1}[0-9]{3}/;
+	var date = /[2]{1}[0-9]{3}$/;
 	if (!(str.value.match(date))) {
 		str.style.border = "2px solid red";
 		$(txt).html("Data non valida");
@@ -137,22 +137,6 @@ function ValidateAnno(str, txt) {
 	$(txt).html("");
 	str.style.border = "2px solid green";
 	return true;
-}
-function ValidateAnnoMagg(str1, txt1, str2, txt2) {
-
-	if (ValidateAnno(str1, txt1) && ValidateAnno(str1, txt2)) {
-		if (str2.value > str1.value) {
-			var scarto = str2.value - str1.value;
-			if (scarto == 1) {
-				str1.style.border = "2px solid green";
-				$(txt1).html("Anno di immatricolazione");
-				return true;
-			}
-		}
-	}
-	$(txt1).html("Data non valida");
-	str1.style.border = "2px solid red";
-	return false;
 }
 
 function ValidateData(str, txt) {

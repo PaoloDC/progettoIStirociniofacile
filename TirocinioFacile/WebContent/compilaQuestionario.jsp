@@ -137,8 +137,10 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 								<div class="form-group">
 									<label> 16. Data </label> <input name="data"
 										placeholder="Giorno"> / <input name="data"
-										placeholder="Mese"> / <input name="data"
-										placeholder="Anno">
+										placeholder="Mese"> / 
+										<input name="data"
+										placeholder="Anno" id="theAnno">
+										<label id="txtErrAnno"></label>
 								</div>
 							</div>
 							<div id="parte2" style="background: #5bf441">
@@ -678,11 +680,8 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 
 	<script>
 			function isOk() {
-				if (ValidateAnno(document.getElementById("theAnno1"),document.getElementById("txtErrAnno1"))&&
-						ValidateAnno(document.getElementById("theAnno2"),document.getElementById("txtErrAnno2"))&&
-							ValidateAnnoMagg(document.getElementById("theAnno1"),document.getElementById("txtErrAnno1"),
-								document.getElementById("theAnno2"),document.getElementById("txtErrAnno2"))&&
-									ValidateAlfa(document.getElementById("theComm"),document.getElementById("txtErrComm"))&&
+				if (ValidateAnno(document.getElementById("theAnno"),document.getElementById("txtErrAnno")) &&
+									ValidateAlfa(document.getElementById("theComm"),document.getElementById("txtErrComm")) &&
 										ValidateAlfa(document.getElementById("theSugg"),document.getElementById("txtErrSugg"))
 				) {
 					return true;
