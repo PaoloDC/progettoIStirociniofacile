@@ -1,5 +1,8 @@
 package it.tirociniofacile.model;
 
+import com.mysql.jdbc.Statement;
+import it.tirociniofacile.bean.PaginaAziendaBean;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,9 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mysql.jdbc.Statement;
 
-import it.tirociniofacile.bean.PaginaAziendaBean;
+
 
 /**
  * Classe che testa i metodi della classe PaginaAziendaModel.
@@ -341,6 +343,10 @@ public class PaginaAziendaModel_jdbc {
     return -2;
   }
   
+  /**
+   * elimina una pagina azienda, metodo per test.
+   * @param id id della pagina da eliminare
+   */
   public void eliminaPagina(int id) {
     Connection connection = con;
     PreparedStatement preparedStatement = null;
