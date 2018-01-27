@@ -43,7 +43,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
   }
 
   /**
-   * .
+   * 
    * 
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
@@ -72,7 +72,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
   }
 
   /**
-   * .
+   * 
    * 
    * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */

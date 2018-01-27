@@ -26,7 +26,8 @@ public class DocumentoModel_jdbc {
    * public static final String SAVE_PATH =
    * "C:/Users/PC1/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
    */
-  public static final String SAVE_PATH = "C:/Users/Andrea95/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
+  public static final String SAVE_PATH = "C:/Users/Andrea95/git/"
+      + "progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
 
   static {
     // Inizia una connessione
@@ -46,7 +47,12 @@ public class DocumentoModel_jdbc {
       System.exit(0);
     }
   }
-
+  /**
+ * seleziona i documenti di convenzione dal db.
+ * @return
+ * @throws SQLException
+ */
+  
   public synchronized ArrayList<DocumentoConvenzioneBean> getTuttiDocumentiConvenzioneAzienda()
       throws SQLException {
     Connection connection = con;
@@ -78,6 +84,11 @@ public class DocumentoModel_jdbc {
 
     return listaDocumenti;
   }
+  /**
+   * seleziona i questionari dal db
+   * @return
+   * @throws SQLException 
+   */
 
   public synchronized ArrayList<DocumentoQuestionarioBean> getTuttiDocumentiQuestionari()
       throws SQLException {
@@ -109,7 +120,13 @@ public class DocumentoModel_jdbc {
 
     return listaDocumenti;
   }
-
+  
+  /**
+ * eleziona i questionari dal db in b
+ * @param id
+ * @return
+ * @throws SQLException
+ */
   public synchronized ArrayList<DocumentoQuestionarioBean> getTuttiDocumentiQuestionariPerPagina(
       int id) throws SQLException {
     Connection connection = con;
