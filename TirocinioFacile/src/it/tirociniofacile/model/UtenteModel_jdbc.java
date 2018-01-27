@@ -400,4 +400,23 @@ public class UtenteModel_jdbc {
     }
     this.salvaUtentiNelFile(lista);
   }
+  
+  /**
+   * Cancella un account azienda.
+   * 
+   * @param email
+   *          identificativo dell'account
+   * @throws SQLException
+   *           in caso di errata connessione al database
+   */
+  public synchronized void cancellaAccountAzienda(String email) throws SQLException {
+    Connection connection = con;
+    PreparedStatement preparedStatement = null;
+    String deleteSql = "DELETE FROM " + UtenteModel.TABLE_NAME_AZIENDA + " WHERE mail = ?";
+    preparedStatement = connection.prepareStatement(deleteSql);
+    preparedStatement.setString(1, email);
+
+    preparedStatement.executeUpdate();
+
+  }
 }
