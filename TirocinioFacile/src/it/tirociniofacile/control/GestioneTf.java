@@ -17,7 +17,7 @@ public class GestioneTf extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   /**
-   * costruttore.
+   * costruttore vuoto. 
    */
   public GestioneTf() {
     super();

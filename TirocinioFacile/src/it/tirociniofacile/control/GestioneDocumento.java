@@ -130,7 +130,7 @@ public class GestioneDocumento extends HttpServlet {
   }
 
   /**
-   * Rierca una azienda prendendo il paremetro email.
+   * Ricerca una azienda prendendo il paremetro email.
    * @param request richiesta http
    * @param response risposta http
    * @throws SQLException eccezione sql
@@ -286,7 +286,7 @@ public class GestioneDocumento extends HttpServlet {
     String matricola = request.getParameter("matricola");
     String valAzienda = request.getParameter("azienda");
     String[] valoriAzienda = valAzienda.split(",");
-    String id = valoriAzienda[0];
+    
     String nomeAzienda = valoriAzienda[1];
     String provazienda = request.getParameter("provazienda");
     String sesso = request.getParameter("sesso");
@@ -314,14 +314,20 @@ public class GestioneDocumento extends HttpServlet {
     // PARTE 2
     String parte2dom1 = request.getParameter("parte2dom1");
     String parte2dom1altro = request.getParameter("parte2dom1altro");
-    String parte2dom3 = request.getParameter("parte2dom3");
+    
+    
     String parte2dom3altro = request.getParameter("parte2dom3altro");
-    String parte2dom4 = request.getParameter("parte2dom4");
+    
+ 
+    
     String parte2dom4altro = request.getParameter("parte2dom4altro");
 
-    String[] cinque = request.getParameterValues("cinque");
-    String[] sei = request.getParameterValues("sei");
     
+    
+   
+   
+    
+
     megaTesto += "<br><br>PARTE II : INFORMAZIONI SULLO STAGE / TIROCINIO<br>"
         + "<br>1. Come è avvenuta la scelta dello stage?<br>";
         
@@ -333,19 +339,21 @@ public class GestioneDocumento extends HttpServlet {
           
     megaTesto += "<br>2. Lo stage è stato svolto: all'esterno"
         + "<br>3. Qual è stato il ruolo del tutor aziendale durante lo stage?<br>";
-    
+    String parte2dom3 = request.getParameter("parte2dom3");
     if (parte2dom3.equals("altro")) {
       megaTesto += "Altro, Specificare: " + parte2dom3altro;
     } else {
       megaTesto += parte2dom3;
     }   
+    String parte2dom4 = request.getParameter("parte2dom4");
     megaTesto += "<br>4. Qual è stato il ruolo del tutor universitario durante lo stage?<br>"; 
     if (parte2dom4.equals("altro")) {
       megaTesto += "Altro, Specificare: " + parte2dom4altro;
     } else {
       megaTesto += parte2dom4;
     } 
-    
+    String[] cinque = request.getParameterValues("cinque");
+    String[] sei = request.getParameterValues("sei");
     megaTesto += "<br><br>5. In che misura lei possedeva le seguenti caratteristiche "
         + "al momento dell'inizio dello stage?<br>"
         + "Capacità relazionali e di comunicazione:\t\t" +  cinque[0]
@@ -373,7 +381,8 @@ public class GestioneDocumento extends HttpServlet {
     megaTesto +=
         "<br><br>PARTE III : GRADO DI SODDISFAZIONE DEL TIROCINANTE Giudizio sull'Esperienza<br>"
         + "<br>A.1 L'esperienza di tirocinio ha arricchito il suo bagaglio di conoscenza?\t" + a[0]
-        + "<br>A.2 L'esperienza di tirocinio è stata utile dal punto di vista professionale?\t" + a[1]
+        + "<br>A.2 L'esperienza di tirocinio è stata utile dal"
+        + " punto di vista professionale?\t" + a[1]
         + "<br>A.3 L'esperienza di tirocinio è stata utile per la sua crescita personale?\t" + a[2]
         + "<br>A.4 L'accoglienza a lei riservata in azienda è stata buona?\t\t\t" + a[3]
         + "<br>A.5 Come valuta l'esperienza rispetto alle sue aspettative iniziali?\t\t" + a[4] 
@@ -395,7 +404,7 @@ public class GestioneDocumento extends HttpServlet {
         + "<br>C.6 I compiti e le responsabilità del tutor "
         + "interno vanno aumentati?\t\t\t\t\t\t\t\t" + c[5];
     
-    
+   
     
     float giudizioEsperienza = 0;
     for (int i = 0; i < a.length; i++) {
@@ -423,11 +432,11 @@ public class GestioneDocumento extends HttpServlet {
     megaTesto += "<br><br>Commenti:<br>" + commenti + "<br><br>Suggerimenti:<br>" + suggerimenti;
     
     System.out.print("MEGAAAAAAAAAAA:\n" + megaTesto);
-    
+    String id = valoriAzienda[0];
     model.salvaQuestionario(commenti, suggerimenti, annoAccademico, mailStudente,
         Integer.parseInt(id), matricola, giudizioEsperienza, 
         giudizioAzienda, giudizioUniversita,megaTesto);
-    
+ 
     try {
       response.setContentType("text/html;charset=UTF-8");
       PrintWriter out = response.getWriter();
@@ -471,12 +480,12 @@ public class GestioneDocumento extends HttpServlet {
   }
 
   /**
-   * 
-   * @param request
-   * @param response
-   * @throws SQLException
-   * @throws ServletException
-   * @throws IOException
+   * Ricerca tutti i documenti questionari presenti.
+   * @param request request della servlet
+   * @param response response della servlet
+   * @throws SQLException eccezioni di SQL
+   * @throws ServletException eccezioni della servlet
+   * @throws IOException eccezioni di I/O
    */
   public void ricercaTuttiDocumentiQuestionariAzienda(HttpServletRequest request,
       HttpServletResponse response) throws SQLException, ServletException, IOException {
@@ -498,12 +507,12 @@ public class GestioneDocumento extends HttpServlet {
   }
 
   /**
-   * 
-   * @param request
-   * @param response
-   * @throws SQLException
-   * @throws ServletException
-   * @throws IOException
+   *  Ricerca i questionari non approvati.
+   * @param request request della servlet
+   * @param response response della servlet
+   * @throws SQLException eccezioni di SQL
+   * @throws ServletException eccezioni della servlet
+   * @throws IOException eccezioni di I/O
    */
   public void ricercaQuestionariNonApprovatiPerStudente(HttpServletRequest request,
       HttpServletResponse response) throws SQLException, ServletException, IOException {

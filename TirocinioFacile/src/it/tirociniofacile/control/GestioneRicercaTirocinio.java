@@ -89,9 +89,9 @@ public class GestioneRicercaTirocinio extends HttpServlet {
    * @throws SQLException
    *           eccezione lanciato dal metodo del model
    * @throws IOException
-   *           eccezzioni input output
+   *           eccezioni input output
    * @throws ServletException
-   *           eccezzioni servlet
+   *           eccezioni servlet
    */
   public void ricercaTuttePagine(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
@@ -140,9 +140,9 @@ public class GestioneRicercaTirocinio extends HttpServlet {
    * @throws SQLException
    *           eccezione lanciato dal metodo del model
    * @throws IOException
-   *           eccezzioni input output
+   *           eccezioni input output
    * @throws ServletException
-   *           eccezzioni servlet
+   *           eccezioni servlet
    */
   public void ricercaPagina(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
@@ -192,9 +192,9 @@ public class GestioneRicercaTirocinio extends HttpServlet {
    * @throws SQLException
    *           eccezione lanciato dal metodo del model
    * @throws IOException
-   *           eccezzioni input output
+   *           eccezioni input output
    * @throws ServletException
-   *           eccezzioni servlet
+   *           eccezioni servlet
    */
   public void visualizzaPagina(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
@@ -218,8 +218,8 @@ public class GestioneRicercaTirocinio extends HttpServlet {
    * 
    * @param request
    *          la richiesta http
-   * @throws IOException 
-   * @throws ServletException 
+   * @throws IOException  eccezioni di I/O
+   * @throws ServletException eccezioni della servlet
    * @throws SQLException
    *           eccezione lanciato dal metodo del model
    */
@@ -241,7 +241,12 @@ public class GestioneRicercaTirocinio extends HttpServlet {
         request.getRequestDispatcher("/GestioneTf?action=visualizzaPagina&id=" + id);
     rd.forward(request, response);
   }
-
+  /**
+ * separa i valori delle stringhe seguite dal carattere ",".
+ * @param stringa stringa di caratteri
+ * @return
+ */
+  
   private ArrayList<String> separaValoriStringa(String stringa) {
     final String separatore = ",";
     ArrayList<String> lista = new ArrayList<>();

@@ -1,7 +1,7 @@
 package it.tirociniofacile.bean;
 
 /**
- * Classe che modella un documento questionario
+ * Classe che modella un documento questionario.
  * 
  * @author Paolo De Cristofaro
  *

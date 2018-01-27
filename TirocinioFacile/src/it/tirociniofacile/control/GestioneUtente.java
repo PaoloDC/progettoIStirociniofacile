@@ -43,27 +43,19 @@ public class GestioneUtente extends HttpServlet {
   }
 
   /**
-   * Esempio di commento, ci vuole il punto finale. ogni riga massimo 100 caratteri spazio sopra e
-   * sotto
+   * .
    * 
-   * @param request
-   *          richiesta
-   * @param response
-   *          risposta
+   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    */
-
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     doPost(request, response);
   }
 
   /**
-   * Il metodo doPost permette di .
+   * .
    * 
-   * @param request
-   *          richiesta
-   * @param response
-   *          risposta
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
    */
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -109,8 +101,8 @@ public class GestioneUtente extends HttpServlet {
    *          richiesta http
    * @throws SQLException
    *           eccezzione sql
-   * @throws IOException
-   * @throws ServletException
+   * @throws IOException eccezioni di I/O
+   * @throws ServletException eccezioni della servlet
    */
   public void registrazioneStudente(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
@@ -140,10 +132,10 @@ public class GestioneUtente extends HttpServlet {
    * 
    * @param request
    *          richiesta http
-   * @throws IOException
-   * @throws ServletException
+   * @throws IOException eccezioni di I/O
+   * @throws ServletException eccezioni della servlet
    * @throws SQLException
-   *           eccezzioni sql
+   *           eccezioni sql
    */
   public void registrazioneAzienda(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -195,11 +187,11 @@ public class GestioneUtente extends HttpServlet {
    * @param request
    *          richiesta http
    * @throws SQLException
-   *           eccezzione sql
+   *           eccezione sql
    * @throws IOException
-   *           input output eccezzioni
+   *           input output eccezioni
    * @throws ServletException
-   *           servlet eccezzioni
+   *           servlet eccezioni
    */
   public void logIn(HttpServletRequest request, HttpServletResponse response)
       throws SQLException, ServletException, IOException {
@@ -251,7 +243,7 @@ public class GestioneUtente extends HttpServlet {
    * @param request
    *          richiesta http
    * @throws SQLException
-   *           eccezzione sql
+   *           eccezione sql
    */
   public void recuperaPassword(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {

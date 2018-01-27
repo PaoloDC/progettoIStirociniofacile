@@ -15,6 +15,11 @@ public class UtenteBean implements Serializable {
   public UtenteBean() {
   
   }
+  /**
+   * Rappresenta tutti gli utenti della piattaforma.
+   * @param email indirizzo e-mail di un utente
+   * @param password password di un account utente
+   */
   
   public UtenteBean(String email, String password) {
     this.email = email;
@@ -36,6 +41,11 @@ public class UtenteBean implements Serializable {
   public void setPassword(String password) {
     this.password = password;
   }
+  /**
+   * permette di scrivere in uno stream l'oggetto utente bean.
+   * @param output output
+   * @throws IOException eccezioni di I/O
+   */
   
   private void writeObject(ObjectOutputStream output) throws IOException {
     output.writeObject(email);

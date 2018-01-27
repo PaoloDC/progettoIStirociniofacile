@@ -1,5 +1,6 @@
 package it.tirociniofacile.model;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import it.tirociniofacile.bean.DocumentoConvenzioneBean;
 import it.tirociniofacile.bean.DocumentoQuestionarioBean;
 
@@ -17,7 +18,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
 
 /**
  * Classe model per la gestione di lettura e scrittura dei documenti (convenzione e questionario)
@@ -28,12 +29,16 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
 public class DocumentoModel {
 
   private static DataSource ds;
+  
   // public static final String SAVE_PATH = "D:/pdf/";
-  public static final String SAVE_PATH = "C:/Users/PC1/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
+  
+  public static final String SAVE_PATH = "C:/Users/PC1/git/"
+      + "progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
   // public static final String SAVE_PATH =
   // "C:/Users/Andrea95/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/";
-
+  
   static {
+    
     try {
       Context initCtx = new InitialContext();
       Context envCtx = (Context) initCtx.lookup("java:comp/env");
@@ -171,7 +176,8 @@ public class DocumentoModel {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
 
-    ArrayList<DocumentoQuestionarioBean> listaDocumenti = new ArrayList<DocumentoQuestionarioBean>();
+    ArrayList<DocumentoQuestionarioBean> listaDocumenti = 
+        new ArrayList<DocumentoQuestionarioBean>();
 
     try {
       connection = ds.getConnection();
@@ -505,8 +511,7 @@ public class DocumentoModel {
    * 
    * @param url
    *          riferimento alla posizione del file pdf
-   * @param email
-   *          mail dell'azienda di cui si sta salvando il documento
+   
    * @throws SQLException
    *           in caso di errata connessione al database
    * @throws IOException
@@ -666,8 +671,7 @@ public class DocumentoModel {
    * Metodo che permette di ricercare un documento di convenzione di un'azienda inserendo la email
    * del profilo associato.
    * 
-   * @param email
-   *          la mail del profilo associata al documento di convenzione
+  
    * @return il documento di convenzione dell'azienda
    * @throws SQLException
    *           in caso di errata connessione al database

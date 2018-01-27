@@ -15,6 +15,12 @@ public class ProfiloStudenteBean extends UtenteBean implements Serializable {
   }
   
   //costruttore
+  /**
+   * Rappresenta il profilo degli studenti registrati sulla piattaforma.
+   * @param email indirizzo email dello studente registrato sulla piattaforma
+   * @param password password dell'account dello studente
+   * @param matricola numero di matricola dello studente iscritto all'università
+   */
   public ProfiloStudenteBean(String email, String password,String matricola) {
     super(email,password);
     this.matricola = matricola;
@@ -28,13 +34,25 @@ public class ProfiloStudenteBean extends UtenteBean implements Serializable {
   public void setMatricola(String matricola) {
     this.matricola = matricola;
   }
+  /**
+   * permette di scrivere l'oggetto profilo studente bean in uno stream.
+   * @param output output
+   * @throws IOException eccezioni di I/O
+   */
   
   private void writeObject(ObjectOutputStream output) throws IOException {  
     output.writeObject(this.getEmail());
     output.writeObject(this.getPassword());
     output.writeObject(matricola);
   }
- 
+  
+  /**
+  * permette di serializzare in un file i parametri di profiloStudenteBean.
+  * @param input input
+  * @throws IOException eccezioni di I/O
+  * @throws ClassNotFoundException file non trovato
+  */
+  
   private void readObject(ObjectInputStream input) throws IOException, ClassNotFoundException {
     //parchiConvenzionati= (ArrayList<Parco>) input.readObject();
     this.setEmail((String) input.readObject());
