@@ -1,5 +1,5 @@
 function ValidateEmailStudente(email, txt) {
-	var emailFormat = /^[a-z]{1}[.]{1}[a-z]*[0-9]{2}$/;
+	var emailFormat = /^[a-z]{1}[.]{1}[a-z]*[0-9]{0,2}$/;
 
 	if (email.value.match(emailFormat)) {
 		$(txt)

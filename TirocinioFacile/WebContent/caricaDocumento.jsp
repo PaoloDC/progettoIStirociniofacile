@@ -91,7 +91,7 @@
 				%>
 
 				<form class="divQuest" method="post" action="GestioneTf"
-					id="form1" onsubmit="return isOk(document.getElementById(<%=docCount%>));" enctype="multipart/form-data">
+					id="form1" onsubmit="return isOk(document.getElementById('<%=docCount %>'));" enctype="multipart/form-data">
 
 					<div class="row">
 						<div class="col-4 col-md-4">
@@ -107,8 +107,7 @@
 							</h4>
 						</div>
 						<div class="col-4 col-md-4">
-							<input type="file" name="file" id=<%=docCount%>
-								accept="application/pdf">
+							<input type="file" name="file" id=<%=docCount %> accept="application/pdf">
 						</div>
 						<button type="submit" class="btn btn-primary">Carica
 							Documento</button>
@@ -149,18 +148,21 @@
 			return true;
 		}
 	</script>
-	<%@ include file="footer.jsp"%>
-
+	
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/js/validate.js"></script>
 
 	<script>
-		function isOk(elem) {
-			if (ValidateFile(elem)) {
+		function isOk(elem1) {
+			if (ValidateFile(elem1)) {
 				return true;
 			}
 			return false;
 		}
 	</script>
+	
+	<%@ include file="footer.jsp"%>
+
+	
 </body>
 </html>
