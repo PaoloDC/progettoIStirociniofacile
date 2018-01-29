@@ -1,7 +1,5 @@
 package it.tirociniofacile.control;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-
 import it.tirociniofacile.bean.DocumentoConvenzioneBean;
 import it.tirociniofacile.bean.UtenteBean;
 import it.tirociniofacile.model.DocumentoModel;
@@ -18,17 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import sun.security.provider.certpath.ResponderId;
-
-
-
-
-
-
-
-
 /**
- * . Servlet implementation class GestioneUtente
+ *  Servlet implementation class GestioneUtente.
  */
 @WebServlet("/GestioneUtente")
 public class GestioneUtente extends HttpServlet {
@@ -41,19 +30,13 @@ public class GestioneUtente extends HttpServlet {
     docModel = new DocumentoModel();
   }
 
-  /**
-   * .
-   * 
-   * @see HttpServlet#HttpServlet()
-   */
   public GestioneUtente() {
     super();
   }
 
+
   /**
-   * .
-   * 
-   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   * doGet.
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -61,11 +44,8 @@ public class GestioneUtente extends HttpServlet {
   }
 
   /**
-   * .
-   * 
-   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   * doPost.
    */
-
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     HttpSession session = request.getSession();

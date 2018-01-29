@@ -385,8 +385,6 @@ public class UtenteModel {
           + "recupero password.\nLa sua password per accedere alla piattaforma"
           + " tirocinio facile è: ' " + passwordDaInviare + " '.\n\nBuona navigazione.";
 
-      // System.out.println("Prima di inviare: " + email + ", pass: " + passwordDaInviare);
-
       Email.sendFromGMail(mailMittente, passwordMittente, destinari, oggetto, corpo);
       return true;
     }

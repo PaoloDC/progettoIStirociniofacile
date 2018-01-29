@@ -46,11 +46,6 @@
 
 	<div class="container-fluid">
 		<%@ include file="header.jsp"%>
-		<%
-			if (utente == null) {
-				System.out.println("Ehii");
-			}
-		%>
 
 		<div class="row">
 			<div class="col-4 col-md-4">

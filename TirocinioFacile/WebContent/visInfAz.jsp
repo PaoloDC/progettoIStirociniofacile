@@ -14,7 +14,7 @@
 	int numQuest = -1;
 	if (request.getAttribute("numeroQuestionari") != null) {
 		numQuest = (int) request.getAttribute("numeroQuestionari");
-		System.out.println("Entrato" + numQuest);
+		//System.out.println("Entrato" + numQuest);
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -68,7 +68,7 @@
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						<%
 							if (listaAzienda != null && listaAzienda.size() != 0) {
-								System.out.println("Ma non è vuoto");
+								//System.out.println("Ma non è vuoto");
 						%>
 						<%
 							for (int i = 0; i < listaAzienda.size(); i++) {
@@ -81,7 +81,7 @@
 						%>
 						<%
 							} else {
-									System.out.println("poopasdpaosidpasoi");
+									//System.out.println("poopasdpaosidpasoi");
 						%>
 						<li><a>Nessuna Azienda</a></li>
 						<%
@@ -113,7 +113,7 @@
 							}
 						%>
 						<%
-							} else { System.out.println("poopasdpaosidpasoi");
+							} else { //System.out.println("poopasdpaosidpasoi");
 						%>
 						<li><a href="#">Nessuna Azienda</a></li>
 						<%

@@ -363,15 +363,11 @@ public class PaginaAziendaModel {
       psCerca = connection.prepareStatement(cercaPaginaSql);
       psCerca.setString(1, email);
 
-      System.out.println("psCerca: " + psCerca);
-
       ResultSet rsCerca = psCerca.executeQuery();
 
       if (rsCerca.first()) {
 
         autoId = rsCerca.getInt(1);
-
-        System.out.println("QUI autoId: " + autoId);
 
         String updatePaginaSql = "UPDATE " + TABLE_NAME_PAGINA
             + " SET localita = ?, descrizione = ? WHERE id = ?";

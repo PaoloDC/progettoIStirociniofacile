@@ -24,20 +24,16 @@ public class GestioneTf extends HttpServlet {
   }
 
   /**
-   * .
-   * 
-   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   * doGet.
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     doPost(request, response);
   }
+
   /**
-   * .
-   * 
-   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   * doPost.
    */
-  
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     String action = request.getParameter("action");

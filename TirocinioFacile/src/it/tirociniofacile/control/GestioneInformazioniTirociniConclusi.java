@@ -29,14 +29,18 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
         super();
   }
 
-  /**.
-   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-  */
+
+  /**
+   * doGet.
+   */
   protected void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
   
     HttpSession session = request.getSession();
     String action = request.getParameter("action");
+    
+    System.out.println("GestioneInformazioniTirociniConclusi action: " + action);
+    
     try {
       if (action != null) {
         if (action.equals("visualizzaInformazioniPerAnnoAccademico")) {
@@ -50,9 +54,10 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
     }
   }
 
-  /**.
-  * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-  */
+
+  /**
+   * doPost.
+   */
   protected void doPost(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {
     doGet(request, response);
@@ -93,7 +98,8 @@ public class GestioneInformazioniTirociniConclusi extends HttpServlet {
     request.setAttribute("numeroQuestionari",
         model.conteggioQuestionariApprovatiPerAzienda(azienda));
   
-    System.out.println("QUIIIIIIIIIIII" + request.getAttribute("numeroQuestionari"));
+    //System.out.println("QUIIIIIIIIIIII" + request.getAttribute("numeroQuestionari"));
+    
     RequestDispatcher rd = request.getRequestDispatcher("/visInfAz.jsp");  
     rd.forward(request, response);
   }

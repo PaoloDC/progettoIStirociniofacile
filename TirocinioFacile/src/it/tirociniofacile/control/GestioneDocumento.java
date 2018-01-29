@@ -126,7 +126,7 @@ public class GestioneDocumento extends HttpServlet {
       int id1 = Integer.parseInt(id);
       if (model.ricercaQuestionarioPerId(id1) != null) {
         request.removeAttribute("questionario");
-        System.out.println("PIIIIIIIIII" + model.ricercaQuestionarioPerId(id1).getAnnoAccademico());
+       
         request.setAttribute("questionario", model.ricercaQuestionarioPerId(id1));
         RequestDispatcher rd = request.getRequestDispatcher("/visualizzaDocumento.jsp");
         rd.forward(request, response);
@@ -150,7 +150,6 @@ public class GestioneDocumento extends HttpServlet {
     if (doc != null) {
       request.removeAttribute("convenzione");
       request.setAttribute("convenzione", doc);
-      
     }
 
   }

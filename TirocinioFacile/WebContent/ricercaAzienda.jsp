@@ -18,7 +18,7 @@
 	int indice = 4;
 	if (request.getAttribute("indice") != null) {
 		indice = (int) request.getAttribute("indice");
-		System.out.println("Indice= " + indice);
+		//System.out.println("Indice= " + indice);
 	} else {
 		indice = 4;
 	}

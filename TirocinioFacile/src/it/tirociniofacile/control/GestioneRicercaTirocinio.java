@@ -42,9 +42,9 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     super();
   }
 
+
   /**
-   * .
-   * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+   * doGet.
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -70,9 +70,9 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     }
   }
 
+
   /**
-   * .
-   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   * doPost.
    */
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -110,7 +110,7 @@ public class GestioneRicercaTirocinio extends HttpServlet {
     String tirocini = request.getParameter("tirocini");
     String compila = request.getParameter("compila");
 
-    System.out.println(this.getServletName() + " tirocini: " + tirocini + ", compila: " + compila);
+    //System.out.println(this.getServletName() + " tirocini: " + tirocini + ", compila: " + compila);
     
     if (tirocini != null) {
       if (tirocini.equals("true")) {

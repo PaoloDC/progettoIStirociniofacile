@@ -20,7 +20,7 @@
 	int indice = 4;
 	if (request.getAttribute("indice") != null) {
 		indice = (int) request.getAttribute("indice");
-		System.out.println("Indice= " + indice);
+		//System.out.println("Indice= " + indice);
 	} else {
 		indice = 4;
 	}
@@ -116,7 +116,7 @@
 									int i = 0;
 									if (request.getAttribute("indice") != null) {
 										indice = (int) request.getAttribute("indice");
-										System.out.println("Indice= " + indice);
+										//System.out.println("Indice= " + indice);
 									}
 									int indiceIniziale = ((indice - NUM_ELE_PAG));
 									while (i < listaDocumentiConvenzione.size()) {
