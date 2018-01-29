@@ -28,7 +28,7 @@ public class DocumentoModel {
 
   private static DataSource ds;
   
-  public static final String SAVE_PATH = "D:/pdf/";  //paolo
+  //public static final String SAVE_PATH = "D:/pdf/";  //paolo
   
   /*
   public static final String SAVE_PATH = 
@@ -37,6 +37,10 @@ public class DocumentoModel {
   public static final String SAVE_PATH = 
     "C:/Users/Andrea95/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/"; //andrea
   */
+ // public static final String SAVE_PATH = "C:\\Program"+" "+"Files\\Apache"+" "
+  //    + ""+"Software"+" "+"Foundation\\Tomcat"+" "+"8.5\\webapps\\TirocinioFacile\\pdf\\";
+
+  public static final String SAVE_PATH ="C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\TirocinioFacile\\pdf\\";
   
   static {
     

@@ -17,10 +17,7 @@
    <welcome-file>index.jsp</welcome-file>
  </welcome-file-list>
  
-<error-page>
-    <error-code>404</error-code>
-    <location>/error.jsp</location>
-</error-page>
+
  
  <servlet>
    <servlet-name>GestioneDocumento</servlet-name>
@@ -45,11 +42,17 @@
  <servlet>
   <servlet-name>GestioneTf</servlet-name>
   <servlet-class>it.tirociniofacile.control.GestioneTf</servlet-class>
-</servlet>
+ </servlet>
 
-<servlet-mapping>
+ <servlet-mapping>
   <servlet-name>GestioneTf</servlet-name>
   <url-pattern>/GestioneTf</url-pattern>
-</servlet-mapping>
+ </servlet-mapping>
+
+<error-page>
+    <error-code>404</error-code>
+    <location>/error404.jsp</location>
+</error-page>
+
   
 </web-app>
