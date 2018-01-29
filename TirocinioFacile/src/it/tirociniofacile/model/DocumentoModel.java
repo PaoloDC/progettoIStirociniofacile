@@ -37,10 +37,16 @@ public class DocumentoModel {
   public static final String SAVE_PATH = 
     "C:/Users/Andrea95/git/progettoIStirociniofacile/TirocinioFacile/WebContent/pdf/"; //andrea
   */
- // public static final String SAVE_PATH = "C:\\Program"+" "+"Files\\Apache"+" "
+  // public static final String SAVE_PATH = "C:\\Program"+" "+"Files\\Apache"+" "
   //    + ""+"Software"+" "+"Foundation\\Tomcat"+" "+"8.5\\webapps\\TirocinioFacile\\pdf\\";
 
-  public static final String SAVE_PATH ="C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\TirocinioFacile\\pdf\\";
+  // public static final String SAVE_PATH =
+  //"C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\TirocinioFacile\\pdf\\";
+  
+  
+  public static final String SAVE_PATH =
+      "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0\\webapps\\TirocinioFacile\\pdf\\";
+ 
   
   static {
     
@@ -188,7 +194,7 @@ public class DocumentoModel {
       connection = ds.getConnection();
       String selectSql = "SELECT commenti,suggerimenti,"
           + "giudizioAzienda,giudizioUniversita,giudizioEsperienza FROM " + TABLE_NAME_QUESTIONARI
-          + " WHERE paginaAziendaId = ? ";
+          + " WHERE paginaAziendaId = ? AND approvato = 1";
 
       preparedStatement = connection.prepareStatement(selectSql);
       preparedStatement.setInt(1, id);
