@@ -171,7 +171,7 @@ public class PaginaAziendaModel {
 
   /**
    * Cerca nel db una pagina azienda per il suo id.
-   * 
+   * @param id identificativo della pagina azienda
    * @return una pagina azienda
    */
   public synchronized PaginaAziendaBean ricerca(int id) {

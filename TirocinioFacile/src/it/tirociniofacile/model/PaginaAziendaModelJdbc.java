@@ -162,6 +162,7 @@ public class PaginaAziendaModelJdbc {
 
   /**
    * Cerca nel db una pagina azienda per il suo id.
+   * @param id id della pagina
    * @return una pagina azienda
    */
   public synchronized PaginaAziendaBean ricerca(int id) {

@@ -54,7 +54,7 @@ public class DocumentoModelJdbc {
   }
   /**
    * Ricerca tutti i documenti convenzione bean.
-   * @return
+   * @return una lista di documenti convenzione
    * 
    * @throws SQLException
    * eccezioni di SQL.
@@ -93,7 +93,7 @@ public class DocumentoModelJdbc {
   }
   /**
    *  Ricerca tutti i documenti questionari non ancora approvati che hanno un pdf allegato.
-   * @return
+   * @return una lista di questionari
    * 
    * @throws SQLException
    * eccezione di SQL
@@ -133,7 +133,7 @@ public class DocumentoModelJdbc {
   /**
    *Ricerca tutti i documenti questionari per una pagina azienda.
    * @param id id della pagina dell'azienda
-   * @return
+   * @return una lista di questionari
    * 
    * @throws SQLException
    * eccezioni di Sql
@@ -175,7 +175,7 @@ public class DocumentoModelJdbc {
   /**
    * Metodo che ricerca tutti i questionari non approvati per un determinato studente.
    * @param mailStudente indirizzo e-mail di uno studente
-   * @return
+   * @return una lista di stringhe che contengono valori che interessano lo studente
    * 
    * @throws SQLException
    * eccezione di SQL.
@@ -218,8 +218,8 @@ public class DocumentoModelJdbc {
   }
   /**
    * Conta il numero di questionari approvati in un anno indicato.
-   * @param anno anno axxademico indicato.
-   * @return
+   * @param anno anno accademico indicato.
+   * @return un intero che corrisponde al numero di questionari
    * 
    * @throws SQLException
    * eccezioni di SQL
@@ -246,7 +246,7 @@ public class DocumentoModelJdbc {
   /**
  * Conta il numero di questionari approvati in una certa azienda.
  * @param azienda nome dell'azienda
- * @return
+ * @return un intero che corrisponde al numero di questionari
  * 
  * @throws SQLException
  * eccezioni di SQL
@@ -275,6 +275,8 @@ public class DocumentoModelJdbc {
     }
     return numAzienda;
   }
+  
+  
   /**
    *  Metodo che consente di salvare un nuovo questionario sul database.
    * @param commenti commenti sull'azienda
@@ -287,9 +289,8 @@ public class DocumentoModelJdbc {
    * @param giudizioAzienda voto sull'azienda
    * @param giudizioUniversita voto sull'università
    * @param testoQuestionario testo del questionario
-   * @return
+   * @return l'id del questionario appena inserito
    */
-  
   public synchronized int salvaQuestionario(String commenti, String suggerimenti,
       String annoAccademico, String mailStudente, int paginaAziendaId, String matricola,
       float giudizioEsperienza, float giudizioAzienda, float giudizioUniversita,
@@ -340,7 +341,7 @@ public class DocumentoModelJdbc {
  * @param luogoDiNascitaRappLegale luogo di nascita del rappresentante  dell'azienda
  * @param dataDiNascitaRappLegale data di nascita del rappresentante dell'azienda
  * @param testoConvenzione testo della convenzione
- * @return
+ * @return true se inserimento ok, false altrimenti
  */
   
   public synchronized boolean salvaConvenzione(String piva, String nomeAzienda, String sedeLegale,
@@ -436,7 +437,7 @@ public class DocumentoModelJdbc {
  * Metodo che permette di ricercare un documento di convenzione di un'azienda inserendo la email
  * del profilo associato.
  * @param email indirizzo e-mail dell'azienda
- * @return
+ * @return il documento convenzione corrispondente
  * 
  * @throws SQLException
  * eccezione di SQL
@@ -483,7 +484,7 @@ public class DocumentoModelJdbc {
  * Metodo che permette di ricercare un documento di convenzione di un'azienda inserendo la email
  * del profilo associato.
  * @param piva partita iva dell'azienda
- * @return
+ * @return il documento convenzione corrispondente
  */
   
   public synchronized DocumentoConvenzioneBean ricercaConvenzionePerPartitaIva(String piva) {
@@ -524,7 +525,7 @@ public class DocumentoModelJdbc {
   /**
  * Permette di ricercare un documento questionario fornendo l'id.
  * @param id identificativo del questionario
- * @return
+ * @return il questionario ricercato
  */
   
   public synchronized DocumentoQuestionarioBean ricercaQuestionarioPerId(int id) {

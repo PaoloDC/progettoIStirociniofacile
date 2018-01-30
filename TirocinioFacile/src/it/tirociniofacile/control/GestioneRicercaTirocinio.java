@@ -218,8 +218,6 @@ public class GestioneRicercaTirocinio extends HttpServlet {
    *          la richiesta http
    * @throws IOException  eccezioni di I/O
    * @throws ServletException eccezioni della servlet
-   * @throws SQLException
-   *           eccezione lanciato dal metodo del model
    */
   public void creaPagina(HttpServletRequest request, HttpServletResponse response) 
       throws ServletException, IOException {

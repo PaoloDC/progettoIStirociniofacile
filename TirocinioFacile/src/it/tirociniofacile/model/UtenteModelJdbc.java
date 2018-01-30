@@ -72,8 +72,6 @@ public class UtenteModelJdbc {
    *          password del nuovo studente da registrare
    * @param matricola
    *          matricola del nuovo studente da registrare
-   * @throws SQLException
-   *           eccezione lanciata in caso di record già esistente
    */
   public synchronized boolean salvaAccountStudente(String email, String password,
       String matricola) {
@@ -100,15 +98,13 @@ public class UtenteModelJdbc {
     return true;
   }
 
+
   /**
    * Inserisce nel db una nuova azienda.
-   * 
-   * @param email
-   *          email della nuova azienda da registrare
-   * @param password
-   *          password della nuova azienda da registrare
-   * @throws SQLException
-   *           eccezione lanciata in caso di record già esistente
+   * @param email email della nuova azienda da registrare
+   * @param password password della nuova azienda da registrare
+   * @param nomeazienda il nome dell'azienda
+   * @return
    */
   public synchronized boolean salvaAccountAzienda(String email, String password,
       String nomeazienda) {
@@ -187,8 +183,6 @@ public class UtenteModelJdbc {
    * @param password
    *          password dell'account da ricercare nel db
    * @return ritorna un bean che rappresenta un utente
-   * @throws SQLException
-   *           in caso di errore di connesione al db
    */
   public synchronized UtenteBean caricaAccount(String email, String password) {
     Connection connection = con;
@@ -416,8 +410,6 @@ public class UtenteModelJdbc {
    * 
    * @param email
    *          identificativo dell'account
-   * @throws SQLException
-   *           in caso di errata connessione al database
    */
   public synchronized void cancellaAccountAzienda(String email) {
     try {

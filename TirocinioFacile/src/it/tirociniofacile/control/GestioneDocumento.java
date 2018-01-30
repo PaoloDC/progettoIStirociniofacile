@@ -269,8 +269,6 @@ public class GestioneDocumento extends HttpServlet {
    * 
    * @param request
    *          richiesta http
-   * @throws SQLException
-   *           eccezioni sql
    */
   public void compilaQuestionario(HttpServletRequest request, HttpServletResponse response) {
 

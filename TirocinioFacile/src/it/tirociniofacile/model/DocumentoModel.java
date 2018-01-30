@@ -21,7 +21,6 @@ import javax.sql.DataSource;
 /**
  * Classe model per la gestione di lettura e scrittura dei documenti (convenzione e questionario)
  * sul database.
- * 
  * @author Paolo De Cristofaro
  */
 public class DocumentoModel {
@@ -66,10 +65,7 @@ public class DocumentoModel {
 
   /**
    * Ricerca tutti i documenti convenzione bean.
-   * 
    * @return lista con tutti i documenti
-   * @throws SQLException
-   *           eccezzioni sql
    */
   public synchronized ArrayList<DocumentoConvenzioneBean> getTuttiDocumentiConvenzioneAzienda() {
     Connection connection = null;
@@ -121,10 +117,8 @@ public class DocumentoModel {
 
   /**
    * Ricerca tutti i documenti questionari non ancora approvati che hanno un pdf allegato.
-   * 
    * @return una lista di questionari
-   * @throws SQLException
-   *           in caso di errata connessione al database
+   * @throws SQLException in caso di errata connessione al database
    */
   public synchronized ArrayList<DocumentoQuestionarioBean> getTuttiDocumentiQuestionari()
       throws SQLException {
@@ -175,12 +169,9 @@ public class DocumentoModel {
 
   /**
    * Ricerca tutti i documenti questionari per una pagina azienda.
-   * 
-   * @param id
-   *          l'identificativo della pagina azienda
+   * @param id l'identificativo della pagina azienda
    * @return una lista di questionari per una certa pagina
-   * @throws SQLException
-   *           in caso di errata connessione al database
+   * @throws SQLException in caso di errata connessione al database
    */
   public synchronized ArrayList<DocumentoQuestionarioBean> getTuttiDocumentiQuestionariPerPagina(
       int id) throws SQLException {
@@ -235,9 +226,7 @@ public class DocumentoModel {
 
   /**
    * Metodo che ricerca tutti i questionari non approvati per un determinato studente.
-   * 
-   * @param mailStudente
-   *          la mail che identifica lo studente
+   * @param mailStudente la mail che identifica lo studente
    * @return una lista di questionari non approvati
    */
   public synchronized ArrayList<String> ricercaQuestionariNonApprovatiPerStudente(
@@ -295,10 +284,9 @@ public class DocumentoModel {
 
   /**
    * Conta il numero di questionari approvati in un anno indicato.
-   * 
-   * @param anno
-   *          l'anno in cui contare
+   * @param anno l'anno in cui contare
    * @return un intero corrispondente al numero di questionari approvati
+   * @throws SQLException in caso di errata connessione al database
    */
   public synchronized int conteggioQuestionariApprovatiPerAnno(String anno) throws SQLException {
     Connection connection = null;
@@ -328,12 +316,12 @@ public class DocumentoModel {
     return numeroQuestinariApprovatiPerAnno;
   }
 
+
   /**
    * Conta il numero di questionari approvati in una certa azienda.
-   * 
-   * @param azienda
-   *          l'azienda per cui cercare
+   * @param azienda l'azienda per cui cercare
    * @return un intero corrispondente al numero di questionari approvati
+   * @throws SQLException in caso di problemi con la connessione al database
    */
   public synchronized int conteggioQuestionariApprovatiPerAzienda(String azienda)
       throws SQLException {
@@ -370,25 +358,17 @@ public class DocumentoModel {
   /**
    * Metodo che consente di salvare un nuovo questionario sul database.
    * 
-   * @param commenti
-   *          eventuali commenti dello studente, allegati al questionario
-   * @param suggerimenti
-   *          eventuali suggerimenti dello studente, allegati al questionario
-   * @param annoAccademico
-   *          indica l'anno in cui è stato svolto il tirocinio
-   * @param mailStudente
-   *          mail dello studente che ha svolto il tirocinio
-   * @param paginaAziendaId
-   *          riferimento all'identificativo sul database della pagina dell'azienda in cui è stato
-   *          svolto il tirocinio
-   * @param matricola
-   *          matricola dello studente che ha svolto il tirocinio
-   * @param giudizioEsperienza
-   *          media dei giudizi sull'esperienza del tirocinio
-   * @param giudizioAzienda
-   *          media dei giudizi sull'azienda che ha ospitato del tirocinio
-   * @param giudizioUniversita
-   *          media dei giudizi sull'università che ha del tirocinio
+   * @param commenti eventuali commenti dello studente, allegati al questionario
+   * @param suggerimenti eventuali suggerimenti dello studente, allegati al questionario
+   * @param annoAccademico indica l'anno in cui è stato svolto il tirocinio
+   * @param mailStudente mail dello studente che ha svolto il tirocinio
+   * @param paginaAziendaId  riferimento all'identificativo sul database della pagina 
+   *     dell'azienda in cui è stato svolto il tirocinio
+   * @param matricola  matricola dello studente che ha svolto il tirocinio
+   * @param giudizioEsperienza  media dei giudizi sull'esperienza del tirocinio
+   * @param giudizioAzienda media dei giudizi sull'azienda che ha ospitato del tirocinio
+   * @param giudizioUniversita media dei giudizi sull'università che ha del tirocinio
+   * @param testoQuestionario il testo del questionario che poi si stamperà
    * @return un intero che corrisponde all'id del questionario, -1 in caso di errato salvataggio
    */
   public synchronized int salvaQuestionario(String commenti, String suggerimenti,
@@ -449,19 +429,15 @@ public class DocumentoModel {
 
   /**
    * Salva il documento di convenzione all'interno del database.
-   * 
-   * @param nomeAzienda
-   *          nome univoco dell'azienda che si convenziona
-   * @param sedeLegale
-   *          nazione in cui ha sede l'azienda
-   * @param citta
-   *          città in cui ha sede l'azienda
-   * @param rappLegale
-   *          nome del rappresentate legale dell'azienda
-   * @param luogoDiNascitaRappLegale
-   *          luogo di nascita del rappresentate legale dell'azienda
-   * @param dataDiNascitaRappLegale
-   *          data di nascita del rappresentate legale dell'azienda
+   * @param piva la partita iva che identifica l'azienda e il documento
+   * @param nomeAzienda nome univoco dell'azienda che si convenziona
+   * @param sedeLegale nazione in cui ha sede l'azienda
+   * @param citta città in cui ha sede l'azienda
+   * @param rappLegale nome del rappresentate legale dell'azienda
+   * @param luogoDiNascitaRappLegale luogo di nascita del rappresentate legale dell'azienda
+   * @param dataDiNascitaRappLegale data di nascita del rappresentate legale dell'azienda
+   * @param testoConvenzione il testo della convenzione che si stamperà
+   * @return true se salva la convenzione, false altrimenti
    */
   public synchronized boolean salvaConvenzione(String piva, String nomeAzienda, String sedeLegale,
       String citta, String rappLegale, String luogoDiNascitaRappLegale,
@@ -519,14 +495,8 @@ public class DocumentoModel {
   /**
    * Metodo che salva il pdf, documento di convenzione dell'azienda, come file e mantiene un
    * riferimento all'url del pdf sul database.
-   * 
-   * @param url
-   *          riferimento alla posizione del file pdf
-   
-   * @throws SQLException
-   *           in caso di errata connessione al database
-   * @throws IOException
-   *           in caso di errato salvataggio del file
+   * @param url riferimento alla posizione del file pdf
+   * @param piva identificativo della convenzione
    */
   public synchronized void salvaPdfConvenzione(String url, String piva) {
     Connection connection = null;
@@ -565,16 +535,12 @@ public class DocumentoModel {
     }
   }
 
+
   /**
    * Metodo che permette il salvataggio di un documento pdf, mantenendo un riferimento, alla
    * posizione del file, sul database.
-   * 
-   * @param url
-   *          riferimento alla posizione del pdf
-   * @throws SQLException
-   *           in caso di errato salvataggio sul database
-   * @throws IOException
-   *           in caso di errato salvataggio del file
+   * @param url riferimento alla posizione del pdf 
+   * @param id identificativo del questionario
    */
   public synchronized void salvaPdfQuestionario(String url, String id) {
     Connection connection = null;
@@ -621,12 +587,9 @@ public class DocumentoModel {
   /**
    * Metodo che permette di ricercare un documento di convenzione di un'azienda inserendo la email
    * del profilo associato.
-   * 
-   * @param email
-   *          la mail del profilo associata al documento di convenzione
+   * @param email la mail del profilo associata al documento di convenzione
    * @return il documento di convenzione dell'azienda
-   * @throws SQLException
-   *           in caso di errata connessione al database
+   * @throws SQLException in caso di errata connessione al database
    */
   public DocumentoConvenzioneBean ricercaConvenzionePerEmail(String email) throws SQLException {
     Connection connection = null;
@@ -679,11 +642,8 @@ public class DocumentoModel {
   /**
    * Metodo che permette di ricercare un documento di convenzione di un'azienda inserendo la email
    * del profilo associato.
-   * 
-  
+   * @param piva identificativo della convenzione da ricercare
    * @return il documento di convenzione dell'azienda
-   * @throws SQLException
-   *           in caso di errata connessione al database
    */
   public synchronized DocumentoConvenzioneBean ricercaConvenzionePerPartitaIva(String piva) {
     Connection connection = null;
@@ -743,12 +703,8 @@ public class DocumentoModel {
 
   /**
    * Permette di ricercare un documento questionario fornendo l'id.
-   * 
-   * @param id
-   *          identificativo del documento da ricercare
+   * @param id identificativo del documento da ricercare
    * @return un documento questionario
-   * @throws SQLException
-   *           in caso di errata connessione al database
    */
   public synchronized DocumentoQuestionarioBean ricercaQuestionarioPerId(int id) {
     Connection connection = null;
@@ -807,12 +763,8 @@ public class DocumentoModel {
   }
 
   /**
-   * Cancella il documento il cui id corrisponde a quello passato.
-   * 
-   * @param id
-   *          identificativo del documento da ricercare
-   * @throws SQLException
-   *           in caso di errata connessione al database
+   * Cancella il documento il cui id corrisponde a quello passato. 
+   * @param id identificativo del documento da ricercare
    */
   public synchronized void cancellaDocumento(String id) {
     Connection connection = null;
@@ -855,9 +807,7 @@ public class DocumentoModel {
 
   /**
    * Approva il documento il cui id corrisponde a quello passato.
-   * 
-   * @param id
-   *          identificativo del documento da ricercare
+   * @param id identificativo del documento da ricercare
    */
   public synchronized void approvaDocumento(String id) {
     Connection connection = null;

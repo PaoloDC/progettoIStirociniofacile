@@ -122,8 +122,7 @@ public class GestioneUtente extends HttpServlet {
    *          richiesta http
    * @throws IOException eccezioni di I/O
    * @throws ServletException eccezioni della servlet
-   * @throws SQLException
-   *           eccezioni sql
+   * @throws IOException eccezione di io
    */
   public void registrazioneAzienda(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -226,11 +225,10 @@ public class GestioneUtente extends HttpServlet {
 
   /**
    * Recupera password invia una mail alla mail inviata contenente una nuova password.
-   * 
-   * @param request
-   *          richiesta http
-   * @throws SQLException
-   *           eccezione sql
+   * @param request  richiesta http
+   * @param response risposta http
+   * @throws ServletException eccezione della servlet
+   * @throws IOException errore di io
    */
   public void recuperaPassword(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
