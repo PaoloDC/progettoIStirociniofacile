@@ -660,14 +660,7 @@ String tipo = (String) session.getAttribute("tipologiaAccount");
 							</div>
 							<button type="submit" class="btn btn-primary">Invia
 								Questionario</button>
-							<button class="btn btn-primary" onclick="myFunction()">Print
-								this page</button>
-							<script>
-								function myFunction() {
-									window.print();
-								}
-							</script>
-
+							
 							<br> <br> <br> <br> <br> <br> <br>
 							<br>
 						</div>
